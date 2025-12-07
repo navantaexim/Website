@@ -11,6 +11,10 @@ const BLOG_DIR = path.join(process.cwd(), 'blogs')
 const PUBLIC_IMG_DIR = path.join(process.cwd(), 'public/blog-images')
 
 export async function getAllBlogs() {
+  if (!fs.existsSync(BLOG_DIR)) {
+    return []
+  }
+
   const files = fs.readdirSync(BLOG_DIR)
 
   return files
@@ -26,23 +30,38 @@ export async function getAllBlogs() {
 
 export async function getBlogContent(slug: string) {
   const mdPath = path.join(BLOG_DIR, `${slug}.md`)
+  
+  if (!fs.existsSync(mdPath)) {
+    return {
+      title: 'Post Not Found',
+      content: '<p>This blog post could not be found.</p>',
+    }
+  }
+
   let file = fs.readFileSync(mdPath, 'utf8')
 
   // Copy images from blogs/media/media → public/blog-images/<slug>/
   const mediaDir = path.join(BLOG_DIR, 'media', 'media')
 
-  const destSlugDir = path.join(PUBLIC_IMG_DIR, slug)
-  if (!fs.existsSync(destSlugDir)) {
-    fs.mkdirSync(destSlugDir, { recursive: true })
-  }
-
-  if (fs.existsSync(mediaDir)) {
-    const images = fs.readdirSync(mediaDir)
-    for (const img of images) {
-      const srcPath = path.join(mediaDir, img)
-      const destPath = path.join(destSlugDir, img)
-      fs.copyFileSync(srcPath, destPath)
+  try {
+    const destSlugDir = path.join(PUBLIC_IMG_DIR, slug)
+    if (!fs.existsSync(destSlugDir)) {
+      fs.mkdirSync(destSlugDir, { recursive: true })
     }
+
+    if (fs.existsSync(mediaDir)) {
+      const images = fs.readdirSync(mediaDir)
+      for (const img of images) {
+        const srcPath = path.join(mediaDir, img)
+        const destPath = path.join(destSlugDir, img)
+        // Only copy if destination doesn't exist or we can write
+        if (!fs.existsSync(destPath)) {
+            fs.copyFileSync(srcPath, destPath)
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Error copying blog images (likely read-only fs):', error)
   }
 
   // Rewrite HTML <img> tags
