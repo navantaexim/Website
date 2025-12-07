@@ -17,7 +17,7 @@ export default function Footer() {
     {
       title: 'Contact',
       links: [
-        { label: 'Email Us', href: 'mailto:navantaexim@gmail.com' },
+        { label: 'Email Us', href: 'mailto:contact@navantaexim.com' },
         // { label: 'Support', href: '#' },
       ]
     },

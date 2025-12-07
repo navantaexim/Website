@@ -5,7 +5,7 @@ import { Copy, Check, Mail } from 'lucide-react'
 
 export default function Contact() {
   const [copied, setCopied] = useState(false)
-  const email = "navantaexim@gmail.com"
+  const email = "contact@navantaexim.com"
 
   const handleCopy = () => {
     navigator.clipboard.writeText(email)
