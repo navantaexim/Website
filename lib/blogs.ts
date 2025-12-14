@@ -1,11 +1,5 @@
 import fs from 'fs'
 import path from 'path'
-import matter from 'gray-matter'
-import { remark } from 'remark'
-import html from 'remark-html'
-import remarkGfm from 'remark-gfm'
-import remarkBreaks from 'remark-breaks'
-
 
 const BLOG_DIR = path.join(process.cwd(), 'blogs')
 const PUBLIC_IMG_DIR = path.join(process.cwd(), 'public/blog-images')
@@ -17,66 +11,65 @@ export async function getAllBlogs() {
   }
 
   const files = fs.readdirSync(BLOG_DIR)
-  const seenSlugs = new Set()
   const blogs = []
+  
+  // Only process HTML files
+  const htmlFiles = files.filter(file => file.endsWith('.html'))
 
-  // Prioritize files - maybe scan all and push to list
-  for (const file of files) {
-      if (!file.endsWith('.md') && !file.endsWith('.html')) continue
-
-      const slug = file.replace(/\.(md|html)$/, '')
+  for (const file of htmlFiles) {
+      const slug = file.replace(/\.html$/, '')
+      const filePath = path.join(BLOG_DIR, file)
       
-      if (seenSlugs.has(slug)) continue
-      seenSlugs.add(slug)
+      let stats
+      try {
+          stats = fs.statSync(filePath)
+      } catch (e) {
+          continue
+      }
 
       let title = slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
 
-      // Try to extract title from HTML
-      if (file.endsWith('.html')) {
-          try {
-              const content = fs.readFileSync(path.join(BLOG_DIR, file), 'utf8')
-              const titleMatch = content.match(/<title>(.*?)<\/title>/i) || content.match(/<h1>(.*?)<\/h1>/i)
-              if (titleMatch && titleMatch[1]) {
-                  title = titleMatch[1].trim()
-              }
-          } catch (e) {
-             // ignore
+      // Extract title from HTML
+      try {
+          const content = fs.readFileSync(filePath, 'utf8')
+          const titleMatch = content.match(/<title>(.*?)<\/title>/i) || content.match(/<h1>(.*?)<\/h1>/i)
+          if (titleMatch && titleMatch[1]) {
+              title = titleMatch[1].trim()
           }
-      } else {
-         // Try to extract title from MD frontmatter
-         try {
-             const content = fs.readFileSync(path.join(BLOG_DIR, file), 'utf8')
-             const { data } = matter(content)
-             if (data.title) title = data.title
-         } catch (e) {}
+      } catch (e) {
+          // ignore error reading file
       }
 
-      blogs.push({ slug, title })
+      blogs.push({ 
+          slug, 
+          title,
+          date: stats.birthtimeMs || stats.mtimeMs
+      })
   }
   
+  // Sort by date ascending (Oldest first)
+  blogs.sort((a, b) => a.date - b.date)
+
   return blogs
 }
 
 export async function getBlogContent(slug: string) {
-  const mdPath = path.join(BLOG_DIR, `${slug}.md`)
   const htmlPath = path.join(BLOG_DIR, `${slug}.html`)
   
-  let fileContent = ''
-  let isHtml = false
-  let title = slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
-
-  if (fs.existsSync(mdPath)) {
-      fileContent = fs.readFileSync(mdPath, 'utf8')
-  } else if (fs.existsSync(htmlPath)) {
-      fileContent = fs.readFileSync(htmlPath, 'utf8')
-      isHtml = true
-  } else {
+  if (!fs.existsSync(htmlPath)) {
     return {
       title: 'Post Not Found',
       content: '<p>This blog post could not be found.</p>',
     }
   }
 
+  let fileContent = fs.readFileSync(htmlPath, 'utf8')
+  
+  // Default title from slug
+  let title = slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+
+  // Copy images from sources to public folder
+  // We keep this logic to ensure images referenced in HTML (relative or absolute) are available in public
   const imageSources = [
       path.join(BLOG_DIR, 'media', 'media'),
       CONTENT_MEDIA_DIR
@@ -105,40 +98,32 @@ export async function getBlogContent(slug: string) {
     console.error('Error copying blog images:', error)
   }
 
-  // Rewrite HTML <img> tags
+  // Rewrite HTML <img> tags to point to the public directory
+  // Valid for: src="contentmedia/image1.jpg" or src="/blogs/contentmedia/image1.jpg"
+  // We want to map them to: /blog-images/[slug]/image1.jpg
   fileContent = fileContent.replace(/<img[^>]+src="([^"]+)"[^>]*>/g, (match, src) => {
+    // If it's already an external link, ignore
+    if (src.startsWith('http') || src.startsWith('//')) return match
+    
     const imageName = src.split('/').pop()
     const newPath = `/blog-images/${slug}/${imageName}`
     return match.replace(src, newPath)
   })
 
-  if (isHtml) {
-      const titleMatch = fileContent.match(/<title>(.*?)<\/title>/i) || fileContent.match(/<h1>(.*?)<\/h1>/i)
-      if (titleMatch && titleMatch[1]) {
-          title = titleMatch[1].trim()
-      }
-      const bodyMatch = fileContent.match(/<body[^>]*>([\s\S]*)<\/body>/i)
-      if (bodyMatch) {
-          fileContent = bodyMatch[1]
-      }
-      return {
-          title,
-          content: fileContent
-      }
+  // Extract Title from content
+  const titleMatch = fileContent.match(/<title>(.*?)<\/title>/i) || fileContent.match(/<h1>(.*?)<\/h1>/i)
+  if (titleMatch && titleMatch[1]) {
+      title = titleMatch[1].trim()
   }
 
-  const { content, data } = matter(fileContent)
-
-  const processed = await remark()
-    .use(remarkGfm)
-    .use(remarkBreaks)
-    .use(html, { sanitize: false })
-    .process(content)
-
-  const htmlContent = processed.toString()
+  // Extract body content to avoid rendering full <html> in the page
+  const bodyMatch = fileContent.match(/<body[^>]*>([\s\S]*)<\/body>/i)
+  if (bodyMatch) {
+      fileContent = bodyMatch[1]
+  }
 
   return {
-    title: data.title || title,
-    content: htmlContent,
+    title,
+    content: fileContent,
   }
 }
