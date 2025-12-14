@@ -4,6 +4,7 @@ import About from '@/components/about'
 import CompetitiveAdvantage from '@/components/competitive-advantage'
 import WhyChoose from '@/components/why-choose'
 import AIDAFunnel from '@/components/aida-funnel'
+import LearningSection from '@/components/learning-section'
 import Contact from '@/components/contact'
 import Footer from '@/components/footer'
 
@@ -21,6 +22,9 @@ export default function Home() {
       <WhyChoose />
       <div id="solutions">
         <AIDAFunnel />
+      </div>
+      <div id="blogs">
+        <LearningSection />
       </div>
       <Contact />
       <Footer />
