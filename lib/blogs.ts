@@ -47,8 +47,33 @@ export async function getAllBlogs() {
       })
   }
   
-  // Sort by date ascending (Oldest first)
-  blogs.sort((a, b) => a.date - b.date)
+  // Custom defined order
+  const customOrder = [
+    'Introduction-To-Global-Trade',
+    'Foundations-Of-Import-Export',
+    'Essential-Exim-Documentation',
+    'Export-Proces-Step-By-Step'
+  ]
+
+  // Sort based on custom order, falling back to name if not in list
+  blogs.sort((a, b) => {
+    const indexA = customOrder.indexOf(a.slug)
+    const indexB = customOrder.indexOf(b.slug)
+
+    // If both are in the custom list, sort by their index
+    if (indexA !== -1 && indexB !== -1) {
+      return indexA - indexB
+    }
+    
+    // If only A is in the list, it comes first
+    if (indexA !== -1) return -1
+    
+    // If only B is in the list, it comes first
+    if (indexB !== -1) return 1
+    
+    // Fallback: Default sort by date (oldest first)
+    return a.date - b.date
+  })
 
   return blogs
 }
