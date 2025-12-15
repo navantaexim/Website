@@ -23,7 +23,7 @@ export default function Header() {
     { label: 'About', href: '#about' },
     { label: 'Why Choose Us', href: '#why-choose' },
     { label: 'Solutions', href: '#solutions' },
-    // { label: 'Blogs', href: '#blogs' },
+    { label: 'Blogs', href: '#blogs' },
   ]
 
   return (
