@@ -3,27 +3,28 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-// import { useAuth } from '@/providers/auth-provider'
-// import { useRouter } from 'next/navigation'
-// import { signOut } from 'firebase/auth'
-// import { auth } from '@/lib/firebase'
+import { useAuth } from '@/providers/auth-provider'
+import { useRouter } from 'next/navigation'
+import { signOut } from 'firebase/auth'
+import { auth } from '@/lib/firebase'
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  // const { user, loading } = useAuth()
-  // const router = useRouter()
+  const { user, loading } = useAuth()
+  const router = useRouter()
 
-  // const handleLogout = async () => {
-  //   await signOut(auth)
-  //   router.push('/')
-  // }
+  const handleLogout = async () => {
+    await signOut(auth)
+    router.push('/')
+  }
 
   const navLinks = [
     { label: 'Home', href: '#hero' },
     { label: 'About', href: '#about' },
     { label: 'Why Choose Us', href: '#why-choose' },
     { label: 'Solutions', href: '#solutions' },
-    { label: 'Blogs', href: '#blogs' },
+    { label: 'Blogs', href: '/blogs' },
+    { label: 'Contact Us', href: '#contact' },
   ]
 
   return (
@@ -55,8 +56,7 @@ export default function Header() {
         </div>
 
         <div className="hidden md:flex items-center gap-3">
-          {/* Authentication & Dashboard - Commented out for future release */}
-          {/* {loading ? (
+          {loading ? (
             <div className="w-8 h-8 bg-gray-200 rounded animate-pulse" />
           ) : user ? (
             <>
@@ -88,15 +88,7 @@ export default function Header() {
                 Sign Up
               </Link>
             </>
-          )} */}
-
-          {/* Temporary Contact Button */}
-          <a
-            href="#contact"
-            className="text-sm font-medium bg-primary text-white px-5 py-2.5 rounded-lg hover:bg-primary/90 transition shadow-sm hover:shadow-md"
-          >
-            Contact Us
-          </a>
+          )}
         </div>
 
         {/* Mobile menu button */}
@@ -134,19 +126,8 @@ export default function Header() {
                 {link.label}
               </a>
             ))}
-            
-            <div className="pt-4 mt-2 border-t border-border">
-               <a
-                href="#contact"
-                className="block w-full text-center text-sm font-medium bg-primary text-white px-4 py-3 rounded-lg hover:bg-primary/90 transition"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Contact Us
-              </a>
-            </div>
 
-            {/* Mobile Auth - Commented out */}
-            {/* <div className="pt-3 border-t border-border space-y-2">
+            <div className="pt-3 border-t border-border space-y-2">
               {loading ? (
                 <div className="w-full h-8 bg-gray-200 rounded animate-pulse" />
               ) : user ? (
@@ -180,7 +161,7 @@ export default function Header() {
                   </Link>
                 </>
               )}
-            </div> */}
+            </div>
           </div>
         </div>
       )}
