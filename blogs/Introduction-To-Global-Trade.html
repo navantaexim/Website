@@ -12,25 +12,54 @@
 	<style>
 		body {
 			font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+			margin: 0;
 		}
 	</style>
 </head>
 
 <body class="bg-white text-slate-800">
 
-	<main class="max-w-7xl mx-auto px-6 py-16">
+<div class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+	<main class="flex gap-12 px-6 lg:px-10">
+		<!-- LEFT: TABLE OF CONTENTS -->
+	<aside class="hidden lg:block w-[280px] shrink-0 border-r pr-6">
+      <div class="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto border-r no-scrollbar pr-4 pb-12">
+
+        <h3 class="text-sm font-semibold uppercase text-slate-500 mb-4">
+          In This Article
+        </h3>
+
+        <details class="group">
+          <summary class="cursor-pointer font-medium text-slate-800 hover:text-blue-600">
+            Introduction To Global Trade
+          </summary>
+          <ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
+            <li><a href="#export-import-definition" data-scroll class="hover:text-blue-600">What is Export and Import?</a></li>
+            <li><a href="#export-import-comparison" data-scroll class="hover:text-blue-600">Export vs Import vs Domestic Trade</a></li>
+            <li><a href="#global-trade-matters" data-scroll class="hover:text-blue-600">Why Global Trade Matters for Engineering Manufacturers?</a></li>
+            <li><a href="#ai-transforming-exim" data-scroll class="hover:text-blue-600">How AI is Transforming Traditional EXIM Systems</a></li>
+            <li><a href="#challenges" data-scroll class="hover:text-blue-600">Common Challenges in the Export–Import Industry</a></li>
+            <li><a href="#case-study" data-scroll class="hover:text-blue-600">Case Study</a></li>
+            <li><a href="#flowchart" data-scroll class="hover:text-blue-600">Flowchart</a></li>
+            <li><a href="#FAQs" data-scroll class="hover:text-blue-600">FAQs</a></li>
+          </ul>
+        </details>
+      </div>
+    </aside>
+
+	<article class="flex-1 max-w-none">
 
 		<!-- SECTION TITLE -->
 		<section class="max-w-4xl mx-auto mb-20">
 			<h1 class="text-4xl text-center font-bold text-slate-900 mb-6">
-				SECTION 1 — Introduction to Global Trade
+				 Introduction to Global Trade
 			</h1>
 		</section>
 
 		<!-- 1.1 Export & Import -->
 		<section class="mb-20 max-w-6xl mx-auto px-6">
-			<h2 class="text-3xl font-bold text-slate-900 mb-8">
-				1.1 What is Export and Import?
+			<h2 id="export-import-definition" class="text-3xl font-bold text-slate-900 mb-8">
+				What is Export and Import?
 			</h2>
 
 			<div class="grid md:grid-cols-2 gap-8 mb-8">
@@ -72,8 +101,8 @@
 
 		<!--1.2 Comparison Table -->
 		<section class="mb-24 max-w-6xl mx-auto px-6">
-			<h2 class="text-3xl font-bold text-slate-900 mb-10 text-center">
-				1.2 Difference Between Export vs Import vs Domestic Trade
+			<h2 id="export-import-comparison" class="text-3xl font-bold text-slate-900 mb-10 text-center">
+				Difference Between Export vs Import vs Domestic Trade
 			</h2>
 
 			<div class="overflow-x-auto border rounded-xl">
@@ -175,8 +204,8 @@
 			<div class="max-w-6xl mx-auto px-6">
 				<!-- Section Heading -->
 				<div class="max-w-1xl mx-auto text-center mb-14">
-					<h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-						1.3 Why Global Trade Matters for Engineering Manufacturers?
+					<h2 id="global-trade-matters" class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+						Why Global Trade Matters for Engineering Manufacturers?
 					</h2>
 					<p class="text-lg py-3 text-slate-600 font-semibold">
 						Engineering manufacturers (machinery, components, tools) benefit strongly from global trade:
@@ -267,8 +296,8 @@
 
 				<!-- Section Heading -->
 				<div class="max-w-4xl mx-auto text-center mb-14">
-					<h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-						1.4 How AI is Transforming Traditional EXIM Systems
+					<h2 id="ai-transforming-exim" class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+						How AI is Transforming Traditional EXIM Systems
 					</h2>
 					<p class="text-lg text-slate-600 font-semibold">
 						AI is not just buzz — it changes how export-import works in practice:
@@ -364,8 +393,8 @@
 
 				<!-- Section Heading -->
 				<div class="max-w-4xl mx-auto text-center mb-14">
-					<h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-						1.5 Common Challenges in the Export–Import Industry
+					<h2 id="challenges" class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+						Common Challenges in the Export–Import Industry
 					</h2>
 					<p class="text-lg text-slate-600 font-semibold">
 						Challenge → Why it matters → Practical fix
@@ -488,8 +517,8 @@
 
 				<!-- Section Heading -->
 				<div class="max-w-1xl mx-auto text-center mb-16">
-					<h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-						1.6 CASE STUDY: How XYZ Engineering Works Transformed Its Export–Import Journey
+					<h2 id="case-study" class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+						CASE STUDY: How XYZ Engineering Works Transformed Its Export–Import Journey
 					</h2>
 				</div>
 
@@ -654,8 +683,8 @@
 
 				<!-- Heading -->
 				<div class="text-center mb-16">
-					<h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-						1.7 Simple Export–Import Flowchart
+					<h2 id="flowchart" class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+						Simple Export–Import Flowchart
 					</h2>
 					<p class="text-lg text-slate-600">
 						Step-by-step flow of a typical export–import transaction
@@ -774,7 +803,7 @@
 
 			<!-- Section Heading -->
 			<div class="max-w-4xl mx-auto text-center mb-16">
-			<h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+			<h2 id="FAQs" class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
 				Suggested Short FAQ
 			</h2>
 			<p class="text-lg text-slate-600">
@@ -783,63 +812,109 @@
 			</div>
 
 			<!-- FAQ Items -->
-			<div class="max-w-4xl mx-auto space-y-4">
+<div class="max-w-4xl mx-auto space-y-4">
 
-			<!-- FAQ 1 -->
-			<details class="group border rounded-xl px-6 py-4">
-				<summary class="flex cursor-pointer items-center justify-between font-semibold text-slate-900">
-				<span>Q: What is the main difference between export and import?</span>
-				<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
-				</summary>
-				<p class="mt-4 text-slate-700 leading-relaxed">
-				Export = selling out of the country; Import = buying into the country.
-				Exports earn foreign currency; imports may be subject to customs duties.
-				</p>
-			</details>
+  <!-- FAQ 1 -->
+  <details class="group border rounded-xl px-6 py-4">
+    <summary class="flex cursor-pointer items-center justify-between font-semibold text-slate-900">
+      <span>Q1. What are the mandatory documents required for exporting goods?</span>
+      <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+    </summary>
+    <p class="mt-4 text-slate-700 leading-relaxed">
+      The essential export documents include the Commercial Invoice, Packing List, Shipping Bill,
+      Bill of Lading/Airway Bill, Certificate of Origin, Insurance Certificate, and product-specific
+      compliance certificates. Depending on the product and country, additional documents may be required.
+    </p>
+  </details>
 
-			<!-- FAQ 2 -->
-			<details class="group border rounded-xl px-6 py-4">
-				<summary class="flex cursor-pointer items-center justify-between font-semibold text-slate-900">
-				<span>Q: Which documents are most important for export?</span>
-				<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
-				</summary>
-				<p class="mt-4 text-slate-700 leading-relaxed">
-				Commercial invoice, packing list, bill of lading/airway bill,
-				export declaration/shipping bill and certificate of origin.
-				</p>
-			</details>
+  <!-- FAQ 2 -->
+  <details class="group border rounded-xl px-6 py-4">
+    <summary class="flex cursor-pointer items-center justify-between font-semibold text-slate-900">
+      <span>Q2. Why is export documentation important?</span>
+      <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+    </summary>
+    <p class="mt-4 text-slate-700 leading-relaxed">
+      Export documentation ensures legal compliance, smooth customs clearance, buyer acceptance,
+      proper valuation, tax benefits, and accurate shipment tracking.
+    </p>
+  </details>
 
-			<!-- FAQ 3 -->
-			<details class="group border rounded-xl px-6 py-4">
-				<summary class="flex cursor-pointer items-center justify-between font-semibold text-slate-900">
-				<span>Q: How can AI help exporters?</span>
-				<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
-				</summary>
-				<p class="mt-4 text-slate-700 leading-relaxed">
-				AI automates documentation, predicts logistics delays,
-				scores buyer risk and helps with customs classification.
-				</p>
-			</details>
+  <!-- FAQ 3 -->
+  <details class="group border rounded-xl px-6 py-4">
+    <summary class="flex cursor-pointer items-center justify-between font-semibold text-slate-900">
+      <span>Q3. Who prepares export documents?</span>
+      <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+    </summary>
+    <p class="mt-4 text-slate-700 leading-relaxed">
+      The exporter prepares core documents, while the Customs Broker (CHA) prepares the Shipping Bill.
+      The freight forwarder issues the BL/AWB.
+    </p>
+  </details>
 
-			<!-- FAQ 4 -->
-			<details class="group border rounded-xl px-6 py-4">
-				<summary class="flex cursor-pointer items-center justify-between font-semibold text-slate-900">
-				<span>Q: What payment methods reduce risk in EXIM?</span>
-				<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
-				</summary>
-				<p class="mt-4 text-slate-700 leading-relaxed">
-				Letters of Credit (LC), advance payment,
-				and export credit insurance reduce non-payment risk.
-				</p>
-			</details>
+  <!-- FAQ 4 -->
+  <details class="group border rounded-xl px-6 py-4">
+    <summary class="flex cursor-pointer items-center justify-between font-semibold text-slate-900">
+      <span>Q4. How do export documents help in customs clearance?</span>
+      <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+    </summary>
+    <p class="mt-4 text-slate-700 leading-relaxed">
+      They provide proof of product origin, value, HS code, shipment weight, and compliance,
+      allowing customs to approve the shipment legally.
+    </p>
+  </details>
 
-			</div>
+  <!-- FAQ 5 -->
+  <details class="group border rounded-xl px-6 py-4">
+    <summary class="flex cursor-pointer items-center justify-between font-semibold text-slate-900">
+      <span>Q5. What happens if export documents have mistakes?</span>
+      <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+    </summary>
+    <p class="mt-4 text-slate-700 leading-relaxed">
+      Mistakes can lead to customs penalties, shipment delays, higher charges,
+      and refusal by the buyer’s bank in LC transactions.
+    </p>
+  </details>
+
+</div>
+
 		</div>
 		</section>
+	</article>
+</main>
+</div>
+<script>
+  document.querySelectorAll('[data-scroll]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault()
 
+      const id = link.getAttribute('href')
+      const target = document.querySelector(id)
+      if (!target) return
 
-	</main>
+      target.scrollIntoView({ behavior: 'smooth' })
 
+      // IMPORTANT: replace state instead of push
+      history.replaceState(null, '', id)
+    })
+  })
+</script>
+<!-- <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll('[data-scroll]').forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+
+          const id = link.getAttribute('href');
+          const target = document.querySelector(id);
+          if (!target) return;
+
+          target.scrollIntoView({ behavior: 'smooth' });
+
+          // IMPORTANT: replace state instead of push
+          history.replaceState(null, '', id);
+        });
+      });
+    });
+  </script> -->
 </body>
-
 </html>
