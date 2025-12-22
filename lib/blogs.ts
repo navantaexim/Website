@@ -52,7 +52,8 @@ export async function getAllBlogs() {
     'Introduction-To-Global-Trade',
     'Foundations-Of-Import-Export',
     'Essential-Exim-Documentation',
-    'Export-Proces-Step-By-Step'
+    'Export-Process-Step-By-Step',
+    'Import-Process-Step-By-Step'
   ]
 
   // Sort based on custom order, falling back to name if not in list
