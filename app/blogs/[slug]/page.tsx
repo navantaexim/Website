@@ -12,9 +12,10 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
   return (
     <div className="max-w-4xl mx-auto py-16 px-4">
       <article
-        className="prose prose-lg prose-li:my-1 prose-ul:ml-6 prose-ol:ml-6"
+        suppressHydrationWarning
         dangerouslySetInnerHTML={{ __html: content }}
       />
+
     </div>
   )
 }

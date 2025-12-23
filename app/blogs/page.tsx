@@ -10,15 +10,32 @@ export default async function BlogsPage() {
 
       <div className="space-y-6">
         {blogs.map((blog) => (
-          <div key={blog.slug} className="p-6 border rounded-xl">
-            <Link
-              href={`/blogs/${blog.slug}`}
-              className="text-2xl text-primary font-semibold hover:underline"
-            >
+          <details key={blog.slug} className="group border rounded-xl p-6">
+
+            <summary className="cursor-pointer text-xl font-semibold text-primary">
               {blog.title}
-            </Link>
-          </div>
+            </summary>
+
+            {blog.sections.length > 0 && (
+              <div className="overflow-hidden transition-all duration-300 ease-in-out group-open:max-h-[500px] max-h-0">
+                <ul className="mt-4 space-y-2 pl-4">
+                  {blog.sections.map((section) => (
+                    <li key={section.id}>
+                      <Link
+                        href={`/blogs/${blog.slug}#${section.id}`}
+                        className="text-slate-700 hover:text-primary transition-colors"
+                      >
+                        {section.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+            )}
+          </details>
         ))}
+
       </div>
     </div>
   )
