@@ -119,9 +119,14 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 .prose table {
@@ -129,7 +134,8 @@
   border-collapse: collapse;
 }
 
-.prose th, .prose td {
+.prose th,
+.prose td {
   border: 1px solid #ddd;
   padding: 12px;
 }
