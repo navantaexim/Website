@@ -1,7 +1,7 @@
 'use client'
 
 import { signInWithPopup } from 'firebase/auth'
-import { auth, googleProvider, isUsingDemoCredentials } from '@/lib/firebase'
+import { auth, googleProvider } from '@/lib/firebase'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
@@ -11,11 +11,6 @@ export default function GoogleSignInButton() {
   const [error, setError] = useState('')
 
   const handleGoogleSignIn = async () => {
-    if (isUsingDemoCredentials) {
-      router.push('/dashboard')
-      return
-    }
-
     setLoading(true)
     setError('')
     try {
