@@ -2,7 +2,7 @@
 
 import { ReactNode, useEffect, useState } from 'react'
 import { onAuthStateChanged, User } from 'firebase/auth'
-import { auth, db, isUsingDemoCredentials } from '@/lib/firebase'
+import { auth, db } from '@/lib/firebase'
 import { createContext, useContext } from 'react'
 
 interface AuthContextType {
@@ -17,13 +17,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (isUsingDemoCredentials) {
-      setLoading(false)
-      return
-    }
-
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (currentUser && !isUsingDemoCredentials) {
+      if (currentUser) {
         try {
           const { doc, setDoc, serverTimestamp } = await import('firebase/firestore')
           await setDoc(doc(db, 'users', currentUser.uid), {
