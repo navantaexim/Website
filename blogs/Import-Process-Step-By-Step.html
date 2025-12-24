@@ -6,22 +6,29 @@
     <title>Import-Process-Step-By-Step</title>
 </head>
 <body class="bg-white text-slate-800 w-full overflow-x-hidden">
-    <button id="toc-toggle" class="lg:hidden fixed top-4 left-4 z-50 bg-white border rounded-md p-2 shadow" aria-label="Open table of contents">
+    <button id="toc-toggle" class="lg:hidden fixed top-18 left-4 z-50
+         bg-white border rounded-md p-2 shadow" aria-label="Open table of contents">
   ☰
 </button>
 <div id="toc-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden">
 </div>
-<div id="toc-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden">
-</div>
+<!-- <div id="toc-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden">
+</div> -->
     <div class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
         <main class="w-full flex justify-center px-4 sm:px-6 lg:px-8">
         <!-- LEFT: TABLE OF CONTENTS -->
         <div class="relative lg:flex max-w-7xl mx-auto">
-            <aside id="toc-sidebar" class=" w-[280px] shrink-0 border-r pr-6 pl-3
-            fixed lg:static top-0 left-0 z-50 
-            h-full lg:h-auto bg-white
-            transform -translate-x-full lg:translate-x-0
-            transition-transform duration-300 ease-in-out">
+            <aside id="toc-sidebar" class="fixed lg:sticky
+                        top-16 lg:top-20
+                        left-0
+                        z-50
+                        w-[280px]
+                        h-[calc(100vh-4rem)]
+                        bg-white
+                        border-r
+                        overflow-y-auto
+                        transform -translate-x-full lg:translate-x-0
+                        transition-transform duration-300 ease-in-out">
             <button
                 id="toc-close"
                 class="lg:hidden absolute top-4 right-4 text-slate-500 hover:text-slate-900 text-xl"
@@ -30,7 +37,7 @@
                 ✕
             </button>
 
-            <div class="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto border-r no-scrollbar pr-4 pb-12">
+            <div class="sticky top-15 max-h-[calc(100vh-6rem)] overflow-y-auto border-r no-scrollbar pr-4 pb-12 pl-3">
                 <h3 class="text-sm font-semibold uppercase text-slate-500 mb-4">
                 In This Article
                 </h3>

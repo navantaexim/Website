@@ -54,25 +54,31 @@
 
 <body class="bg-white text-slate-800 w-full overflow-x-hidden">
     <!-- ================= LAYOUT ================= -->
-    <button id="toc-toggle" class="lg:hidden fixed top-4 left-4 z-50 bg-white border rounded-md p-2 shadow"
+    <button id="toc-toggle" class="lg:hidden fixed top-18 left-4 z-50
+         bg-white border rounded-md p-2 shadow"
         aria-label="Open table of contents">
         ☰
     </button>
-    <div id="toc-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden">
+    <div id="toc-overlay" class="fixed inset-0 bg-black/40 z-40 hidden">
     </div>
-    <div id="toc-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden">
-    </div>
+    <!-- <div id="toc-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden">
+    </div> -->
 
 
     <div class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
         <main class="w-full flex justify-center px-4 sm:px-6 lg:px-8">
             <!-- LEFT: TABLE OF CONTENTS -->
             <div class="relative lg:flex max-w-7xl mx-auto">
-                <aside id="toc-sidebar" class=" w-[280px] shrink-0 border-r pr-6 pl-3
-            fixed lg:static top-0 left-0 z-50 
-            h-full lg:h-auto bg-white
-            transform -translate-x-full lg:translate-x-0
-            transition-transform duration-300 ease-in-out">
+                <aside id="toc-sidebar" class="w-[280px] shrink-0 border-r pr-6 pl-3
+                        fixed lg:sticky
+                        top-16 lg:top-20
+                        left-0
+                        z-50
+                        h-[calc(100vh-4rem)] lg:h-[calc(100vh-5rem)]
+                        bg-white
+                        overflow-y-auto
+                        transform -translate-x-full lg:translate-x-0
+                        transition-transform duration-300 ease-in-out">
 
                     <button id="toc-close"
                         class="lg:hidden absolute top-4 right-4 text-slate-500 hover:text-slate-900 text-xl"
@@ -6681,7 +6687,7 @@ DDP Price = DAP Price + Destination Customs Clearance Fee + Import Duty % + VAT 
                 </article>
         </main>
     </div>
-    <script>
+    <!-- <script>
         document.addEventListener('DOMContentLoaded', () => {
             const OFFSET = 96; // header height
 
@@ -6705,15 +6711,45 @@ DDP Price = DAP Price + Destination Customs Clearance Fee + Import Duty % + VAT 
                 });
             });
         });
-    </script>
+    </script> -->
+<script>
+  const toggleBtn = document.getElementById("toc-toggle")
+  const closeBtn = document.getElementById("toc-close")
+  const sidebar = document.getElementById("toc-sidebar")
+  const overlay = document.getElementById("toc-overlay")
+  const body = document.body
 
+  function openSidebar() {
+    sidebar.classList.remove("-translate-x-full")
+    overlay.classList.remove("hidden")
+    body.classList.add("overflow-hidden")
+  }
 
+  function closeSidebar() {
+    sidebar.classList.add("-translate-x-full")
+    overlay.classList.add("hidden")
+    body.classList.remove("overflow-hidden")
+  }
 
+  toggleBtn.addEventListener("click", openSidebar)
+  closeBtn.addEventListener("click", closeSidebar)
+  overlay.addEventListener("click", closeSidebar)
 
+  document.querySelectorAll('[data-scroll]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault()
 
+      const id = link.getAttribute('href')
+      const target = document.querySelector(id)
+      if (!target) return
 
+      target.scrollIntoView({ behavior: 'smooth' })
 
-
+      // IMPORTANT: replace state instead of push
+      history.replaceState(null, '', id)
+    })
+  })
+</script>
     <!-- ================= SIDEBAR STYLE ================= -->
     <style>
         .nav-link {
