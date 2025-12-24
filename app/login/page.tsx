@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import GoogleSignInButton from '@/components/google-signin-button'
+import GoogleSignInButton from '@/components/auth/google-signin-button'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '@/lib/firebase'
 import { useRouter } from 'next/navigation'

@@ -32,4 +32,22 @@ try {
   db = {}
 }
 
-export { auth, googleProvider, db}
+export { auth, googleProvider, db }
+
+import { 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  signOut as firebaseSignOut,
+  signInWithPopup
+} from 'firebase/auth'
+
+export const signUpWithEmail = (email: string, password: string) => 
+  createUserWithEmailAndPassword(auth, email, password)
+
+export const signInWithEmail = (email: string, password: string) => 
+  signInWithEmailAndPassword(auth, email, password)
+
+export const logout = () => firebaseSignOut(auth)
+
+export const signInWithGoogle = () => signInWithPopup(auth, googleProvider)
+

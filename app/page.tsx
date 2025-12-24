@@ -1,12 +1,12 @@
-import Header from '@/components/header'
-import Hero from '@/components/hero'
-import About from '@/components/about'
-import CompetitiveAdvantage from '@/components/competitive-advantage'
-import WhyChoose from '@/components/why-choose'
-import AIDAFunnel from '@/components/aida-funnel'
-import LearningSection from '@/components/learning-section'
-import Contact from '@/components/contact'
-import Footer from '@/components/footer'
+import Header from '@/components/layout/header'
+import Hero from '@/components/sections/hero'
+import About from '@/components/sections/about'
+import CompetitiveAdvantage from '@/components/sections/competitive-advantage'
+import WhyChoose from '@/components/sections/why-choose'
+import AIDAFunnel from '@/components/sections/aida-funnel'
+import LearningSection from '@/components/sections/learning-section'
+import Contact from '@/components/sections/contact'
+import Footer from '@/components/layout/footer'
 
 export default function Home() {
   return (

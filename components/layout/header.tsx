@@ -10,12 +10,11 @@ import { auth } from '@/lib/firebase'
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const { user, loading } = useAuth()
+  const { user, loading, logout } = useAuth()
   const router = useRouter()
 
   const handleLogout = async () => {
-    await signOut(auth)
-    router.push('/')
+    await logout()
   }
 
   const navLinks = [
