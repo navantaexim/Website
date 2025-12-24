@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import GoogleSignInButton from '@/components/google-signin-button'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth, isUsingDemoCredentials } from '@/lib/firebase'
+import { auth } from '@/lib/firebase'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 
@@ -17,10 +17,6 @@ export default function LoginPage() {
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (isUsingDemoCredentials) {
-      router.push('/dashboard')
-      return
-    }
 
     setLoading(true)
     setError('')
