@@ -102,6 +102,8 @@ export async function getAllBlogs() {
 
 export async function getBlogContent(slug: string) {
   const htmlPath = path.join(BLOG_DIR, `${slug}.html`)
+  console.log('Looking for:', htmlPath)
+
 
   if (!fs.existsSync(htmlPath)) {
     return {

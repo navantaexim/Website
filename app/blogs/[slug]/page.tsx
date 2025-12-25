@@ -1,20 +1,26 @@
 import { getBlogContent } from '@/lib/blogs'
+import BlogClientEnhancements from '@/components/BlogClientEnhancements'
 
-export default async function BlogPage({ params }: { params: Promise<{ slug: string }> }) {
-  // const slug = params.slug
+export default async function BlogPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  // ✅ REQUIRED in Next.js 16
   const { slug } = await params
-
-  console.log('Slug received:', slug)
 
   const { content, title } = await getBlogContent(slug)
 
   return (
-    <div className="max-w-4xl mx-auto py-16 px-4">
-      <article
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{ __html: content }}
-      />
+    <>
+      <BlogClientEnhancements />
 
-    </div>
+      <div className="w-full">
+        <article
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
+      </div>
+    </>
   )
 }

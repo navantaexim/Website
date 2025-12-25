@@ -8,9 +8,12 @@
         content="Complete export process guide including IEC registration, buyer sourcing, pricing, logistics, customs, payments, and dispute handling." />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
-        html {
-            scroll-behavior: smooth;
+        @media (prefers-reduced-motion: no-preference) {
+            html {
+                scroll-behavior: smooth;
+            }
         }
+
 
         body {
             font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -54,34 +57,34 @@
 
 <body class="bg-white text-slate-800 w-full overflow-x-hidden">
     <!-- ================= LAYOUT ================= -->
-    <button id="toc-toggle" class="lg:hidden fixed top-4 left-4 z-50 bg-white border rounded-md p-2 shadow"
-        aria-label="Open table of contents">
+    <button id="toc-toggle" class="lg:hidden fixed top-4 left-4 z-50
+         bg-white border rounded-md p-2 shadow" aria-label="Open table of contents">
         ☰
     </button>
-    <div id="toc-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden">
+    <div id="toc-overlay" class="fixed inset-0 bg-black/40 hidden lg:hidden z-40">
     </div>
-    <div id="toc-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden">
-    </div>
-
 
     <div class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-        <main class="w-full flex justify-center px-4 sm:px-6 lg:px-8">
+        <main class="w-full px-4 sm:px-6 lg:px-8
+         lg:pl-[280px]">
+
             <!-- LEFT: TABLE OF CONTENTS -->
             <div class="relative lg:flex max-w-7xl mx-auto">
-                <aside id="toc-sidebar" class=" w-[280px] shrink-0 border-r pr-6 pl-3
-            fixed lg:static top-0 left-0 z-50 
-            h-full lg:h-auto bg-white
-            transform -translate-x-full lg:translate-x-0
-            transition-transform duration-300 ease-in-out">
+                <aside id="toc-sidebar" class="fixed lg:sticky top-0 lg:top-24 left-0 z-50
+         w-[280px]
+         h-screen lg:h-[calc(100vh-6rem)]
+         bg-white border-r
+         transform -translate-x-full lg:translate-x-0
+         transition-transform duration-300">
+
+
 
                     <button id="toc-close"
                         class="lg:hidden absolute top-4 right-4 text-slate-500 hover:text-slate-900 text-xl"
                         aria-label="Close sidebar">
                         ✕
                     </button>
-
-                    <div
-                        class="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto border-r no-scrollbar pr-4 pb-12">
+                    <div class="h-full overflow-y-auto px-4 pt-20 pb-16">
                         <h3 class="text-sm font-semibold uppercase text-slate-500 mb-4">
                             In This Article
                         </h3>
@@ -92,16 +95,12 @@
                                 Export Registration (IEC)
                             </summary>
                             <ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
-                                <li><a href="javascript:void(0)" data-scroll data-target="what-is-iec"
-                                        class="hover:text-blue-600">What is IEC?</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="why-is-iec-required"
-                                        class="hover:text-blue-600">Why is IEC Required?</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="where-to-register"
-                                        class="hover:text-blue-600">Where to Register</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="how-to-register"
-                                        class="hover:text-blue-600">How to Register</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="iec-registration-faq"
-                                        class="hover:text-blue-600">IEC FAQ</a></li>
+                                <li><a href="#what-is-iec" class="hover:text-blue-600">What is IEC?</a></li>
+                                <li><a href="#why-is-iec-required" class="hover:text-blue-600">Why is IEC Required?</a>
+                                </li>
+                                <li><a href="#where-to-register" class="hover:text-blue-600">Where to Register</a></li>
+                                <li><a href="#how-to-register" class="hover:text-blue-600">How to Register</a></li>
+                                <li><a href="#iec-registration-faq" class="hover:text-blue-600">IEC FAQ</a></li>
                             </ul>
                         </details>
 
@@ -111,17 +110,15 @@
                                 Buyer Sourcing
                             </summary>
                             <ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
-                                <li><a href="javascript:void(0)" data-scroll
-                                        data-target="How-to-Find-International-Buyers-B2B-Platforms-AI-Tools-Trade-Shows"
+                                <li><a href="#How-to-Find-International-Buyers-B2B-Platforms-AI-Tools-Trade-Shows"
                                         class="hover:text-blue-600">Buyer Sourcing Overview</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="where-to-find-buyers"
-                                        class="hover:text-blue-600">Where to Find Buyers</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="how-to-find-buyers"
-                                        class="hover:text-blue-600">How to Find Buyers</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="future-vision"
-                                        class="hover:text-blue-600">Future Vision</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="buyer-sourcing-faq"
-                                        class="hover:text-blue-600">Buyer Sourcing FAQ</a></li>
+                                <li><a href="#where-to-find-buyers" class="hover:text-blue-600">Where to Find Buyers</a>
+                                </li>
+                                <li><a href="#how-to-find-buyers" class="hover:text-blue-600">How to Find Buyers</a>
+                                </li>
+                                <li><a href="#future-vision" class="hover:text-blue-600">Future Vision</a></li>
+                                <li><a href="#buyer-sourcing-faq" class="hover:text-blue-600">Buyer Sourcing FAQ</a>
+                                </li>
                             </ul>
                         </details>
 
@@ -131,16 +128,13 @@
                                 Proforma Invoice & Quotation
                             </summary>
                             <ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
-                                <li><a href="javascript:void(0)" data-scroll data-target="Proforma-Invoice-Quotation"
-                                        class="hover:text-blue-600">PI & Quotation Overview</a></li>
-                                <li><a href="javascript:void(0)" data-scroll
-                                        data-target="what-proforma-invoice-contains" class="hover:text-blue-600">What
-                                        Proforma Invoice Contains</a></li>
-                                <li><a href="javascript:void(0)" data-scroll
-                                        data-target="how-to-prepare-proforma-invoice" class="hover:text-blue-600">How to
+                                <li><a href="#Proforma-Invoice-Quotation" class="hover:text-blue-600">PI & Quotation
+                                        Overview</a></li>
+                                <li><a href="#what-proforma-invoice-contains" class="hover:text-blue-600">What Proforma
+                                        Invoice Contains</a></li>
+                                <li><a href="#how-to-prepare-proforma-invoice" class="hover:text-blue-600">How to
                                         Prepare Proforma Invoice</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="proforma-invoice-faq"
-                                        class="hover:text-blue-600">PI FAQ</a></li>
+                                <li><a href="#proforma-invoice-faq" class="hover:text-blue-600">PI FAQ</a></li>
                             </ul>
                         </details>
 
@@ -151,17 +145,16 @@
                                 Export Pricing
                             </summary>
                             <ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
-                                <li><a href="javascript:void(0)" data-scroll data-target="Export-Price-Calculation"
-                                        class="hover:text-blue-600">Export Pricing Basics</a></li>
-                                <li><a href="javascript:void(0)" data-scroll
-                                        data-target="where-do-export-pricing-components-come-from"
+                                <li><a href="#Export-Price-Calculation" class="hover:text-blue-600">Export Pricing
+                                        Basics</a></li>
+                                <li><a href="#where-do-export-pricing-components-come-from"
                                         class="hover:text-blue-600">Pricing Components</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="how-to-calculate-export-price"
-                                        class="hover:text-blue-600">Calculate Export Price</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="export-price-flowchart"
-                                        class="hover:text-blue-600">Export Price Flowchart</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="export-pricing-faq"
-                                        class="hover:text-blue-600">Export Pricing FAQ</a></li>
+                                <li><a href="#how-to-calculate-export-price" class="hover:text-blue-600">Calculate
+                                        Export Price</a></li>
+                                <li><a href="#export-price-flowchart" class="hover:text-blue-600">Export Price
+                                        Flowchart</a></li>
+                                <li><a href="#export-pricing-faq" class="hover:text-blue-600">Export Pricing FAQ</a>
+                                </li>
                             </ul>
                         </details>
 
@@ -171,18 +164,14 @@
                                 Incoterms
                             </summary>
                             <ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
-                                <li><a href="javascript:void(0)" data-scroll
-                                        data-target="Understanding-Incoterms-for-Exporters"
+                                <li><a href="#Understanding-Incoterms-for-Exporters"
                                         class="hover:text-blue-600">Incoterms Overview</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="how-exporters-use-incoterms"
-                                        class="hover:text-blue-600">How
+                                <li><a href="#how-exporters-use-incoterms" class="hover:text-blue-600">How
                                         Exporters Use Incoterms?</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="incoterms-decision-process"
-                                        class="hover:text-blue-600">Incoterms Decision Process</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="incoterms-case-study"
-                                        class="hover:text-blue-600">Case Study</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="incoterms-faq"
-                                        class="hover:text-blue-600">FAQ</a></li>
+                                <li><a href="#incoterms-decision-process" class="hover:text-blue-600">Incoterms Decision
+                                        Process</a></li>
+                                <li><a href="#incoterms-case-study" class="hover:text-blue-600">Case Study</a></li>
+                                <li><a href="#incoterms-faq" class="hover:text-blue-600">FAQ</a></li>
                             </ul>
                         </details>
 
@@ -192,21 +181,17 @@
                                 Production Planning for Export Orders
                             </summary>
                             <ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
-                                <li><a href="javascript:void(0)" data-scroll
-                                        data-target="Production-Planning-for-Export-Orders"
+                                <li><a href="#Production-Planning-for-Export-Orders"
                                         class="hover:text-blue-600">Production Planning</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="how-to-plan-production"
-                                        class="hover:text-blue-600">How to Plan Production</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="production-flowchart"
-                                        class="hover:text-blue-600">Production Flowchart</a></li>
-                                <li><a href="javascript:void(0)" data-scroll
-                                        data-target="skills-and-knowledge-for-export-production-planning"
+                                <li><a href="#how-to-plan-production" class="hover:text-blue-600">How to Plan
+                                        Production</a></li>
+                                <li><a href="#production-flowchart" class="hover:text-blue-600">Production Flowchart</a>
+                                </li>
+                                <li><a href="#skills-and-knowledge-for-export-production-planning"
                                         class="hover:text-blue-600">Skills & Knowledge</a></li>
-                                <li><a href="javascript:void(0)" data-scroll
-                                        data-target="critical-care-points-for-export-production-planning"
+                                <li><a href="#critical-care-points-for-export-production-planning"
                                         class="hover:text-blue-600">Critical Care Points</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="export-planning-faq"
-                                        class="hover:text-blue-600">FAQ</a></li>
+                                <li><a href="#export-planning-faq" class="hover:text-blue-600">FAQ</a></li>
                             </ul>
                         </details>
 
@@ -216,14 +201,12 @@
                                 Quality Inspection
                             </summary>
                             <ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
-                                <li><a href="javascript:void(0)" data-scroll data-target="Quality-Inspection-Process"
-                                        class="hover:text-blue-600">QC Overview</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="how-qc-works"
-                                        class="hover:text-blue-600">How QC Works</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="full-workflow-of-qc"
-                                        class="hover:text-blue-600">Full Workflow of QC</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="export-qc-faq"
-                                        class="hover:text-blue-600">FAQ</a></li>
+                                <li><a href="#Quality-Inspection-Process" class="hover:text-blue-600">QC Overview</a>
+                                </li>
+                                <li><a href="#how-qc-works" class="hover:text-blue-600">How QC Works</a></li>
+                                <li><a href="#full-workflow-of-qc" class="hover:text-blue-600">Full Workflow of QC</a>
+                                </li>
+                                <li><a href="#export-qc-faq" class="hover:text-blue-600">FAQ</a></li>
                             </ul>
                         </details>
 
@@ -233,15 +216,12 @@
                                 Quality Control Process
                             </summary>
                             <ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
-                                <li><a href="javascript:void(0)" data-scroll
-                                        data-target="Buyer-QC-Inspection-Optional-but/Common-in-Global-Trade"
+                                <li><a href="#Buyer-QC-Inspection-Optional-but/Common-in-Global-Trade"
                                         class="hover:text-blue-600">Buyer QC Inspection</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="why-qc-essential"
-                                        class="hover:text-blue-600">Why QC is Essential</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="qc-process-flowchart"
-                                        class="hover:text-blue-600">QC Process Flowchart</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="qc-process-faq"
-                                        class="hover:text-blue-600">FAQ</a></li>
+                                <li><a href="#why-qc-essential" class="hover:text-blue-600">Why QC is Essential</a></li>
+                                <li><a href="#qc-process-flowchart" class="hover:text-blue-600">QC Process Flowchart</a>
+                                </li>
+                                <li><a href="#qc-process-faq" class="hover:text-blue-600">FAQ</a></li>
                             </ul>
                         </details>
 
@@ -251,34 +231,25 @@
                                 Logistics Bookings
                             </summary>
                             <ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
-                                <li><a href="javascript:void(0)" data-scroll
-                                        data-target="Logistics-Booking-Sea-Air-Road"
-                                        class="hover:text-blue-600">Logistics Booking</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="how-to-book-logistics"
-                                        class="hover:text-blue-600">How to Book Logistics</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="logistics-bookings-workflow"
-                                        class="hover:text-blue-600">How
+                                <li><a href="#Logistics-Booking-Sea-Air-Road" class="hover:text-blue-600">Logistics
+                                        Booking</a></li>
+                                <li><a href="#how-to-book-logistics" class="hover:text-blue-600">How to Book
+                                        Logistics</a></li>
+                                <li><a href="#logistics-bookings-workflow" class="hover:text-blue-600">How
                                         Logistics Bookings Work</a></li>
-                                <li><a href="javascript:void(0)" data-scroll
-                                        data-target="seller-buyer-logistics-responsibilities"
+                                <li><a href="#seller-buyer-logistics-responsibilities"
                                         class="hover:text-blue-600">Seller & Buyer Responsibilities</a></li>
-                                <li><a href="javascript:void(0)" data-scroll
-                                        data-target="how-to-connect-with-logistics-providers"
+                                <li><a href="#how-to-connect-with-logistics-providers"
                                         class="hover:text-blue-600">Logistics Providers</a></li>
-                                <li><a href="javascript:void(0)" data-scroll
-                                        data-target="making-logistics-cost-effective" class="hover:text-blue-600">Making
+                                <li><a href="#making-logistics-cost-effective" class="hover:text-blue-600">Making
                                         Logistics Cost Effective</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="complete-logistics-workflow"
-                                        class="hover:text-blue-600">Complete Logistics Workflow</a></li>
-                                <li><a href="javascript:void(0)" data-scroll
-                                        data-target="types-of-logistics-in-export-import"
-                                        class="hover:text-blue-600">Types
+                                <li><a href="#complete-logistics-workflow" class="hover:text-blue-600">Complete
+                                        Logistics Workflow</a></li>
+                                <li><a href="#types-of-logistics-in-export-import" class="hover:text-blue-600">Types
                                         of Logistics</a></li>
-                                <li><a href="javascript:void(0)" data-scroll
-                                        data-target="integration-of-logistics-types"
-                                        class="hover:text-blue-600">Integration of Logistics</a></li>
-                                <li><a href="javascript:void(0)" data-scroll data-target="logistics-faq"
-                                        class="hover:text-blue-600">FAQ</a></li>
+                                <li><a href="#integration-of-logistics-types" class="hover:text-blue-600">Integration of
+                                        Logistics</a></li>
+                                <li><a href="#logistics-faq" class="hover:text-blue-600">FAQ</a></li>
                             </ul>
                         </details>
 
@@ -290,22 +261,18 @@
                             </summary>
                             <ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll
-                                        data-target="How-to-Select-Logistics-for-Import-Step-by-Step"
+                                    <a href="#How-to-Select-Logistics-for-Import-Step-by-Step"
                                         class="hover:text-blue-600">
                                         How to Select Logistics for Import
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll
-                                        data-target="how-professionals-select-logistics-smartly"
-                                        class="hover:text-blue-600">
+                                    <a href="#how-professionals-select-logistics-smartly" class="hover:text-blue-600">
                                         Professional Selection
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll data-target="section-13-faq"
-                                        class="hover:text-blue-600">
+                                    <a href="#section-13-faq" class="hover:text-blue-600">
                                         FAQ
                                     </a>
                                 </li>
@@ -319,32 +286,27 @@
                             </summary>
                             <ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll
-                                        data-target="Export-Customs-Clearance-Explained" class="hover:text-blue-600">
+                                    <a href="#Export-Customs-Clearance-Explained" class="hover:text-blue-600">
                                         Export Customs Clearance Explained
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll
-                                        data-target="export-customs-clearance-explained" class="hover:text-blue-600">
+                                    <a href="#export-customs-clearance-explained" class="hover:text-blue-600">
                                         How Customs Clearance Works
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll data-target="shipment-dispatch-tracking"
-                                        class="hover:text-blue-600">
+                                    <a href="#shipment-dispatch-tracking" class="hover:text-blue-600">
                                         Shipment Dispatch & Tracking
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll data-target="post-shipment-documentation"
-                                        class="hover:text-blue-600">
+                                    <a href="#post-shipment-documentation" class="hover:text-blue-600">
                                         Post Shipment Documentation
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll data-target="export-customs-clearance-faq"
-                                        class="hover:text-blue-600">
+                                    <a href="#export-customs-clearance-faq" class="hover:text-blue-600">
                                         FAQ
                                     </a>
                                 </li>
@@ -358,51 +320,43 @@
                             </summary>
                             <ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll
-                                        data-target="export-payment-terms-complete-details-proessional-explanation"
+                                    <a href="#export-payment-terms-complete-details-proessional-explanation"
                                         class="hover:text-blue-600">
                                         Export Payment Terms Explained
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll data-target="types-of-payment-terms"
-                                        class="hover:text-blue-600">
+                                    <a href="#types-of-payment-terms" class="hover:text-blue-600">
                                         Types of Payment Terms
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll data-target="advance-payment"
-                                        class="hover:text-blue-600">
+                                    <a href="#advance-payment" class="hover:text-blue-600">
                                         Advance Payment
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll data-target="lc-payment"
-                                        class="hover:text-blue-600">
+                                    <a href="#lc-payment" class="hover:text-blue-600">
                                         LC Payment
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll data-target="dp-payment"
-                                        class="hover:text-blue-600">
+                                    <a href="#dp-payment" class="hover:text-blue-600">
                                         DP Payment
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll data-target="da-payment"
-                                        class="hover:text-blue-600">
+                                    <a href="#da-payment" class="hover:text-blue-600">
                                         DA Payment
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll data-target="how-to-choose-payment-term"
-                                        class="hover:text-blue-600">
+                                    <a href="#how-to-choose-payment-term" class="hover:text-blue-600">
                                         How to Choose Payment Term
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll data-target="payment-terms-faq"
-                                        class="hover:text-blue-600">
+                                    <a href="#payment-terms-faq" class="hover:text-blue-600">
                                         FAQ
                                     </a>
                                 </li>
@@ -416,39 +370,32 @@
                             </summary>
                             <ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll
-                                        data-target="handling-buyer-disputes-professionally"
-                                        class="hover:text-blue-600">
+                                    <a href="#handling-buyer-disputes-professionally" class="hover:text-blue-600">
                                         Handling Buyer Disputes
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll data-target="why-buyer-disputes"
-                                        class="hover:text-blue-600">
+                                    <a href="#why-buyer-disputes" class="hover:text-blue-600">
                                         Why Buyer Disputes Happen
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll data-target="where-buyer-disputes-occur"
-                                        class="hover:text-blue-600">
+                                    <a href="#where-buyer-disputes-occur" class="hover:text-blue-600">
                                         Where Buyer Disputes Occur
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll data-target="how-to-handle-buyer-disputes"
-                                        class="hover:text-blue-600">
+                                    <a href="#how-to-handle-buyer-disputes" class="hover:text-blue-600">
                                         How to Handle Buyer Disputes
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll
-                                        data-target="real-life-types-of-buyer-disputes" class="hover:text-blue-600">
+                                    <a href="#real-life-types-of-buyer-disputes" class="hover:text-blue-600">
                                         Real-Life Types of Buyer Disputes
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)" data-scroll data-target="buyer-disputes-faq"
-                                        class="hover:text-blue-600">
+                                    <a href="#buyer-disputes-faq" class="hover:text-blue-600">
                                         FAQ
                                     </a>
                                 </li>
@@ -459,8 +406,6 @@
                         </nav>
                     </div>
                 </aside>
-
-
 
                 <!-- ================= MAIN CONTENT ================= -->
                 <article class="w-full max-w-4xl bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-12">
@@ -987,7 +932,7 @@
                     <section class="max-w-4xl mx-auto mb-20 space-y-6">
 
                         <h2 id="Proforma-Invoice-Quotation" class="text-3xl md:text-4xl font-semibold text-slate-900">
-                            3. Proforma Invoice & Quotation
+                            Proforma Invoice & Quotation
                         </h2>
 
 
@@ -6681,38 +6626,6 @@ DDP Price = DAP Price + Destination Customs Clearance Fee + Import Duty % + VAT 
                 </article>
         </main>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const OFFSET = 96; // header height
-
-            document.querySelectorAll('[data-scroll]').forEach(link => {
-                link.addEventListener('click', e => {
-                    e.preventDefault();
-
-                    const id = link.dataset.target;
-                    const target = document.getElementById(id);
-                    if (!target) return;
-
-                    const y =
-                        target.getBoundingClientRect().top +
-                        window.pageYOffset -
-                        OFFSET;
-
-                    window.scrollTo({
-                        top: y,
-                        behavior: 'smooth'
-                    });
-                });
-            });
-        });
-    </script>
-
-
-
-
-
-
-
 
     <!-- ================= SIDEBAR STYLE ================= -->
     <style>

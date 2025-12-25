@@ -134,9 +134,9 @@ export default function Header() {
                 {link.label}
               </a>
             ))}
-            
+
             <div className="pt-4 mt-2 border-t border-border">
-               <a
+              <a
                 href="#contact"
                 className="block w-full text-center text-sm font-medium bg-primary text-white px-4 py-3 rounded-lg hover:bg-primary/90 transition"
                 onClick={() => setMobileMenuOpen(false)}
