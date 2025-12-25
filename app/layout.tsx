@@ -3,8 +3,10 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { AuthProvider } from '@/providers/auth-provider'
 import './globals.css'
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
+import Header from '@/components/header'
+
+const _geist = Geist({ subsets: ["latin"] });
+const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: 'Navanta Exim - AI-Driven Global Marketing for Engineering Manufacturers',
@@ -35,6 +37,7 @@ export default function RootLayout({
         />
 
         <AuthProvider>
+          <Header />
           {children}
           <Analytics />
         </AuthProvider>
