@@ -6626,83 +6626,20 @@ DDP Price = DAP Price + Destination Customs Clearance Fee + Import Duty % + VAT 
                 </article>
         </main>
     </div>
-    <<<<<<< HEAD=======<!-- <script>
-        document.addEventListener('DOMContentLoaded', () => {
-        const OFFSET = 96; // header height
 
-        document.querySelectorAll('[data-scroll]').forEach(link => {
-        link.addEventListener('click', e => {
-        e.preventDefault();
+    <!-- ================= SIDEBAR STYLE ================= -->
+    <style>
+        .nav-link {
+            display: block;
+            padding: 6px 8px;
+            border-radius: 6px;
+            color: #334155;
+        }
 
-        const id = link.dataset.target;
-        const target = document.getElementById(id);
-        if (!target) return;
-
-        const y =
-        target.getBoundingClientRect().top +
-        window.pageYOffset -
-        OFFSET;
-
-        window.scrollTo({
-        top: y,
-        behavior: 'smooth'
-        });
-        });
-        });
-        });
-        </script> -->
-        <script>
-            const toggleBtn = document.getElementById("toc-toggle")
-            const closeBtn = document.getElementById("toc-close")
-            const sidebar = document.getElementById("toc-sidebar")
-            const overlay = document.getElementById("toc-overlay")
-            const body = document.body
-
-            function openSidebar() {
-                sidebar.classList.remove("-translate-x-full")
-                overlay.classList.remove("hidden")
-                body.classList.add("overflow-hidden")
-            }
-
-            function closeSidebar() {
-                sidebar.classList.add("-translate-x-full")
-                overlay.classList.add("hidden")
-                body.classList.remove("overflow-hidden")
-            }
-
-            toggleBtn.addEventListener("click", openSidebar)
-            closeBtn.addEventListener("click", closeSidebar)
-            overlay.addEventListener("click", closeSidebar)
-
-            document.querySelectorAll('[data-scroll]').forEach(link => {
-                link.addEventListener('click', e => {
-                    e.preventDefault()
-
-                    const id = link.getAttribute('href')
-                    const target = document.querySelector(id)
-                    if (!target) return
-
-                    target.scrollIntoView({ behavior: 'smooth' })
->>>>>>> 0bfcd4a7af6d7a7420e04ff5d87d556da509be26
-
-                    // IMPORTANT: replace state instead of push
-                    history.replaceState(null, '', id)
-                })
-            })
-        </script>
-        <!-- ================= SIDEBAR STYLE ================= -->
-        <style>
-            .nav-link {
-                display: block;
-                padding: 6px 8px;
-                border-radius: 6px;
-                color: #334155;
-            }
-
-            .nav-link:hover {
-                background: #f1f5f9;
-            }
-        </style>
+        .nav-link:hover {
+            background: #f1f5f9;
+        }
+    </style>
 
 </body>
 
