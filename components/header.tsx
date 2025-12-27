@@ -19,11 +19,11 @@ export default function Header() {
   // }
 
   const navLinks = [
-    { label: 'Home', href: '#hero' },
-    { label: 'About', href: '#about' },
-    { label: 'Why Choose Us', href: '#why-choose' },
-    { label: 'Solutions', href: '#solutions' },
-    { label: 'Blogs', href: '#blogs' },
+    { label: 'Home', href: '/#hero' },
+    { label: 'About', href: '/#about' },
+    { label: 'Why Choose Us', href: '/#why-choose' },
+    { label: 'Solutions', href: '/#solutions' },
+    { label: 'Blogs', href: '/#blogs' },
   ]
 
   return (
@@ -134,9 +134,9 @@ export default function Header() {
                 {link.label}
               </a>
             ))}
-            
+
             <div className="pt-4 mt-2 border-t border-border">
-               <a
+              <a
                 href="#contact"
                 className="block w-full text-center text-sm font-medium bg-primary text-white px-4 py-3 rounded-lg hover:bg-primary/90 transition"
                 onClick={() => setMobileMenuOpen(false)}

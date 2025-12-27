@@ -7,16 +7,27 @@ const CONTENT_MEDIA_DIR = path.join(BLOG_DIR, 'media')
 
 
 
-function extractMainTitles(html: string) {
+function extractMainTitlesFromAside(html: string) {
   const root = parse(html)
-  const headings = root.querySelectorAll('h2')
 
-  return headings
-    .filter(h2 => h2.getAttribute('id'))
-    .map(h2 => ({
-      id: h2.getAttribute('id')!,
-      title: h2.text.trim(),
-    }))
+  const summaries = root.querySelectorAll(
+    'aside#toc-sidebar summary'
+  )
+
+  return summaries
+    .map(summary => {
+      const id =
+        summary.getAttribute('data-id') ||
+        summary.getAttribute('id')
+
+      if (!id) return null
+
+      return {
+        id,
+        title: summary.text.trim(),
+      }
+    })
+    .filter(Boolean) as { id: string; title: string }[]
 }
 
 
@@ -48,7 +59,7 @@ export async function getAllBlogs() {
     let mainTitles: { id: string; title: string }[] = []
     try {
       const content = fs.readFileSync(filePath, 'utf8')
-      mainTitles = extractMainTitles(content)
+      mainTitles = extractMainTitlesFromAside(content)
 
       const titleMatch = content.match(/<title>(.*?)<\/title>/i) || content.match(/<h1>(.*?)<\/h1>/i)
       if (titleMatch && titleMatch[1]) {
@@ -75,7 +86,8 @@ export async function getAllBlogs() {
     'Foundations-Of-Import-Export',
     'Essential-Exim-Documentation',
     'Export-Process-Step-By-Step',
-    'Import-Process-Step-By-Step'
+    'Import-Process-Step-By-Step',
+    'International-Marketing'
   ]
 
   // Sort based on custom order, falling back to name if not in list
@@ -103,6 +115,7 @@ export async function getAllBlogs() {
 
 export async function getBlogContent(slug: string) {
   const htmlPath = path.join(BLOG_DIR, `${slug}.html`)
+
 
   if (!fs.existsSync(htmlPath)) {
     return {
