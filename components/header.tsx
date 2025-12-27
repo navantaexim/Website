@@ -19,11 +19,11 @@ export default function Header() {
   // }
 
   const navLinks = [
-    { label: 'Home', href: '#hero' },
-    { label: 'About', href: '#about' },
-    { label: 'Why Choose Us', href: '#why-choose' },
-    { label: 'Solutions', href: '#solutions' },
-    { label: 'Blogs', href: '#blogs' },
+    { label: 'Home', href: '/#hero' },
+    { label: 'About', href: '/#about' },
+    { label: 'Why Choose Us', href: '/#why-choose' },
+    { label: 'Solutions', href: '/#solutions' },
+    { label: 'Blogs', href: '/#blogs' },
   ]
 
   return (

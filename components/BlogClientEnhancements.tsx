@@ -1,4 +1,3 @@
-// components/BlogClientEnhancements.tsx
 'use client'
 
 import SmoothAnchorScroll from './SmoothAnchorScroll'

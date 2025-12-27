@@ -75,7 +75,8 @@ export async function getAllBlogs() {
     'Foundations-Of-Import-Export',
     'Essential-Exim-Documentation',
     'Export-Process-Step-By-Step',
-    'Import-Process-Step-By-Step'
+    'Import-Process-Step-By-Step',
+    'International-Marketing'
   ]
 
   // Sort based on custom order, falling back to name if not in list
@@ -103,7 +104,6 @@ export async function getAllBlogs() {
 
 export async function getBlogContent(slug: string) {
   const htmlPath = path.join(BLOG_DIR, `${slug}.html`)
-  console.log('Looking for:', htmlPath)
 
 
   if (!fs.existsSync(htmlPath)) {

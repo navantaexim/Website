@@ -1,4 +1,3 @@
-// components/TocSidebarController.tsx
 'use client'
 
 import { useEffect } from 'react'
@@ -12,30 +11,35 @@ export default function TocSidebarController() {
 
         if (!toggle || !sidebar || !overlay) return
 
-        const open = () => {
+        const openSidebar = () => {
             sidebar.classList.remove('-translate-x-full')
-            overlay.classList.remove('hidden')
+            overlay.classList.remove('hidden', 'pointer-events-none')
+            document.body.style.overflow = 'hidden' // 🔒 lock scroll
         }
 
-        const close = () => {
+        const closeSidebar = () => {
             sidebar.classList.add('-translate-x-full')
-            overlay.classList.add('hidden')
+            overlay.classList.add('hidden', 'pointer-events-none')
+            document.body.style.overflow = '' // ✅ RESTORE SCROLL
         }
 
-        toggle.addEventListener('click', open)
-        overlay.addEventListener('click', close)
-        closeBtn?.addEventListener('click', close)
+        toggle.addEventListener('click', openSidebar)
+        overlay.addEventListener('click', closeSidebar)
+        closeBtn?.addEventListener('click', closeSidebar)
 
+        // ✅ IMPORTANT FIX: restore scroll on TOC link click
         sidebar.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
-                if (window.innerWidth < 1024) close()
+                if (window.innerWidth < 1024) {
+                    closeSidebar()
+                }
             })
         })
 
         return () => {
-            toggle.removeEventListener('click', open)
-            overlay.removeEventListener('click', close)
-            closeBtn?.removeEventListener('click', close)
+            toggle.removeEventListener('click', openSidebar)
+            overlay.removeEventListener('click', closeSidebar)
+            closeBtn?.removeEventListener('click', closeSidebar)
         }
     }, [])
 

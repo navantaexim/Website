@@ -1,18 +1,23 @@
-// components/SmoothAnchorScroll.tsx
 'use client'
-
 import { useEffect } from 'react'
 
 export default function SmoothAnchorScroll() {
     useEffect(() => {
         const handler = (e: Event) => {
-            const link = (e.target as HTMLElement).closest('a[href^="#"]')
+            const link = (e.target as HTMLElement)?.closest('a[href^="#"]')
             if (!link) return
 
-            const id = link.getAttribute('href')
-            if (!id || id === '#') return
+            const rawId = link.getAttribute('href')
+            if (!rawId || rawId === '#') return
 
-            const target = document.querySelector(id)
+            let target: Element | null = null
+
+            try {
+                target = document.querySelector(decodeURIComponent(rawId))
+            } catch {
+                return // invalid selector → ignore
+            }
+
             if (!target) return
 
             e.preventDefault()
@@ -22,7 +27,6 @@ export default function SmoothAnchorScroll() {
                 block: 'start',
             })
 
-            // 🔑 THIS FIXES BACK BUTTON
             history.replaceState(null, '', location.pathname)
         }
 
