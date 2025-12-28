@@ -1,0 +1,3160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Logistics</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body class="bg-white text-slate-800 w-full overflow-x-hidden">
+  <button
+  id="toc-toggle"
+  class="lg:hidden fixed bottom-6 right-6 z-50
+         bg-white shadow-lg rounded-full p-3 border" aria-label="Open table of contents">
+  ☰
+</button>
+<div
+  id="toc-overlay"
+  class="fixed inset-0 bg-black/40 z-40 hidden">
+</div>
+
+<div class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+    <main class="w-full flex justify-center px-4 sm:px-6 lg:px-8">
+    
+        <div class="relative lg:flex max-w-7xl mx-auto">
+        <aside id="toc-sidebar" class="fixed lg:sticky
+                    top-16 lg:top-20
+                    left-0
+                    z-50
+                    w-[280px]
+                    h-[calc(100vh-4rem)]
+                    bg-white
+                    border-r
+                    overflow-y-auto
+                    transform -translate-x-full lg:translate-x-0
+                    transition-transform duration-300 ease-in-out">
+            <button
+                id="toc-close"
+                class="lg:hidden absolute top-4 right-4 text-slate-500 hover:text-slate-900 text-xl"
+                aria-label="Close sidebar"
+            >
+                ✕
+            </button>
+
+            <div class="sticky top-15 max-h-[calc(100vh-6rem)] overflow-y-auto border-r no-scrollbar pr-4 pb-12 pl-3">
+                <h3 class="text-sm font-semibold uppercase text-slate-500 mb-4">
+                In This Article
+                </h3>
+
+                <details class="group">
+                <summary data-id="sea-freight" class="cursor-pointer font-medium text-slate-800 hover:text-blue-600">
+                    Sea Freight
+                </summary>
+                <ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
+                    <li><a href="#introduction" data-scroll class="hover:text-blue-600">Introduction</a></li>
+                    <li><a href="#lclvsfcl" data-scroll class="hover:text-blue-600">LCL vs FCL</a></li>
+                    <li><a href="#FAQs-sea-freight" data-scroll class="hover:text-blue-600">FAQs</a></li>
+                </ul>
+                </details>
+
+                <details class="group-1">
+                <summary data-id="air-freight" class="cursor-pointer font-medium text-slate-800 hover:text-blue-600">
+                   Air Freight
+                </summary>
+                <ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
+                    <li><a href="#introduction-air-freight" data-scroll class="hover:text-blue-600">Introduction</a></li>
+                    <li><a href="#air-freight-vs-other-transport-modes" data-scroll class="hover:text-blue-600">Air Freight vs Other Transport Modes</a></li>
+                    <li><a href="#types-of-air-freight-services" data-scroll class="hover:text-blue-600">Types of Air Freight Services</a></li>
+                    <li><a href="#FAQs-air-freight" data-scroll class="hover:text-blue-600">FAQs</a></li>
+                </ul>
+                </details>
+
+                <details class="group-2">
+                <summary data-id="rail-multimodal-logistics" class="cursor-pointer font-medium text-slate-800 hover:text-blue-600">
+                    Rail & Multimodal Logistics
+                </summary>
+                <ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
+                    <li><a href="#introduction-rail-multimodal-logistics" data-scroll class="hover:text-blue-600">Introduction</a></li>
+                    <li><a href="#common-usage-locations" data-scroll class="hover:text-blue-600">Common Usage Locations</a></li>
+                    <li><a href="#step-by-step-multimodal-transport-process" data-scroll class="hover:text-blue-600">Step-by-Step Multimodal Transport Process</a></li>
+                    <li><a href="#rail-vs-multimodal-logistics" data-scroll class="hover:text-blue-600">Rail vs Multimodal Logistics</a></li>
+                    <li><a href="#FAQs-rail-multimodal-logistics" data-scroll class="hover:text-blue-600">FAQs</a></li>
+                </ul>
+                </details>
+
+                <details class="group-3">
+                <summary data-id="container-types" class="cursor-pointer font-medium text-slate-800 hover:text-blue-600">
+                    Container Types for Engineering Goods
+                </summary>
+                <ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
+                    <li><a href="#introduction-container" data-scroll class="hover:text-blue-600">Introduction</a></li>
+                    <li><a href="#key-usage-locations" data-scroll class="hover:text-blue-600">Key Usage Locations</a></li>
+                    <li><a href="#container-selection" data-scroll class="hover:text-blue-600">Container selection</a></li>
+                    <li><a href="#FAQs-container-types" data-scroll class="hover:text-blue-600">FAQs</a></li>
+                </ul>
+                </details>
+
+                <details class="group-4">
+                <summary data-id="logistics-cost-optimisation" class="cursor-pointer font-medium text-slate-800 hover:text-blue-600">
+                    Logistics Cost Optimization
+                </summary>
+                <ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
+                    <li><a href="#introduction-logistics-cost-optimization" data-scroll class="hover:text-blue-600">Introduction</a></li>
+                    <li><a href="#major-cost-components" data-scroll class="hover:text-blue-600">Major Cost Components</a></li>
+                    <li><a href="#how-to-optimize-logistics-cost" data-scroll class="hover:text-blue-600">How to optimize logistics cost? </a></li>
+                    <li><a href="#FAQs-logistics-cost" data-scroll class="hover:text-blue-600">FAQs</a></li>
+                </ul>
+                </details>
+
+                <details class="group-5">
+                <summary data-id="Freight-Forwarder-vs-NVOCC-vs-CHA" class="cursor-pointer font-medium text-slate-800 hover:text-blue-600">
+                   Freight Forwarder vs NVOCC vs CHA
+                </summary>
+                <ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
+                    <li><a href="#introduction-freight-forwarder-vs-nvocc-vs-cha" data-scroll class="hover:text-blue-600">Introduction</a></li>
+                    <li><a href="#roles-responsibilities" data-scroll class="hover:text-blue-600">Roles & responsibilities</a></li>
+                    <li><a href="#freight-forwarder-vs-nvocc-vs-cha" data-scroll class="hover:text-blue-600">Freight Forwarder vs NVOCC vs CHA</a></li>
+                    <li><a href="#FAQs-ff-nvocc-cha" data-scroll class="hover:text-blue-600">FAQs</a></li>
+                </ul>
+                </details>
+
+                <details class="group-6">
+                <summary data-id="supply-chain-risk-management" class="cursor-pointer font-medium text-slate-800 hover:text-blue-600">
+                   Supply Chain Risk Management
+                </summary>
+                <ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
+                    <li><a href="#introduction-supply-chain-risk-management" data-scroll class="hover:text-blue-600">Introduction</a></li>
+                    <li><a href="#why-supply-chain-risk-management" data-scroll class="hover:text-blue-600">Why is supply chain risk management?</a></li>
+                    <li><a href="#where-supply-chain-risks-occur" data-scroll class="hover:text-blue-600">Where do supply chain risks occur?</a></li>
+                    <li><a href="#how-to-manage-supply-chain-risks" data-scroll class="hover:text-blue-600">How to manage supply chain risks?</a></li>
+                    <li><a href="#FAQs-supply-chain-risk" data-scroll class="hover:text-blue-600">FAQs</a></li>
+                </ul>
+                </details>
+
+                </div>
+        </aside>
+        </div>
+        <article class="w-full max-w-4xl bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-12">
+
+        <section id="sea-freight" class="max-w-4xl mx-auto mb-20 space-y-6">
+
+            <!-- Title -->
+            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 text-center">
+                Global Logistics: Sea Freight – LCL vs FCL
+            </h1>
+
+            <p id="introduction" class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Sea freight is the backbone of international logistics, especially for engineering goods,
+                industrial machinery, and bulk cargo. Choosing between LCL (Less than Container Load) and
+                FCL (Full Container Load) directly impacts shipping cost, transit time, cargo safety, and
+                operational efficiency.
+            </p>
+
+            <!-- What is Sea Freight -->
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900 pt-10">
+                What is Sea Freight?
+            </h2>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Sea freight refers to the transportation of goods across international waters using
+                ocean-going vessels and standardized shipping containers. It is the most economical and
+                scalable logistics solution for moving heavy, oversized, and high-volume cargo over long distances.
+            </p>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Sea freight operates through global shipping lines, ports, container terminals, and inland
+                logistics networks, making it suitable for worldwide trade operations.
+            </p>
+
+            <!-- Types -->
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900 pt-10">
+                Types of Sea Freight
+            </h2>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold">
+                LCL – Less than Container Load
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                LCL shipping is used when cargo volume is insufficient to fill an entire container.
+                Multiple shipments from different exporters are consolidated into a single container
+                at a Container Freight Station (CFS).
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Shared container space</li>
+                <li>Charged per CBM (Cubic Meter)</li>
+                <li>Suitable for small or trial shipments</li>
+                <li>Longer transit due to consolidation and deconsolidation</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-6">
+                FCL – Full Container Load
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                FCL shipping is used when a single exporter occupies the entire container, regardless
+                of whether the container is fully loaded or not.
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Exclusive container usage</li>
+                <li>Flat freight rate per container</li>
+                <li>Faster transit time</li>
+                <li>Higher cargo security and lower damage risk</li>
+            </ul>
+
+            <!-- Why -->
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900 pt-10">
+                Why Choose Sea Freight for International Trade?
+            </h2>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Lowest transportation cost for heavy and bulky engineering goods</li>
+                <li>Ideal for long-distance international trade routes</li>
+                <li>Ability to transport oversized, overweight, and project cargo</li>
+                <li>Availability of multiple container types (Dry, Flat Rack, Open Top, High Cube)</li>
+                <li>Lower carbon footprint compared to air freight</li>
+                <li>Stable freight pricing for bulk shipments</li>
+            </ul>
+
+            <!-- Where -->
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900 pt-10">
+                Where is Sea Freight Commonly Used?
+            </h2>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold">
+                Major Sea Freight Trade Routes
+            </h3>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Asia–Europe trade lane (Engineering goods, automotive parts)</li>
+                <li>India–USA exports (Machinery, tools, components)</li>
+                <li>India–Middle East (Industrial equipment)</li>
+                <li>China–Africa & ASEAN markets</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-6">
+                Industries Using Sea Freight
+            </h3>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Engineering & manufacturing</li>
+                <li>Heavy machinery & project cargo</li>
+                <li>Construction equipment</li>
+                <li>Power & energy sector</li>
+                <li>Automotive & spare parts</li>
+                <li>Steel and metal products</li>
+            </ul>
+
+            <!-- Table -->
+            <h2 id="lclvsfcl" class="text-xl sm:text-2xl lg:text-3xl text-center font-semibold text-slate-900 pt-10">
+                LCL vs FCL – Comparative Table
+            </h2>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full border  border-slate-200 text-left text-sm sm:text-base">
+                <thead class="bg-slate-100">
+                    <tr>
+                    <th class="border px-4 py-3 font-semibold text-slate-900">Parameter</th>
+                    <th class="border px-4 py-3 font-semibold text-slate-900">LCL</th>
+                    <th class="border px-4 py-3 font-semibold text-slate-900">FCL</th>
+                    </tr>
+                </thead>
+                <tbody class="text-slate-600">
+                    <tr>
+                    <td class="border px-4 py-3">Cargo Volume</td>
+                    <td class="border px-4 py-3">Small shipments</td>
+                    <td class="border px-4 py-3">Large shipments</td>
+                    </tr>
+                    <tr>
+                    <td class="border px-4 py-3">Cost Structure</td>
+                    <td class="border px-4 py-3">Per CBM</td>
+                    <td class="border px-4 py-3">Per container</td>
+                    </tr>
+                    <tr>
+                    <td class="border px-4 py-3">Transit Time</td>
+                    <td class="border px-4 py-3">Longer</td>
+                    <td class="border px-4 py-3">Faster</td>
+                    </tr>
+                    <tr>
+                    <td class="border px-4 py-3">Cargo Safety</td>
+                    <td class="border px-4 py-3">Moderate</td>
+                    <td class="border px-4 py-3">High</td>
+                    </tr>
+                    <tr>
+                    <td class="border px-4 py-3">Handling</td>
+                    <td class="border px-4 py-3">Multiple handling points</td>
+                    <td class="border px-4 py-3">Minimal handling</td>
+                    </tr>
+                    <tr>
+                    <td class="border px-4 py-3">Ideal For</td>
+                    <td class="border px-4 py-3">SMEs, trial shipments</td>
+                    <td class="border px-4 py-3">Bulk exporters, heavy machinery</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+
+            <!-- Conclusion -->
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900 pt-10">
+                Conclusion
+            </h2>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Choosing between LCL and FCL sea freight is a strategic logistics decision that affects
+                cost efficiency, delivery timelines, and cargo safety. For engineering goods exporters,
+                understanding shipment size, urgency, and risk factors ensures optimized ocean freight
+                planning and smooth international trade execution.
+            </p>
+            <div class="max-w-4xl mx-auto my-16">
+                <h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">Sea Freight Decision Flowchart</h2>
+                <img src="/public/blog-images/Global-Logistics/SeaFreightDecision.png"
+                alt="Sea freight decision"
+                class="mx-auto w-full max-w-xl rounded-xl border border-slate-200 shadow-sm" />
+            </div>
+
+        </section>
+
+        <!-- FAQS sea-freight -->
+        <section class="max-w-4xl mx-auto mb-20 space-y-6">
+
+            <h2 id="FAQs-sea-freight" class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-2">
+                Sea Freight – FAQs
+            </h2>
+
+            <div class="space-y-4">
+
+                <!-- FAQ 1 -->
+                <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer
+                    text-base sm:text-lg font-semibold text-slate-900 list-none">
+                    Q1. What is Sea Freight in international logistics?
+                    <span class="transition-transform group-open:rotate-180">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-600 leading-relaxed">
+                    Sea freight is the transportation of goods via ocean vessels using standardized shipping
+                    containers. It is the most cost-effective logistics solution for moving heavy, bulky, and
+                    high-volume cargo across international borders. Sea freight is widely used for engineering
+                    goods, industrial machinery, metal products, and bulk shipments due to its high load
+                    capacity and global reach.
+                </p>
+                </details>
+
+                <!-- FAQ 2 -->
+                <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer
+                    text-base sm:text-lg font-semibold text-slate-900 list-none">
+                    Q2. What is the difference between LCL and FCL in sea freight?
+                    <span class="transition-transform group-open:rotate-180">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-600 leading-relaxed">
+                    The main difference lies in container usage and cost structure. LCL (Less than Container Load)
+                    allows multiple shippers to share one container and is charged per CBM (Cubic Meter).
+                    FCL (Full Container Load) gives one shipper exclusive use of the entire container and is
+                    charged at a flat container rate. LCL is ideal for small shipments, while FCL is suitable
+                    for bulk and heavy engineering cargo.
+                </p>
+                </details>
+
+                <!-- FAQ 3 -->
+                <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer
+                    text-base sm:text-lg font-semibold text-slate-900 list-none">
+                    Q3. When should an exporter choose LCL shipping?
+                    <span class="transition-transform group-open:rotate-180">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-600 leading-relaxed">
+                    LCL shipping is recommended when the cargo volume is below 12–15 CBM, the shipment is
+                    non-urgent, or when exporters want to reduce upfront freight cost. It is commonly used by
+                    SMEs, first-time exporters, and exporters sending trial shipments.
+                </p>
+                </details>
+
+                <!-- FAQ 4 -->
+                <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer
+                    text-base sm:text-lg font-semibold text-slate-900 list-none">
+                    Q4. When is FCL shipping the better option?
+                    <span class="transition-transform group-open:rotate-180">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-600 leading-relaxed">
+                    FCL shipping is the better option when cargo volume is 15 CBM or more, or when shipping
+                    heavy machinery, high-value engineering goods, or sensitive equipment. FCL offers better
+                    cargo safety, faster transit time, and lower freight cost per unit, making it ideal for
+                    bulk and repeat shipments.
+                </p>
+                </details>
+
+                <!-- FAQ 5 -->
+                <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer
+                    text-base sm:text-lg font-semibold text-slate-900 list-none">
+                    Q5. Which is more cost-effective: LCL or FCL?
+                    <span class="transition-transform group-open:rotate-180">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-600 leading-relaxed">
+                    LCL has a lower initial cost but a higher cost per CBM, while FCL has a higher upfront
+                    cost but becomes more economical for larger shipment volumes. For exporters shipping
+                    regularly or in bulk, FCL is more cost-effective in the long run.
+                </p>
+                </details>
+
+                <!-- FAQ 6 -->
+                <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer
+                    text-base sm:text-lg font-semibold text-slate-900 list-none">
+                    Q6. Is cargo safety better in LCL or FCL?
+                    <span class="transition-transform group-open:rotate-180">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-600 leading-relaxed">
+                    Cargo safety is generally higher in FCL shipments because the container is handled only
+                    once and sealed by a single exporter. LCL shipments involve multiple handling points
+                    during consolidation and deconsolidation, increasing the risk of damage or delay.
+                </p>
+                </details>
+
+                <!-- FAQ 7 -->
+                <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer
+                    text-base sm:text-lg font-semibold text-slate-900 list-none">
+                    Q7. What types of goods are suitable for sea freight?
+                    <span class="transition-transform group-open:rotate-180">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-600 leading-relaxed">
+                    Sea freight is suitable for engineering goods, industrial machinery, construction
+                    equipment, metal products, automotive parts, project cargo, and bulk commodities.
+                    It supports both standard and specialized containers such as flat racks, open tops,
+                    and high-cube containers.
+                </p>
+                </details>
+
+                <!-- FAQ 8 -->
+                <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer
+                    text-base sm:text-lg font-semibold text-slate-900 list-none">
+                    Q8. How do exporters decide between LCL and FCL sea freight?
+                    <span class="transition-transform group-open:rotate-180">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-600 leading-relaxed">
+                    Exporters should evaluate cargo volume (CBM), weight and dimensions, shipment urgency,
+                    cargo value and sensitivity, budget, and frequency of exports. Consulting a freight
+                    forwarder or logistics expert helps exporters choose the most efficient and compliant
+                    sea freight solution.
+                </p>
+                </details>
+            </div>
+        </section>
+
+        <!-- Air Freight Services -->
+        <section id="air-freight" class="max-w-4xl mx-auto mb-20 space-y-6">
+
+            <h2 class="text-xl sm:text-2xl lg:text-3xl text-center font-semibold text-slate-900">
+                Air Freight Services
+            </h2>
+
+            <p id="introduction-air-freight" class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed ">
+                Air freight is the fastest and most reliable mode of international logistics, specifically designed for time-critical, high-value, and precision engineering goods. In global trade, air freight plays a vital role in reducing lead time, preventing production downtime, and meeting urgent delivery commitments.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">
+                What is Air Freight?
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Air freight refers to the transportation of goods through commercial passenger aircraft or dedicated cargo aircraft across international and domestic destinations. It is widely used for high-value, lightweight, fragile, or urgent shipments where speed, reliability, and security are top priorities.
+            </p>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Unlike sea freight, air freight focuses on time efficiency rather than volume, making it ideal for engineering components, electronics, aerospace parts, and emergency industrial supplies.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">
+                Key Characteristics of Air Freight
+            </h3>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Fastest mode of global transportation</li>
+                <li>Airport-to-airport logistics network</li>
+                <li>Advanced cargo tracking & security systems</li>
+                <li>High compliance with international aviation standards</li>
+                <li>Premium logistics solution for urgent exports</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">
+                Why Use Air Freight for International Shipping?
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Air freight is chosen when time sensitivity outweighs transportation cost. For engineering companies, delayed shipments can lead to production shutdowns, project delays, or financial penalties, making air freight a strategic choice.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">Major Advantages of Air Freight</h3>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">1. Fastest International Shipping Mode</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Air freight drastically reduces transit time from weeks to days or even hours, enabling exporters to meet tight delivery schedules and emergency requirements.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">2. Lower Inventory Holding Cost</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Faster transit means less warehousing and storage, helping businesses reduce inventory carrying costs and working capital blockage.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">3. High Cargo Security</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Airports and airlines follow strict security protocols, minimizing risks of theft, damage, or cargo tampering, especially for high-value engineering products.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">4. Reliability & Schedule Integrity</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Airlines operate on fixed schedules, ensuring predictable and reliable delivery timelines.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">5. Ideal for Emergency & Critical Shipments</h3>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Production line breakdowns</li>
+                <li>Urgent spare part requirements</li>
+                <li>Critical project deadlines</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">
+                Where is Air Freight Commonly Used?
+            </h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+               Air freight is widely used across industries where speed, accuracy, and product integrity are essential.
+            </p>
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">
+                Key Industries Using Air Freight
+            </h3>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">Aerospace & Aviation</h3>
+            <ul class="list-disc pl-6 text-slate-600 space-y-2">
+                <li>Aircraft components</li>
+                <li>Avionics systems</li>
+                <li>Precision aerospace parts</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">Electronics & Electrical Engineering</h3>
+            <ul class="list-disc pl-6 text-slate-600 space-y-2">
+                <li>Semiconductors</li>
+                <li>Control panels</li>
+                <li>Precision instruments</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">Industrial & Engineering Sector</h3>
+            <ul class="list-disc pl-6 text-slate-600 space-y-2">
+                <li>Critical machine spare parts</li>
+                <li>CNC components</li>
+                <li>Automation equipment</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">Project & Time-Bound Cargo</h3>
+            <ul class="list-disc pl-6 text-slate-600 space-y-2">
+                <li>Power plants</li>
+                <li>Infrastructure projects</li>
+                <li>Oil & gas shutdown support</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">Pharmaceutical & Medical Engineering</h3>
+            <ul class="list-disc pl-6 text-slate-600 space-y-2">
+                <li>Diagnostic equipment</li>
+                <li>Medical devices</li>
+                <li>Sensitive instruments</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">How Does Air Freight Work?</h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+            Air freight operates under strict international aviation regulations and follows a highly controlled logistics process to ensure speed, safety, and compliance.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">1. Chargeable Weight Calculation</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Air freight cost is calculated based on chargeable weight, which is the higher of:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-4">
+            <li>Actual weight (kg)</li>
+            <li>Volumetric weight (L × W × H ÷ 6000)</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+            This ensures efficient use of aircraft cargo space.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">2. Specialized Packing Requirements</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Air cargo requires lightweight, strong, and compliant packaging, often including:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-6">
+            <li>Shock-resistant packing</li>
+            <li>Moisture protection</li>
+            <li>UN-certified packaging (if applicable)</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">3. Regulatory & Safety Compliance</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Air freight must comply with:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-6">
+            <li>IATA (International Air Transport Association) regulations</li>
+            <li>ICAO safety standards</li>
+            <li>Airline-specific cargo rules</li>
+            <li>Dangerous Goods (DG) compliance, if applicable</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">4. Airport-to-Airport Transportation</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+            Air freight primarily operates on an airport-to-airport basis, with optional door-to-door service through freight forwarders.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">5. Customs Clearance & Delivery</h3>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-10">
+            <li>Export customs clearance at origin</li>
+            <li>Airline handling & screening</li>
+            <li>Import customs clearance at destination</li>
+            <li>Final delivery to consignee</li>
+            </ul>
+
+            <h2 id="air-freight-vs-other-transport-modes" class="text-xl sm:text-2xl lg:text-3xl text-center font-semibold text-slate-900 mt-14 mb-6">
+            Air Freight vs Other Transport Modes (Quick Insight)
+            </h2>
+
+            <div class="overflow-x-auto mb-12">
+            <table class="min-w-full border border-slate-200 text-left text-sm sm:text-base">
+                <thead class="bg-slate-100">
+                <tr>
+                    <th class="border px-4 py-3 font-semibold text-slate-900">Parameter</th>
+                    <th class="border px-4 py-3 font-semibold text-slate-900">Air Freight</th>
+                    <th class="border px-4 py-3 font-semibold text-slate-900">Sea Freight</th>
+                </tr>
+                </thead>
+                <tbody class="text-slate-600">
+                <tr>
+                    <td class="border px-4 py-3">Transit Time</td>
+                    <td class="border px-4 py-3">Very Fast</td>
+                    <td class="border px-4 py-3">Slow</td>
+                </tr>
+                <tr>
+                    <td class="border px-4 py-3">Cost</td>
+                    <td class="border px-4 py-3">High</td>
+                    <td class="border px-4 py-3">Low</td>
+                </tr>
+                <tr>
+                    <td class="border px-4 py-3">Cargo Type</td>
+                    <td class="border px-4 py-3">High-value, urgent</td>
+                    <td class="border px-4 py-3">Heavy, bulk</td>
+                </tr>
+                <tr>
+                    <td class="border px-4 py-3">Security</td>
+                    <td class="border px-4 py-3">Very High</td>
+                    <td class="border px-4 py-3">Moderate</td>
+                </tr>
+                <tr>
+                    <td class="border px-4 py-3">Ideal For</td>
+                    <td class="border px-4 py-3">Time-critical</td>
+                    <td class="border px-4 py-3">Cost-sensitive</td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+
+            <h2 id="types-of-air-freight-services" class="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900 mt-14 mb-6">
+            Types of Air Freight Services
+            </h2>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+            A Detailed Export–Import Logistics Guide for Engineering & High-Value Cargo
+            </p>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-10">
+            Air freight services are a strategic component of global supply chain management, enabling exporters and importers to move time-critical, high-value, and precision cargo across international markets. Selecting the right type of air freight service is crucial for cost control, delivery performance, regulatory compliance, and customer satisfaction.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">1. Express / Priority Air Freight Services</h3>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">
+            What is Express Air Freight?</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Express air freight is a premium, time-definite air cargo service that ensures fastest possible international delivery, often within 24 to 72 hours. Shipments receive top priority status across airline booking, handling, and customs clearance processes.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">Why Use Express Air Freight?</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Fastest international logistics solution</li>
+            <li>Guaranteed cargo space and flight priority</li>
+            <li>Minimizes production downtime and revenue loss</li>
+            <li>Ideal for emergency and mission-critical shipments</li>
+            <li>Reduced transit and handling risks</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">Where is Express Air Freight Used?</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Emergency engineering spare parts</li>
+            <li>Aerospace and aviation components</li>
+            <li>Critical electronics and automation parts</li>
+            <li>Medical and life-saving equipment</li>
+            <li>Urgent project cargo</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-8">How to Use Express Air Freight in Export / Import?</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Pre-booking with priority airline services</li>
+            <li>Pre-approved export and import documentation</li>
+            <li>Direct or minimum-connection flights</li>
+            <li>Advance customs filing to avoid clearance delays</li>
+            <li>Door-to-door express delivery where required</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 mt-4 mb-10">
+            <span class="font-semibold">Real-Life Scenario:  </span> 
+            A manufacturing plant facing an unexpected machinery breakdown uses express air freight services to import a critical component overnight, preventing costly production stoppage.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mt-12">
+            2. Standard / General Air Freight Services
+            </h3>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">
+            What is Standard Air Freight?
+            </h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Standard air freight is the most widely used air cargo service, providing a balanced solution between speed and cost. Shipments move on scheduled commercial flights with reliable transit times.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">
+            Why Use Standard Air Freight?
+            </h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Cost-effective compared to express services</li>
+            <li>Reliable airline schedules</li>
+            <li>Suitable for planned international shipments</li>
+            <li>Consistent delivery performance</li>
+            <li>Ideal for routine export–import operations</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">
+            Where is Standard Air Freight Used?
+            </h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Engineering components and assemblies</li>
+            <li>Electrical and electronic goods</li>
+            <li>Industrial equipment</li>
+            <li>Finished manufacturing products</li>
+            <li>Regular import and export cargo</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">
+            How to Use Standard Air Freight in Export / Import?
+            </h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Advance cargo booking with airlines</li>
+            <li>Standard packing and labeling</li>
+            <li>Normal customs clearance timelines</li>
+            <li>Airport-to-airport or door-to-door logistics</li>
+            <li>Freight forwarder coordination</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 mt-4 mb-12">
+            <span class="font-semibold">Real-Life Scenario:  </span> 
+            An exporter shipping precision-engineered components with a 7-day delivery commitment selects standard air freight to balance cost and delivery reliability.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mt-12">
+            3. Deferred / Economy Air Freight Services
+            </h3>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">
+            What is Deferred Air Freight?
+            </h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Deferred air freight is a budget-oriented air cargo service where shipments move on a space-available basis, resulting in longer but predictable transit times.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">
+            Why Use Deferred Air Freight?
+            </h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Lower air freight costs</li>
+            <li>Suitable for non-urgent shipments</li>
+            <li>Still faster than sea freight</li>
+            <li>Effective for inventory replenishment</li>
+            <li>Cost optimization for SMEs</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">
+            Where is Deferred Air Freight Used?
+            </h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Non-critical engineering parts</li>
+            <li>Backup spare parts inventory</li>
+            <li>Promotional or marketing materials</li>
+            <li>Low-priority imports</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">
+            How to Use Deferred Air Freight in Export / Import?
+            </h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Flexible delivery scheduling</li>
+            <li>Economy airline booking</li>
+            <li>Indirect routing if required</li>
+            <li>Standard export and import documentation</li>
+            <li>Proper inventory planning</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 mt-4 mb-12">
+            <span class="font-semibold">Real-Life Scenario:  </span> 
+            An importer restocking non-urgent machine spares uses deferred air freight to reduce logistics cost while maintaining acceptable lead time.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mt-12">
+            4. Charter Air Freight Services
+            </h3>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">
+            What is Charter Air Freight?
+            </h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Charter air freight involves exclusive use of an entire aircraft for a single shipment, providing maximum control over routing, scheduling, and cargo handling.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">
+            Why Use Charter Air Freight?
+            </h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Handles oversized and heavy cargo</li>
+            <li>Custom departure and arrival schedules</li>
+            <li>Direct point-to-point delivery</li>
+            <li>Ideal for urgent project logistics</li>
+            <li>Eliminates airline capacity constraints</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">
+            Where is Charter Air Freight Used?
+            </h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Heavy engineering machinery</li>
+            <li>Power plant and infrastructure projects</li>
+            <li>Oil & gas equipment</li>
+            <li>Humanitarian and disaster relief cargo</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">
+            How to Use Charter Air Freight in Export / Import?
+            </h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Aircraft selection based on cargo specifications</li>
+            <li>Custom flight planning and permissions</li>
+            <li>Special loading and securing methods</li>
+            <li>Dedicated customs and ground handling coordination</li>
+            <li>End-to-end project management</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 mt-4 mb-12">
+            <span class="font-semibold">Real-Life Scenario:  </span> 
+            A power sector company charters an aircraft to deliver oversized turbine components urgently to meet strict project deadlines.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mt-12">
+            5. Consolidated Air Freight Services
+            </h3>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">
+            What is Consolidated Air Freight?
+            </h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Consolidated air freight combines multiple shipments from different exporters into a single shipment to reduce individual freight costs.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">
+            Why Use Consolidated Air Freight?
+            </h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Lower freight cost per shipment</li>
+            <li>Efficient for small and frequent exporters</li>
+            <li>Optimized aircraft space utilization</li>
+            <li>Reduced airline charges</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">
+            Where is Consolidated Air Freight Used?
+            </h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Small engineering exporters</li>
+            <li>SME international trade</li>
+            <li>Spare parts shipments</li>
+            <li>E-commerce and B2B exports</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">
+            How to Use Consolidated Air Freight in Export / Import?
+            </h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Cargo delivered to consolidation warehouse</li>
+            <li>Grouped under a master airway bill</li>
+            <li>Shipped together on scheduled flights</li>
+            <li>Deconsolidation and customs clearance at destination</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 mt-4 mb-12">
+            <span class="font-semibold">Real-Life Scenario:  </span> 
+            Multiple exporters ship small quantities of machine components weekly using consolidated air freight to achieve cost efficiency.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mt-12">
+            6. Door-to-Door Air Freight Services
+            </h3>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">
+            What is Door-to-Door Air Freight?
+            </h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Door-to-door air freight is a comprehensive logistics solution where a single service provider manages pickup, air transport, customs clearance, and final delivery.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">
+            Why Use Door-to-Door Air Freight?
+            </h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>End-to-end logistics management</li>
+            <li>Single point of accountability</li>
+            <li>Reduced coordination effort</li>
+            <li>Ideal for first-time exporters and importers</li>
+            <li>Transparent tracking and documentation</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">
+            Where is Door-to-Door Air Freight Used?
+            </h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Prototype and sample exports</li>
+            <li>SME and startup exporters</li>
+            <li>Time-bound customer deliveries</li>
+            <li>International B2B shipments</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">
+            How to Use Door-to-Door Air Freight in Export / Import?
+            </h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Engage a freight forwarder</li>
+            <li>Provide shipment and commercial documents</li>
+            <li>Forwarder manages customs compliance</li>
+            <li>Real-time shipment tracking</li>
+            <li>Final delivery at consignee location</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 mt-4 mb-12">
+            <span class="font-semibold">Real-Life Scenario:  </span>
+            A first-time exporter ships engineering prototypes overseas using door-to-door air freight to avoid logistical complexity.
+            </p>
+
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900 mt-14 mb-6">
+            Choosing the Right Air Freight Service
+            </h2>
+
+            <div class="overflow-x-auto mb-12">
+            <table class="min-w-full border border-slate-200 text-left text-sm sm:text-base">
+                <thead class="bg-slate-100">
+                <tr>
+                    <th class="border px-4 py-3 font-semibold text-slate-900">Business Condition</th>
+                    <th class="border px-4 py-3 font-semibold text-slate-900">Best Air Freight Service</th>
+                </tr>
+                </thead>
+                <tbody class="text-slate-600">
+                <tr>
+                    <td class="border px-4 py-3">Emergency delivery</td>
+                    <td class="border px-4 py-3">Express Air Freight</td>
+                </tr>
+                <tr>
+                    <td class="border px-4 py-3">Planned urgent cargo</td>
+                    <td class="border px-4 py-3">Standard Air Freight</td>
+                </tr>
+                <tr>
+                    <td class="border px-4 py-3">Cost-sensitive shipment</td>
+                    <td class="border px-4 py-3">Deferred Air Freight</td>
+                </tr>
+                <tr>
+                    <td class="border px-4 py-3">Oversized project cargo</td>
+                    <td class="border px-4 py-3">Charter Air Freight</td>
+                </tr>
+                <tr>
+                    <td class="border px-4 py-3">Small frequent shipments</td>
+                    <td class="border px-4 py-3">Consolidated Air Freight</td>
+                </tr>
+                <tr>
+                    <td class="border px-4 py-3">New exporter/importer</td>
+                    <td class="border px-4 py-3">Door-to-Door Air Freight</td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+
+            <div class="max-w-4xl mx-auto my-16">
+                <h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">Air Freight Process Flowchart</h2>
+                <img src="/public/blog-images/Global-Logistics/AirFreightProcess.png"
+                alt="Air freight process"
+                class="mx-auto w-full max-w-xl rounded-xl border border-slate-200 shadow-sm" />
+            </div>
+            
+
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900 mt-14 mb-6">
+            Conclusion
+            </h2>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Air freight is a strategic logistics solution for businesses that prioritize speed, reliability, and cargo safety over cost. For engineering exporters, aerospace suppliers, electronics manufacturers, and project-based industries, air freight ensures business continuity, customer satisfaction, and operational efficiency.
+            Choosing the right air freight service provider and understanding chargeable weight, compliance, and packing standards helps businesses optimize cost while meeting urgent global demands.
+            </p>
+        </section>
+
+        <!-- FAQ – Air Freight Services  -->
+        <section class="max-w-4xl mx-auto mb-20 space-y-6">
+
+          <h2 id="FAQs-air-freight" class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-2">
+            FAQ – Air Freight Services
+          </h2>
+
+          <div class="space-y-4">
+
+            <!-- FAQ 1 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q1. What are Air Freight Services in international trade?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Air freight services refer to the transportation of cargo via commercial or dedicated cargo aircraft for domestic and international shipments. These services are mainly used for time-sensitive, high-value, and precision goods, including engineering components, electronics, aerospace parts, and urgent spare parts.
+              </p>
+            </details>
+
+            <!-- FAQ 2 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q2. When should exporters or importers choose air freight?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Air freight should be chosen when delivery speed, reliability, and cargo safety are more important than cost. It is ideal for urgent shipments, emergency imports, critical spare parts, prototypes, and high-value engineering goods where delays can cause production losses or project failure.
+              </p>
+            </details>
+
+            <!-- FAQ 3 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q3. What types of goods are best suited for air freight services?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <div class="mt-4 text-slate-600 leading-relaxed">
+                <p>Air freight is best suited for:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                  <li>Engineering & precision components</li>
+                  <li>Electronics and semiconductors</li>
+                  <li>Aerospace and aviation parts</li>
+                  <li>Medical and diagnostic equipment</li>
+                  <li>Critical machine spare parts</li>
+                  <li>Time-bound project cargo</li>
+                </ul>
+                <p class="mt-2">
+                  These goods require fast transit, high security, and careful handling.
+                </p>
+              </div>
+            </details>
+
+            <!-- FAQ 4 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q4. What are the main types of air freight services available?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <div class="mt-4 text-slate-600 leading-relaxed">
+                <p>The common types of air freight services include:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                  <li>Express / Priority Air Freight</li>
+                  <li>Standard / General Air Freight</li>
+                  <li>Deferred / Economy Air Freight</li>
+                  <li>Consolidated Air Freight</li>
+                  <li>Charter Air Freight</li>
+                  <li>Door-to-Door Air Freight Services</li>
+                </ul>
+                <p class="mt-2">
+                  Each type is designed to meet different urgency levels, cargo sizes, and cost requirements.
+                </p>
+              </div>
+            </details>
+
+            <!-- FAQ 5 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q5. How is air freight cost calculated?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <div class="mt-4 text-slate-600 leading-relaxed">
+                <p>Air freight charges are calculated based on chargeable weight, which is the higher of:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                  <li>Actual gross weight (kg)</li>
+                  <li>Volumetric weight (Length × Width × Height ÷ 6000)</li>
+                </ul>
+                <p class="mt-2">
+                  This method ensures efficient use of aircraft cargo space.
+                </p>
+              </div>
+            </details>
+
+            <!-- FAQ 6 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q6. Is air freight safe for high-value and fragile cargo?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Yes, air freight is considered the safest mode of international transportation. Airports and airlines follow strict security checks, controlled handling procedures, and real-time tracking systems, making it ideal for high-value, fragile, and sensitive engineering goods.
+              </p>
+            </details>
+
+            <!-- FAQ 7 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q7. What documents are required for air freight shipments?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <div class="mt-4 text-slate-600 leading-relaxed">
+                <p>Common documents required for air freight include:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                  <li>Commercial Invoice</li>
+                  <li>Packing List</li>
+                  <li>Airway Bill (AWB)</li>
+                  <li>Export or Import Customs Documents</li>
+                  <li>Certificate of Origin (if applicable)</li>
+                  <li>DG Declaration (for dangerous goods)</li>
+                </ul>
+                <p class="mt-2">
+                  Proper documentation ensures smooth customs clearance and on-time delivery.
+                </p>
+              </div>
+            </details>
+
+            <!-- FAQ 8 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q8. What is the difference between air freight and sea freight?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <div class="mt-4 text-slate-600 leading-relaxed">
+                <p>The key difference is speed vs cost:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                  <li>Air Freight: Fastest, high security, higher cost, ideal for urgent cargo</li>
+                  <li>Sea Freight: Cost-effective, suitable for heavy and bulk cargo, longer transit time</li>
+                </ul>
+                <p class="mt-2">
+                  Exporters choose air freight when time is critical and sea freight when cost optimization is the priority.
+                </p>
+              </div>
+            </details>
+
+            <!-- FAQ 9 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q9. Can air freight be used for door-to-door delivery?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Yes, air freight can be provided as a door-to-door logistics service, where a freight forwarder manages pickup, air transportation, customs clearance, and final delivery. This option is highly suitable for SMEs, first-time exporters, and time-bound shipments.
+              </p>
+            </details>
+
+            <!-- FAQ 10 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q10. How do exporters choose the right air freight service?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <div class="mt-4 text-slate-600 leading-relaxed">
+                <p>Exporters should consider:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                  <li>Urgency of delivery</li>
+                  <li>Cargo value and sensitivity</li>
+                  <li>Shipment size and weight</li>
+                  <li>Budget and frequency of shipments</li>
+                  <li>Compliance and handling requirements</li>
+                </ul>
+                <p class="mt-2">
+                  Consulting an experienced air freight forwarder helps in selecting the most efficient and cost-effective air freight service.
+                </p>
+              </div>
+            </details>
+
+          </div>
+        </section>
+
+        <!--Rail & Multimodal Logistics -->
+        <section id="rail-multimodal-logistics" class="max-w-4xl mx-auto mb-20 space-y-6">
+
+        <h2 class="text-xl sm:text-2xl text-center lg:text-3xl font-semibold text-slate-900">
+            3. Rail & Multimodal Logistics
+        </h2>
+
+        <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Advanced Guide for Exporters, Importers & Engineering Goods
+        </p>
+
+        <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Rail and multimodal logistics are becoming essential pillars of modern global trade, especially for engineering goods, bulk cargo, and long-distance shipments. These logistics solutions help businesses optimize cost, reduce risk, and improve supply chain efficiency by combining the strengths of multiple transport modes.
+        </p>
+
+        <h3 id="introduction-rail-multimodal-logistics" class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">
+            What is rail & multimodal logistics?
+        </h3>
+
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">
+            Rail Logistics
+        </h3>
+        <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Rail logistics refers to the transportation of cargo using railway networks, primarily for long-distance inland movement of heavy, bulk, or containerized goods. Rail transport is widely used between manufacturing hubs, Inland Container Depots (ICDs), ports, and industrial corridors.
+        </p>
+
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-4">
+            Multimodal Logistics
+        </h3>
+        <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Multimodal logistics is the movement of goods using two or more modes of transport—such as road, rail, sea, and air—under a single transport contract and one logistics service provider.
+        </p>
+
+        <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            In multimodal transport:
+        </p>
+
+        <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>One operator takes end-to-end responsibility</li>
+            <li>Cargo moves seamlessly across modes</li>
+            <li>Documentation is simplified</li>
+            <li>Transit risk is reduced</li>
+        </ul>
+
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-8">
+            Why use rail & multimodal logistics?
+        </h3>
+
+        <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Rail and multimodal logistics are chosen to achieve cost efficiency, operational reliability, and sustainability, especially for engineering goods and industrial cargo.
+        </p>
+
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-4">
+            Key Benefits of Rail Logistics
+        </h3>
+
+        <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Cost-effective for long-distance inland transport</li>
+            <li>Ideal for heavy and bulk engineering goods</li>
+            <li>High carrying capacity</li>
+            <li>Lower fuel cost compared to road transport</li>
+        </ul>
+
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-4">
+            Key Benefits of Multimodal Logistics
+        </h3>
+
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-4">1. Cost Optimization</h3>
+        <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Combining transport modes helps select the most economical route, reducing overall freight and handling costs.
+        </p>
+
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-4">2. Reduced Transit Risk</h3>
+        <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            A single logistics operator manages the entire movement, minimizing handover errors, delays, and cargo damage.
+        </p>
+
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-4">3. Better Inland Connectivity</h3>
+        <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Multimodal logistics efficiently connects factories, ICDs, ports, and final destinations, even in remote or landlocked regions.
+        </p>
+
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-4">4. Eco-Friendly Transportation</h3>
+        <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Rail and multimodal logistics significantly reduce carbon emissions, supporting sustainable and green supply chain practices.
+        </p>
+
+        <h3 id="common-usage-locations" class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-8">
+            Where is rail & multimodal logistics used?
+        </h3>
+
+        <h4 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-4">
+            Common Usage Locations
+        </h4>
+
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">
+            Inland Container Depots (ICDs)
+        </h3>
+        <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Movement of export/import containers between factories and ports</li>
+            <li>Customs-bonded cargo handling</li>
+            <li>Rail–road integration</li>
+        </ul>
+
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">
+            Landlocked Countries & Regions
+        </h3>
+        <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Countries without direct sea access</li>
+            <li>Dependence on rail and road links to nearest seaports</li>
+        </ul>
+
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">
+            Long-Distance Domestic Transport
+        </h3>
+        <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Inter-state cargo movement</li>
+            <li>Bulk raw materials and finished engineering goods</li>
+        </ul>
+
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">
+            Industrial Corridors & Manufacturing Hubs
+        </h3>
+        <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Steel, automobile, heavy engineering clusters</li>
+            <li>Power, infrastructure, and project cargo movement</li>
+        </ul>
+
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-8">
+            How does multimodal transport work?
+        </h3>
+
+        <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Multimodal logistics operates on coordination, documentation simplicity, and end-to-end responsibility.
+        </p>
+
+        <h3 id="step-by-step-multimodal-transport-process" class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">
+            Step-by-Step Multimodal Transport Process
+        </h3>
+
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">1. Single Transport Contract</h3>
+        <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            The shipper signs one multimodal transport agreement with a logistics service provider, even though multiple transport modes are involved.
+        </p>
+
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">2. One Logistics Service Provider</h3>
+        <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            A Multimodal Transport Operator (MTO) or freight forwarder manages:
+        </p>
+
+        <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Mode selection</li>
+            <li>Scheduling</li>
+            <li>Cargo handling</li>
+            <li>Risk management</li>
+        </ul>
+
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">3. Single Transport Document</h3>
+        <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            A Multimodal Transport Document (MTD) or combined transport document is issued, covering the entire journey.
+        </p>
+
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">4. Seamless Cargo Movement</h3>
+        <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Factory → Road</li>
+            <li>Road → Rail</li>
+            <li>Rail → Port</li>
+            <li>Port → Sea or Air</li>
+            <li>Destination → Final delivery</li>
+        </ul>
+
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">5. Customs & Compliance Handling</h3>
+        <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Customs documentation</li>
+            <li>Regulatory compliance</li>
+            <li>Coordination at ICDs and ports</li>
+        </ul>
+
+        <h2 id="rail-vs-multimodal-logistics" class="text-xl sm:text-2xl lg:text-3xl text-center font-semibold text-slate-900 pt-10">
+            Rail vs Multimodal Logistics (Quick Comparison)
+        </h2>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full border border-slate-200 text-left text-sm sm:text-base">
+            <thead class="bg-slate-100">
+                <tr>
+                <th class="border px-4 py-3 font-semibold text-slate-900">Aspect</th>
+                <th class="border px-4 py-3 font-semibold text-slate-900">Rail Logistics</th>
+                <th class="border px-4 py-3 font-semibold text-slate-900">Multimodal Logistics</th>
+                </tr>
+            </thead>
+            <tbody class="text-slate-600">
+                <tr>
+                <td class="border px-4 py-3">Transport Modes</td>
+                <td class="border px-4 py-3">Rail only</td>
+                <td class="border px-4 py-3">Two or more modes</td>
+                </tr>
+                <tr>
+                <td class="border px-4 py-3">Contract</td>
+                <td class="border px-4 py-3">Mode-specific</td>
+                <td class="border px-4 py-3">Single contract</td>
+                </tr>
+                <tr>
+                <td class="border px-4 py-3">Flexibility</td>
+                <td class="border px-4 py-3">Moderate</td>
+                <td class="border px-4 py-3">High</td>
+                </tr>
+                <tr>
+                <td class="border px-4 py-3">Cost Efficiency</td>
+                <td class="border px-4 py-3">High for inland</td>
+                <td class="border px-4 py-3">High overall</td>
+                </tr>
+                <tr>
+                <td class="border px-4 py-3">Risk Management</td>
+                <td class="border px-4 py-3">Limited</td>
+                <td class="border px-4 py-3">Centralized</td>
+                </tr>
+                <tr>
+                <td class="border px-4 py-3">Ideal For</td>
+                <td class="border px-4 py-3">Inland bulk cargo</td>
+                <td class="border px-4 py-3">End-to-end global trade</td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+            <div class="max-w-4xl mx-auto my-16">
+                <h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">Multimodal Logistics</h2>
+                <img src="/public/blog-images/Global-Logistics/MultiModalLogistics.png"
+                alt="Multimodal Logistics"
+                class="mx-auto w-full max-w-xl rounded-xl border border-slate-200 shadow-sm" />
+            </div>
+
+        <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900 pt-10">
+            Conclusion
+        </h2>
+
+        <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Rail & Multimodal Logistics provide a smart, cost-effective, and sustainable logistics solution for exporters and importers handling engineering goods, bulk cargo, and long-distance shipments. By combining rail efficiency with multimodal flexibility, businesses can achieve better transit control, reduced risk, and optimized logistics cost in both domestic and international trade.
+        </p>
+
+        </section>
+
+        <!-- FAQs Rail & Multimodal Logistics -->
+        <section class="max-w-4xl mx-auto mb-20 space-y-6">
+
+          <h2 id="FAQs-rail-multimodal-logistics" class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-2">
+            FAQ – Rail & Multimodal Logistics
+          </h2>
+
+          <div class="space-y-4">
+
+            <!-- FAQ 1 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q1. What is Rail & Multimodal Logistics?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Rail & Multimodal Logistics refers to the transportation of goods using rail freight and two or more transport modes such as road, rail, sea, and air under a single logistics contract. It enables end-to-end cargo movement with better cost control, reduced risk, and improved supply chain efficiency.
+              </p>
+            </details>
+
+            <!-- FAQ 2 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q2. What is the difference between Rail Logistics and Multimodal Logistics?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Rail logistics uses only railway transport for inland cargo movement, whereas multimodal logistics integrates multiple transport modes under one operator. Multimodal logistics offers higher flexibility, simplified documentation, and centralized responsibility compared to standalone rail freight.
+              </p>
+            </details>
+
+            <!-- FAQ 3 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q3. Why should exporters and importers use Multimodal Logistics?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Exporters and importers use multimodal logistics to reduce transportation cost, minimize transit delays, and ensure seamless cargo flow across borders. It is especially beneficial for engineering goods, project cargo, and long-distance international trade.
+              </p>
+            </details>
+
+            <!-- FAQ 4 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q4. When is Rail Freight the best logistics option?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <div class="mt-4 text-slate-600 leading-relaxed">
+                <p>Rail freight is ideal when:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                  <li>Cargo is heavy, bulky, or containerized</li>
+                  <li>Distance is long and inland</li>
+                  <li>Cost efficiency is a priority</li>
+                  <li>Cargo movement is between ICDs, ports, and industrial corridors</li>
+                </ul>
+              </div>
+            </details>
+
+            <!-- FAQ 5 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q5. What types of cargo are suitable for Rail & Multimodal Logistics?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <div class="mt-4 text-slate-600 leading-relaxed">
+                <p>Rail & multimodal logistics are suitable for:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                  <li>Engineering goods</li>
+                  <li>Machinery and equipment</li>
+                  <li>Steel and metal products</li>
+                  <li>Automobile components</li>
+                  <li>Bulk raw materials</li>
+                  <li>Project and infrastructure cargo</li>
+                </ul>
+              </div>
+            </details>
+
+            <!-- FAQ 6 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q6. How does documentation work in Multimodal Logistics?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                In multimodal logistics, a single transport document such as a Multimodal Transport Document (MTD) is issued. This document covers the entire journey, reducing paperwork, simplifying customs clearance, and ensuring single-point liability.
+              </p>
+            </details>
+
+            <!-- FAQ 7 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q7. Is Multimodal Logistics safe for international trade?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Yes, multimodal logistics is highly secure because one logistics operator manages the entire supply chain. This reduces cargo handling risks, transit damage, miscommunication, and delays, making it reliable for international exports and imports.
+              </p>
+            </details>
+
+            <!-- FAQ 8 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q8. How does Rail & Multimodal Logistics reduce logistics costs?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <div class="mt-4 text-slate-600 leading-relaxed">
+                <p>Costs are reduced by:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                  <li>Using rail for long-distance inland transport</li>
+                  <li>Optimizing routes and modes</li>
+                  <li>Lower fuel consumption</li>
+                  <li>Reduced handling and storage charges</li>
+                  <li>Efficient container utilization</li>
+                </ul>
+              </div>
+            </details>
+
+            <!-- FAQ 9 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q9. Where are Rail & Multimodal Logistics commonly used?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <div class="mt-4 text-slate-600 leading-relaxed">
+                <p>They are widely used in:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                  <li>Inland Container Depots (ICDs)</li>
+                  <li>Landlocked countries</li>
+                  <li>Industrial corridors</li>
+                  <li>Export hubs and manufacturing zones</li>
+                  <li>Long-distance domestic and international routes</li>
+                </ul>
+              </div>
+            </details>
+
+            <!-- FAQ 10 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q10. Who manages the shipment in Multimodal Logistics?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                A Multimodal Transport Operator (MTO) or integrated logistics provider manages the entire shipment, taking responsibility for transport coordination, documentation, customs support, and cargo delivery from origin to destination.
+              </p>
+            </details>
+
+          </div>
+        </section>
+
+        <!-- Container -->
+        <section id="container-types" class="max-w-4xl mx-auto mb-20 space-y-6">
+
+            <h2 class="text-xl sm:text-2xl lg:text-3xl text-center font-semibold text-slate-900">
+              4. Container Types for Engineering Goods
+            </h2>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Complete Guide for Exporters, Importers & Project Cargo
+            </p>
+
+            <p id="introduction-container" class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Choosing the right container type is a critical decision in global logistics, especially for engineering goods, machinery, industrial equipment, and project cargo. Proper container selection ensures cargo safety, cost efficiency, regulatory compliance, and smooth international transportation.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">
+              What are container types?
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Container types are standardized steel transport units designed to safely carry different kinds of cargo across sea, rail, road, and multimodal logistics networks. Each container type is engineered to handle specific cargo dimensions, weight, handling requirements, and environmental conditions.
+            </p>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              For engineering goods, container selection depends on:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Cargo size and weight</li>
+              <li>Shape and height</li>
+              <li>Sensitivity (temperature, moisture)</li>
+              <li>Handling and loading method</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-8">
+              Why is container selection important?
+            </h3>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">1. Prevents Cargo Damage</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Engineering goods are often heavy, precision-based, and high-value. Using the right container prevents:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Structural stress</li>
+              <li>Transit damage</li>
+              <li>Improper securing</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">2. Optimizes Freight Cost</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Incorrect container choice can lead to:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Space wastage</li>
+              <li>Higher freight rates</li>
+              <li>Re-handling charges</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Optimized container selection improves container utilization and cost efficiency.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">3. Ensures Regulatory Compliance</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Different cargo types must comply with:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>IMO regulations</li>
+              <li>ISO container standards</li>
+              <li>Port and shipping line rules</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Correct container selection avoids customs delays and penalties.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">4. Supports Oversized & Project Cargo</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Engineering goods often exceed standard dimensions. Specialized containers support:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Over-height cargo</li>
+              <li>Over-width machinery</li>
+              <li>Heavy lift equipment</li>
+            </ul>
+
+            <h3 id="key-usage-locations" class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-8">
+              Where are containers used?
+            </h3>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">Key Usage Locations</h3>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">Ports</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Container loading and unloading</li>
+              <li>Sea freight transport</li>
+              <li>Customs clearance</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">Inland Container Depots (ICDs)</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Stuffing and de-stuffing</li>
+              <li>Customs-bonded cargo handling</li>
+              <li>Rail–road connectivity</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">Manufacturing Plants</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Factory stuffing</li>
+              <li>Export-ready cargo movement</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">Project Cargo Sites</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Infrastructure projects</li>
+              <li>Power plants</li>
+              <li>Construction and industrial installations</li>
+            </ul>
+
+            <h3 id="container-selection" class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-8">
+              How to select the right container for engineering goods?
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Container selection depends on cargo characteristics and logistics constraints.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">Key evaluation factors:</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Cargo dimensions (length, width, height)</li>
+              <li>Cargo weight</li>
+              <li>Loading method (crane, forklift)</li>
+              <li>Sensitivity (temperature, moisture)</li>
+              <li>Regulatory requirements</li>
+            </ul>
+
+                      <div class="max-w-4xl mx-auto my-16">
+                          <h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">How to select the right container</h2>
+                          <img src="/public/blog-images/Global-Logistics/SelectRightContainer.png"
+                          alt="How to select the right container"
+                          class="mx-auto w-full max-w-xl rounded-xl border border-slate-200 shadow-sm" />
+                      </div>
+
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900 pt-10">
+              Conclusion
+            </h2>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Selecting the right container type for engineering goods is essential for safe cargo movement, optimized logistics cost, and regulatory compliance. From standard dry containers to flat racks, open tops, reefers, ISO tanks, and high cube containers, each container serves a specific industrial logistics requirement. Proper container planning ensures damage-free delivery, smoother customs clearance, and efficient global trade operations.
+            </p>
+
+        </section>
+
+        <!-- FAQs-container-types -->
+        <section class="max-w-4xl mx-auto mb-20 space-y-6">
+
+          <h2 id="FAQs-container-types" class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-2">
+            FAQ – Container Types for Engineering Goods
+          </h2>
+
+          <div class="space-y-4">
+
+            <!-- FAQ 1 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q1. What are container types in international logistics?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Container types are standardized steel units used to transport goods safely via sea, rail, road, and multimodal logistics. Different container types are designed to handle varied cargo sizes, weights, shapes, and handling requirements, especially for engineering and industrial goods.
+              </p>
+            </details>
+
+            <!-- FAQ 2 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q2. Why is choosing the right container type important?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Selecting the correct container type helps to prevent cargo damage, optimize freight costs, ensure regulatory compliance, and support oversized or heavy machinery. Incorrect container selection can result in higher shipping costs, cargo damage, and customs delays.
+              </p>
+            </details>
+
+            <!-- FAQ 3 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q3. Which container is best for general engineering goods?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                A Dry Container (20 ft or 40 ft) is best for standard-sized, palletized, or boxed engineering goods such as spare parts, tools, and machinery components. It offers maximum protection and cost efficiency for regular cargo.
+              </p>
+            </details>
+
+            <!-- FAQ 4 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q4. What container should be used for heavy or oversized machinery?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                A Flat Rack Container is ideal for heavy, over-width, or over-length engineering equipment. It allows top and side loading, making it suitable for construction machinery, transformers, and large industrial units.
+              </p>
+            </details>
+
+            <!-- FAQ 5 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q5. When should an Open Top container be used?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                An Open Top Container is used when cargo exceeds standard container height and requires top loading by crane. It is commonly used for tall machinery, industrial presses, and vertical equipment.
+              </p>
+            </details>
+
+            <!-- FAQ 6 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q6. What is a High Cube container and when is it required?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                A High Cube Container is similar to a standard container but offers extra height (approximately 1 foot more). It is ideal for lightweight but voluminous engineering goods that require additional vertical space without using specialized containers.
+              </p>
+            </details>
+
+            <!-- FAQ 7 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q7. Which container is suitable for temperature-sensitive engineering goods?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                A Reefer Container is used for temperature-controlled transportation. It is suitable for industrial chemicals, electronic components, and sensitive engineering materials that require a controlled environment during transit.
+              </p>
+            </details>
+
+            <!-- FAQ 8 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q8. What is an ISO Tank container used for?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                An ISO Tank Container is designed to transport liquid chemicals, industrial oils, and hazardous or non-hazardous liquids safely. It complies with international safety and quality standards.
+              </p>
+            </details>
+
+            <!-- FAQ 9 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q9. Where are containers for engineering goods commonly used?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Containers are widely used at manufacturing plants, Inland Container Depots (ICDs), ports, industrial corridors, and project cargo sites for both export and import operations.
+              </p>
+            </details>
+
+            <!-- FAQ 10 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q10. How can exporters and importers ensure correct container selection?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <div class="mt-4 text-slate-600 leading-relaxed">
+                <p>Exporters and importers should evaluate:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                  <li>Cargo dimensions and weight</li>
+                  <li>Loading and unloading method</li>
+                  <li>Temperature or safety requirements</li>
+                  <li>Destination regulations</li>
+                </ul>
+                <p class="mt-2">
+                  Consulting a freight forwarder or logistics expert ensures optimal container utilization and risk-free transportation.
+                </p>
+              </div>
+            </details>
+
+          </div>
+        </section>
+
+        <!-- Logistics Cost Optimization -->
+        <section id="logistics-cost-optimisation" class="max-w-4xl mx-auto mb-20 space-y-6">
+
+            <h2 class="text-xl sm:text-2xl lg:text-3xl text-center font-semibold text-slate-900">
+              5. Logistics Cost Optimization
+            </h2>
+
+            <p id="introduction-logistics-cost-optimization" class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Advanced Cost Control Strategy for Exporters & Importers
+            </p>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Logistics Cost Optimization is one of the most powerful profit-improvement tools in global trade. By optimizing freight, warehousing, handling, documentation, and customs costs, businesses can achieve higher margins, competitive pricing, and sustainable supply chain operations—without compromising service quality or cargo safety.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">
+              What is logistics cost optimization?
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Logistics Cost Optimization is the systematic reduction of transportation and supply chain expenses while maintaining or improving delivery speed, reliability, and cargo safety. It focuses on eliminating inefficiencies, improving resource utilization, and selecting the most cost-effective logistics strategies.
+            </p>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Optimization does not mean cost cutting at risk—it means smart planning, data-driven decisions, and operational efficiency.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-8">
+              Why is logistics cost optimization critical?
+            </h3>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">1. Improves Profit Margin</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Logistics costs typically account for 10–20% of product value. Even a 5–10% reduction directly increases net profit without increasing sales.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">2. Enables Competitive Pricing</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Lower logistics costs allow exporters and importers to:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Offer better CIF / DDP pricing</li>
+              <li>Win international tenders</li>
+              <li>Compete in price-sensitive markets</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">3. Supports Sustainable Operations</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Optimized logistics reduces:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Fuel consumption</li>
+              <li>Carbon emissions</li>
+              <li>Wasteful handling and storage</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">4. Improves Cash Flow</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Lower freight and inventory costs reduce working capital blockage and inventory holding expenses.
+            </p>
+
+            <h3 id="major-cost-components" class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-8">
+              Where do logistics costs arise?
+            </h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Logistics costs are spread across the entire supply chain, not just transportation.
+            </p>
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">Major Cost Components</h3>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">1. Freight Charges</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Sea freight (LCL / FCL)</li>
+              <li>Air freight</li>
+              <li>Rail and road transport</li>
+              <li>Fuel surcharges</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">2. Port & Terminal Handling Charges</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>THC (Terminal Handling Charges)</li>
+              <li>CFS / ICD handling</li>
+              <li>Equipment usage</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">3. Warehousing Costs</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Storage rent</li>
+              <li>Inventory holding cost</li>
+              <li>Handling and palletization</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">4. Documentation & Compliance</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Freight forwarder fees</li>
+              <li>Customs documentation</li>
+              <li>Certification and inspection charges</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">5. Customs Duties & Taxes</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Basic customs duty</li>
+              <li>IGST / VAT</li>
+              <li>Anti-dumping or safeguard duties</li>
+            </ul>
+
+            <h3 id="how-to-optimize-logistics-cost" class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mt-10">
+            How to optimize logistics cost? (Strategic & practical)
+          </h3>
+
+          <p class="text-md sm:text-base lg:text-lg font-semibold mb-2">
+            1. Mode Selection Optimization (Sea vs Air vs Rail)
+          </p>
+
+          <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+            Choosing the right transport mode has the largest cost impact.
+          </p>
+
+          <div class="overflow-x-auto mb-6">
+            <table class="min-w-full border border-slate-200 text-sm sm:text-base">
+              <thead class="bg-slate-100">
+                <tr>
+                  <th class="border px-4 py-3 font-semibold">Mode</th>
+                  <th class="border px-4 py-3 font-semibold">Cost</th>
+                  <th class="border px-4 py-3 font-semibold">Transit Time</th>
+                  <th class="border px-4 py-3 font-semibold">Best Use</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-600">
+                <tr>
+                  <td class="border px-4 py-3">Sea Freight</td>
+                  <td class="border px-4 py-3">Lowest</td>
+                  <td class="border px-4 py-3">Slow</td>
+                  <td class="border px-4 py-3">Bulk & heavy goods</td>
+                </tr>
+                <tr>
+                  <td class="border px-4 py-3">Air Freight</td>
+                  <td class="border px-4 py-3">Highest</td>
+                  <td class="border px-4 py-3">Fastest</td>
+                  <td class="border px-4 py-3">Urgent, high-value cargo</td>
+                </tr>
+                <tr>
+                  <td class="border px-4 py-3">Rail Freight</td>
+                  <td class="border px-4 py-3">Medium</td>
+                  <td class="border px-4 py-3">Moderate</td>
+                  <td class="border px-4 py-3">Inland long-distance</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="text-slate-600 mb-8">
+            <span class="font-semibold">Optimization Tip:</span> Use sea freight for planned shipments and air freight only for emergencies.
+          </p>
+
+          <p class="text-md sm:text-base lg:text-lg font-semibold mb-2">
+            2. Load & Container Optimization
+          </p>
+
+          <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-2">
+            Poor container utilization increases cost per unit.
+          </p>
+
+          <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Key Actions:
+          </p>
+
+          <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-6">
+            <li>Optimize carton dimensions</li>
+            <li>Improve pallet stacking</li>
+            <li>Choose correct container type</li>
+            <li>Avoid shipping “air” inside containers</li>
+          </ul>
+
+          <p class="text-md sm:text-base lg:text-lg font-semibold mb-2">
+            3. Route & Transit Planning
+          </p>
+
+          <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Indirect routes and unnecessary transshipment increase:
+          </p>
+
+          <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-4">
+            <li>Freight cost</li>
+            <li>Transit risk</li>
+            <li>Insurance premium</li>
+          </ul>
+
+          <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Optimization Strategies:
+          </p>
+
+          <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-6">
+            <li>Use direct sailings</li>
+            <li>Avoid congestion-prone ports</li>
+            <li>Select optimized rail corridors</li>
+          </ul>
+
+          <p class="text-md sm:text-base lg:text-lg font-semibold mb-2">
+            4. Freight Rate Negotiation
+          </p>
+
+          <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-2">
+            Long-term and volume-based contracts reduce rates.
+          </p>
+
+          <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Best Practices:
+          </p>
+
+          <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+            <li>Annual freight contracts</li>
+            <li>Multi-shipment agreements</li>
+            <li>Rate benchmarking</li>
+          </ul>
+
+          <p class="text-md sm:text-base lg:text-lg font-semibold mb-2">
+            5. Consolidation Strategies
+          </p>
+
+          <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+            LCL to FCL Conversion  
+            Combining multiple small shipments into one FCL drastically reduces cost.
+          </p>
+
+          <p class="font-semibold text-slate-900 mb-2">
+            EXACT CALCULATION – Logistics Cost Optimization (Real Example)
+          </p>
+
+          <p class="text-md sm:text-base lg:text-lg text-slate-600 mb-4">
+            <span class="font-semibold">Example Scenario:</span>  
+            Exporter shipping Engineering Goods (10 CBM, 6,000 kg) from India to Germany
+          </p>
+          <p class="text-md sm:text-base lg:text-lg text-slate-600 mb-4">
+            <span class="font-semibold">Option 1:</span>  
+            LCL Shipment (Before Optimization)
+          </p>
+
+          <div class="overflow-x-auto mb-6">
+            <table class="min-w-full border border-slate-200 text-sm sm:text-base">
+              <thead class="bg-slate-100">
+                <tr>
+                  <th class="border px-4 py-3 font-semibold">Cost Component</th>
+                  <th class="border px-4 py-3 font-semibold">Amount (USD)</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-600">
+                <tr><td class="border px-4 py-3">LCL Freight</td><td class="border px-4 py-3">1,200</td></tr>
+                <tr><td class="border px-4 py-3">Origin Handling</td><td class="border px-4 py-3">300</td></tr>
+                <tr><td class="border px-4 py-3">Destination CFS</td><td class="border px-4 py-3">350</td></tr>
+                <tr><td class="border px-4 py-3">Documentation</td><td class="border px-4 py-3">150</td></tr>
+                <tr class="font-semibold"><td class="border px-4 py-3">Total Logistics Cost</td><td class="border px-4 py-3">2,000 USD</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="text-md sm:text-base lg:text-lg text-slate-600 mb-4">
+            <span class="font-semibold">Option 2:</span>  
+            Optimized FCL Shipment (After Optimization)
+          </p>
+
+
+          <div class="overflow-x-auto mb-6">
+            <table class="min-w-full border border-slate-200 text-sm sm:text-base">
+              <thead class="bg-slate-100">
+                <tr>
+                  <th class="border px-4 py-3 font-semibold">Cost Component</th>
+                  <th class="border px-4 py-3 font-semibold">Amount (USD)</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-600">
+                <tr><td class="border px-4 py-3">20 ft FCL Freight</td><td class="border px-4 py-3">1,400</td></tr>
+                <tr><td class="border px-4 py-3">Origin Handling</td><td class="border px-4 py-3">250</td></tr>
+                <tr><td class="border px-4 py-3">Destination Handling</td><td class="border px-4 py-3">250</td></tr>
+                <tr><td class="border px-4 py-3">Documentation</td><td class="border px-4 py-3">100</td></tr>
+                <tr class="font-semibold"><td class="border px-4 py-3">Total Logistics Cost</td><td class="border px-4 py-3">2,000 USD</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="text-md sm:text-base lg:text-lg text-slate-600 mb-4">
+            BUT Cargo Volume Utilization:
+          </p>
+
+          <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-6">
+            <li>LCL cost per CBM = 200 USD</li>
+            <li>FCL cost per CBM (full utilization) = 140 USD</li>
+          </ul>
+
+          <div class="overflow-x-auto mb-8">
+            <table class="min-w-full border border-slate-200 text-sm sm:text-base">
+              <thead class="bg-slate-100">
+                <tr>
+                  <th class="border px-4 py-3 font-semibold">Item</th>
+                  <th class="border px-4 py-3 font-semibold">LCL</th>
+                  <th class="border px-4 py-3 font-semibold">FCL</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-600">
+                <tr>
+                  <td class="border px-4 py-3">Total Cost</td>
+                  <td class="border px-4 py-3">2,800 USD</td>
+                  <td class="border px-4 py-3">1,400 USD</td>
+                </tr>
+                <tr>
+                  <td class="border px-4 py-3">Cost per CBM</td>
+                  <td class="border px-4 py-3">200 USD</td>
+                  <td class="border px-4 py-3">100 USD</td>
+                </tr>
+                <tr class="font-semibold">
+                  <td class="border px-4 py-3">Savings</td>
+                  <td class="border px-4 py-3">–</td>
+                  <td class="border px-4 py-3">50%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="overflow-x-auto mb-8">
+            <table class="min-w-full border border-slate-200 text-sm sm:text-base">
+              <thead class="bg-slate-100">
+                <tr>
+                  <th class="border px-4 py-3 font-semibold">Logistics Cost Optimization Formula</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-600">
+                <tr>
+                  <td class="border px-4 py-4">
+                    Logistics Cost per Unit =<br>
+                    (Total Freight + Handling + Documentation + Warehousing) ÷ Total Cargo Volume or Weight
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-8">
+            Key KPIs to Track Logistics Cost Optimization
+          </h3>
+
+          <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-6">
+            <li>Freight cost per CBM / MT</li>
+            <li>Logistics cost as % of sales</li>
+            <li>Inventory holding cost</li>
+            <li>Transit time variance</li>
+            <li>Damage and claim ratio</li>
+          </ul>
+
+                      <div class="max-w-4xl mx-auto my-16">
+                          <h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">Logistics Cost Optimization Process</h2>
+                          <img src="/public/blog-images/Global-Logistics/LogisticsCostOptimizationProcess.png"
+                          alt="Logistics Cost Optimization Process"
+                          class="mx-auto w-full max-w-xl rounded-xl border border-slate-200 shadow-sm" />
+                      </div>
+
+          <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900 mt-10 mb-4">
+            Conclusion
+          </h2>
+
+          <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Logistics Cost Optimization is a strategic advantage, not just a cost-saving exercise. By optimizing mode selection, container utilization, route planning, freight negotiation, and consolidation strategies, exporters and importers can achieve lower logistics cost, higher margins, faster deliveries, and sustainable global operations.
+          </p>
+
+
+        </section>
+
+        <!-- FAQS -->
+        <section class="max-w-4xl mx-auto mb-20 space-y-6">
+
+          <h2 id="FAQs-logistics-cost" class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-2">
+            FAQ – Logistics Cost Optimization
+          </h2>
+
+          <div class="space-y-4">
+
+            <!-- FAQ 1 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q1. What is Logistics Cost Optimization?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Logistics Cost Optimization is the strategic process of reducing transportation and supply chain costs without compromising delivery timelines, cargo safety, or service quality. It focuses on improving freight efficiency, container utilization, route planning, and operational control.
+              </p>
+            </details>
+
+            <!-- FAQ 2 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q2. Why is logistics cost optimization important for exporters and importers?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Logistics costs directly impact profit margins and product competitiveness. Optimizing logistics expenses helps exporters and importers offer better pricing, improve cash flow, and stay competitive in global markets while maintaining reliable delivery performance.
+              </p>
+            </details>
+
+            <!-- FAQ 3 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q3. What are the major cost components in logistics?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <div class="mt-4 text-slate-600 leading-relaxed">
+                <p>The main logistics cost components include:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                  <li>Freight charges (sea, air, rail, road)</li>
+                  <li>Port and terminal handling charges</li>
+                  <li>Warehousing and inventory holding costs</li>
+                  <li>Documentation and compliance fees</li>
+                  <li>Customs duties and taxes</li>
+                </ul>
+              </div>
+            </details>
+
+            <!-- FAQ 4 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q4. How does mode selection help in optimizing logistics costs?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Selecting the right transportation mode significantly reduces costs. Sea freight is ideal for heavy and bulk cargo, air freight for urgent and high-value shipments, and rail freight for cost-effective inland movement. Correct mode selection avoids unnecessary premium charges.
+              </p>
+            </details>
+
+            <!-- FAQ 5 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q5. How does container and load optimization reduce logistics cost?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Proper container and load optimization ensures maximum space utilization, reducing the cost per unit shipped. Choosing the right container type and improving packing efficiency prevents space wastage and avoids higher freight and handling charges.
+              </p>
+            </details>
+
+            <!-- FAQ 6 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q6. What role does cargo consolidation play in cost optimization?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Cargo consolidation combines multiple smaller shipments into a single larger shipment, such as converting LCL to FCL. This significantly reduces freight cost per CBM, handling charges, and documentation expenses.
+              </p>
+            </details>
+
+            <!-- FAQ 7 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q7. Can route planning reduce logistics costs?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Yes, optimized route planning reduces transit time, fuel costs, port congestion delays, and risk of cargo damage. Choosing direct routes and efficient corridors leads to lower overall logistics expenses.
+              </p>
+            </details>
+
+            <!-- FAQ 8 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q8. How do freight rate negotiations help in cost optimization?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Negotiating freight rates through long-term contracts, volume commitments, and rate benchmarking helps secure lower rates from shipping lines and logistics providers, resulting in consistent cost savings.
+              </p>
+            </details>
+
+            <!-- FAQ 9 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q9. How can documentation and compliance impact logistics costs?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Errors in documentation or regulatory non-compliance can lead to shipment delays, demurrage, detention, and penalties. Streamlined documentation and proper compliance reduce hidden logistics costs and avoid unnecessary expenses.
+              </p>
+            </details>
+
+            <!-- FAQ 10 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q10. How can companies measure logistics cost optimization success?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <div class="mt-4 text-slate-600 leading-relaxed">
+                <p>Success can be measured by tracking key performance indicators such as:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                  <li>Logistics cost per unit (CBM or MT)</li>
+                  <li>Logistics cost as a percentage of sales</li>
+                  <li>Transit time consistency</li>
+                  <li>Inventory holding cost</li>
+                  <li>Damage and claim ratio</li>
+                </ul>
+              </div>
+            </details>
+
+          </div>
+        </section>
+
+        <!-- Freight Forwarder vs NVOCC vs CHA -->
+        <section id="Freight-Forwarder-vs-NVOCC-vs-CHA" class="max-w-4xl mx-auto mb-20 space-y-6">
+
+          <h2 id="introduction-freight-forwarder-vs-nvocc-vs-cha" class="text-xl sm:text-2xl lg:text-3xl text-center font-semibold text-slate-900">
+            6. Freight Forwarder vs NVOCC vs CHA
+          </h2>
+
+          <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            In international trade and global logistics, Freight Forwarders, NVOCCs, and CHAs play distinct but interconnected roles. Understanding their differences helps exporters and importers select the right logistics partner, ensure legal compliance, control costs, and achieve smooth shipment execution.
+          </p>
+
+          <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">
+            What are these entities?
+          </h3>
+
+          <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">Freight Forwarder</h3>
+          <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            A Freight Forwarder is a logistics professional or company that organizes and manages the complete movement of cargo from origin to destination. Freight forwarders act as logistics coordinators, handling transport planning, documentation, and communication across the supply chain.
+          </p>
+
+          <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">NVOCC (Non-Vessel Operating Common Carrier)</h3>
+          <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            An NVOCC is a logistics entity that does not own vessels but issues its own House Bill of Lading and contracts directly with shipping lines. NVOCCs specialize in sea freight consolidation and container space management.
+          </p>
+
+          <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">CHA (Customs House Agent)</h3>
+          <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            A Customs House Agent (CHA) is a licensed professional authorized by customs authorities to handle customs clearance, duty payment, and regulatory compliance for import and export cargo.
+          </p>
+
+          <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-8">
+            Why understanding these differences is important?
+          </h3>
+
+          <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">1. Correct Partner Selection</h3>
+          <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Each entity serves a specific logistics function. Selecting the right partner ensures operational efficiency and regulatory compliance.
+          </p>
+
+          <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">2. Legal & Regulatory Compliance</h3>
+          <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Customs laws require licensed CHAs for clearance, while shipping requires authorized NVOCCs or forwarders.
+          </p>
+
+          <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">3. Cost Control & Transparency</h3>
+          <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Understanding roles prevents duplicate charges, hidden costs, and misaligned responsibilities.
+          </p>
+
+          <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">4. Smooth Shipment Execution</h3>
+          <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            Clear role definition avoids delays, documentation errors, and coordination failures.
+          </p>
+
+          <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-8">
+            Where each entity is used?
+          </h3>
+
+          <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">Freight Forwarder</h3>
+          <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Global export & import shipments</li>
+            <li>Multimodal logistics (road, rail, sea, air)</li>
+            <li>End-to-end supply chain management</li>
+          </ul>
+
+          <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">NVOCC</h3>
+          <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Sea freight shipments</li>
+            <li>LCL and FCL consolidation</li>
+            <li>Issuance of House Bill of Lading</li>
+          </ul>
+
+          <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">CHA</h3>
+          <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Ports, ICDs, airports</li>
+            <li>Customs clearance zones</li>
+            <li>Bonded warehouses</li>
+          </ul>
+
+          <h3 id="roles-responsibilities" class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mt-10">
+            Roles & responsibilities
+          </h3>
+
+          <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mt-4">
+            1. Freight Forwarder – Roles & Responsibilities
+          </h3>
+
+          <p class="font-semibold text-slate-900 mt-3">
+            Core Responsibilities:
+          </p>
+
+          <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Shipment planning and coordination</li>
+            <li>Mode selection (sea, air, rail, road)</li>
+            <li>Freight rate negotiation</li>
+            <li>Booking cargo space</li>
+            <li>Documentation handling</li>
+            <li>Cargo tracking and delivery coordination</li>
+          </ul>
+
+          <p class="font-semibold text-slate-900 mt-4">
+            Acts As:
+          </p>
+
+          <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Single point of contact for shippers</li>
+            <li>Logistics consultant and coordinator</li>
+            <li>Risk management partner</li>
+          </ul>
+
+          <p class="font-semibold text-slate-900 mt-4">
+            Best Used When:
+          </p>
+
+          <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Shipper needs end-to-end logistics management</li>
+            <li>Multiple transport modes are involved</li>
+            <li>International coordination is required</li>
+          </ul>
+
+          <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mt-4">
+            2. NVOCC – Roles & Responsibilities
+          </h3>
+
+          <p class="font-semibold text-slate-900 mt-3">
+            Core Responsibilities:
+          </p>
+
+          <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Booking vessel space from shipping lines</li>
+            <li>Issuing House Bill of Lading (HBL)</li>
+            <li>Consolidating LCL cargo</li>
+            <li>Managing container utilization</li>
+            <li>Handling port-to-port sea freight</li>
+          </ul>
+
+          <p class="font-semibold text-slate-900 mt-4">
+            Acts As:
+          </p>
+
+          <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Carrier to the shipper</li>
+            <li>Shipper to the shipping line</li>
+          </ul>
+
+          <p class="font-semibold text-slate-900 mt-4">
+            Best Used When:
+          </p>
+
+          <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>LCL shipments require consolidation</li>
+            <li>Cost-effective sea freight is needed</li>
+            <li>House Bill of Lading issuance is preferred</li>
+          </ul>
+
+          <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mt-4">
+            3. CHA – Roles & Responsibilities
+          </h3>
+
+          <p class="font-semibold text-slate-900 mt-3">
+            Core Responsibilities:
+          </p>
+
+          <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Filing shipping bills and bills of entry</li>
+            <li>HS code classification</li>
+            <li>Duty and tax calculation</li>
+            <li>Customs examination coordination</li>
+            <li>Regulatory compliance and approvals</li>
+          </ul>
+
+          <p class="font-semibold text-slate-900 mt-4">
+            Acts As:
+          </p>
+
+          <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Legal representative before customs authorities</li>
+            <li>Compliance and documentation expert</li>
+          </ul>
+
+          <p class="font-semibold text-slate-900 mt-4">
+            Best Used When:
+          </p>
+
+          <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Import or export customs clearance is required</li>
+            <li>Regulatory documentation is complex</li>
+            <li>Cargo requires inspection or certification</li>
+          </ul>
+
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-8">
+              How do freight forwarder, NVOCC & CHA work together?
+            </h3>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">Integrated Workflow Example:</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Exporter appoints a Freight Forwarder → Plans shipment, selects route and mode</li>
+              <li>Forwarder engages an NVOCC → NVOCC books vessel space and issues HBL</li>
+              <li>CHA handles customs clearance → Files documents, pays duties, clears cargo</li>
+              <li>Cargo moves smoothly to destination → Final delivery coordinated by forwarder</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              This collaboration ensures:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Compliance with customs regulations</li>
+              <li>Efficient cargo movement</li>
+              <li>Cost-effective shipping</li>
+              <li>Reduced risk of delays</li>
+            </ul>
+
+            <div class="overflow-x-auto pt-8">
+              <h2 id="freight-forwarder-vs-nvocc-vs-cha" class="text-center text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">Freight Forwarder vs NVOCC vs CHA – Comparison Table</h2>
+              <table class="min-w-full border border-slate-200 text-sm sm:text-base">
+                <thead class="bg-slate-100">
+                  <tr>
+                    <th class="border px-4 py-3 font-semibold">Aspect</th>
+                    <th class="border px-4 py-3 font-semibold">Freight Forwarder</th>
+                    <th class="border px-4 py-3 font-semibold">NVOCC</th>
+                    <th class="border px-4 py-3 font-semibold">CHA</th>
+                  </tr>
+                </thead>
+                <tbody class="text-slate-600">
+                  <tr>
+                    <td class="border px-4 py-3">Primary Role</td>
+                    <td class="border px-4 py-3">Logistics management</td>
+                    <td class="border px-4 py-3">Sea freight carrier</td>
+                    <td class="border px-4 py-3">Customs clearance</td>
+                  </tr>
+                  <tr>
+                    <td class="border px-4 py-3">Bill of Lading</td>
+                    <td class="border px-4 py-3">May issue</td>
+                    <td class="border px-4 py-3">Issues own HBL</td>
+                    <td class="border px-4 py-3">Does not issue</td>
+                  </tr>
+                  <tr>
+                    <td class="border px-4 py-3">Licensing</td>
+                    <td class="border px-4 py-3">Trade/Logistics</td>
+                    <td class="border px-4 py-3">Shipping authority</td>
+                    <td class="border px-4 py-3">Customs authority</td>
+                  </tr>
+                  <tr>
+                    <td class="border px-4 py-3">Customs Handling</td>
+                    <td class="border px-4 py-3">Coordinates</td>
+                    <td class="border px-4 py-3">No</td>
+                    <td class="border px-4 py-3">Yes</td>
+                  </tr>
+                  <tr>
+                    <td class="border px-4 py-3">Mode Coverage</td>
+                    <td class="border px-4 py-3">All modes</td>
+                    <td class="border px-4 py-3">Sea only</td>
+                    <td class="border px-4 py-3">Customs only</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+                      <div class="max-w-4xl mx-auto my-16">
+                          <h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">Freight Forwarder vs NVOCC vs CHA Workflow</h2>
+                          <img src="/public/blog-images/Global-Logistics/FreightForwarder vs NVOCC vs CHA.png"
+                          alt="Freight Forwarder vs NVOCC vs CHA Workflow"
+                          class="mx-auto w-full max-w-xl rounded-xl border border-slate-200 shadow-sm" />
+                      </div>
+
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900 pt-10">
+              Conclusion
+            </h2>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Understanding the difference between a Freight Forwarder, NVOCC, and CHA is critical for successful export-import operations. While a freight forwarder manages the complete logistics journey, an NVOCC specializes in sea freight and container consolidation, and a CHA ensures customs compliance and clearance. Together, they form a strong logistics ecosystem that enables cost-effective, compliant, and smooth global trade.
+            </p>
+
+        </section>
+
+        <!-- FAQS -->
+        <section class="max-w-4xl mx-auto mb-20 space-y-6">
+
+          <h2 id="FAQs-ff-nvocc-cha" class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-2">
+            FAQ – Freight Forwarder, NVOCC & CHA
+          </h2>
+
+          <div class="space-y-4">
+
+            <!-- FAQ 1 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q1. What is a Freight Forwarder?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                A Freight Forwarder is a logistics service provider that manages end-to-end cargo movement from origin to destination. Freight forwarders coordinate transport planning, freight booking, documentation, tracking, and delivery across sea, air, rail, and road modes.
+              </p>
+            </details>
+
+            <!-- FAQ 2 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q2. What is an NVOCC?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                An NVOCC (Non-Vessel Operating Common Carrier) is a logistics entity that does not own ships but books vessel space from shipping lines and issues its own House Bill of Lading (HBL). NVOCCs mainly handle sea freight consolidation and container management.
+              </p>
+            </details>
+
+            <!-- FAQ 3 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q3. What is a CHA (Customs House Agent)?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                A Customs House Agent (CHA) is a government-licensed professional authorized to handle customs clearance procedures on behalf of exporters and importers. CHAs ensure compliance with customs laws, duty payment, and cargo examination.
+              </p>
+            </details>
+
+            <!-- FAQ 4 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q4. What is the main difference between a Freight Forwarder, NVOCC, and CHA?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <div class="mt-4 text-slate-600 leading-relaxed">
+                <ul class="list-disc pl-6 space-y-1">
+                  <li>Freight Forwarder: Manages overall logistics coordination</li>
+                  <li>NVOCC: Acts as a sea freight carrier and issues HBL</li>
+                  <li>CHA: Handles customs clearance and regulatory compliance</li>
+                </ul>
+                <p class="mt-2">
+                  Each plays a distinct role in international trade.
+                </p>
+              </div>
+            </details>
+
+            <!-- FAQ 5 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q5. When should an exporter or importer use a Freight Forwarder?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                A freight forwarder should be used when end-to-end logistics management is required, especially for international shipments involving multiple transport modes or destinations.
+              </p>
+            </details>
+
+            <!-- FAQ 6 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q6. When is an NVOCC required?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <div class="mt-4 text-slate-600 leading-relaxed">
+                <p>An NVOCC is required when shipping by sea freight, particularly for:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                  <li>LCL (Less than Container Load) shipments</li>
+                  <li>Cost-effective container consolidation</li>
+                  <li>Issuance of a House Bill of Lading</li>
+                </ul>
+              </div>
+            </details>
+
+            <!-- FAQ 7 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q7. Is a CHA mandatory for customs clearance?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Yes, in most countries (including India), customs clearance must be handled by a licensed CHA. They are legally authorized to file shipping bills, bills of entry, and represent clients before customs authorities.
+              </p>
+            </details>
+
+            <!-- FAQ 8 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q8. Can one company act as Freight Forwarder, NVOCC, and CHA?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Yes, some logistics companies are licensed to act as freight forwarder, NVOCC, and CHA. This provides single-window logistics solutions, better coordination, and reduced cost and documentation complexity.
+              </p>
+            </details>
+
+            <!-- FAQ 9 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q9. Who is legally responsible for the cargo during sea transport?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                When an NVOCC issues a House Bill of Lading, the NVOCC acts as the carrier and holds responsibility towards the shipper. The shipping line remains responsible under the Master Bill of Lading.
+              </p>
+            </details>
+
+            <!-- FAQ 10 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q10. How do Freight Forwarder, NVOCC, and CHA work together?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                A freight forwarder plans and coordinates the shipment, an NVOCC manages sea freight and issues the House Bill of Lading, and a CHA ensures customs clearance. Together, they enable smooth, compliant, and cost-effective global cargo movement.
+              </p>
+            </details>
+
+          </div>
+        </section>
+
+        <!-- Supply chain risk management -->
+        <section id="supply-chain-risk-management" class="max-w-4xl mx-auto mb-20 space-y-6">
+
+            <h2 id="introduction-supply-chain-risk-management" class="text-xl sm:text-2xl lg:text-3xl text-center font-semibold text-slate-900">
+              7. Supply Chain Risk Management
+            </h2>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Complete Guide for Exporters, Importers & Industrial Logistics
+            </p>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Supply Chain Risk Management (SCRM) is a strategic approach to identify, assess, and mitigate risks that can disrupt the movement of goods, materials, and information across the global supply chain. Effective SCRM ensures business continuity, cargo safety, timely delivery, and cost efficiency, which are critical for engineering, industrial, and project-based shipments.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">
+              What is supply chain risk management?
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Supply Chain Risk Management is the process of identifying potential risks in the supply chain, analyzing their impact, and implementing mitigation strategies. Risks can occur at any point in the supply chain, including transportation, warehousing, procurement, and customs operations.
+            </p>
+
+            <p class="font-semibold text-slate-900">
+              Key Features:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Proactive risk assessment</li>
+              <li>Real-time monitoring and reporting</li>
+              <li>Contingency planning for disruptions</li>
+              <li>Coordination across suppliers, carriers, and logistics partners</li>
+            </ul>
+
+            <h3 id="why-supply-chain-risk-management" class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-8">
+              Why is supply chain risk management important?
+            </h3>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">1. Prevents Delays</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Timely identification of risks like port congestion, customs inspections, or transport breakdowns helps prevent shipment delays, ensuring on-time delivery.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">2. Protects Cargo Value</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              High-value engineering goods, machinery, and industrial equipment are vulnerable to damage, theft, or environmental hazards. SCRM ensures insurance coverage, proper packaging, and handling protocols.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">3. Ensures Business Continuity</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Supply chain disruptions can halt production or project execution. Risk management ensures backup suppliers, alternative transport routes, and emergency protocols are in place.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">4. Reduces Financial Loss</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              By anticipating and mitigating risks, companies can avoid penalty charges, demurrage, inventory losses, and additional freight costs.
+            </p>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">5. Improves Stakeholder Confidence</h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+              Customers, investors, and partners gain trust in consistent delivery performance and risk-aware operations.
+            </p>
+
+            <h3 id="where-supply-chain-risks-occur" class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-8">
+              Where do supply chain risks occur?
+            </h3>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">1. Transportation Risks</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Vessel or truck delays</li>
+              <li>Accidents or cargo damage</li>
+              <li>Carrier insolvency</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">2. Customs & Regulatory Risks</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Delays in clearance</li>
+              <li>Non-compliance penalties</li>
+              <li>Changing regulations</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">3. Warehousing & Inventory Risks</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Fire, theft, or spoilage</li>
+              <li>Mismanagement or overstocking</li>
+              <li>Equipment failure</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">4. Supplier & Procurement Risks</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Single-source dependency</li>
+              <li>Quality or production delays</li>
+              <li>Price volatility</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">5. Political & Natural Risks</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Strikes, protests, or political instability</li>
+              <li>Floods, earthquakes, or pandemics</li>
+              <li>Trade restrictions or embargoes</li>
+            </ul>
+
+            <h3 id="how-to-manage-supply-chain-risks" class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-8">
+              How to manage supply chain risks?
+            </h3>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">1. Diversified Logistics Routes</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Use multiple transport modes (sea, air, rail, road)</li>
+              <li>Avoid single-route dependency</li>
+              <li>Plan alternate ports and inland hubs</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">2. Cargo Insurance</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Marine cargo insurance for ocean freight</li>
+              <li>Air cargo insurance for high-value goods</li>
+              <li>Coverage for natural disasters, theft, or damage</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">3. Backup Suppliers & Contingency Planning</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Maintain alternative suppliers</li>
+              <li>Maintain safety stock or buffer inventory</li>
+              <li>Include emergency procurement contracts</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">4. Compliance Audits & Documentation</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Regular supplier and logistics audits</li>
+              <li>Ensure customs, safety, and environmental compliance</li>
+              <li>Maintain updated certificates and permits</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">5. Real-Time Tracking & Monitoring</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>GPS and IoT-enabled cargo tracking</li>
+              <li>Shipment monitoring dashboards</li>
+              <li>Early warning alerts for delays, temperature deviation, or route disruption</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-6">6. Risk Assessment & KPI Monitoring</h3>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Perform risk scoring for all supply chain nodes</li>
+              <li>Monitor key performance indicators (on-time delivery, damage ratio, insurance claims)</li>
+              <li>Continuously refine mitigation strategies</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 pt-8">
+              Benefits of effective supply chain risk management
+            </h3>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+              <li>Reduced shipment delays and disruptions</li>
+              <li>Minimized cargo damage or loss</li>
+              <li>Lower financial and operational impact from unforeseen events</li>
+              <li>Better supplier and carrier reliability</li>
+              <li>Enhanced global trade reputation and customer satisfaction</li>
+            </ul>
+                      <div class="max-w-4xl mx-auto my-16">
+                          <h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">Supply Chain Risk Management Process</h2>
+                          <img src="/public/blog-images/Global-Logistics/SupplyChainRiskManagementProcess.png"
+                          alt="Supply Chain Risk Management Process"
+                          class="mx-auto w-full max-w-xl rounded-xl border border-slate-200 shadow-sm" />
+                      </div>
+
+        </section>
+
+        <!-- FAQS -->
+        <section class="max-w-4xl mx-auto mb-20 space-y-6">
+
+          <h2 id="FAQs-supply-chain-risk" class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-2">
+            FAQ – Supply Chain Risk Management
+          </h2>
+
+          <div class="space-y-4">
+
+            <!-- FAQ 1 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q1. What is Supply Chain Risk Management (SCRM)?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Supply Chain Risk Management is the process of identifying, analyzing, and mitigating risks in the supply chain to ensure timely delivery, cargo safety, and business continuity. It covers all stages including transportation, warehousing, customs, and supplier operations.
+              </p>
+            </details>
+
+            <!-- FAQ 2 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q2. Why is Supply Chain Risk Management important?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <div class="mt-4 text-slate-600 leading-relaxed">
+                <p>SCRM is critical because it:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                  <li>Prevents shipment delays</li>
+                  <li>Protects cargo value and reduces damage</li>
+                  <li>Ensures business continuity</li>
+                  <li>Minimizes financial loss</li>
+                  <li>Enhances stakeholder confidence</li>
+                </ul>
+              </div>
+            </details>
+
+            <!-- FAQ 3 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q3. Where do supply chain risks commonly occur?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <div class="mt-4 text-slate-600 leading-relaxed">
+                <p>Supply chain risks can occur in:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                  <li>Transportation (delays, accidents, carrier failure)</li>
+                  <li>Customs and regulatory compliance (clearance delays, penalties)</li>
+                  <li>Warehousing and inventory (damage, theft, spoilage)</li>
+                  <li>Supplier & procurement (single-source dependency, production delays)</li>
+                  <li>Political & natural disruptions (strikes, floods, trade restrictions)</li>
+                </ul>
+              </div>
+            </details>
+
+            <!-- FAQ 4 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q4. How can logistics companies or exporters manage supply chain risks?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <div class="mt-4 text-slate-600 leading-relaxed">
+                <p>Risks can be managed by:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                  <li>Using diversified logistics routes and alternative transport modes</li>
+                  <li>Procuring cargo insurance (sea, air, rail)</li>
+                  <li>Maintaining backup suppliers and contingency plans</li>
+                  <li>Conducting compliance audits and documentation checks</li>
+                  <li>Implementing real-time tracking for shipments</li>
+                  <li>Monitoring risk KPIs (on-time delivery, damage ratio, claims)</li>
+                </ul>
+              </div>
+            </details>
+
+            <!-- FAQ 5 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q5. What is the role of cargo insurance in risk management?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Cargo insurance protects shipments against damage, theft, or loss during transit. It ensures that high-value engineering goods, industrial equipment, or project cargo are financially secured in case of unforeseen events.
+              </p>
+            </details>
+
+            <!-- FAQ 6 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q6. How do backup suppliers help in mitigating risks?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Backup suppliers reduce dependency on a single source, ensuring continuity if the primary supplier fails due to production issues, strikes, or natural disasters. This reduces the risk of project delays and production halts.
+              </p>
+            </details>
+
+            <!-- FAQ 7 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q7. What is the importance of real-time tracking in risk management?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Real-time tracking allows monitoring of shipment location, transit conditions, and deviations. Early alerts help in proactive decision-making, rerouting, or corrective action to avoid delays or cargo damage.
+              </p>
+            </details>
+
+            <!-- FAQ 8 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q8. How can companies assess and prioritize supply chain risks?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Companies can use risk scoring and ranking methods to evaluate the likelihood and impact of potential disruptions. High-impact, high-probability risks are prioritized for mitigation planning.
+              </p>
+            </details>
+
+            <!-- FAQ 9 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q9. Can technology help in Supply Chain Risk Management?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <p class="mt-4 text-slate-600 leading-relaxed">
+                Yes, technologies such as IoT sensors, GPS tracking, AI-based risk analytics, and logistics dashboards provide real-time data and predictive insights, enhancing risk detection and mitigation.
+              </p>
+            </details>
+
+            <!-- FAQ 10 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+              <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                Q10. What are the benefits of effective Supply Chain Risk Management?
+                <span class="transition-transform group-open:rotate-180">▶</span>
+              </summary>
+              <div class="mt-4 text-slate-600 leading-relaxed">
+                <ul class="list-disc pl-6 space-y-1">
+                  <li>Reduced shipment delays and disruptions</li>
+                  <li>Minimized cargo damage and loss</li>
+                  <li>Lower financial and operational risks</li>
+                  <li>Increased supplier and carrier reliability</li>
+                  <li>Enhanced customer satisfaction and trust</li>
+                </ul>
+              </div>
+            </details>
+
+          </div>
+        </section>
+
+        </article>
+</main>
+</div>
+<script>
+    const toggleBtn = document.getElementById("toc-toggle")
+    const closeBtn = document.getElementById("toc-close")
+    const sidebar = document.getElementById("toc-sidebar")
+    const overlay = document.getElementById("toc-overlay")
+    const body = document.body
+
+    function openSidebar() {
+      sidebar.classList.remove("-translate-x-full")
+      overlay.classList.remove("hidden")
+      body.classList.add("overflow-hidden")
+    }
+
+    function closeSidebar() {
+      sidebar.classList.add("-translate-x-full")
+      overlay.classList.add("hidden")
+      body.classList.remove("overflow-hidden")
+    }
+
+    toggleBtn.addEventListener("click", openSidebar)
+    closeBtn.addEventListener("click", closeSidebar)
+    overlay.addEventListener("click", closeSidebar)
+
+    document.querySelectorAll('[data-scroll]').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault()
+
+        const id = link.getAttribute('href')
+        const target = document.querySelector(id)
+        if (!target) return
+
+        target.scrollIntoView({ behavior: 'smooth' })
+
+        // IMPORTANT: replace state instead of push
+        history.replaceState(null, '', id)
+      })
+    })
+    
+</script>    
+</body>
+</html>
