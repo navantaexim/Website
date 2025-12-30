@@ -1,6 +1,6 @@
 import 'server-only'
 import { cookies } from 'next/headers'
-import { auth } from '@/lib/firebase-admin'
+import { getAuth } from '@/lib/firebase-admin'
 import prisma from '@/lib/db'
 
 export async function getCurrentUser() {
@@ -11,7 +11,7 @@ export async function getCurrentUser() {
 
   try {
     // Verify the session cookie
-    const decodedClaims = await auth.verifySessionCookie(session, true)
+    const decodedClaims = await getAuth().verifySessionCookie(session, true)
     
     // Fetch user from DB
     const user = await prisma.user.findUnique({
