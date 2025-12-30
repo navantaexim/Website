@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
-import { auth } from '@/lib/firebase-admin'
+import { getAuth } from '@/lib/firebase-admin'
 import prisma from '@/lib/db'
 
 export async function POST(request: Request) {
@@ -13,7 +13,7 @@ export async function POST(request: Request) {
 
     // 1. Verify the Firebase ID token
     // The verifyIdToken promise resolves to the decoded token if valid
-    const decodedToken = await auth.verifyIdToken(token)
+    const decodedToken = await getAuth().verifyIdToken(token)
     const { email, uid, name, picture } = decodedToken
 
     if (!email) {
@@ -43,7 +43,7 @@ export async function POST(request: Request) {
     // 3. Create Session Cookie
     // Set explicit expiration (e.g., 5 days)
     const expiresIn = 60 * 60 * 24 * 5 * 1000
-    const sessionCookie = await auth.createSessionCookie(token, { expiresIn })
+    const sessionCookie = await getAuth().createSessionCookie(token, { expiresIn })
 
     // 4. Set the cookie
     // Next.js 15+ compatible await
