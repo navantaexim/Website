@@ -89,7 +89,9 @@ export async function getAllBlogs() {
     'Import-Process-Step-By-Step',
     'International-Marketing',
     'Global-Logistics',
-    'International-Finance'
+    'International-Finance',
+    'Lean-Supply-Chain-Management',
+    
   ]
 
   // Sort based on custom order, falling back to name if not in list

@@ -1,0 +1,3059 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Lean Supply Chain Management</title>
+	<!-- Tailwind CSS -->
+	<script src="https://cdn.tailwindcss.com"></script>
+
+	<style>
+		body {
+			font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+			margin: 0;
+		}
+	</style>
+</head>
+
+<body class="bg-white text-slate-800 w-full overflow-x-hidden">
+	<button id="toc-toggle" class="lg:hidden fixed bottom-6 right-6 z-50
+         bg-white shadow-lg rounded-full p-3 border" aria-label="Open table of contents">
+		☰
+	</button>
+	<div id="toc-overlay" class="fixed inset-0 bg-black/40 z-40 hidden">
+	</div>
+
+	<div class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+		<main class="w-full flex justify-center px-4 sm:px-6 lg:px-8">
+
+        <div class="relative lg:flex max-w-7xl mx-auto">
+            <aside id="toc-sidebar" class="fixed lg:sticky
+					top-16 lg:top-20
+					left-0
+					z-50
+					w-[280px]
+					h-[calc(100vh-4rem)]
+					bg-white
+					border-r
+					overflow-y-auto
+					transform -translate-x-full lg:translate-x-0
+					transition-transform duration-300 ease-in-out">
+					<button id="toc-close"
+						class="lg:hidden absolute top-4 right-4 text-slate-500 hover:text-slate-900 text-xl"
+						aria-label="Close sidebar">
+						✕
+					</button>
+
+					<div class="sticky top-15 max-h-[calc(100vh-6rem)] overflow-y-auto border-r no-scrollbar pr-4 pb-12 pl-3">
+						<h3 class="text-sm font-semibold uppercase text-slate-500 mb-4">
+							In This Article
+						</h3>
+
+						<details class="group">
+							<summary data-id="lean-supply-chain-management"
+								class="cursor-pointer font-medium text-slate-800 hover:text-blue-600">
+								Lean Supply Chain Management
+							</summary>
+							<ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
+								<li><a href="#introduction-lscm" data-scroll class="hover:text-blue-600">Introduction</a></li>
+								<li><a href="#what-why-where-how-lscm" data-scroll class="hover:text-blue-600">What,Why,Where,How</a></li>
+								<li><a href="#FAQs-lscm" data-scroll class="hover:text-blue-600">FAQs</a></li>
+							</ul>
+						</details>
+
+						<details class="group-1">
+							<summary data-id="eliminating-waste-in-exim"
+								class="cursor-pointer font-medium text-slate-800 hover:text-blue-600">
+								Eliminating Waste in EXIM
+							</summary>
+							<ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
+								<li><a href="#introduction-eliminating-waste-in-exim" data-scroll class="hover:text-blue-600">Introduction</a></li>
+								<li><a href="#what-why-eliminating-waste-in-exim" data-scroll class="hover:text-blue-600">What,Why</a></li>
+								<li><a href="#FAQs-eliminating-waste-in-exim" data-scroll class="hover:text-blue-600">FAQs</a></li>
+							</ul>
+						</details>
+
+						<details class="group-2">
+							<summary data-id="lean-tools-in-supply-chain"
+								class="cursor-pointer font-medium text-slate-800 hover:text-blue-600">
+								Lean Tools in Supply Chain (5S, Kaizen, Kanban)
+							</summary>
+							<ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
+								<li><a href="#introduction-lean-tools-in-supply-chain" data-scroll class="hover:text-blue-600">Introduction</a></li>
+								<li><a href="#what-why-lean-tools-in-supply-chain" data-scroll class="hover:text-blue-600">What,Why</a></li>
+								<li><a href="#five-s-in-exim-operations" data-scroll class="hover:text-blue-600">5S in EXIM Operations</a></li>
+								<li><a href="#FAQs-lean-tools-in-supply-chain" data-scroll class="hover:text-blue-600">FAQs</a></li>
+							</ul>
+						</details>
+
+						<details class="group-3">
+							<summary data-id="kaizen-in-exim-global-trade"
+								class="cursor-pointer font-medium text-slate-800 hover:text-blue-600">
+								Kaizen (Continuous Improvement) in EXIM & Global Trade
+							</summary>
+							<ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
+								<li><a href="#introduction-kaizen-in-exim-global-trade" data-scroll class="hover:text-blue-600">Introduction</a></li>
+								<li><a href="#what-why-where-how-kaizen-in-exim-global-trade" data-scroll class="hover:text-blue-600">What,Why,Where,How</a></li>
+								<li><a href="#FAQs-kaizen-in-exim-global-trade" data-scroll class="hover:text-blue-600">FAQs</a></li>
+							</ul>
+						</details>
+
+						<details class="group-4">
+							<summary data-id="kanban-in-supply-chain-logistics"
+								class="cursor-pointer font-medium text-slate-800 hover:text-blue-600">
+								Kanban in Supply Chain & Logistics 
+							</summary>
+							<ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
+								<li><a href="#introduction-ksc" data-scroll class="hover:text-blue-600">Introduction</a></li>
+								<li><a href="#what-why-where-how-ksc" data-scroll class="hover:text-blue-600">What,Why,Where,How</a></li>
+								<li><a href="#FAQs-ksc" data-scroll class="hover:text-blue-600">FAQs</a></li>
+							</ul>
+						</details>
+
+						<details class="group-5">
+							<summary data-id="standardizing-streamlining-exim-processes"
+								class="cursor-pointer font-medium text-slate-800 hover:text-blue-600">
+								Standardizing & Streamlining EXIM Processes
+							</summary>
+							<ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
+								<li><a href="#introduction-ssep" data-scroll class="hover:text-blue-600">Introduction</a></li>
+								<li><a href="#what-why-where-how-ssep" data-scroll class="hover:text-blue-600">What,Why,Where,How</a></li>
+								<li><a href="#FAQs-ssep" data-scroll class="hover:text-blue-600">FAQs</a></li>
+							</ul>
+						</details>
+
+                        <details class="group-6">
+							<summary data-id="visibility-kpis-performance-dashboards"
+								class="cursor-pointer font-medium text-slate-800 hover:text-blue-600">
+								Visibility KPIs & Performance Dashboards
+							</summary>
+							<ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
+								<li><a href="#introduction-vkpdp" data-scroll class="hover:text-blue-600">Introduction</a></li>
+								<li><a href="#what-why-where-how-vkpdp" data-scroll class="hover:text-blue-600">What,Why,Where,How</a></li>
+								<li><a href="#FAQs-vkpdp" data-scroll class="hover:text-blue-600">FAQs</a></li>
+							</ul>
+						</details>
+					</div>
+				</aside>
+        </div>
+        <article class="w-full max-w-4xl bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-12">
+
+            <section id="lean-supply-chain-management" class="max-w-4xl mx-auto mb-20 space-y-6">
+                <!-- Main Title -->
+                <h1 class="text-2xl sm:text-3xl text-center lg:text-4xl font-bold text-slate-900 mb-10">
+                   Lean Supply Chain Management
+                </h1>
+
+                <p id="introduction-lscm" class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+                    Lean Supply Chain Management is a strategic operational philosophy that focuses on maximizing customer value while systematically eliminating waste across the entire Export–Import (EXIM) ecosystem.
+                </p>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+                    In the context of global trade and international logistics, supply chains are often complex, fragmented, and cost-intensive. Lean principles enable organizations to simplify trade workflows, reduce inefficiencies, strengthen compliance, and improve end-to-end visibility across cross-border operations.
+                </p>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-10">
+                    For exporters, importers, and global supply chain operators, lean supply chain management is a critical enabler of competitiveness, profitability, and regulatory resilience.
+                </p>
+
+                <!-- 10.1 -->
+                <h2 id="what-why-where-how-lscm" class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                    What is Lean Supply Chain Management?
+                </h2>
+
+                <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                    What is Lean Supply Chain?
+                </h3>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+                    Lean Supply Chain Management is a structured, data-driven approach to identifying, analyzing, and eliminating non-value-adding activities (waste) across all supply chain functions, including:
+                </p>
+
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+                    <li>Procurement & supplier coordination</li>
+                    <li>Production & order fulfillment</li>
+                    <li>International logistics & freight movement</li>
+                    <li>Customs clearance & regulatory compliance</li>
+                    <li>Warehousing & inventory control</li>
+                    <li>Distribution & last-mile delivery</li>
+                </ul>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-10">
+                    In EXIM operations, a lean supply chain ensures that every activity, document, movement, and approval adds measurable value—either to the customer or to regulatory compliance.
+                </p>
+
+                <!-- Value Creation -->
+                <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                    Value Creation in Lean EXIM Supply Chains
+                </h3>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+                    A lean EXIM supply chain focuses on:
+                </p>
+
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-6">
+                    <li>Speed – reducing lead times and transit delays</li>
+                    <li>Accuracy – minimizing documentation and compliance errors</li>
+                    <li>Cost efficiency – lowering logistics, storage, and penalty costs</li>
+                    <li>Reliability – ensuring predictable and on-time deliveries</li>
+                </ul>
+
+                <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                    Key Outcomes in EXIM Operations
+                </h3>
+
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-10">
+                    <li>Faster cargo movement across borders</li>
+                    <li>Lower logistics, warehousing, and compliance costs</li>
+                    <li>Reduced customs interventions and penalties</li>
+                    <li>Higher service reliability and customer trust</li>
+                    <li>Improved exporter–importer coordination</li>
+                </ul>
+
+                <!-- Why -->
+                <h2 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                    Why Lean Supply Chain is Important in EXIM?
+                </h2>
+
+                <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                    Complexity of Global Trade
+                </h3>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+                    Modern EXIM operations are impacted by:
+                </p>
+
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+                    <li>Multiple stakeholders (exporters, importers, suppliers, freight forwarders, customs brokers, banks, regulators)</li>
+                    <li>Complex international trade regulations</li>
+                    <li>Country-specific compliance requirements</li>
+                    <li>Volatile freight rates and port congestion</li>
+                    <li>Extended trade and payment cycles</li>
+                </ul>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+                    Without lean practices, these complexities lead to delays, cost overruns, duplication of effort, and compliance risks.
+                </p>
+
+                <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                    Strategic Importance of Lean in EXIM
+                </h3>
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+                    Lean supply chain management helps organizations:
+                </p>
+
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-10">
+                    <li>Reduce overall trade cycle time (order to delivery)</li>
+                    <li>Eliminate duplicate documentation and approvals</li>
+                    <li>Minimize demurrage, detention, and port storage costs</li>
+                    <li>Improve working capital through faster cash conversion</li>
+                    <li>Enhance compliance accuracy and audit readiness</li>
+                </ul>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-10">
+                    Lean transforms EXIM operations from reactive and fragmented into proactive, predictable, and controlled systems.
+                </p>
+
+                <!-- Where -->
+                <h2 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                    Where Lean Principles Apply in EXIM?
+                </h2>
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+                    Lean principles can be implemented across every stage of the export–import lifecycle, including:
+                </p>
+
+                <ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-6 mb-10">
+                    <li>
+                    <strong>Export Operations</strong>
+                    <ul class="list-disc pl-6 mt-2 space-y-2">
+                        <li>Export order processing</li>
+                        <li>Shipping instruction preparation</li>
+                        <li>Documentation verification</li>
+                        <li>Cargo consolidation and dispatch</li>
+                    </ul>
+                    </li>
+                    <li>
+                    <strong>Import Operations</strong>
+                    <ul class="list-disc pl-6 mt-2 space-y-2">
+                        <li>Import planning and pre-clearance</li>
+                        <li>HS code classification</li>
+                        <li>Customs duty assessment</li>
+                        <li>Post-clearance compliance</li>
+                    </ul>
+                    </li>
+                    <li>
+                    <strong>Logistics & Transportation</strong>
+                    <ul class="list-disc pl-6 mt-2 space-y-2">
+                        <li>Freight booking and route optimization</li>
+                        <li>Carrier and forwarder coordination</li>
+                        <li>Transit time management</li>
+                        <li>Exception handling</li>
+                    </ul>
+                    </li>
+                    <li>
+                    <strong>Warehousing & Inventory</strong>
+                    <ul class="list-disc pl-6 mt-2 space-y-2">
+                        <li>Inventory turnover optimization</li>
+                        <li>Reduced storage and handling waste</li>
+                        <li>FIFO/FEFO implementation</li>
+                        <li>Demand-aligned stocking</li>
+                    </ul>
+                    </li>
+                    <li>
+                    <strong>Compliance & Documentation</strong>
+                    <ul class="list-disc pl-6 mt-2 space-y-2">
+                        <li>Standardized trade documentation</li>
+                        <li>Automated data validation</li>
+                        <li>Regulatory reporting</li>
+                        <li>Audit preparation</li>
+                    </ul>
+                    </li>
+                </ol>
+
+                <!-- How -->
+                <h2 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                    How Lean Supply Chain Works in EXIM?
+                </h2>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+                    Lean supply chain management in EXIM follows a continuous improvement cycle focused on visibility, control, and performance.
+                </p>
+
+                <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                    Step-by-Step Lean Execution Framework
+                </h3>
+
+                <ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-4 mb-10 list-disc">
+                    <li>End-to-End Process Mapping</li>
+                    <li>Waste Identification</li>
+                    <li>Root Cause Analysis</li>
+                    <li>Waste Elimination & Process Optimization</li>
+                    <li>Standardization of Workflows</li>
+                    <li>KPI Monitoring & Continuous Improvement</li>
+                </ol>
+
+                <!-- Benefits -->
+                <h2 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                    Key Benefits of Lean Supply Chain Management in EXIM
+                </h2>
+
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-10">
+                    <li>Reduced logistics and transportation costs</li>
+                    <li>Shorter order-to-cash cycles</li>
+                    <li>Lower customs delays and penalties</li>
+                    <li>Improved shipment predictability</li>
+                    <li>Enhanced operational transparency</li>
+                    <li>Stronger compliance governance</li>
+                    <li>Scalable and resilient global supply chains</li>
+                </ul>
+                <div class="max-w-4xl mx-auto my-16">
+                    <h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">Flowchart – Lean Supply Chain Concept</h2>
+                    <img src="/public/blog-images/Lean-Supply-Chain-Management/LeanSupplyChainConcept.png"
+                    alt="Flowchart – Lean Supply Chain Concept"
+                    class="mx-auto w-full max-w-xl rounded-xl border border-slate-200 shadow-sm" />
+                </div>
+
+                <!-- Expert Insight -->
+                <h2 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                    Expert Insight
+                </h2>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                    Lean Supply Chain Management is not a one-time cost-cutting exercise.  
+                    In EXIM, it is a strategic operating model that aligns speed, compliance, cost efficiency, and customer value into a single integrated system.
+                </p>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mt-4">
+                    Organizations that adopt lean principles gain:
+                </p>
+
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                    <li>Faster global market access</li>
+                    <li>Lower operational risk</li>
+                    <li>Higher trade profitability</li>
+                    <li>Long-term competitive advantage</li>
+                </ul>
+            
+            </section>
+
+            <!-- FAQ Overview -->
+            <section class="max-w-4xl mx-auto mb-20 space-y-6">
+
+            <h2 id="FAQs-lscm" class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">
+                FAQ – Lean Supply Chain Management
+            </h2>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>1. What is Lean Supply Chain Management?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Lean Supply Chain Management is a strategic approach that focuses on maximizing customer value while eliminating waste across supply chain operations. In EXIM (Export–Import), it improves logistics efficiency, customs compliance, cost control, and delivery speed by removing non-value-adding activities.
+                </p>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>2. Why is Lean Supply Chain important in Export-Import (EXIM) operations?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Lean supply chain is critical in EXIM because global trade involves complex documentation, multiple stakeholders, regulatory compliance, and high logistics costs. Lean practices help reduce delays, minimize customs errors, lower costs, and improve trade cycle time, making international operations more competitive.
+                </p>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>3. What types of waste are common in EXIM supply chains?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <div class="mt-4 text-slate-700 leading-relaxed">
+                <p class="mb-2">Common EXIM supply chain waste includes:</p>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>Duplicate documentation</li>
+                    <li>Customs clearance delays</li>
+                    <li>Excess inventory at ports</li>
+                    <li>Manual data entry errors</li>
+                    <li>Unnecessary cargo movement</li>
+                    <li>Demurrage and detention costs</li>
+                </ul>
+                </div>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>4. How do Lean tools like 5S, Kaizen, and Kanban help EXIM operations?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <div class="mt-4 text-slate-700 leading-relaxed">
+                <p class="mb-2">Lean tools support structured improvement:</p>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>5S improves document organization and audit readiness</li>
+                    <li>Kaizen drives continuous improvement in trade processes</li>
+                    <li>Kanban provides real-time visibility of shipments and workflows</li>
+                </ul>
+                <p class="mt-2">
+                    Together, they enhance accuracy, speed, coordination, and compliance.
+                </p>
+                </div>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>5. How does Lean Supply Chain improve customs clearance efficiency?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <div class="mt-4 text-slate-700 leading-relaxed">
+                <p class="mb-2">Lean supply chain improves customs clearance by:</p>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>Standardizing documentation</li>
+                    <li>Reducing errors in HS codes and declarations</li>
+                    <li>Enabling pre-clearance planning</li>
+                    <li>Improving coordination with customs brokers</li>
+                </ul>
+                <p class="mt-2">
+                    This results in faster clearance, fewer inspections, and lower penalties.
+                </p>
+                </div>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>6. What are the key KPIs used in Lean EXIM Supply Chains?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <div class="mt-4 text-slate-700 leading-relaxed">
+                <p class="mb-2">Key lean supply chain KPIs include:</p>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>Order cycle time</li>
+                    <li>Customs clearance time</li>
+                    <li>Logistics cost percentage</li>
+                    <li>Documentation error rate</li>
+                    <li>On-time delivery performance</li>
+                    <li>Inventory turnover</li>
+                </ul>
+                </div>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>7. How does process standardization support Lean Supply Chain Management?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Process standardization ensures uniform SOPs, templates, and workflows across export-import operations. It reduces errors, improves compliance consistency, speeds up execution, and enables scalability—making lean supply chains predictable and audit-ready.
+                </p>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>8. Can small and mid-size exporters implement Lean Supply Chain practices?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Yes. Lean supply chain management is scalable and highly effective for small and mid-size exporters. By focusing on waste reduction, process standardization, and simple KPIs, businesses can achieve cost savings, faster deliveries, and improved compliance without heavy investment.
+                </p>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>9. What is the biggest benefit of Lean Supply Chain in global trade?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                The biggest benefit of lean supply chain management in global trade is end-to-end visibility combined with cost and risk reduction. It enables organizations to operate faster, smarter, and more compliantly, creating a sustainable competitive advantage in international markets.
+                </p>
+            </details>
+
+            </section>
+
+            <!-- Eliminating Waste in EXIM (Lean Waste Framework) -->
+            <section id="eliminating-waste-in-exim" class="max-w-4xl mx-auto mb-20 space-y-6">
+
+                <h1 id="introduction-eliminating-waste-in-exim" class="text-2xl sm:text-3xl text-center lg:text-4xl font-bold text-slate-900 mb-10">
+                    Eliminating Waste in EXIM (Lean Waste Framework)
+                </h1>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+                    In international trade, waste is one of the biggest hidden cost drivers. Unlike manufacturing, waste in Export–Import (EXIM) operations is often invisible, appearing as delays, rework, compliance errors, excess inventory, and avoidable logistics expenses.
+                </p>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+                    The Lean Waste Framework enables organizations to identify, measure, and systematically eliminate waste across the global trade lifecycle—improving speed, accuracy, compliance, and profitability.
+                </p>
+
+                <h2 id="what-why-eliminating-waste-in-exim" class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+                    What is Waste in EXIM?
+                </h2>
+
+                <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
+                    Definition of Waste in Export–Import Operations
+                </h3>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+                    In EXIM, waste refers to any activity, process, movement, or delay that consumes time, cost, or resources without adding value to:
+                </p>
+
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+                    <li>The customer, or</li>
+                    <li>Regulatory and compliance requirements.</li>
+                </ul>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+                    If an activity does not:
+                </p>
+
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+                    <li>Move cargo closer to delivery, or</li>
+                    <li>Improve compliance accuracy,</li>
+                </ul>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+                    …it is considered non-value-adding waste.
+                </p>
+
+                <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
+                    Unique Nature of Waste in EXIM
+                </h3>
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+                    Unlike manufacturing, EXIM waste is:
+                </p>
+
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+                    <li>Documentation-heavy</li>
+                    <li>Regulation-driven</li>
+                    <li>Multi-stakeholder dependent</li>
+                    <li>Time-sensitive</li>
+                </ul>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+                    This makes waste harder to detect but more expensive to ignore.
+                </p>
+
+                <h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+                    Types of Waste in Export–Import Operations (Lean Waste Categories)
+                </h2>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+                    Lean supply chain management identifies seven core waste categories, all of which are highly relevant in EXIM.
+                </p>
+
+                <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
+                    1. Overprocessing
+                </h3>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+                    Definition: Doing more work than required.
+                </p>
+
+                <p class="font-medium text-slate-700 mb-2">EXIM Examples:</p>
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-6">
+                    <li>Duplicate documentation across departments</li>
+                    <li>Manual rechecking of already validated data</li>
+                    <li>Multiple approvals for routine shipments</li>
+                </ul>
+
+                <p class="font-medium text-slate-700 mb-2">Impact:</p>
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+                    <li>Higher administrative costs</li>
+                    <li>Slower shipment processing</li>
+                </ul>
+
+                <!-- Repeat structure preserved for all remaining waste types -->
+
+                <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
+                    2. Waiting
+                </h3>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+                    Definition: Idle time where work or cargo is not moving.
+                </p>
+
+                <p class="font-medium text-slate-700 mb-2">EXIM Examples:</p>
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-6">
+                    <li>Cargo waiting for customs examination</li>
+                    <li>Delay in document approval</li>
+                    <li>Waiting for freight confirmation</li>
+                </ul>
+
+                <p class="font-medium text-slate-700 mb-2">Impact:</p>
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+                    <li>Increased demurrage and detention</li>
+                    <li>Missed delivery timelines</li>
+                </ul>
+
+                <!-- Lean waste categories -->
+                <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
+                    3. Transportation
+                </h3>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+                    Definition: Unnecessary movement of goods.
+                </p>
+
+                <p class="font-medium text-slate-700 mb-2">EXIM Examples:</p>
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-6">
+                    <li>Extra port handling</li>
+                    <li>Re-routing due to poor planning</li>
+                    <li>Multiple warehouse transfers</li>
+                </ul>
+
+                <p class="font-medium text-slate-700 mb-2">Impact:</p>
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+                    <li>Higher freight and handling costs</li>
+                    <li>Increased risk of damage</li>
+                </ul>
+
+                <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
+                    4. Inventory
+                </h3>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+                    Definition: Excess stock beyond demand.
+                </p>
+
+                <p class="font-medium text-slate-700 mb-2">EXIM Examples:</p>
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-6">
+                    <li>Cargo stored at ports due to clearance delays</li>
+                    <li>Overstocking for uncertain demand</li>
+                    <li>Slow-moving imported inventory</li>
+                </ul>
+
+                <p class="font-medium text-slate-700 mb-2">Impact:</p>
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+                    <li>High storage costs</li>
+                    <li>Working capital blockage</li>
+                </ul>
+
+                <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
+                    5. Motion
+                </h3>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+                    Definition: Unnecessary movement of people or information.
+                </p>
+
+                <p class="font-medium text-slate-700 mb-2">EXIM Examples:</p>
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-6">
+                    <li>Manual data entry across systems</li>
+                    <li>Physical file movement for approvals</li>
+                    <li>Searching for documents during audits</li>
+                </ul>
+
+                <p class="font-medium text-slate-700 mb-2">Impact:</p>
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+                    <li>Lower productivity</li>
+                    <li>Higher error probability</li>
+                </ul>
+
+                <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
+                    6. Defects
+                </h3>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+                    Definition: Errors that require correction.
+                </p>
+
+                <p class="font-medium text-slate-700 mb-2">EXIM Examples:</p>
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-6">
+                    <li>Incorrect HS code classification</li>
+                    <li>Wrong country of origin declaration</li>
+                    <li>Inaccurate invoice values</li>
+                </ul>
+
+                <p class="font-medium text-slate-700 mb-2">Impact:</p>
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+                    <li>Customs penalties</li>
+                    <li>Shipment rejections or holds</li>
+                </ul>
+
+                <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
+                    7. Overproduction
+                </h3>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+                    Definition: Doing work earlier or in larger quantity than required.
+                </p>
+
+                <p class="font-medium text-slate-700 mb-2">EXIM Examples:</p>
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-6">
+                    <li>Shipping before confirmed demand</li>
+                    <li>Preparing export documents without final orders</li>
+                    <li>Booking cargo prematurely</li>
+                </ul>
+
+                <p class="font-medium text-slate-700 mb-2">Impact:</p>
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-10">
+                    <li>Excess inventory</li>
+                    <li>Cash flow inefficiencies</li>
+                </ul>
+
+                <h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+                    Why Waste Elimination is Critical in EXIM?
+                </h2>
+
+                <p class="font-medium font-semibold text-slate-700 mb-2">Financial Impact</p>
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-6">
+                    <li>Reduces logistics, warehousing, and penalty costs</li>
+                    <li>Improves profit margins on export and import transactions</li>
+                </ul>
+
+                <p class="font-medium font-semibold text-slate-700 mb-2">Compliance Impact</p>
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-6">
+                    <li>Enhances accuracy of customs declarations</li>
+                    <li>Reduces audit observations and penalties</li>
+                </ul>
+
+                <p class="font-medium font-semibold text-slate-700 mb-2">Operational Impact</p>
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-6">
+                    <li>Shortens lead times</li>
+                    <li>Improves shipment predictability</li>
+                </ul>
+
+                <p class="font-medium font-semibold text-slate-700 mb-2">Strategic Impact</p>
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-10">
+                    <li>Improves customer satisfaction</li>
+                    <li>Strengthens competitive advantage in global markets</li>
+                </ul>
+
+                            <div class="max-w-4xl mx-auto my-16">
+                                <h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">Flowchart – Waste Elimination in EXIM</h2>
+                                <img src="/public/blog-images/Lean-Supply-Chain-Management/WasteElimination.png"
+                                alt="Waste elimination in EXIM"
+                                class="mx-auto w-full max-w-xl rounded-xl border border-slate-200 shadow-sm" />
+                            </div>
+
+                <h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+                    Expert Insight
+                </h2>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+                    In EXIM operations, waste is not always visible—but it is always expensive.
+                </p>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+                    Organizations that adopt a lean waste framework gain:
+                </p>
+
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                    <li>Faster customs clearance</li>
+                    <li>Lower logistics costs</li>
+                    <li>Higher compliance accuracy</li>
+                    <li>Stronger global competitiveness</li>
+                </ul>
+
+                <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mt-6">
+                    Eliminating waste is not about cutting corners—it is about building smarter, faster, and more compliant trade operations.
+                </p>
+
+            </section>
+
+            <!-- FAQ: Eliminating Waste in EXIM -->
+            <section class="max-w-4xl mx-auto mb-20 space-y-4">
+            <h2 id="FAQs-eliminating-waste-in-exim" class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">
+                FAQ – Eliminating Waste in EXIM
+            </h2>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>1. What does “waste” mean in Export–Import (EXIM) operations?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                In EXIM, waste refers to any activity that consumes time, cost, or resources without adding customer or regulatory value. This includes documentation errors, customs delays, excess inventory, manual rework, and unnecessary cargo movement, all of which increase trade costs and risk.
+                </p>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>2. Why is eliminating waste critical in international trade?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Eliminating waste is critical because global trade involves tight margins, strict compliance requirements, and time-sensitive logistics. Reducing waste helps organizations lower logistics costs, speed up customs clearance, avoid penalties, and improve overall trade efficiency.
+                </p>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>3. What are the most common types of waste in EXIM supply chains?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                The most common EXIM waste types include:
+                </p>
+                <ul class="list-disc pl-6 mt-3 text-slate-700 space-y-1">
+                <li>Duplicate documentation (overprocessing)</li>
+                <li>Cargo waiting at customs or ports</li>
+                <li>Unnecessary cargo transportation</li>
+                <li>Excess inventory at ports or warehouses</li>
+                <li>Manual data entry and rework</li>
+                <li>Incorrect HS codes or declarations</li>
+                </ul>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>4. How do documentation errors create waste in EXIM?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Documentation errors lead to customs queries, shipment holds, rework, penalties, and delays. Incorrect invoices, packing lists, or HS codes increase clearance time and logistics costs, making documentation accuracy a key focus area for lean EXIM operations.
+                </p>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>5. Where does waste occur most frequently in EXIM operations?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Waste most commonly occurs in:
+                </p>
+                <ul class="list-disc pl-6 mt-3 text-slate-700 space-y-1">
+                <li>Export and import documentation preparation</li>
+                <li>Customs clearance and compliance checks</li>
+                <li>Port and terminal handling</li>
+                <li>Warehousing and inventory storage</li>
+                <li>Inter-department and partner coordination</li>
+                </ul>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>6. How can exporters and importers eliminate waste in EXIM?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Organizations can eliminate EXIM waste by:
+                </p>
+                <ul class="list-disc pl-6 mt-3 text-slate-700 space-y-1">
+                <li>Implementing digital documentation and paperless trade</li>
+                <li>Automating processes using ERP and trade management systems</li>
+                <li>Adopting pre-clearance and advance planning</li>
+                <li>Aligning suppliers, freight forwarders, and brokers</li>
+                <li>Conducting regular lean audits and reviews</li>
+                </ul>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>7. How does lean waste elimination improve customs clearance?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Lean waste elimination improves customs clearance by reducing errors, standardizing filings, enabling advance submissions, and improving data accuracy. This results in faster release times, fewer inspections, and lower demurrage and detention costs.
+                </p>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>8. Can small and mid-sized exporters apply lean waste reduction in EXIM?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Yes. Lean waste reduction is highly scalable and effective for small and mid-sized exporters. By focusing on process mapping, standard documentation, and simple KPI tracking, businesses can achieve significant cost savings and faster trade cycles without large investments.
+                </p>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>9. What is the long-term benefit of eliminating waste in EXIM?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                The long-term benefit of eliminating waste in EXIM is the creation of a faster, more compliant, and cost-efficient supply chain. Organizations gain better visibility, stronger risk control, improved customer satisfaction, and sustainable competitive advantage in global markets.
+                </p>
+            </details>
+
+            </section>
+
+            <!-- Lean Tools in Supply Chain (5S, Kaizen, Kanban) -->
+            <section id="lean-tools-in-supply-chain" class="max-w-4xl mx-auto mb-20 space-y-6">
+
+            <h2 id="introduction-lean-tools-in-supply-chain" class="text-2xl sm:text-3xl text-center lg:text-4xl font-bold text-slate-900 mb-10">
+                Lean Tools in Supply Chain (5S, Kaizen, Kanban)
+            </h2>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Lean tools are structured operational methodologies designed to improve efficiency, accuracy, quality, and workflow continuity across supply chain operations.
+            </p>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                In Export–Import (EXIM) environments—where documentation, compliance, coordination, and timing are critical—lean tools help organizations eliminate waste, standardize processes, and maintain operational discipline.
+            </p>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                When correctly implemented, lean tools transform EXIM operations from reactive and error-prone into predictable, controlled, and scalable systems.
+            </p>
+
+            <h3 id="what-why-lean-tools-in-supply-chain" class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                What are Lean Tools?
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Lean tools are practical frameworks and techniques used to:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Identify inefficiencies</li>
+                <li>Eliminate non-value-adding activities</li>
+                <li>Improve process flow</li>
+                <li>Enhance compliance accuracy</li>
+                <li>Enable continuous improvement</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                In EXIM supply chains, lean tools support faster trade cycles, lower logistics costs, reduced compliance risk, and improved visibility.
+            </p>
+
+            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                Why Lean Tools are Critical in EXIM?
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Global trade operations involve:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>High documentation volumes</li>
+                <li>Strict regulatory oversight</li>
+                <li>Multiple internal and external stakeholders</li>
+                <li>Time-sensitive cargo movement</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Lean tools provide:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Process discipline</li>
+                <li>Operational transparency</li>
+                <li>Error prevention</li>
+                <li>Continuous improvement mechanisms</li>
+            </ul>
+
+            <h2 id="five-s-in-exim-operations" class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mt-10">
+                5S in EXIM Operations
+            </h2>
+
+            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                What is 5S?
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                5S is a workplace organization and standardization methodology aimed at creating efficient, clean, and disciplined work environments—both physical and digital.
+            </p>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                The five elements of 5S are:
+            </p>
+
+            <ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-3 list-decimal">
+                <li>Sort (Seiri) – Remove what is unnecessary</li>
+                <li>Set in Order (Seiton) – Organize what remains</li>
+                <li>Shine (Seiso) – Clean and verify</li>
+                <li>Standardize (Seiketsu) – Establish consistent procedures</li>
+                <li>Sustain (Shitsuke) – Maintain discipline and compliance</li>
+            </ol>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                In EXIM, 5S applies not only to physical offices and warehouses but also to digital documentation, trade data, and system workflows.
+            </p>
+
+            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                Why 5S Matters in EXIM?
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed font-semibold">
+                Operational Benefits
+            </p>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+            5S directly addresses key EXIM challenges by:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Reducing documentation errors and rework</li>
+                <li>Improving file, data, and record accessibility</li>
+                <li>Enhancing audit and compliance readiness</li>
+                <li>Preventing shipment delays due to missing information</li>
+                <li>Improving operational discipline and accountability</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed font-semibold">
+                Compliance Benefits
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Faster response to customs queries</li>
+                <li>Reduced risk of penalties</li>
+                <li>Improved traceability of trade records</li>
+                <li>Better preparedness for internal and external audits</li>
+            </ul>
+            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                Where 5S Applies in EXIM Operations?
+            </h3>
+
+            <h4 class="text-sm sm:text-base lg:text-lg font-semibold text-slate-900">
+                1. Export Documentation Desks
+            </h4>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Commercial invoices</li>
+                <li>Packing lists</li>
+                <li>Certificates of origin</li>
+                <li>Shipping instructions</li>
+            </ul>
+
+            <h4 class="text-sm sm:text-base lg:text-lg font-semibold text-slate-900">
+                2. Customs Compliance Teams
+            </h4>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>HS code databases</li>
+                <li>Regulatory filings</li>
+                <li>License and permit records</li>
+            </ul>
+
+            <h4 class="text-sm sm:text-base lg:text-lg font-semibold text-slate-900">
+                3. Warehouse & Logistics Operations
+            </h4>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Inventory labeling</li>
+                <li>Storage locations</li>
+                <li>Handling equipment organization</li>
+            </ul>
+
+            <h4 class="text-sm sm:text-base lg:text-lg font-semibold text-slate-900">
+                4. Shipping & Coordination Offices
+            </h4>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Booking confirmations</li>
+                <li>Carrier contracts</li>
+                <li>Shipment status tracking</li>
+            </ul>
+
+            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 mt-8">
+                How to Implement 5S in EXIM Operations?
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Step-by-Step 5S Implementation Framework
+            </p>
+
+            <h4 class="text-sm sm:text-base lg:text-lg font-semibold text-slate-900">
+                1. Sort (Remove the Unnecessary)
+            </h4>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 font-semibold">
+                Actions in EXIM:
+            </p>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Remove outdated document versions</li>
+                <li>Archive inactive shipment files</li>
+                <li>Eliminate redundant approvals and reports</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 font-semibold">
+                Outcome:
+            </p>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Reduced clutter</li>
+                <li>Faster access to critical information</li>
+            </ul>
+
+            <h4 class="text-sm sm:text-base lg:text-lg font-semibold text-slate-900">
+                2. Set in Order (Organize Systematically)
+            </h4>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 font-semibold">
+                Actions in EXIM:
+            </p>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Standard folder structures (by shipment, country, year)</li>
+                <li>Clear document naming conventions</li>
+                <li>Centralized digital repositories</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 font-semibold">
+                Outcome:
+            </p>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Faster document retrieval</li>
+                <li>Reduced dependency on individuals</li>
+            </ul>
+
+            <h4 class="text-sm sm:text-base lg:text-lg font-semibold text-slate-900">
+                3. Shine (Clean and Validate)
+            </h4>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 font-semibold">
+                Actions in EXIM:
+            </p>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Regular data validation</li>
+                <li>System cleanup</li>
+                <li>Review of master data (HS codes, vendors)</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 font-semibold">
+                Outcome:
+            </p>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Fewer errors</li>
+                <li>Improved data accuracy</li>
+            </ul>
+
+            <h4 class="text-sm sm:text-base lg:text-lg font-semibold text-slate-900">
+                4. Standardize (Define Best Practices)
+            </h4>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 font-semibold">
+                Actions in EXIM:
+            </p>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>SOPs for export and import documentation</li>
+                <li>Standard templates for invoices and packing lists</li>
+                <li>Checklist-based compliance reviews</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 font-semibold">
+                Outcome:
+            </p>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Consistent execution</li>
+                <li>Reduced variability</li>
+            </ul>
+
+            <h4 class="text-sm sm:text-base lg:text-lg font-semibold text-slate-900">
+                5. Sustain (Maintain Discipline)
+            </h4>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 font-semibold">
+                Actions in EXIM:
+            </p>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Periodic audits</li>
+                <li>Compliance reviews</li>
+                <li>Performance monitoring</li>
+                <li>Training and refreshers</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 font-semibold">
+                Outcome:
+            </p>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Long-term operational excellence</li>
+                <li>Continuous compliance readiness</li>
+            </ul>
+
+            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                Key Benefits of 5S in EXIM
+            </h3>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Faster documentation processing</li>
+                <li>Lower error and rework rates</li>
+                <li>Reduced shipment delays</li>
+                <li>Improved audit outcomes</li>
+                <li>Higher team productivity</li>
+                <li>Scalable and controlled operations</li>
+            </ul>
+                        <div class="max-w-4xl mx-auto my-16">
+                            <h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">Flowchart – 5S Implementation in EXIM</h2>
+                            <img src="/public/blog-images/Lean-Supply-Chain-Management/5SImplementation.png"
+                            alt="5S Implementation in EXIM"
+                            class="mx-auto w-full max-w-xl rounded-xl border border-slate-200 shadow-sm" />
+                        </div>
+
+            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                Expert Insight
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                In EXIM operations, disorganization directly translates into delays, penalties, and customer dissatisfaction.
+            </p>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                5S is not just a housekeeping tool—it is a foundation for compliance, speed, and reliability in international trade.
+            </p>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Organizations that apply 5S effectively build lean, audit-ready, and high-performing EXIM supply chains.
+            </p>
+
+            </section>
+
+            <!-- FAQ-->
+            <section class="max-w-4xl mx-auto mb-20 space-y-6">
+
+            <h2 id="FAQs-lean-tools-in-supply-chain" class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">
+                FAQ: 5S in Lean Supply Chain & EXIM
+            </h2>
+
+            <div class="space-y-4">
+
+                <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                    <span>1. What is 5S in Lean Supply Chain Management?</span>
+                    <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-600 leading-relaxed">
+                    5S is a lean workplace organization methodology used to improve efficiency, accuracy, and discipline in supply chain and EXIM operations. It stands for Sort, Set in Order, Shine, Standardize, and Sustain, helping organizations eliminate clutter, reduce errors, and improve workflow visibility.
+                </p>
+                </details>
+
+                <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                    <span>2. Why is 5S important for EXIM operations?</span>
+                    <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-600 leading-relaxed">
+                    5S is important in EXIM because international trade involves complex documentation, regulatory compliance, and time-critical logistics. Applying 5S helps reduce documentation errors, improve audit readiness, speed up customs clearance, and ensure smooth export-import operations.
+                </p>
+                </details>
+
+                <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                    <span>3. How does 5S help reduce documentation errors in exports and imports?</span>
+                    <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-600 leading-relaxed">
+                    5S improves documentation accuracy by sorting unnecessary files, organizing data logically, maintaining clean records, and standardizing formats. This reduces rework, avoids customs queries, and improves compliance accuracy across export and import documentation.
+                </p>
+                </details>
+
+                <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                    <span>4. Where can 5S be applied in EXIM and logistics operations?</span>
+                    <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <div class="mt-4 text-slate-600 leading-relaxed space-y-2">
+                    <p>5S can be applied across multiple EXIM touchpoints, including:</p>
+                    <ul class="list-disc pl-6 space-y-1">
+                    <li>Export and import documentation desks</li>
+                    <li>Customs compliance teams</li>
+                    <li>Freight and shipping coordination offices</li>
+                    <li>Warehouses and inventory control areas</li>
+                    <li>Trade finance and LC documentation units</li>
+                    </ul>
+                </div>
+                </details>
+
+                <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                    <span>5. How is 5S implemented in EXIM organizations?</span>
+                    <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <div class="mt-4 text-slate-600 leading-relaxed space-y-2">
+                    <p>5S implementation in EXIM involves:</p>
+                    <ul class="list-disc pl-6 space-y-1">
+                    <li>Sorting and eliminating obsolete physical and digital files</li>
+                    <li>Creating standard folder structures and naming conventions</li>
+                    <li>Cleaning and validating trade data regularly</li>
+                    <li>Documenting SOPs for EXIM workflows</li>
+                    <li>Conducting periodic audits and reviews</li>
+                    </ul>
+                </div>
+                </details>
+
+                <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                    <span>6. What role does 5S play in customs audits and compliance?</span>
+                    <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-600 leading-relaxed">
+                    5S enhances customs audit readiness by ensuring structured documentation, easy traceability, and standardized records. This reduces compliance risk, supports faster inspections, and helps organizations meet regulatory requirements efficiently.
+                </p>
+                </details>
+
+                <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                    <span>7. Can 5S be applied to digital systems and ERP in EXIM?</span>
+                    <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-600 leading-relaxed">
+                    Yes. 5S is highly effective in digital EXIM environments. It helps organize ERP data, standardize document templates, remove redundant entries, and maintain clean master data, improving system efficiency and decision-making.
+                </p>
+                </details>
+
+                <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                    <span>8. Is 5S suitable for small and medium EXIM businesses?</span>
+                    <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-600 leading-relaxed">
+                    Absolutely. 5S is cost-effective, scalable, and easy to implement, making it ideal for small and mid-sized exporters and importers. Even basic 5S practices can deliver quick efficiency gains and cost reductions.
+                </p>
+                </details>
+
+                <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                    <span>9. What are the long-term benefits of 5S in EXIM supply chains?</span>
+                    <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-600 leading-relaxed">
+                    The long-term benefits of 5S include lower operational costs, faster processing times, improved compliance, higher employee productivity, and better customer satisfaction—all essential for building a lean and resilient global supply chain.
+                </p>
+                </details>
+
+            </div>
+
+            </section>
+
+            <!-- Kaizen (Continuous Improvement) in EXIM & Global Trade -->
+            <section id="kaizen-in-exim-global-trade" class="max-w-4xl mx-auto mb-20 space-y-6">
+
+            <h1 id="introduction-kaizen-in-exim-global-trade" class="text-2xl sm:text-3xl text-center lg:text-4xl font-bold text-slate-900 mb-10">
+                Kaizen (Continuous Improvement) in EXIM & Global Trade
+            </h1>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+                In global trade, change is constant—regulations evolve, logistics conditions fluctuate, and customer expectations rise.
+                Kaizen, meaning continuous incremental improvement, provides a disciplined framework that enables EXIM organizations to adapt continuously,
+                improve performance steadily, and build long-term operational resilience.
+            </p>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+                Unlike large transformation projects, Kaizen focuses on small, practical improvements implemented consistently by employees at all levels,
+                creating a culture of ongoing excellence in export–import operations.
+            </p>
+
+            <h2 id="what-why-where-how-kaizen-in-exim-global-trade" class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+                What is Kaizen?
+            </h2>
+
+            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+                Definition of Kaizen in Supply Chain & EXIM
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+                Kaizen is a continuous improvement methodology that emphasizes:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+                <li>Small, incremental process improvements</li>
+                <li>Employee involvement at all levels</li>
+                <li>Data-driven decision making</li>
+                <li>Standardization of successful practices</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+                In EXIM operations, Kaizen ensures that every shipment, document, and workflow is continuously refined
+                to improve speed, accuracy, cost efficiency, and compliance.
+            </p>
+
+            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+                Kaizen Philosophy in Global Trade
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+                Kaizen operates on the principle that:
+                <strong>“Many small improvements over time create major competitive advantage.”</strong>
+            </p>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+                In international trade, where margins are tight and risks are high, Kaizen enables organizations to stay compliant,
+                agile, and customer-focused.
+            </p>
+
+            <h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+                Why Kaizen is Essential in Global Trade?
+            </h2>
+
+            <ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-6 mb-8 list-decimal">
+                <li>
+                <strong>Frequent Regulatory Changes</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Customs laws, duties, and trade agreements change regularly</li>
+                    <li>Non-compliance can lead to penalties and shipment delays</li>
+                </ul>
+                <p class="mt-2">Kaizen ensures continuous adaptation of procedures and controls.</p>
+                </li>
+
+                <li>
+                <strong>Evolving Customer Expectations</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Faster delivery times</li>
+                    <li>Real-time shipment visibility</li>
+                    <li>Zero documentation errors</li>
+                </ul>
+                <p class="mt-2">Kaizen supports continuous service improvement without disruption.</p>
+                </li>
+
+                <li>
+                <strong>Volatile Logistics Risks</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Port congestion</li>
+                    <li>Freight rate fluctuations</li>
+                    <li>Geopolitical disruptions</li>
+                </ul>
+                <p class="mt-2">Kaizen enables rapid response through incremental process adjustments.</p>
+                </li>
+
+                <li>
+                <strong>Competitive Pressure</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Global markets demand efficiency and reliability</li>
+                    <li>Lean, agile supply chains outperform rigid systems</li>
+                </ul>
+                <p class="mt-2">Kaizen builds sustainable operational excellence.</p>
+                </li>
+            </ol>
+
+            <h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+                Where Kaizen is Applied in EXIM Operations?
+            </h2>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+                Kaizen can be implemented across every EXIM function, including:
+            </p>
+
+            <ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-6 mb-8 list-decimal">
+
+                <li>
+                <strong>Export Documentation</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Reducing document preparation time</li>
+                    <li>Minimizing errors and rework</li>
+                    <li>Improving data accuracy and consistency</li>
+                </ul>
+                </li>
+
+                <li>
+                <strong>Freight Booking &amp; Logistics Planning</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Improving booking lead times</li>
+                    <li>Optimizing carrier selection</li>
+                    <li>Reducing transit delays</li>
+                </ul>
+                </li>
+
+                <li>
+                <strong>Customs Clearance &amp; Compliance</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Improving HS code accuracy</li>
+                    <li>Reducing customs queries</li>
+                    <li>Faster clearance cycles</li>
+                </ul>
+                </li>
+
+                <li>
+                <strong>Vendor &amp; Partner Coordination</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Better communication with forwarders and brokers</li>
+                    <li>Standardized data exchange</li>
+                    <li>Improved SLA performance</li>
+                </ul>
+                </li>
+
+                <li>
+                <strong>Internal Coordination</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Faster approvals</li>
+                    <li>Reduced handover delays</li>
+                    <li>Clear accountability</li>
+                </ul>
+                </li>
+
+            </ol>
+
+            <h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+                How Kaizen Works in EXIM?
+            </h2>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+                Kaizen follows a structured improvement cycle focused on learning, execution, and standardization.
+            </p>
+
+            <ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-6 mb-8">
+
+                <li>
+                <strong>Step 1: Identify Improvement Opportunities</strong>
+                <p class="mt-2">Sources in EXIM:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Shipment delays</li>
+                    <li>Customs rejections</li>
+                    <li>Customer complaints</li>
+                    <li>Audit observations</li>
+                    <li>KPI underperformance</li>
+                </ul>
+                </li>
+
+                <li>
+                <strong>Step 2: Analyze Root Causes</strong>
+                <p class="mt-2">Common EXIM root causes:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Manual data handling</li>
+                    <li>Unclear SOPs</li>
+                    <li>Poor system integration</li>
+                    <li>Lack of training</li>
+                </ul>
+                </li>
+
+                <li>
+                <strong>Step 3: Implement Small, Practical Changes</strong>
+                <p class="mt-2">Examples:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Updating a document checklist</li>
+                    <li>Automating a data validation step</li>
+                    <li>Redefining approval timelines</li>
+                </ul>
+                </li>
+
+                <li>
+                <strong>Step 4: Measure Impact</strong>
+                <p class="mt-2">Key metrics:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Cycle time reduction</li>
+                    <li>Error rate improvement</li>
+                    <li>Cost savings</li>
+                    <li>Compliance accuracy</li>
+                </ul>
+                </li>
+
+                <li>
+                <strong>Step 5: Standardize Successful Improvements</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Update SOPs</li>
+                    <li>Train teams</li>
+                    <li>Embed changes into systems</li>
+                </ul>
+                </li>
+
+                <li>
+                <strong>Step 6: Repeat Continuously</strong>
+                <p class="mt-2">
+                    Kaizen is ongoing—not a one-time initiative.
+                </p>
+                </li>
+
+            </ol>
+
+            <h2 class="text-lg sm:text-xl text-center lg:text-2xl font-semibold text-slate-900 mb-5">
+                Kaizen vs Traditional Improvement in EXIM
+            </h2>
+
+            <div class="overflow-x-auto mb-10">
+                <table class="w-full border border-slate-200 text-sm sm:text-base text-slate-700">
+                <thead class="bg-slate-100 text-slate-900 font-semibold">
+                    <tr>
+                    <th class="border px-4 py-2 text-left">Traditional Approach</th>
+                    <th class="border px-4 py-2 text-left">Kaizen Approach</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <td class="border px-4 py-2">Large, infrequent changes</td>
+                    <td class="border px-4 py-2">Small, continuous improvements</td>
+                    </tr>
+                    <tr>
+                    <td class="border px-4 py-2">Top-down execution</td>
+                    <td class="border px-4 py-2">Employee-driven participation</td>
+                    </tr>
+                    <tr>
+                    <td class="border px-4 py-2">High disruption</td>
+                    <td class="border px-4 py-2">Low disruption</td>
+                    </tr>
+                    <tr>
+                    <td class="border px-4 py-2">Slow adaptation</td>
+                    <td class="border px-4 py-2">Fast adaptability</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+                Key Benefits of Kaizen in EXIM
+            </h3>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-10">
+                <li>Shorter export-import cycle times</li>
+                <li>Lower logistics and compliance costs</li>
+                <li>Improved customs clearance efficiency</li>
+                <li>Higher customer satisfaction</li>
+                <li>Stronger compliance culture</li>
+                <li>Continuous operational excellence</li>
+            </ul>
+            <div class="max-w-4xl mx-auto my-16">
+                <h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">Flowchart – Kaizen Cycle in EXIM</h2>
+                <img src="/public/blog-images/Lean-Supply-Chain-Management/KaizenCycle.png"
+                alt="Kaizen Cycle in EXIM"
+                class="mx-auto w-full max-w-xl rounded-xl border border-slate-200 shadow-sm" />
+            </div>
+
+            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                Expert Insight
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                In global trade, standing still is the fastest way to fall behind.
+                Kaizen empowers EXIM organizations to improve every shipment, every document, and every process—every day.
+                By embedding Kaizen into EXIM operations, organizations achieve:
+            </p>
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-10">
+                <li>Long-term compliance stability</li>
+                <li>Cost-efficient trade execution</li>
+                <li>Agile response to market and regulatory changes</li>
+            </ul>
+            </section>
+
+            <!-- FAQ – Kaizen in Lean Supply Chain & EXIM -->
+            <section class="max-w-4xl mx-auto mb-20 space-y-4">
+
+            <h2 id="FAQs-kaizen-in-exim-global-trade" class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-6">
+                FAQ – Kaizen in Lean Supply Chain & EXIM
+            </h2>
+
+            <!-- FAQ 1 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>1. What is Kaizen in Lean Supply Chain Management?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Kaizen is a continuous improvement methodology that focuses on making small, incremental changes to improve efficiency, quality, and consistency in supply chain and EXIM operations. In international trade, Kaizen helps optimize workflows across documentation, logistics, customs clearance, and vendor coordination.
+                </p>
+            </details>
+
+            <!-- FAQ 2 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>2. Why is Kaizen important for export–import operations?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Kaizen is critical in EXIM because trade regulations, logistics risks, and customer expectations change frequently. Continuous improvement enables organizations to adapt quickly, reduce errors, control costs, and maintain compliance in dynamic global trade environments.
+                </p>
+            </details>
+
+            <!-- FAQ 3 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>3. How does Kaizen help improve customs clearance and compliance?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Kaizen improves customs clearance by identifying recurring errors, reducing rework, standardizing documentation, and improving coordination with customs brokers. This leads to faster clearance times, fewer inspections, and lower compliance risk.
+                </p>
+            </details>
+
+            <!-- FAQ 4 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>4. Where can Kaizen be applied in EXIM supply chains?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <div class="mt-4 text-slate-700 leading-relaxed">
+                <p>Kaizen can be applied across all EXIM functions, including:</p>
+                <ul class="list-disc pl-6 mt-3 space-y-1">
+                    <li>Export and import documentation processes</li>
+                    <li>Freight booking and shipment planning</li>
+                    <li>Customs clearance and regulatory compliance</li>
+                    <li>Vendor, forwarder, and carrier coordination</li>
+                    <li>Trade finance and LC processing</li>
+                </ul>
+                </div>
+            </details>
+
+            <!-- FAQ 5 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>5. How does the Kaizen process work in EXIM operations?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <div class="mt-4 text-slate-700 leading-relaxed">
+                <p>The Kaizen cycle in EXIM typically follows four steps:</p>
+                <ol class="pl-6 mt-3 space-y-1 list-decimal">
+                    <li>Identify improvement opportunities</li>
+                    <li>Implement small, low-risk changes</li>
+                    <li>Measure performance impact using KPIs</li>
+                    <li>Standardize successful improvements</li>
+                </ol>
+                <p class="mt-3">
+                    This ensures continuous, sustainable optimization.
+                </p>
+                </div>
+            </details>
+
+            <!-- FAQ 6 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>6. How is Kaizen different from major process reengineering in EXIM?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Unlike large-scale transformations, Kaizen focuses on incremental, employee-driven improvements. It minimizes disruption while delivering consistent performance gains in cost, speed, and quality across export-import operations.
+                </p>
+            </details>
+
+            <!-- FAQ 7 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>7. Can Kaizen be implemented by small and mid-sized EXIM companies?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Yes. Kaizen is highly scalable and cost-effective, making it ideal for SMEs. Small exporters and importers can start with simple improvements in documentation accuracy, workflow coordination, and shipment tracking to achieve measurable benefits.
+                </p>
+            </details>
+
+            <!-- FAQ 8 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>8. What role do employees play in Kaizen-based EXIM improvement?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Employees are central to Kaizen. Since they work closest to EXIM processes, their insights help identify inefficiencies, suggest improvements, and sustain operational discipline—creating a culture of continuous improvement.
+                </p>
+            </details>
+
+            <!-- FAQ 9 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>9. What are the long-term benefits of Kaizen in EXIM supply chains?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Long-term Kaizen benefits include lower trade costs, faster cycle times, improved compliance accuracy, higher customer satisfaction, and stronger operational resilience—all critical for sustainable success in global trade.
+                </p>
+            </details>
+
+            </section>
+
+            <!-- Kanban in Supply Chain & Logistics (EXIM Focus) -->
+            <section id="kanban-in-supply-chain-logistics" class="max-w-4xl mx-auto mb-20 space-y-6">
+
+            <h1 id="introduction-ksc" class="text-2xl sm:text-3xl text-center lg:text-4xl font-bold text-slate-900 mb-10">
+                Kanban in Supply Chain & Logistics (EXIM Focus)
+            </h1>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+                In global trade, lack of visibility and poor coordination are among the biggest causes of shipment delays, documentation errors, and compliance failures.
+                Kanban, a visual workflow management system, enables EXIM organizations to control work-in-progress (WIP), optimize process flow, and enhance real-time visibility across export–import operations.
+                When applied to supply chain and logistics, Kanban transforms complex EXIM workflows into transparent, predictable, and manageable processes.
+            </p>
+
+            <h2 id="what-why-where-how-ksc" class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-2">
+                What is Kanban?
+            </h2>
+
+            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                Definition of Kanban in Supply Chain
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+                Kanban is a visual process control methodology that manages work by:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+                <li>Visualizing tasks and workflows</li>
+                <li>Limiting work-in-progress</li>
+                <li>Ensuring continuous and balanced flow</li>
+                <li>Identifying bottlenecks early</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+                In EXIM supply chains, Kanban helps track shipments, documents, customs stages, and logistics activities in real time.
+            </p>
+
+            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                Kanban Philosophy in Global Trade
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+                Kanban operates on the principle:
+                <br><strong>“Start work only when capacity is available.”</strong>
+                <br>This is critical in EXIM operations, where overloading teams or systems directly leads to errors, delays, and compliance risks.
+            </p>
+
+            <h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-2">
+                Why Use Kanban in EXIM?
+            </h2>
+
+            <ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-6 mb-8 list-decimal">
+                <li>
+                <strong>Improved Shipment Visibility</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Real-time view of shipment status</li>
+                    <li>Clear understanding of pending and completed tasks</li>
+                    <li>Reduced dependency on follow-ups and emails</li>
+                </ul>
+                </li>
+
+                <li>
+                <strong>Control of Task Overload</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Limits work-in-progress</li>
+                    <li>Prevents teams from handling too many shipments at once</li>
+                    <li>Improves accuracy and focus</li>
+                </ul>
+                </li>
+
+                <li>
+                <strong>Bottleneck Identification & Prevention</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Highlights delays in customs clearance</li>
+                    <li>Identifies documentation backlogs</li>
+                    <li>Enables faster corrective actions</li>
+                </ul>
+                </li>
+
+                <li>
+                <strong>Enhanced Cross-Functional Coordination</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Aligns exporters, logistics teams, customs brokers, and warehouses</li>
+                    <li>Improves accountability and ownership</li>
+                    <li>Strengthens collaboration across EXIM stakeholders</li>
+                </ul>
+                </li>
+            </ol>
+
+            <h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-2">
+                Where Kanban is Used in EXIM Operations?
+            </h2>
+
+            <ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-6 mb-8 list-decimal">
+                <li>
+                <strong>Shipment Tracking & Control</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Export shipment status monitoring</li>
+                    <li>Import arrival and clearance tracking</li>
+                    <li>Exception management</li>
+                </ul>
+                </li>
+
+                <li>
+                <strong>Documentation Workflow Management</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Invoice and packing list preparation</li>
+                    <li>Certificate and license approvals</li>
+                    <li>Compliance checks</li>
+                </ul>
+                </li>
+
+                <li>
+                <strong>Customs Clearance Stages</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Pre-clearance</li>
+                    <li>Filing</li>
+                    <li>Examination</li>
+                    <li>Duty payment</li>
+                    <li>Release</li>
+                </ul>
+                </li>
+
+                <li>
+                <strong>Warehouse & Dispatch Planning</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Cargo receipt</li>
+                    <li>Picking and packing</li>
+                    <li>Dispatch scheduling</li>
+                    <li>Inventory movement</li>
+                </ul>
+                </li>
+            </ol>
+
+            <h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-2">
+            How Kanban Works in EXIM?
+            </h2>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+            Kanban uses visual boards and cards to represent work items and workflow stages.
+            </p>
+
+            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+            Core Components of Kanban
+            </h3>
+
+            <ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-6 mb-8">
+            
+            <li>
+                <strong>Visual Boards</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                <li>Physical or digital dashboards</li>
+                <li>Represent end-to-end EXIM workflows</li>
+                </ul>
+            </li>
+
+            <li>
+                <strong>Kanban Cards</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                <li>Each card represents a shipment, document, or task</li>
+                <li>Contains key trade information (shipment ID, customer, due date)</li>
+                </ul>
+            </li>
+
+            <li>
+                <strong>Workflow Columns</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                <li>Clearly defined process stages</li>
+                <li>Example: “Pending → In Progress → Under Customs → Released”</li>
+                </ul>
+            </li>
+
+            <li>
+                <strong>Work-In-Progress (WIP) Limits</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                <li>Maximum number of tasks allowed per stage</li>
+                <li>Prevents congestion and overload</li>
+                </ul>
+            </li>
+
+            <li>
+                <strong>Real-Time Updates</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                <li>Status updates as tasks progress</li>
+                <li>Immediate visibility of issues</li>
+                </ul>
+            </li>
+            </ol>
+
+
+            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                Typical EXIM Kanban Columns
+            </h3>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+                <li>Shipment Requested</li>
+                <li>Documentation in Progress</li>
+                <li>Ready for Customs</li>
+                <li>Customs Clearance</li>
+                <li>Cleared / Released</li>
+                <li>Dispatched / Delivered</li>
+            </ul>
+
+            <h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-2">
+                Key Benefits of Kanban in EXIM Supply Chains
+            </h2>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+                <li>Faster export-import cycle times</li>
+                <li>Reduced documentation and compliance errors</li>
+                <li>Improved on-time delivery performance</li>
+                <li>Higher team productivity</li>
+                <li>Stronger operational transparency</li>
+                <li>Better customer communication</li>
+            </ul>
+
+            <h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-2">
+                Best Practices for Implementing Kanban in EXIM
+            </h2>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-10">
+                <li>Start with one EXIM process (e.g., export documentation)</li>
+                <li>Define clear workflow stages</li>
+                <li>Set realistic WIP limits</li>
+                <li>Use digital Kanban tools integrated with ERP</li>
+                <li>Review boards daily</li>
+                <li>Continuously refine workflows</li>
+            </ul>
+
+            <div class="max-w-4xl mx-auto my-16">
+                <h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">Flowchart – Kanban Workflow in EXIM</h2>
+                <img src="/public/blog-images/Lean-Supply-Chain-Management/KanbanWorkflow.png"
+                alt="Kanban workflow"
+                class="mx-auto w-full max-w-xl rounded-xl border border-slate-200 shadow-sm" />
+            </div>
+
+            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+                Expert Insight
+            </h3>
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                In EXIM operations, what is not visible cannot be controlled.
+                Kanban provides the real-time visibility and flow control required to manage complex global trade operations efficiently.
+                When combined with 5S and Kaizen, Kanban becomes a powerful enabler of lean, agile, and compliant EXIM supply chains.
+            </p>
+
+            </section>
+
+            <!-- FAQ – Kanban in Lean Supply Chain & EXIM -->
+            <section class="max-w-4xl mx-auto mb-20 space-y-6">
+
+            <h2 id="FAQs-ksc" class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-6">
+                FAQ - Kanban in Lean Supply Chain & EXIM
+            </h2>
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                            <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                            <span>1. What is Kanban in Lean Supply Chain Management?</span>
+                            <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Kanban is a visual workflow management system used to control work-in-progress (WIP) and improve process flow across supply chain and EXIM operations. In international trade, Kanban helps teams track shipments, documents, and clearance stages in real time.
+                </p>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>2. Why is Kanban important for EXIM and logistics operations?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Kanban is important in EXIM because export-import processes involve multiple handoffs, dependencies, and timelines. Kanban improves visibility, prevents task overload, reduces bottlenecks, and enhances coordination between documentation, logistics, and customs teams.
+                </p>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>3. How does Kanban improve shipment visibility in international trade?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Kanban improves shipment visibility by providing real-time status tracking of tasks such as document preparation, cargo booking, customs clearance, and delivery. This allows stakeholders to identify delays early and take corrective action.
+                </p>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>4. Where can Kanban be applied in EXIM supply chains?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <ul class="mt-4 list-disc pl-6 text-slate-700 space-y-1">
+                <li>Export and import documentation workflows</li>
+                <li>Shipment and freight booking stages</li>
+                <li>Customs clearance processes</li>
+                <li>Warehouse dispatch and delivery planning</li>
+                <li>Vendor and carrier coordination</li>
+                </ul>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>5. How does Kanban help reduce delays and bottlenecks in EXIM?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Kanban reduces delays by limiting work-in-progress, highlighting blocked tasks, and balancing workload across teams. Bottlenecks become visible instantly, enabling faster resolution and smoother trade flow.
+                </p>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>6. How does a Kanban workflow work in EXIM operations?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <ul class="mt-4 list-disc pl-6 text-slate-700 space-y-1">
+                <li>Visual boards (physical or digital)</li>
+                <li>Status columns such as “Pending,” “In Progress,” “Under Customs,” and “Completed”</li>
+                <li>Task cards representing shipments or documents</li>
+                <li>Continuous updates to maintain flow</li>
+                </ul>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>7. Can Kanban be integrated with ERP and digital trade systems?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Yes. Kanban works effectively with ERP, TMS, and logistics management systems. Digital Kanban boards improve data accuracy, enhance collaboration, and support real-time decision-making in export-import operations.
+                </p>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>8. Is Kanban suitable for small and mid-sized EXIM companies?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Absolutely. Kanban is simple, scalable, and cost-effective, making it ideal for SMEs. Even basic Kanban boards can significantly improve task visibility, reduce errors, and enhance delivery reliability.
+                </p>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>9. What are the long-term benefits of using Kanban in EXIM supply chains?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Long-term benefits include improved delivery reliability, lower operational costs, faster trade cycles, better team coordination, and higher customer satisfaction, creating a resilient and lean global supply chain.
+                </p>
+            </details>
+
+            </section>
+
+            <!-- Standardizing & Streamlining EXIM Processes -->
+            <section id="standardizing-streamlining-exim-processes" class="max-w-4xl mx-auto mb-20 space-y-6">
+
+  <h1 id="introduction-ssep" class="text-2xl sm:text-3xl text-center lg:text-4xl font-bold text-slate-900 mb-10">
+    Standardizing & Streamlining EXIM Processes
+  </h1>
+
+  <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+    In Export–Import (EXIM) operations, process inconsistency is one of the biggest causes of errors, delays, and compliance risks.
+  </p>
+
+  <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+    Standardizing and streamlining EXIM processes means designing uniform, repeatable, and controlled workflows that ensure speed, accuracy, and regulatory compliance across global trade transactions.
+  </p>
+
+  <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-10">
+    A standardized EXIM operating model transforms trade operations from person-dependent and reactive into system-driven, scalable, and audit-ready processes.
+  </p>
+
+  <h2 id="what-why-where-how-ssep" class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+    What is Process Standardization in EXIM?
+  </h2>
+
+  <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+    Definition
+  </h3>
+
+  <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+    Process standardization in EXIM refers to the creation and enforcement of uniform procedures, templates, formats, and workflows for all export and import activities, regardless of:
+  </p>
+
+  <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+    <li>Product category</li>
+    <li>Destination or origin country</li>
+    <li>Business unit</li>
+    <li>Shipment volume</li>
+  </ul>
+
+  <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+    It ensures that every trade transaction follows the same approved method, minimizing variability and risk.
+  </p>
+
+  <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+    Standardization vs Streamlining
+  </h3>
+
+  <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+    <li>Standardization focuses on consistency</li>
+    <li>Streamlining focuses on efficiency</li>
+  </ul>
+
+  <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-10">
+    Together, they create lean, fast, and compliant EXIM operations.
+  </p>
+
+  <h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+    Why Standardization is Critical in EXIM?
+  </h2>
+
+  <ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-6 mb-10 list-decimal">
+    <li>
+      <strong>Error Reduction & Accuracy Improvement</strong>
+      <ul class="list-disc pl-6 mt-2 space-y-1">
+        <li>Eliminates manual interpretation</li>
+        <li>Reduces documentation mismatches</li>
+        <li>Minimizes rework and corrections</li>
+      </ul>
+    </li>
+
+    <li>
+      <strong>Regulatory & Customs Compliance</strong>
+      <ul class="list-disc pl-6 mt-2 space-y-1">
+        <li>Ensures consistent HS code usage</li>
+        <li>Supports accurate customs declarations</li>
+        <li>Improves audit and inspection outcomes</li>
+      </ul>
+    </li>
+
+    <li>
+      <strong>Faster Trade Execution</strong>
+      <ul class="list-disc pl-6 mt-2 space-y-1">
+        <li>Reduces processing time per shipment</li>
+        <li>Enables parallel task execution</li>
+        <li>Improves shipment turnaround time</li>
+      </ul>
+    </li>
+
+    <li>
+      <strong>Scalability & Business Growth</strong>
+      <ul class="list-disc pl-6 mt-2 space-y-1">
+        <li>Supports higher shipment volumes</li>
+        <li>Enables onboarding of new team members quickly</li>
+        <li>Facilitates expansion into new markets</li>
+      </ul>
+    </li>
+
+    <li>
+      <strong>Risk Mitigation</strong>
+      <ul class="list-disc pl-6 mt-2 space-y-1">
+        <li>Reduces dependency on individuals</li>
+        <li>Improves continuity during staff changes</li>
+        <li>Strengthens governance and control</li>
+      </ul>
+    </li>
+  </ol>
+
+  <h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+    Where Standardization Applies in EXIM Operations?
+  </h2>
+   <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-10">
+    Standardization must be applied across all core EXIM touchpoints, including:
+  </p>
+
+  <ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-6 mb-10 list-decimal">
+    <li>
+      <strong>Commercial Invoices</strong>
+      <ul class="list-disc pl-6 mt-2 space-y-1">
+        <li>Standard invoice formats</li>
+        <li>Consistent value declarations</li>
+        <li>Unified product descriptions</li>
+        <li>Currency and Incoterms alignment</li>
+      </ul>
+    </li>
+
+    <li>
+      <strong>Packing Lists</strong>
+      <ul class="list-disc pl-6 mt-2 space-y-1">
+        <li>Standard quantity and weight formats</li>
+        <li>Uniform packaging descriptions</li>
+        <li>Alignment with invoice and BL</li>
+      </ul>
+    </li>
+
+    <li>
+      <strong>Shipping Instructions</strong>
+      <ul class="list-disc pl-6 mt-2 space-y-1">
+        <li>Standard data fields</li>
+        <li>Consistent carrier instructions</li>
+        <li>Automated data sharing with forwarders</li>
+      </ul>
+    </li>
+
+    <li>
+      <strong>Customs Declarations</strong>
+      <ul class="list-disc pl-6 mt-2 space-y-1">
+        <li>Standard HS code libraries</li>
+        <li>Duty calculation logic</li>
+        <li>Country-specific compliance rules</li>
+      </ul>
+    </li>
+
+    <li>
+      <strong>Trade Finance Documentation</strong>
+      <ul class="list-disc pl-6 mt-2 space-y-1">
+        <li>Letters of Credit (LC)</li>
+        <li>Bank negotiation documents</li>
+        <li>Insurance certificates</li>
+        <li>Payment and settlement records</li>
+      </ul>
+    </li>
+  </ol>
+
+  <h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+    How to Standardize EXIM Processes?
+  </h2>
+
+  <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+    Step-by-Step Standardization Framework
+  </h3>
+
+  <!-- Step 1 -->
+  <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+    Step 1: Define EXIM SOPs (Standard Operating Procedures)
+  </h3>
+
+  <p class="text-md sm:text-base lg:text-lg text-slate-600 mb-2">Actions:</p>
+  <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-4">
+    <li>Document export and import workflows</li>
+    <li>Define roles and responsibilities</li>
+    <li>Establish approval hierarchies</li>
+  </ul>
+
+  <p class="text-md sm:text-base lg:text-lg text-slate-600 mb-2">Outcome:</p>
+  <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+    <li>Clear, repeatable processes</li>
+    <li>Reduced ambiguity</li>
+  </ul>
+
+  <!-- Step 2 -->
+  <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+    Step 2: Develop Standardized Templates
+  </h3>
+
+  <p class="text-md sm:text-base lg:text-lg text-slate-600 mb-2">Key Templates:</p>
+  <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-4">
+    <li>Commercial invoices</li>
+    <li>Packing lists</li>
+    <li>Shipping instructions</li>
+    <li>Compliance checklists</li>
+  </ul>
+
+  <p class="text-md sm:text-base lg:text-lg text-slate-600 mb-2">Outcome:</p>
+  <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+    <li>Consistency across shipments</li>
+    <li>Reduced documentation errors</li>
+  </ul>
+
+  <!-- Step 3 -->
+  <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+    Step 3: Implement ERP & Trade Management Systems
+  </h3>
+
+  <p class="text-md sm:text-base lg:text-lg text-slate-600 mb-2">Capabilities:</p>
+  <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-4">
+    <li>Centralized data management</li>
+    <li>Automated validations</li>
+    <li>Real-time process visibility</li>
+  </ul>
+
+  <p class="text-md sm:text-base lg:text-lg text-slate-600 mb-2">Outcome:</p>
+  <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+    <li>Reduced manual work</li>
+    <li>Integrated workflows</li>
+  </ul>
+
+  <!-- Step 4 -->
+  <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+    Step 4: Train Teams & External Partners
+  </h3>
+
+  <p class="text-md sm:text-base lg:text-lg text-slate-600 mb-2">Focus Areas:</p>
+  <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-4">
+    <li>SOP adherence</li>
+    <li>System usage</li>
+    <li>Compliance awareness</li>
+  </ul>
+
+  <p class="text-md sm:text-base lg:text-lg text-slate-600 mb-2">Outcome:</p>
+  <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+    <li>Uniform execution</li>
+    <li>Improved coordination</li>
+  </ul>
+
+  <!-- Step 5 -->
+  <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+    Step 5: Conduct Audits & Continuous Improvements
+  </h3>
+
+  <p class="text-md sm:text-base lg:text-lg text-slate-600 mb-2">Activities:</p>
+  <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-4">
+    <li>Internal audits</li>
+    <li>Compliance reviews</li>
+    <li>Process refinement</li>
+  </ul>
+
+  <p class="text-md sm:text-base lg:text-lg text-slate-600 mb-2">Outcome:</p>
+  <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+    <li>Sustained standardization</li>
+    <li>Continuous optimization</li>
+  </ul>
+
+  <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+    Key Benefits of Standardized & Streamlined EXIM Processes
+  </h3>
+
+  <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-10">
+    <li>Faster export-import cycle times</li>
+    <li>Lower documentation and compliance errors</li>
+    <li>Reduced customs delays and penalties</li>
+    <li>Improved audit readiness</li>
+    <li>Enhanced operational control</li>
+    <li>Scalable global trade operations</li>
+  </ul>
+
+  <div class="max-w-4xl mx-auto my-16">
+                <h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">Flowchart – Standardized EXIM Process</h2>
+                <img src="/public/blog-images/Lean-Supply-Chain-Management/StandardizedEXIMProcess.png"
+                alt="Standardized EXIM Process"
+                class="mx-auto w-full max-w-xl rounded-xl border border-slate-200 shadow-sm" />
+            </div>
+
+  <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+    Expert Insight
+  </h3>
+
+  <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+    In global trade, speed without standardization creates risk, and standardization without streamlining creates rigidity.
+  </p>
+
+  <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+    Successful EXIM organizations balance both—building efficient, compliant, and scalable trade processes.
+  </p>
+
+  <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+    Standardizing EXIM operations is not just an operational improvement; it is a strategic foundation for sustainable international growth.
+  </p>
+
+            </section>
+
+            <!-- FAQ – Standardizing & Streamlining EXIM Processes -->
+            <section class="max-w-4xl mx-auto mb-20 space-y-6">
+
+            <h2 id="FAQs-ssep" class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-6">
+                FAQ – Standardizing & Streamlining EXIM Processes
+            </h2>
+
+            <!-- FAQ 1 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>1. What does standardizing EXIM processes mean?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Standardizing EXIM processes means creating uniform procedures, templates, and workflows for all export-import activities such as documentation, customs filing, logistics coordination, and trade finance. It ensures consistency, accuracy, and compliance across global trade operations.
+                </p>
+            </details>
+
+            <!-- FAQ 2 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>2. Why is process standardization critical in export–import operations?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Process standardization is critical because EXIM involves complex regulations, multiple stakeholders, and high compliance risk. Standardized workflows reduce errors, speed up operations, improve audit readiness, and ensure regulatory compliance across markets.
+                </p>
+            </details>
+
+            <!-- FAQ 3 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>3. How does streamlining EXIM processes improve operational efficiency?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Streamlining removes unnecessary steps, duplication, and manual effort from EXIM workflows. This leads to faster documentation, quicker customs clearance, lower logistics costs, and improved supply chain responsiveness.
+                </p>
+            </details>
+
+            <!-- FAQ 4 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>4. Which EXIM documents benefit most from standardization?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-3">
+                The documents that benefit most include:
+                </p>
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Commercial invoices</li>
+                <li>Packing lists</li>
+                <li>Shipping instructions</li>
+                <li>Bills of lading / airway bills</li>
+                <li>Customs declarations</li>
+                <li>Letters of Credit and trade finance documents</li>
+                </ul>
+                <p class="mt-3 text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Standard formats reduce discrepancies and clearance delays.
+                </p>
+            </details>
+
+            <!-- FAQ 5 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>5. Where should organizations apply standardized EXIM workflows?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-3">
+                Standardized workflows should be applied across:
+                </p>
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Export order processing</li>
+                <li>Import customs clearance</li>
+                <li>Logistics and freight booking</li>
+                <li>Vendor and carrier coordination</li>
+                <li>Compliance and audit management</li>
+                </ul>
+                <p class="mt-3 text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                This ensures end-to-end trade consistency.
+                </p>
+            </details>
+
+            <!-- FAQ 6 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>6. How can companies standardize and streamline EXIM processes?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-3">
+                Companies can standardize EXIM processes by:
+                </p>
+                <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Defining detailed SOPs for each trade activity</li>
+                <li>Using standardized document templates</li>
+                <li>Implementing ERP and trade management systems</li>
+                <li>Training teams regularly</li>
+                <li>Conducting internal audits and reviews</li>
+                </ul>
+            </details>
+
+            <!-- FAQ 7 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>7. How does standardization help with customs compliance and audits?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Standardization ensures accurate, complete, and traceable documentation, making customs audits smoother and reducing the risk of penalties. It also supports faster inspections and regulatory approvals.
+                </p>
+            </details>
+
+            <!-- FAQ 8 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>8. Can small and mid-sized EXIM businesses benefit from process standardization?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Yes. Standardization is highly beneficial for SMEs, as it improves efficiency without heavy investment. Simple SOPs and templates help small exporters and importers scale operations while maintaining compliance.
+                </p>
+            </details>
+
+            <!-- FAQ 9 -->
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>9. What are the long-term benefits of standardizing EXIM processes?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Long-term benefits include reduced errors, faster trade cycles, lower operating costs, improved compliance, enhanced visibility, and better customer satisfaction, enabling sustainable growth in global markets.
+                </p>
+            </details>
+
+            </section>
+
+            <!-- Visibility KPIs & Performance Dashboards -->
+            <section id="visibility-kpis-performance-dashboards" class="max-w-4xl mx-auto mb-20 space-y-6">
+
+            <h1 id="introduction-vkpdp" class="text-2xl sm:text-3xl text-center lg:text-4xl font-bold text-slate-900 mb-10">
+                Visibility KPIs & Performance Dashboards
+            </h1>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                In modern Export–Import (EXIM) operations, visibility is the foundation of control. Without accurate, real-time performance data, organizations cannot identify risks, control costs, or improve efficiency.
+            </p>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Visibility KPIs and Performance Dashboards provide a data-driven framework to measure, monitor, and continuously improve speed, cost, quality, and compliance across global supply chains.
+            </p>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                In a lean supply chain, KPIs convert operational data into actionable insights, enabling proactive decision-making rather than reactive firefighting.
+            </p>
+
+            <!-- What are KPIs -->
+            <h2 id="what-why-where-how-vkpdp" class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">
+                What are Supply Chain KPIs?
+            </h2>
+
+            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900">
+                Definition
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Supply Chain Key Performance Indicators (KPIs) are quantifiable metrics used to evaluate how effectively an organization manages its supply chain activities across:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Export and import operations</li>
+                <li>Logistics and transportation</li>
+                <li>Customs clearance and compliance</li>
+                <li>Inventory and warehousing</li>
+                <li>Vendor and partner performance</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                In EXIM, KPIs act as early-warning signals, highlighting delays, inefficiencies, cost overruns, and compliance risks before they escalate.
+            </p>
+
+            <!-- Role -->
+            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900">
+                Role of KPIs in Lean EXIM Operations
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                Lean supply chains rely on:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Measurement</li>
+                <li>Transparency</li>
+                <li>Continuous improvement</li>
+            </ul>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+                KPIs ensure that:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Only value-adding activities are optimized</li>
+                <li>Waste and bottlenecks are identified quickly</li>
+                <li>Performance improvements are measurable and sustainable</li>
+            </ul>
+
+            <!-- Why KPIs -->
+            <h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">
+            Why KPIs are Critical in Lean Supply Chain Management?
+            </h2>
+
+            <ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-6">
+
+            <li>
+                <strong>Data-Driven Decision Making</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-2">
+                <li>Eliminates guesswork</li>
+                <li>Supports fact-based operational and strategic decisions</li>
+                <li>Improves forecasting and planning accuracy</li>
+                </ul>
+            </li>
+
+            <li>
+                <strong>Early Risk Detection</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-2">
+                <li>Identifies customs delays and compliance deviations</li>
+                <li>Flags cost overruns and service failures</li>
+                <li>Enables proactive corrective actions</li>
+                </ul>
+            </li>
+
+            <li>
+                <strong>Performance Benchmarking</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-2">
+                <li>Compares performance across:</li>
+                <ul class="list-disc pl-6 mt-1 space-y-1">
+                    <li>Countries</li>
+                    <li>Carriers</li>
+                    <li>Freight forwarders</li>
+                    <li>Vendors</li>
+                </ul>
+                <li>Supports continuous improvement initiatives</li>
+                </ul>
+            </li>
+
+            <li>
+                <strong>Continuous Improvement & Lean Governance</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-2">
+                <li>Measures impact of lean initiatives</li>
+                <li>Supports Kaizen and waste-reduction programs</li>
+                <li>Reinforces accountability and ownership</li>
+                </ul>
+            </li>
+
+            </ol>
+
+
+            <!-- KPI Table -->
+            <h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900">
+                Key EXIM Lean KPIs (Detailed Framework)
+            </h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full border border-slate-200 text-sm sm:text-base lg:text-lg">
+                <thead class="bg-slate-100 text-slate-900">
+                    <tr>
+                    <th class="border border-slate-200 px-4 py-3 text-left">KPI</th>
+                    <th class="border border-slate-200 px-4 py-3 text-left">Description</th>
+                    <th class="border border-slate-200 px-4 py-3 text-left">Lean Objective</th>
+                    </tr>
+                </thead>
+                <tbody class="text-slate-600">
+                    <tr>
+                    <td class="border px-4 py-3">Order Cycle Time</td>
+                    <td class="border px-4 py-3">Time from order confirmation to delivery</td>
+                    <td class="border px-4 py-3">Speed</td>
+                    </tr>
+                    <tr>
+                    <td class="border px-4 py-3">Customs Clearance Time</td>
+                    <td class="border px-4 py-3">Time taken for customs release</td>
+                    <td class="border px-4 py-3">Efficiency</td>
+                    </tr>
+                    <tr>
+                    <td class="border px-4 py-3">Logistics Cost (%)</td>
+                    <td class="border px-4 py-3">Logistics cost as % of order value</td>
+                    <td class="border px-4 py-3">Cost control</td>
+                    </tr>
+                    <tr>
+                    <td class="border px-4 py-3">Documentation Error Rate</td>
+                    <td class="border px-4 py-3">Errors per shipment</td>
+                    <td class="border px-4 py-3">Quality</td>
+                    </tr>
+                    <tr>
+                    <td class="border px-4 py-3">On-Time Delivery (OTD)</td>
+                    <td class="border px-4 py-3">Shipments delivered on schedule</td>
+                    <td class="border px-4 py-3">Reliability</td>
+                    </tr>
+                    <tr>
+                    <td class="border px-4 py-3">Inventory Turnover</td>
+                    <td class="border px-4 py-3">Inventory movement frequency</td>
+                    <td class="border px-4 py-3">Optimization</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900">
+                Additional Advanced EXIM KPIs
+            </h3>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Demurrage & Detention Cost</li>
+                <li>Customs Query Rate</li>
+                <li>Compliance Deviation Rate</li>
+                <li>Freight Rate Variance</li>
+                <li>Vendor SLA Adherence</li>
+                <li>Order-to-Cash Cycle Time</li>
+            </ul>
+
+            <!-- Dashboards -->
+            <h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">
+            Where Performance Dashboards are Used in EXIM?
+            </h2>
+
+            <ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-6 list-decimal">
+
+            <li>
+                <strong>Management Review & Strategic Planning</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-2">
+                <li>Executive dashboards</li>
+                <li>Monthly and quarterly performance reviews</li>
+                <li>Cost and profitability analysis</li>
+                </ul>
+            </li>
+
+            <li>
+                <strong>Compliance Monitoring</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-2">
+                <li>Customs and regulatory KPIs</li>
+                <li>Audit readiness tracking</li>
+                <li>Risk exposure analysis</li>
+                </ul>
+            </li>
+
+            <li>
+                <strong>Logistics & Operations Planning</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-2">
+                <li>Shipment status visibility</li>
+                <li>Bottleneck identification</li>
+                <li>Resource and capacity planning</li>
+                </ul>
+            </li>
+
+            <li>
+                <strong>Vendor & Partner Performance Evaluation</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-2">
+                <li>Freight forwarder performance</li>
+                <li>Carrier reliability</li>
+                <li>Broker and warehouse SLA compliance</li>
+                </ul>
+            </li>
+
+            </ol>
+
+            <h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mt-12">
+            How to Build Effective EXIM Performance Dashboards?
+            </h2>
+
+            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mt-6 mb-2">
+            Step-by-Step Dashboard Development Framework
+            </h3>
+
+            <ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-6">
+
+            <li>
+                <strong>Step 1: Identify Critical EXIM KPIs</strong>
+                <p class="mt-2">
+                Focus on KPIs that directly impact:
+                </p>
+                <ul class="list-disc pl-6 mt-2 space-y-2">
+                <li>Cost</li>
+                <li>Speed</li>
+                <li>Compliance</li>
+                <li>Customer satisfaction</li>
+                </ul>
+                <p class="mt-2">
+                Avoid KPI overload—clarity over quantity.
+                </p>
+            </li>
+
+            <li>
+                <strong>Step 2: Integrate ERP & Logistics Data</strong>
+                <p class="mt-2">
+                Key data sources include:
+                </p>
+                <ul class="list-disc pl-6 mt-2 space-y-2">
+                <li>ERP systems</li>
+                <li>Trade management software</li>
+                <li>Logistics and freight platforms</li>
+                <li>Customs clearance systems</li>
+                </ul>
+            </li>
+
+            <li>
+                <strong>Step 3: Enable Real-Time Visualization</strong>
+                <p class="mt-2">
+                Use:
+                </p>
+                <ul class="list-disc pl-6 mt-2 space-y-2">
+                <li>Interactive dashboards</li>
+                <li>Trend analysis</li>
+                <li>Exception alerts</li>
+                </ul>
+                <p class="mt-2">
+                Ensure dashboards are role-based (management, operations, compliance).
+                </p>
+            </li>
+
+            <li>
+                <strong>Step 4: Define Ownership & Review Frequency</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-2">
+                <li>Assign KPI ownership</li>
+                <li>Conduct weekly/monthly reviews</li>
+                <li>Track corrective actions</li>
+                </ul>
+            </li>
+
+            <li>
+                <strong>Step 5: Link KPIs to Continuous Improvement</strong>
+                <ul class="list-disc pl-6 mt-2 space-y-2">
+                <li>Feed KPI insights into Kaizen initiatives</li>
+                <li>Update SOPs and workflows</li>
+                <li>Measure improvement impact</li>
+                </ul>
+            </li>
+
+            </ol>
+
+
+            <!-- Best Practices -->
+            <h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">
+                Best Practices for KPI & Dashboard Management in EXIM
+            </h2>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+                <li>Align KPIs with business and compliance goals</li>
+                <li>Use standardized definitions across teams</li>
+                <li>Automate data capture wherever possible</li>
+                <li>Focus on actionable insights, not just reporting</li>
+                <li>Continuously refine KPIs as trade conditions change</li>
+            </ul>
+  <div class="max-w-4xl mx-auto my-16">
+                <h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">Flowchart – KPI & Dashboard Management Framework </h2>
+                <img src="/public/blog-images/Lean-Supply-Chain-Management/KPI&Dashboard.png"
+                alt="KPI & Dashboard Management Framework"
+                class="mx-auto w-full max-w-xl rounded-xl border border-slate-200 shadow-sm" />
+            </div>
+
+            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mt-10 mb-3">
+            Expert Insight
+            </h3>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+            In EXIM operations, what gets measured gets improved—and what is not visible becomes a risk.
+            Visibility KPIs and performance dashboards transform supply chains from reactive cost centers into
+            strategic, data-driven value creators.
+            </p>
+
+            <p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+            Organizations that master EXIM analytics achieve:
+            </p>
+
+            <ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+            <li>Faster trade cycles</li>
+            <li>Lower logistics and compliance costs</li>
+            <li>Stronger risk management</li>
+            <li>Sustainable competitive advantage</li>
+            </ul>
+
+
+            </section>
+
+            <!-- FAQ – Visibility KPIs & Performance Dashboards in EXIM -->
+            <section class="max-w-4xl mx-auto mb-20 space-y-6">
+
+            <h2 id="FAQs-vkpdp" class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-6">
+                FAQ – Visibility KPIs & Performance Dashboards in EXIM
+            </h2>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>1. What are visibility KPIs in EXIM supply chain management?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Visibility KPIs in EXIM are measurable performance indicators that track the speed, cost, accuracy, and compliance of export-import operations. They provide real-time insight into shipments, documentation, customs clearance, and logistics performance.
+                </p>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>2. Why are KPIs critical in a lean EXIM supply chain?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                KPIs are critical because lean EXIM supply chains rely on data-driven decision-making. Visibility KPIs help identify delays, detect risks early, control costs, benchmark performance, and support continuous improvement across global trade operations.
+                </p>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>3. What are the most important KPIs for export-import operations?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <div class="mt-4 text-slate-700 leading-relaxed">
+                <p class="mb-3">Key EXIM KPIs include:</p>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>Order cycle time</li>
+                    <li>Customs clearance time</li>
+                    <li>Logistics cost percentage</li>
+                    <li>Documentation error rate</li>
+                    <li>On-time delivery performance</li>
+                    <li>Inventory turnover</li>
+                </ul>
+                <p class="mt-3">These KPIs measure speed, efficiency, quality, and reliability.</p>
+                </div>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>4. How do performance dashboards improve supply chain visibility?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Performance dashboards centralize KPI data into real-time visual reports, enabling faster decision-making. They help stakeholders monitor shipments, track exceptions, and respond quickly to delays or compliance issues.
+                </p>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>5. Where are EXIM performance dashboards commonly used?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <div class="mt-4 text-slate-700 leading-relaxed">
+                <p class="mb-3">EXIM dashboards are commonly used in:</p>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>Management and leadership reviews</li>
+                    <li>Logistics and shipment planning teams</li>
+                    <li>Customs compliance monitoring</li>
+                    <li>Vendor and carrier performance evaluation</li>
+                </ul>
+                <p class="mt-3">They ensure end-to-end trade transparency.</p>
+                </div>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>6. How do KPIs support customs compliance and risk management?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                KPIs such as clearance time, error rate, and inspection frequency help identify compliance risks early. Monitoring these metrics improves audit readiness, reduces penalties, and ensures regulatory adherence.
+                </p>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>7. How can organizations build effective EXIM performance dashboards?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <div class="mt-4 text-slate-700 leading-relaxed">
+                <p class="mb-3">To build effective dashboards, organizations should:</p>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>Identify critical EXIM KPIs</li>
+                    <li>Integrate ERP, TMS, and customs data</li>
+                    <li>Use real-time visualization tools</li>
+                    <li>Review dashboards regularly for improvement</li>
+                </ul>
+                </div>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>8. Can small and mid-sized EXIM businesses use KPI dashboards?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Yes. KPI dashboards are scalable and cost-effective, making them suitable for SMEs. Even basic dashboards provide valuable insights into shipment performance, costs, and compliance.
+                </p>
+            </details>
+
+            <details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+                <summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+                <span>9. What are the long-term benefits of visibility KPIs in EXIM?</span>
+                <span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+                </summary>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                Long-term benefits include improved operational control, faster trade cycles, reduced costs, better compliance, higher customer satisfaction, and continuous performance improvement in global supply chains.
+                </p>
+            </details>
+
+            </section>
+
+        </article>
+        </main>
+	</div>
+<script>
+		const toggleBtn = document.getElementById("toc-toggle")
+		const closeBtn = document.getElementById("toc-close")
+		const sidebar = document.getElementById("toc-sidebar")
+		const overlay = document.getElementById("toc-overlay")
+		const body = document.body
+
+		function openSidebar() {
+			sidebar.classList.remove("-translate-x-full")
+			overlay.classList.remove("hidden")
+			body.classList.add("overflow-hidden")
+		}
+
+		function closeSidebar() {
+			sidebar.classList.add("-translate-x-full")
+			overlay.classList.add("hidden")
+			body.classList.remove("overflow-hidden")
+		}
+
+		toggleBtn.addEventListener("click", openSidebar)
+		closeBtn.addEventListener("click", closeSidebar)
+		overlay.addEventListener("click", closeSidebar)
+
+		document.querySelectorAll('[data-scroll]').forEach(link => {
+			link.addEventListener('click', e => {
+				e.preventDefault()
+
+				const id = link.getAttribute('href')
+				const target = document.querySelector(id)
+				if (!target) return
+
+				target.scrollIntoView({ behavior: 'smooth' })
+
+				// IMPORTANT: replace state instead of push
+				history.replaceState(null, '', id)
+			})
+		})
+</script>
+</body>
+</html>	
