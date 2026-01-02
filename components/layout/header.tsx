@@ -136,8 +136,7 @@ export default function Header() {
               </a>
             </div>
 
-            {/* Mobile Auth - Commented out */}
-            {/* <div className="pt-3 border-t border-border space-y-2">
+            <div className="pt-3 border-t border-border space-y-2">
               {loading ? (
                 <div className="w-full h-8 bg-gray-200 rounded animate-pulse" />
               ) : user ? (
@@ -171,7 +170,7 @@ export default function Header() {
                   </Link>
                 </>
               )}
-            </div> */}
+            </div>
           </div>
         </div>
       )}
