@@ -14,7 +14,24 @@ export default function GoogleSignInButton() {
     setLoading(true)
     setError('')
     try {
-      await signInWithPopup(auth, googleProvider)
+      const result = await signInWithPopup(auth, googleProvider)
+      const user = result.user
+      const token = await user.getIdToken()
+
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token }),
+      })
+
+      if (!response.ok) {
+        const data = await response.json()
+        throw new Error(data.error || 'Failed to authenticate with server')
+      }
+
+      router.refresh()
       router.push('/dashboard')
     } catch (err: any) {
       setError(err.message || 'Failed to sign in')
