@@ -36,24 +36,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (currentUser) {
-        try {
-          // Get the ID token
-          const token = await currentUser.getIdToken()
-          
-          // Sync with PostgreSQL backend & Set Cookie
-          await fetch('/api/auth/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ token }),
-          })
-        } catch (error) {
-          console.error("Error syncing user with backend:", error)
-        }
-      }
-      
       setUser(currentUser)
       setLoading(false)
     })

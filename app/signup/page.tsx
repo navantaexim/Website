@@ -1,12 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import GoogleSignInButton from '@/components/auth/google-signin-button'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '@/lib/firebase'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
+import { useAuth } from '@/providers/auth-provider'
 
 export default function SignupPage() {
   const [email, setEmail] = useState('')
@@ -15,6 +16,30 @@ export default function SignupPage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+  const { user, loading: authLoading } = useAuth()
+
+  // Auto-sync/Redirect if already logged in
+  useEffect(() => {
+    if (!authLoading && user) {
+      const syncSession = async () => {
+        try {
+          const token = await user.getIdToken()
+          const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token }),
+          })
+          if (response.ok) {
+            router.refresh()
+            router.push('/dashboard')
+          }
+        } catch (err) {
+          console.error('Auto-sync failed', err)
+        }
+      }
+      syncSession()
+    }
+  }, [user, authLoading, router])
 
   const handleEmailSignup = async (e: React.FormEvent) => {
     e.preventDefault()
