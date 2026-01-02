@@ -1,28 +1,41 @@
 'use client'
 
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState, createContext, useContext } from 'react'
 import { onAuthStateChanged, User } from 'firebase/auth'
-import { auth, isUsingDemoCredentials } from '@/lib/firebase'
-import { createContext, useContext } from 'react'
+import { 
+  auth, 
+  signUpWithEmail, 
+  signInWithEmail, 
+  logout as firebaseLogout, 
+  signInWithGoogle 
+} from '@/lib/firebase'
+import { useRouter } from 'next/navigation'
 
 interface AuthContextType {
   user: User | null
   loading: boolean
+  signInWithEmail: typeof signInWithEmail
+  signUpWithEmail: typeof signUpWithEmail
+  signInWithGoogle: typeof signInWithGoogle
+  logout: () => Promise<void>
 }
 
-const AuthContext = createContext<AuthContextType>({ user: null, loading: true })
+const AuthContext = createContext<AuthContextType>({ 
+  user: null, 
+  loading: true,
+  signInWithEmail: async () => ({} as any),
+  signUpWithEmail: async () => ({} as any),
+  signInWithGoogle: async () => ({} as any),
+  logout: async () => {},
+})
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
+  const router = useRouter()
 
   useEffect(() => {
-    if (isUsingDemoCredentials) {
-      setLoading(false)
-      return
-    }
-
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser)
       setLoading(false)
     })
@@ -30,8 +43,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => unsubscribe()
   }, [])
 
+  const handleLogout = async () => {
+    try {
+      await firebaseLogout() // Client side logout
+      await fetch('/api/auth/logout', { method: 'POST' }) // Server side cookie clear
+      setUser(null)
+      router.refresh() // Refresh to update server components
+      router.push('/')
+    } catch (error) {
+      console.error('Logout failed', error)
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ user, loading }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      loading,
+      signInWithEmail,
+      signUpWithEmail,
+      signInWithGoogle,
+      logout: handleLogout
+    }}>
       {children}
     </AuthContext.Provider>
   )

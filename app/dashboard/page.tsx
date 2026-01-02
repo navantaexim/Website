@@ -6,6 +6,7 @@ import { useAuth } from '@/providers/auth-provider'
 import Link from 'next/link'
 import { signOut } from 'firebase/auth'
 import { auth } from '@/lib/firebase'
+import Image from 'next/image'
 
 export default function DashboardPage() {
   const { user, loading } = useAuth()
@@ -41,12 +42,18 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-background">
       <nav className="sticky top-0 z-50 bg-white border-b border-border shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-white text-sm font-bold">NE</span>
-            </div>
-            <span className="font-bold text-lg text-foreground">Navanta Exim</span>
-          </div>
+          <Link href="/" className="flex items-center space-x-2">
+          <Image
+            src="/navantalogo.jpg"
+            alt="Navanta Exim Logo"
+            width={40}
+            height={40}
+            className="rounded-lg"
+          />
+          <span className="font-bold text-lg text-foreground">
+            Navanta Exim
+          </span>
+        </Link>
           <div className="flex items-center gap-4">
             <Link href="/" className="text-sm text-muted-foreground hover:text-foreground">
               Back to Home

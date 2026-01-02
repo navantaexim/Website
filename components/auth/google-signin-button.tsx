@@ -1,7 +1,7 @@
 'use client'
 
 import { signInWithPopup } from 'firebase/auth'
-import { auth, googleProvider, isUsingDemoCredentials } from '@/lib/firebase'
+import { auth, googleProvider } from '@/lib/firebase'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
@@ -11,15 +11,27 @@ export default function GoogleSignInButton() {
   const [error, setError] = useState('')
 
   const handleGoogleSignIn = async () => {
-    if (isUsingDemoCredentials) {
-      router.push('/dashboard')
-      return
-    }
-
     setLoading(true)
     setError('')
     try {
-      await signInWithPopup(auth, googleProvider)
+      const result = await signInWithPopup(auth, googleProvider)
+      const user = result.user
+      const token = await user.getIdToken()
+
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token }),
+      })
+
+      if (!response.ok) {
+        const data = await response.json()
+        throw new Error(data.error || 'Failed to authenticate with server')
+      }
+
+      router.refresh()
       router.push('/dashboard')
     } catch (err: any) {
       setError(err.message || 'Failed to sign in')
