@@ -32,11 +32,27 @@ export default function SignupPage() {
 
     setLoading(true)
     try {
-      await createUserWithEmailAndPassword(auth, email, password)
+      const result = await createUserWithEmailAndPassword(auth, email, password)
+      const user = result.user
+      const token = await user.getIdToken()
+
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token }),
+      })
+
+      if (!response.ok) {
+        const data = await response.json()
+        throw new Error(data.error || 'Failed to sync session')
+      }
+
+      router.refresh()
       router.push('/dashboard')
     } catch (err: any) {
       setError(err.message || 'Failed to create account')
-    } finally {
       setLoading(false)
     }
   }
