@@ -40,33 +40,6 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <nav className="sticky top-0 z-50 bg-white border-b border-border shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2">
-          <Image
-            src="/navantalogo.jpg"
-            alt="Navanta Exim Logo"
-            width={40}
-            height={40}
-            className="rounded-lg"
-          />
-          <span className="font-bold text-lg text-foreground">
-            Navanta Exim
-          </span>
-        </Link>
-          <div className="flex items-center gap-4">
-            <Link href="/" className="text-sm text-muted-foreground hover:text-foreground">
-              Back to Home
-            </Link>
-            <button
-              onClick={handleLogout}
-              className="text-sm font-medium bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition"
-            >
-              Logout
-            </button>
-          </div>
-        </div>
-      </nav>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-white rounded-lg shadow-sm p-8">
