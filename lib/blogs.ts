@@ -75,7 +75,8 @@ export async function getAllBlogs() {
     'Essential-Exim-Documentation',
     'Export-Process-Step-By-Step',
     'Import-Process-Step-By-Step',
-    'International-Marketing'
+    'International-Marketing',
+    'Compliance-Regulations-And-Policies'
   ]
 
   // Sort based on custom order, falling back to name if not in list
