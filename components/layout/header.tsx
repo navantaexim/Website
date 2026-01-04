@@ -18,7 +18,6 @@ export default function Header() {
   }
 
   const navLinks = [
-    { label: 'Home', href: '/' },
     { label: 'About', href: '/#about' },
     { label: 'Why Choose Us', href: '/#why-choose' },
     { label: 'Solutions', href: '/#solutions' },
@@ -126,17 +125,7 @@ export default function Header() {
               </a>
             ))}
 
-            <div className="pt-4 mt-2 border-t border-border">
-              <a
-                href="#contact"
-                className="block w-full text-center text-sm font-medium bg-primary text-white px-4 py-3 rounded-lg hover:bg-primary/90 transition"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Contact Us
-              </a>
-            </div>
-
-            <div className="pt-3 border-t border-border space-y-2">
+            <div className="pt-3 space-y-2">
               {loading ? (
                 <div className="w-full h-8 bg-gray-200 rounded animate-pulse" />
               ) : user ? (
