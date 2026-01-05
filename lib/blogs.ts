@@ -91,6 +91,7 @@ export async function getAllBlogs() {
     'Global-Logistics',
     'International-Finance',
     'Lean-Supply-Chain-Management',
+    'Export-Packing',
     
   ]
 
