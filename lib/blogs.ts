@@ -10,24 +10,12 @@ const CONTENT_MEDIA_DIR = path.join(BLOG_DIR, 'media')
 function extractMainTitlesFromAside(html: string) {
   const root = parse(html)
 
-  const summaries = root.querySelectorAll(
-    'aside#toc-sidebar summary'
-  )
+  const summaries = root.querySelectorAll('aside#toc-sidebar summary[data-id]')
 
-  return summaries
-    .map(summary => {
-      const id =
-        summary.getAttribute('data-id') ||
-        summary.getAttribute('id')
-
-      if (!id) return null
-
-      return {
-        id,
-        title: summary.text.trim(),
-      }
-    })
-    .filter(Boolean) as { id: string; title: string }[]
+  return summaries.map(summary => ({
+    id: summary.getAttribute('data-id')!,
+    title: summary.text.trim(),
+  }))
 }
 
 
@@ -88,11 +76,12 @@ export async function getAllBlogs() {
     'Export-Process-Step-By-Step',
     'Import-Process-Step-By-Step',
     'International-Marketing',
+    'Compliance-Regulations-And-Policies',
     'Global-Logistics',
     'International-Finance',
     'Lean-Supply-Chain-Management',
     'Export-Packaging',
-    
+
   ]
 
   // Sort based on custom order, falling back to name if not in list
