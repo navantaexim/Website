@@ -1,0 +1,2711 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>International Finance</title>
+	<!-- Tailwind CSS -->
+	<script src="https://cdn.tailwindcss.com"></script>
+
+	<style>
+		body {
+			font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+			margin: 0;
+		}
+	</style>
+</head>
+
+<body class="bg-white text-slate-800 w-full overflow-x-hidden">
+	<button id="toc-toggle" class="lg:hidden fixed bottom-6 right-6 z-50
+         bg-white shadow-lg rounded-full p-3 border" aria-label="Open table of contents">
+		☰
+	</button>
+	<div id="toc-overlay" class="fixed inset-0 bg-black/40 z-40 hidden">
+	</div>
+
+	<div class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+		<main class="w-full flex justify-center px-4 sm:px-6 lg:px-8">
+
+			<!-- LEFT: TABLE OF CONTENTS -->
+			<div class="relative lg:flex max-w-7xl mx-auto">
+
+				<aside id="toc-sidebar" class="fixed lg:sticky
+					top-16 lg:top-20
+					left-0
+					z-50
+					w-[280px]
+					h-[calc(100vh-4rem)]
+					bg-white
+					border-r
+					overflow-y-auto
+					transform -translate-x-full lg:translate-x-0
+					transition-transform duration-300 ease-in-out">
+					<button id="toc-close"
+						class="lg:hidden absolute top-4 right-4 text-slate-500 hover:text-slate-900 text-xl"
+						aria-label="Close sidebar">
+						✕
+					</button>
+
+					<div class="sticky top-15 max-h-[calc(100vh-6rem)] overflow-y-auto border-r no-scrollbar pr-4 pb-12 pl-3">
+						<h3 class="text-sm font-semibold uppercase text-slate-500 mb-4">
+							In This Article
+						</h3>
+
+						<details class="group">
+							<summary data-id="international-finance"
+								class="cursor-pointer font-medium text-slate-800 hover:text-blue-600">
+								Letters of Credit (LC)
+							</summary>
+							<ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
+								<li><a href="#introduction-lc" data-scroll class="hover:text-blue-600">Introduction</a></li>
+								<li><a href="#case-study-lc" data-scroll class="hover:text-blue-600">Case Study</a></li>
+								<li><a href="#FAQs-lc" data-scroll class="hover:text-blue-600">FAQs</a></li>
+							</ul>
+						</details>
+
+						<details class="group-1">
+							<summary data-id="forex-exchange"
+								class="cursor-pointer font-medium text-slate-800 hover:text-blue-600">
+								Forex, Exchange Rates & Hedging
+							</summary>
+							<ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
+								<li><a href="#introduction-forex" data-scroll class="hover:text-blue-600">Introduction</a></li>
+								<li><a href="#how-to-hedge-currency-risk" data-scroll class="hover:text-blue-600">How to Hedge Currency Risk?</a></li>
+								<li><a href="#FAQs-forex" data-scroll class="hover:text-blue-600">FAQs</a></li>
+							</ul>
+						</details>
+
+						<details class="group-2">
+							<summary data-id="trade-credit-insurance"
+								class="cursor-pointer font-medium text-slate-800 hover:text-blue-600">
+								Trade Credit Insurance
+							</summary>
+							<ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
+								<li><a href="#introduction-tic" data-scroll class="hover:text-blue-600">Introduction</a></li>
+								<li><a href="#FAQs-tic" data-scroll class="hover:text-blue-600">FAQs</a></li>
+							</ul>
+						</details>
+
+						<details class="group-3">
+							<summary data-id="risk-in-advance-payment"
+								class="cursor-pointer font-medium text-slate-800 hover:text-blue-600">
+								Risks in Advance Payment
+							</summary>
+							<ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
+								<li><a href="#introduction-rap" data-scroll class="hover:text-blue-600">Introduction</a></li>
+								<li><a href="#FAQs-rap" data-scroll class="hover:text-blue-600">FAQs</a></li>
+							</ul>
+						</details>
+
+						<details class="group-4">
+							<summary data-id="global-payment-gateways"
+								class="cursor-pointer font-medium text-slate-800 hover:text-blue-600">
+								Global Payment Gateways
+							</summary>
+							<ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
+								<li><a href="#introduction-gpg" data-scroll class="hover:text-blue-600">Introduction</a></li>
+								<li><a href="#risks-challenges-gpg" data-scroll class="hover:text-blue-600">Risks & Challenges</a></li>
+								<li><a href="#FAQs-gpg" data-scroll class="hover:text-blue-600">FAQs</a></li>
+							</ul>
+						</details>
+
+						<details class="group-5">
+							<summary data-id="export-financing-options"
+								class="cursor-pointer font-medium text-slate-800 hover:text-blue-600">
+								Export Financing Options & Incentives
+							</summary>
+							<ul class="mt-2 ml-4 space-y-1 text-sm text-slate-600">
+								<li><a href="#introduction-efo" data-scroll class="hover:text-blue-600">Introduction</a></li>
+								<li><a href="#key-docs" data-scroll class="hover:text-blue-600">Key Documents Required for Export Financing</a></li>
+								<li><a href="#FAQs-efo" data-scroll class="hover:text-blue-600">FAQs</a></li>
+							</ul>
+						</details>
+
+					</div>
+				</aside>
+			</div>
+
+		<article class="w-full max-w-4xl bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-12">
+
+				<!-- section-8-international-finance -->
+				<section id="international-finance" class="max-w-4xl mx-auto mb-20 space-y-6">
+
+				<h1 id="international-finance-title" class="text-2xl sm:text-3xl text-center lg:text-4xl font-bold text-slate-900 mb-10">
+					International Finance
+				</h1>
+
+				<p id="introduction-lc" class="text-md sm:text-base lg:text-lg leading-relaxed">
+					Understanding Letters of Credit (LC)
+				</p>
+
+				<h2 id="what-is-lc" class="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900 pt-5">
+					What is a letter of credit (LC)?
+				</h2>
+
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+					A Letter of Credit (LC) is a formal financial instrument issued by a bank that guarantees payment to an exporter on the fulfillment of specific terms and conditions. It acts as a secure payment mechanism in international trade, ensuring that exporters receive payment even if the buyer defaults. LCs are particularly crucial in cross-border transactions where trust between new or unfamiliar trading partners may be limited.
+				</p>
+
+				<p class="text-md sm:text-base lg:text-lg font-semibold leading-relaxed">
+					There are several types of LCs used in international trade, including:
+				</p>
+
+				<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+					<li>Revocable LC – Can be altered by the issuing bank without the exporter’s consent.</li>
+					<li>Irrevocable LC – Cannot be changed without agreement from all parties; the most commonly used in trade.</li>
+					<li>Confirmed LC – A second bank (usually in the exporter’s country) guarantees payment in addition to the issuing bank.</li>
+					<li>Sight LC – Payment is made immediately upon presentation of compliant documents.</li>
+					<li>Usance or Deferred LC – Payment is made after a specified period, allowing buyers time to pay.</li>
+				</ul>
+
+				<h2 id="why-use-lc" class="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900 pt-10">
+					Why use a letter of credit?
+				</h2>
+
+				<h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">1. Payment Security:</h3>
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+					An LC ensures that the exporter receives payment once all the stipulated terms are met, eliminating the risk of non-payment from buyers. This is especially vital in high-value international shipments.
+				</p>
+
+				<h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">2. Risk Mitigation:</h3>
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+					LCs reduce commercial and political risks. Commercial risks include buyer insolvency or refusal to pay, while political risks include currency restrictions, war, or government interventions in the buyer’s country.
+				</p>
+
+				<h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">3. Builds Trust in International Trade:</h3>
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+					By using an LC, exporters and importers can conduct business without needing a long-standing relationship, facilitating cross-border trade expansion.
+				</p>
+
+				<h3 class="text-lg sm:text-xl lg:text-2xl font-semibold pt-5">4. Facilitates Financing:</h3>
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+					Exporters can use an LC as a collateral document to obtain pre-shipment or post-shipment finance from banks, improving cash flow.
+				</p>
+
+				<h2 id="where-lc-used" class="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900 pt-10">
+					Where is a letter of credit used?
+				</h2>
+
+				<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+					<li>International Trade Transactions: LCs are most commonly used in import-export operations where buyers and sellers are in different countries.</li>
+					<li>High-Value Transactions: For expensive machinery, bulk commodities, or technology exports, LCs provide assurance of payment.</li>
+					<li>Emerging Markets or High-Risk Countries: LCs mitigate payment uncertainties in countries with volatile economies, political instability, or weak legal systems.</li>
+				</ul>
+
+				<h2 id="how-lc-works" class="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900 pt-10">
+					How does a letter of credit work?
+				</h2>
+
+				<ol class="list-decimal pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+					<li>Agreement Between Buyer and Seller</li>
+					<li>LC Request to Issuing Bank</li>
+					<li>LC Advising and Notification</li>
+					<li>Shipment of Goods</li>
+					<li>Document Submission and Verification</li>
+					<li>Payment Release</li>
+					<li>Settlement and Delivery</li>
+				</ol>
+
+				<h2 id="lc-advantages" class="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900 pt-10">
+					Key advantages of letters of credit (LC) in international trade
+				</h2>
+
+				<div class="overflow-x-auto pt-4">
+					<table class="min-w-full border border-slate-200 text-sm sm:text-base">
+					<thead class="bg-slate-100">
+						<tr>
+						<th class="border px-4 py-3 font-semibold text-left">Advantage</th>
+						<th class="border px-4 py-3 font-semibold text-left">Explanation</th>
+						</tr>
+					</thead>
+					<tbody class="text-slate-600">
+						<tr>
+						<td class="border px-4 py-3">Secure Payment</td>
+						<td class="border px-4 py-3">Bank guarantee ensures exporters are paid for compliant shipments.</td>
+						</tr>
+						<tr>
+						<td class="border px-4 py-3">Risk Reduction</td>
+						<td class="border px-4 py-3">Minimizes buyer default and political risk.</td>
+						</tr>
+						<tr>
+						<td class="border px-4 py-3">Financing Facility</td>
+						<td class="border px-4 py-3">Can be used to obtain pre-shipment or post-shipment loans.</td>
+						</tr>
+						<tr>
+						<td class="border px-4 py-3">Trust Building</td>
+						<td class="border px-4 py-3">Enables transactions with new or unfamiliar partners.</td>
+						</tr>
+						<tr>
+						<td class="border px-4 py-3">Legal Framework</td>
+						<td class="border px-4 py-3">Governed by UCP 600 (Uniform Customs and Practice for Documentary Credits), providing standardized rules.</td>
+						</tr>
+					</tbody>
+					</table>
+				</div>
+
+				</section>
+
+				<!-- lc-case-study -->
+				<section class="max-w-4xl mx-auto mb-20 space-y-6">
+
+					<!-- Main Heading -->
+					<h1 id="case-study-lc" class="text-2xl sm:text-3xl text-center lg:text-4xl font-bold text-slate-900 mb-10">
+						Case Study: Letters of Credit (LC) – Advanced Insights
+					</h1>
+
+					<!-- Overview -->
+					<h2 id="lc-case-study-overview" class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">
+						Overview of the Case Study
+					</h2>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+						This case study examines the process of obtaining and releasing a Letter of Credit (LC) in international trade, highlighting common challenges, required documentation, and best practices for exporters and importers. It is based on real-world scenarios, providing practical knowledge for global business transactions.
+					</p>
+
+					<!-- LC Release Process -->
+					<h2 id="lc-release-process" class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">
+						LC Release Process – Step by Step
+					</h2>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">1. Agreement Between Buyer and Seller</h2>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Buyer and seller finalize the sales contract, agreeing to use an LC for payment.</li>
+						<li>Contract specifies type of LC (sight, usance, confirmed, revocable/irrevocable), shipment terms, and required documents.</li>
+					</ul>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">2. Buyer Requests LC from Issuing Bank</h2>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Buyer applies to their bank (issuing bank) to open LC.</li>
+						<li>Bank assesses buyer creditworthiness and available limits.</li>
+					</ul>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">3. Issuing Bank Issues LC</h2>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>LC is issued in favor of the exporter and sent to the exporter’s bank (advising bank).</li>
+						<li>Advising bank authenticates the LC and notifies the exporter.</li>
+					</ul>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">4. Exporter Ships Goods & Prepares Documents</h2>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Exporter ships goods as per contract and collects mandatory documents.</li>
+						<li>Documents include invoice, packing list, bill of lading, insurance certificate, and LC-specific certificates.</li>
+					</ul>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">5. Document Submission to Advising Bank</h2>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Exporter submits documents to advising bank.</li>
+						<li>Bank checks compliance and forwards documents to issuing bank.</li>
+					</ul>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">6. Issuing Bank Verification & Payment Release</h2>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Issuing bank reviews documents.</li>
+						<li>Sight LC: Payment immediately upon verification.</li>
+						<li>Usance/Deferred LC: Payment at agreed future date.</li>
+					</ul>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">7. Buyer Receives Documents & Clears Goods</h2>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Buyer collects documents from issuing bank.</li>
+						<li>Goods are cleared and transaction is completed.</li>
+					</ul>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-8">Common Problems in Obtaining an LC from Bank
+					</h2>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">
+					1. Documentation Errors
+					</h2>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+					<li>Mistakes in invoice, shipping documents, or certificates.</li>
+					<li>Non-compliance with LC terms can delay or block payment.</li>
+					</ul>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">
+					2. Bank Delays
+					</h2>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+					<li>Slow verification by issuing or advising bank may affect shipment schedules.</li>
+					</ul>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">
+					3. Credit Limit Issues
+					</h2>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+					<li>Buyer’s bank may reject or limit LC due to insufficient credit or collateral.</li>
+					</ul>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">
+					4. Type of LC Complexity
+					</h2>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+					<li>Revocable LC: Risk of modification without exporter consent.</li>
+					<li>Confirmed LC: Requires coordination between two banks.</li>
+					<li>Usance LC: Payment delayed; exporter may face cash flow constraints.</li>
+					</ul>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900">
+					5. Political or Regulatory Risks
+					</h2>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-10">
+					<li>Changes in government regulations, currency controls, or sanctions may impact LC issuance or payment.</li>
+					</ul>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">
+					Required Documents for LC
+					</h2>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
+					A. From Exporter (Seller) to Bank:
+					</h3>
+
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+					<li>Commercial Invoice – Detailed description of goods.</li>
+					<li>Packing List – Quantity, weight, and packaging details.</li>
+					<li>Bill of Lading / Airway Bill – Proof of shipment.</li>
+					<li>Insurance Certificate – Required if goods are insured.</li>
+					<li>Certificate of Origin – Specifies country of manufacture.</li>
+					<li>Inspection Certificate (if required) – Verifies quality/quantity.</li>
+					<li>Other LC-specific Documents – Per LC terms (e.g., phytosanitary, fumigation certificates).</li>
+					</ul>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
+					B. From Buyer to Bank:
+					</h3>
+
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+					<li>LC application form with buyer details, LC amount, currency, and terms.</li>
+					<li>Sales Contract – Agreement with exporter.</li>
+					<li>Proof of fund availability or collateral (for bank approval).</li>
+					</ul>
+
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">
+					Considerations According to LC Type
+					</h2>
+
+					<div class="overflow-x-auto mb-10">
+					<table class="min-w-full border border-slate-200 text-sm sm:text-base">
+						<thead class="bg-slate-100">
+						<tr>
+							<th class="border px-4 py-3 font-semibold text-left">LC Type</th>
+							<th class="border px-4 py-3 font-semibold text-left">Key Considerations for Buyer</th>
+							<th class="border px-4 py-3 font-semibold text-left">Key Considerations for Seller</th>
+						</tr>
+						</thead>
+						<tbody class="text-slate-600">
+						<tr>
+							<td class="border px-4 py-3">Sight LC</td>
+							<td class="border px-4 py-3">Payment made immediately after document verification. Ensure funds are available.</td>
+							<td class="border px-4 py-3">Prepare documents accurately to avoid payment delays.</td>
+						</tr>
+						<tr>
+							<td class="border px-4 py-3">Usance/Deferred LC</td>
+							<td class="border px-4 py-3">Cash flow planning is essential.</td>
+							<td class="border px-4 py-3">Understand credit period and risk of delayed payment.</td>
+						</tr>
+						<tr>
+							<td class="border px-4 py-3">Confirmed LC</td>
+							<td class="border px-4 py-3">Reduces risk if issuing bank is in unstable country.</td>
+							<td class="border px-4 py-3">Verify confirming bank’s reliability; payment guaranteed.</td>
+						</tr>
+						<tr>
+							<td class="border px-4 py-3">Revocable LC</td>
+							<td class="border px-4 py-3">Flexible but risky; bank can amend terms without consent.</td>
+							<td class="border px-4 py-3">Avoid unless in trusted trade relationship.</td>
+						</tr>
+						<tr>
+							<td class="border px-4 py-3">Irrevocable LC</td>
+							<td class="border px-4 py-3">Most secure; cannot be modified without agreement.</td>
+							<td class="border px-4 py-3">Ensure all document conditions are strictly met.</td>
+						</tr>
+						</tbody>
+					</table>
+					</div>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+					Practical Tips for Smooth LC Transactions
+					</h2>
+
+					<ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-6 mb-6 list-disc">
+					<li>Detailed Contract: Clearly mention LC type, terms, and required documents.</li>
+					<li>Early Bank Consultation: Engage both issuing and advising banks before shipment.</li>
+					<li>Document Accuracy: Cross-check all documents to match LC terms exactly.</li>
+					<li>Use Confirmed LC for High-Risk Markets: Provides extra security for exporters.</li>
+					<li>Plan for Cash Flow in Usance LC: Prepare for deferred payment scenarios.</li>
+					<li>Monitor Political and Regulatory Risks: Stay updated on import/export regulations in buyer country.</li>
+					</ol>
+
+			<div class="max-w-4xl mx-auto my-16">
+                <h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">LC Release Process Flowchart</h2>
+                <img src="/public/blog-images/International-Finance/LCReleaseProcess.png"
+                alt="LC Release Process Flowchart"
+                class="mx-auto w-full max-w-xl rounded-xl border border-slate-200 shadow-sm" />
+            </div>
+
+				</section>
+
+				<!-- FAQ – Understanding Letters of Credit (LC) -->
+				<section id="FAQs-lc" class="max-w-4xl mx-auto mb-20 space-y-6">
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">
+						FAQ – Understanding Letters of Credit (LC)
+					</h2>
+
+					<!-- FAQ 1 -->
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+						<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q1. What is a Letter of Credit (LC) in international trade?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+						</summary>
+						<p class="mt-4 text-slate-700 leading-relaxed">
+						A Letter of Credit (LC) is a bank-issued financial guarantee that assures an exporter (seller) of payment once all specified terms and documentary conditions are fulfilled. It is widely used in international trade finance to minimize payment and credit risks between buyers and sellers located in different countries.
+						</p>
+					</details>
+
+					<!-- FAQ 2 -->
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+						<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q2. Why is a Letter of Credit important for exporters?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+						</summary>
+						<p class="mt-4 text-slate-700 leading-relaxed">
+						An LC protects exporters against buyer default, delayed payment, and country risks. Since payment is guaranteed by a bank, exporters receive funds as long as they present LC-compliant documents, regardless of the buyer’s financial condition.
+						</p>
+					</details>
+
+					<!-- FAQ 3 -->
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+						<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q3. Why do importers use Letters of Credit?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+						</summary>
+						<p class="mt-4 text-slate-700 leading-relaxed">
+						Importers use LCs to ensure that payment is released only after shipment is completed and documents comply with agreed terms. This provides control over shipment quality, quantity, and timing while maintaining trust with foreign suppliers.
+						</p>
+					</details>
+
+					<!-- FAQ 4 -->
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+						<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q4. Who are the main parties involved in an LC transaction?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+						</summary>
+						<div class="mt-4 text-slate-700 leading-relaxed">
+						<p>The key parties involved in a Letter of Credit transaction include:</p>
+						<ul class="list-disc pl-6 mt-2 space-y-1">
+							<li>Applicant: Importer / Buyer</li>
+							<li>Issuing Bank: Buyer’s bank that issues the LC</li>
+							<li>Beneficiary: Exporter / Seller</li>
+							<li>Advising Bank: Exporter’s bank that advises the LC</li>
+							<li>Confirming Bank (if applicable): Bank that adds payment guarantee</li>
+						</ul>
+						</div>
+					</details>
+
+					<!-- FAQ 5 -->
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+						<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q5. What documents are required under a Letter of Credit?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+						</summary>
+						<div class="mt-4 text-slate-700 leading-relaxed">
+						<p>Common LC documents include:</p>
+						<ul class="list-disc pl-6 mt-2 space-y-1">
+							<li>Commercial Invoice</li>
+							<li>Packing List</li>
+							<li>Bill of Lading / Airway Bill</li>
+							<li>Insurance Certificate</li>
+							<li>Certificate of Origin</li>
+							<li>Inspection or Quality Certificate (if required)</li>
+							<li>Any additional documents specified in the LC</li>
+						</ul>
+						<p class="mt-3">
+							All documents must strictly match LC terms to avoid discrepancies.
+						</p>
+						</div>
+					</details>
+
+					<!-- FAQ 6 -->
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+						<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q6. What is the LC release process?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+						</summary>
+						<ol class="mt-4 pl-5 text-slate-700 space-y-1">
+						<li>Buyer applies for LC issuance</li>
+						<li>Issuing bank issues LC</li>
+						<li>Advising bank notifies exporter</li>
+						<li>Exporter ships goods</li>
+						<li>Documents submitted to bank</li>
+						<li>Bank verifies compliance</li>
+						<li>Payment released (Sight or Usance)</li>
+						</ol>
+					</details>
+
+					<!-- FAQ 7 with Table -->
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+						<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q7. What is the difference between Sight LC and Usance LC?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+						</summary>
+
+						<div class="mt-4 overflow-x-auto">
+						<table class="min-w-full border border-slate-200 text-sm sm:text-base">
+							<thead class="bg-slate-100">
+							<tr>
+								<th class="border px-4 py-2">Feature</th>
+								<th class="border px-4 py-2">Sight LC</th>
+								<th class="border px-4 py-2">Usance LC</th>
+							</tr>
+							</thead>
+							<tbody class="text-slate-700">
+							<tr>
+								<td class="border px-4 py-2">Payment Timing</td>
+								<td class="border px-4 py-2">Immediate</td>
+								<td class="border px-4 py-2">Deferred</td>
+							</tr>
+							<tr>
+								<td class="border px-4 py-2">Cash Flow Impact</td>
+								<td class="border px-4 py-2">Faster for exporter</td>
+								<td class="border px-4 py-2">Credit period to buyer</td>
+							</tr>
+							<tr>
+								<td class="border px-4 py-2">Risk Level</td>
+								<td class="border px-4 py-2">Lower</td>
+								<td class="border px-4 py-2">Slightly higher</td>
+							</tr>
+							</tbody>
+						</table>
+						</div>
+					</details>
+
+					<!-- FAQ 8 -->
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q8. What is an Irrevocable Letter of Credit?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+						An Irrevocable LC cannot be amended or canceled without the consent of all parties involved. It is the most commonly used LC in international trade due to its high level of security.
+					</p>
+					</details>
+
+					<!-- FAQ 9 -->
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q9. What is a Confirmed Letter of Credit?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+						A Confirmed LC includes an additional payment guarantee from a second bank, usually in the exporter’s country. It protects exporters from issuing bank failure or political risks in the buyer’s country.
+					</p>
+					</details>
+
+					<!-- FAQ 10 -->
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q10. What are the common problems in LC transactions?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<div class="mt-4 text-slate-700 leading-relaxed">
+						<p>Common LC challenges include:</p>
+						<ul class="list-disc pl-6 mt-2 space-y-1">
+						<li>Document discrepancies</li>
+						<li>Incorrect LC wording</li>
+						<li>Late shipment</li>
+						<li>Bank processing delays</li>
+						<li>Buyer credit limit issues</li>
+						</ul>
+						<p class="mt-3">
+						Most LC problems arise due to documentation errors, not shipment issues.
+						</p>
+					</div>
+					</details>
+
+					<!-- FAQ 11 -->
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q11. What happens if documents do not comply with LC terms?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<div class="mt-4 text-slate-700 leading-relaxed">
+						<p>If discrepancies are found:</p>
+						<ul class="list-disc pl-6 mt-2 space-y-1">
+						<li>Bank may refuse payment</li>
+						<li>Buyer may accept or reject discrepancies</li>
+						<li>Payment may be delayed or renegotiated</li>
+						</ul>
+						<p class="mt-3">
+						Strict compliance with LC terms is critical for successful payment.
+						</p>
+					</div>
+					</details>
+
+					<!-- FAQ 12 -->
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q12. Is a Letter of Credit 100% risk-free?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<div class="mt-4 text-slate-700 leading-relaxed">
+						<p>No. While LCs significantly reduce payment risk, they do not eliminate all risks, such as:</p>
+						<ul class="list-disc pl-6 mt-2 space-y-1">
+						<li>Fraudulent documents</li>
+						<li>Political sanctions</li>
+						<li>Force majeure events</li>
+						<li>Poorly drafted LC terms</li>
+						</ul>
+						<p class="mt-3">
+						Proper due diligence and professional guidance are essential.
+						</p>
+					</div>
+					</details>
+
+					<!-- FAQ 13 -->
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q13. Under which rules are Letters of Credit governed?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+						Letters of Credit are governed by UCP 600 (Uniform Customs and Practice for Documentary Credits) issued by the International Chamber of Commerce (ICC).
+					</p>
+					</details>
+
+					<!-- FAQ 14 -->
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q14. Can exporters get financing against an LC?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<div class="mt-4 text-slate-700 leading-relaxed">
+						<p>Yes. Exporters can obtain:</p>
+						<ul class="list-disc pl-6 mt-2 space-y-1">
+						<li>Pre-shipment finance</li>
+						<li>Post-shipment finance</li>
+						<li>Discounting of Usance LC</li>
+						</ul>
+						<p class="mt-3">
+						LCs are widely accepted as bankable trade instruments.
+						</p>
+					</div>
+					</details>
+
+					<!-- FAQ 15 -->
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q15. When should an LC be used instead of advance payment or open account?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<div class="mt-4 text-slate-700 leading-relaxed">
+						<p>An LC is ideal when:</p>
+						<ul class="list-disc pl-6 mt-2 space-y-1">
+						<li>Trading with new or unknown buyers</li>
+						<li>Dealing with high-value shipments</li>
+						<li>Operating in high-risk countries</li>
+						<li>Buyer requests deferred payment</li>
+						</ul>
+					</div>
+					</details>
+
+
+				</section>
+
+				<!-- ForexExchangeRates -->
+				<section id="forex-exchange" class="max-w-4xl mx-auto mb-20 space-y-6">
+
+					<h1 id="introduction-forex" class="text-2xl sm:text-3xl text-center lg:text-4xl font-bold text-slate-900 mb-10">
+						Forex, Exchange Rates & Hedging
+					</h1>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+						What is Forex & Exchange Rate?
+					</h2>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
+						Foreign Exchange (Forex) Market
+					</h3>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+						The Foreign Exchange (Forex) market is the global marketplace where currencies are bought, sold, and exchanged. It is the largest and most liquid financial market in the world, operating 24 hours a day across major financial centers such as London, New York, Tokyo, and Singapore.
+					</p>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+						In international trade, Forex enables:
+					</p>
+
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Exporters to convert foreign earnings into domestic currency</li>
+						<li>Importers to pay overseas suppliers</li>
+						<li>Multinational companies to manage multi-currency cash flows</li>
+					</ul>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
+						Exchange Rate
+					</h3>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+						An exchange rate represents the value of one currency relative to another currency (e.g., USD/INR, EUR/USD). Exchange rates may be:
+					</p>
+
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Fixed (controlled by central banks)</li>
+						<li>Floating (market-driven based on demand and supply)</li>
+						<li>Managed float (partially regulated by authorities)</li>
+					</ul>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+						Even small exchange rate movements can significantly impact profitability in international trade contracts.
+					</p>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+						Why Forex & Exchange Rates are Important in International Trade
+					</h2>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
+						1. Impact on Export & Import Pricing
+					</h3>
+
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Export competitiveness in global markets</li>
+						<li>Import cost fluctuations</li>
+					</ul>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+						A depreciating domestic currency benefits exporters but increases import costs, while an appreciating currency has the opposite effect.
+					</p>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
+						2. Profit Margin Volatility
+					</h3>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+						Unhedged currency exposure can erode profit margins even when sales volumes increase. Exporters often lose profits not due to poor sales, but due to unfavorable exchange rate movements.
+					</p>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
+						3. Financial Planning & Risk Management
+					</h3>
+
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Accurate cost forecasting</li>
+						<li>Improved pricing strategy</li>
+						<li>Better working capital planning</li>
+					</ul>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
+						4. Global Trade Expansion
+					</h3>
+
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Enter new international markets</li>
+						<li>Price products competitively</li>
+						<li>Offer flexible payment terms to overseas buyers</li>
+					</ul>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl  font-semibold text-slate-900 mb-8">
+						Where Forex & Exchange Rates are Used
+					</h2>
+
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Export–Import Transactions (invoice settlement in foreign currency)</li>
+						<li>Multinational Corporations (MNCs) with overseas operations</li>
+						<li>Cross-border investments & joint ventures</li>
+						<li>International logistics & freight payments</li>
+						<li>Global procurement & sourcing activities</li>
+					</ul>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+						Forex exposure is particularly critical in countries with volatile currencies, emerging markets, or high inflation economies.
+					</p>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-8">
+						Understanding Currency Risk in International Trade
+					</h2>
+
+					<ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-6 mb-6">
+						<li><strong>Transaction Risk</strong> – Risk arising from exchange rate movement between contract date and payment date.</li>
+						<li><strong>Translation Risk</strong> – Risk related to conversion of foreign assets and liabilities into domestic currency for financial reporting.</li>
+						<li><strong>Economic Risk</strong> – Long-term risk impacting competitiveness and market value due to sustained currency changes.</li>
+					</ol>
+
+					<h2 id="how-to-hedge-currency-risk" class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+					How to Hedge Currency Risk – Professional Strategies
+					</h2>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
+					1. Forward Contracts (Most Common Method)
+					</h3>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+					A forward contract locks in a specific exchange rate for a future date, protecting businesses from adverse currency movements.
+					</p>
+
+					<h4 class="text-base sm:text-lg font-semibold text-slate-900 mb-2">
+					Advantages:
+					</h4>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-4">
+					<li>Predictable cash flows</li>
+					<li>No upfront cost</li>
+					<li>Simple to execute</li>
+					</ul>
+
+					<h4 class="text-base sm:text-lg font-semibold text-slate-900 mb-2">
+					Limitations:
+					</h4>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-4">
+					<li>No benefit if market moves favorably</li>
+					</ul>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+					<strong>Best for:</strong> Exporters and importers with fixed payment schedules.
+					</p>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
+					2. Currency Options
+					</h3>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+					Currency options provide the right, but not the obligation, to buy or sell a currency at a predetermined rate.
+					</p>
+
+					<h4 class="text-base sm:text-lg font-semibold text-slate-900 mb-2">
+					Advantages:
+					</h4>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-4">
+					<li>Protection against downside risk</li>
+					<li>Ability to benefit from favorable movements</li>
+					</ul>
+
+					<h4 class="text-base sm:text-lg font-semibold text-slate-900 mb-2">
+					Limitations:
+					</h4>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-4">
+					<li>Premium cost involved</li>
+					</ul>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+					<strong>Best for:</strong> Businesses needing flexibility in uncertain markets.
+					</p>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
+					3. Currency Futures
+					</h3>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+					Standardized contracts traded on exchanges to hedge currency risk.
+					</p>
+
+					<h4 class="text-base sm:text-lg font-semibold text-slate-900 mb-2">
+					Advantages:
+					</h4>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-4">
+					<li>Transparent pricing</li>
+					<li>Regulated market</li>
+					</ul>
+
+					<h4 class="text-base sm:text-lg font-semibold text-slate-900 mb-2">
+					Limitations:
+					</h4>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-4">
+					<li>Less customization</li>
+					<li>Margin requirements</li>
+					</ul>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+					<strong>Best for:</strong> Large corporates and financial institutions.
+					</p>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2 sm:mb-3">
+					4. Natural Hedging
+					</h3>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+					Natural hedging involves matching foreign currency inflows with outflows, such as:
+					</p>
+
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-4">
+					<li>Paying overseas suppliers in the same currency as export earnings</li>
+					<li>Maintaining foreign currency accounts</li>
+					</ul>
+
+					<h4 class="text-base sm:text-lg font-semibold text-slate-900 mb-2">
+					Advantages:
+					</h4>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-4">
+					<li>No financial cost</li>
+					<li>Reduces dependency on financial instruments</li>
+					</ul>
+
+					<h4 class="text-base sm:text-lg font-semibold text-slate-900 mb-2">
+					Limitations:
+					</h4>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-4">
+					<li>Limited applicability</li>
+					</ul>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+					<strong>Best for:</strong> Multinational companies with global operations.
+					</p>
+
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">
+						Comparative Overview of Hedging Instruments
+					</h2>
+
+					<div class="overflow-x-auto mb-10">
+						<table class="min-w-full border border-slate-200 text-sm sm:text-base">
+						<thead class="bg-slate-100">
+							<tr>
+							<th class="border px-4 py-3 text-left">Hedging Tool</th>
+							<th class="border px-4 py-3 text-left">Cost</th>
+							<th class="border px-4 py-3 text-left">Flexibility</th>
+							<th class="border px-4 py-3 text-left">Risk Protection</th>
+							<th class="border px-4 py-3 text-left">Ideal For</th>
+							</tr>
+						</thead>
+						<tbody class="text-slate-600">
+							<tr>
+							<td class="border px-4 py-3">Forward Contract</td>
+							<td class="border px-4 py-3">Low</td>
+							<td class="border px-4 py-3">Low</td>
+							<td class="border px-4 py-3">High</td>
+							<td class="border px-4 py-3">SMEs, Exporters</td>
+							</tr>
+							<tr>
+							<td class="border px-4 py-3">Currency Option</td>
+							<td class="border px-4 py-3">Medium</td>
+							<td class="border px-4 py-3">High</td>
+							<td class="border px-4 py-3">High</td>
+							<td class="border px-4 py-3">Volatile markets</td>
+							</tr>
+							<tr>
+							<td class="border px-4 py-3">Currency Futures</td>
+							<td class="border px-4 py-3">Medium</td>
+							<td class="border px-4 py-3">Medium</td>
+							<td class="border px-4 py-3">High</td>
+							<td class="border px-4 py-3">Corporates</td>
+							</tr>
+							<tr>
+							<td class="border px-4 py-3">Natural Hedging</td>
+							<td class="border px-4 py-3">None</td>
+							<td class="border px-4 py-3">Limited</td>
+							<td class="border px-4 py-3">Medium</td>
+							<td class="border px-4 py-3">MNCs</td>
+							</tr>
+						</tbody>
+						</table>
+					</div>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+						Best Practices for Forex & Hedging in Export-Import Business
+					</h2>
+
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Always identify currency exposure at contract stage</li>
+						<li>Hedge high-value and long-tenure transactions</li>
+						<li>Use professional forex advisory services</li>
+						<li>Monitor central bank policies and global economic trends</li>
+						<li>Diversify currency exposure across markets</li>
+					</ul>
+
+					<div class="max-w-4xl mx-auto my-16">
+						<h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">Forex, Exchange Rates & Hedging Process Flowchart</h2>
+						<img src="/public/blog-images/International-Finance/ForexExchangeRates.png"
+						alt="Forex, Exchange Rates & Hedging Process Flowchart"
+						class="mx-auto w-full max-w-xl rounded-xl border border-slate-200 shadow-sm" />
+					</div>
+
+				</section>
+
+				<!-- FAQ – Forex, Exchange Rates & Hedging -->
+				<section class="max-w-4xl mx-auto mb-20 space-y-6">
+					<h2 id="FAQs-forex" class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">
+						FAQ – Forex, Exchange Rates & Hedging
+					</h2>
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q1. What is Forex in international trade?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+						<strong>Definition:</strong> Forex (Foreign Exchange) refers to the global market where currencies are exchanged. In international trade, forex enables exporters and importers to receive and make payments in different currencies, making cross-border business possible.
+					</p>
+					</details>
+
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q2. What is an exchange rate?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+						<strong>Meaning:</strong> An exchange rate is the value of one currency in relation to another currency (e.g., USD/INR, EUR/USD). It determines how much domestic currency is required to pay or receive a foreign currency amount.
+					</p>
+					</details>
+
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q3. Why do exchange rates fluctuate?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<div class="mt-4 text-slate-700 leading-relaxed">
+						<strong>Reasons:</strong>
+						<ul class="list-disc pl-6 mt-3 space-y-2">
+						<li>Demand and supply of currencies</li>
+						<li>Inflation and interest rates</li>
+						<li>Central bank policies</li>
+						<li>Political and economic stability</li>
+						<li>Global trade and capital flows</li>
+						</ul>
+						<p class="mt-3">
+						These fluctuations directly affect export pricing and import costs.
+						</p>
+					</div>
+					</details>
+
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q4. What is forex risk in export–import business?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+						<strong>Risk:</strong> Forex risk is the possibility of financial loss due to adverse currency movements between the contract date and payment date. Even profitable trade deals can incur losses if currency risk is not managed.
+					</p>
+					</details>
+
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q5. What are the types of forex risks?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<div class="mt-4 text-slate-700 leading-relaxed">
+						<strong>Classification:</strong>
+						<ul class="list-disc pl-6 mt-3 space-y-2">
+						<li>Transaction Risk: Risk during payment settlement</li>
+						<li>Translation Risk: Risk while converting financial statements</li>
+						<li>Economic Risk: Long-term impact on competitiveness</li>
+						</ul>
+					</div>
+					</details>
+
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q6. What is currency hedging?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+						<strong>Protection:</strong> Currency hedging is a financial strategy used to protect businesses from unfavorable exchange rate movements. It helps stabilize cash flows and profit margins in international trade.
+					</p>
+					</details>
+
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q7. What is a forward contract in forex hedging?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+						<strong>Hedging Tool:</strong> A forward contract allows businesses to lock in an exchange rate for a future date, ensuring certainty in payment or receipt amounts.
+					</p>
+					</details>
+
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q8. What are currency options and futures?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<div class="mt-4 text-slate-700 leading-relaxed">
+						<strong>Instruments:</strong>
+						<ul class="list-disc pl-6 mt-3 space-y-2">
+						<li>Currency Options: Provide the right (not obligation) to buy/sell currency at a fixed rate.</li>
+						<li>Currency Futures: Exchange-traded contracts with standardized terms.</li>
+						</ul>
+						<p class="mt-3">
+						Both are used to manage currency volatility.
+						</p>
+					</div>
+					</details>
+
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q9. What is natural hedging?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+						<strong>Method:</strong> Natural hedging involves offsetting foreign currency inflows with outflows, such as paying suppliers in the same currency in which export revenue is received.
+					</p>
+					</details>
+
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q10. When should exporters hedge their forex exposure?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<div class="mt-4 text-slate-700 leading-relaxed">
+						<strong>Timing:</strong> Exporters should hedge when:
+						<ul class="list-disc pl-6 mt-3 space-y-2">
+						<li>Contract value is high</li>
+						<li>Payment is deferred</li>
+						<li>Currency volatility is high</li>
+						<li>Profit margins are thin</li>
+						</ul>
+						<p class="mt-3">
+						Early hedging ensures predictable earnings.
+						</p>
+					</div>
+					</details>
+
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q11. Is forex hedging mandatory?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+						<strong>Guidance:</strong> Forex hedging is not mandatory, but it is highly recommended for businesses engaged in international trade, especially in volatile currency environments.
+					</p>
+					</details>
+
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q12. What happens if forex risk is not hedged?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<div class="mt-4 text-slate-700 leading-relaxed">
+						<strong>Impact:</strong>
+						<ul class="list-disc pl-6 mt-3 space-y-2">
+						<li>Reduced profit margins</li>
+						<li>Unexpected financial losses</li>
+						<li>Pricing instability</li>
+						<li>Cash flow mismatches</li>
+						</ul>
+					</div>
+					</details>
+
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q13. Who provides forex hedging services?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<div class="mt-4 text-slate-700 leading-relaxed">
+						<strong>Providers:</strong>
+						<ul class="list-disc pl-6 mt-3 space-y-2">
+						<li>Commercial banks</li>
+						<li>Authorized dealer banks</li>
+						<li>Financial institutions</li>
+						<li>Export credit agencies</li>
+						</ul>
+					</div>
+					</details>
+
+					<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+						<span>Q14. How does forex hedging improve business competitiveness?</span>
+						<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+						<strong>Advantage:</strong> By stabilizing pricing and margins, hedging enables exporters to offer competitive prices, enter long-term contracts, and expand into new markets confidently.
+					</p>
+					</details>
+
+				</section>
+
+				<!-- Trade Credit Insurance -->
+				<section id="trade-credit-insurance" class="max-w-4xl mx-auto mb-20 space-y-6">
+
+				<h1 id="introduction-tic" class="text-2xl sm:text-3xl text-center lg:text-4xl font-bold text-slate-900 mb-10">
+					Trade Credit Insurance
+				</h1>
+
+				<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+					What is Trade Credit Insurance?
+				</h2>
+
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+					Trade Credit Insurance (TCI) is a financial risk management solution that protects exporters and businesses against non-payment by buyers. The non-payment may arise due to commercial risks (such as buyer insolvency or prolonged default) or political risks (such as war, currency inconvertibility, import restrictions, or government actions).
+				</p>
+
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-10">
+					Trade Credit Insurance ensures that exporters receive a pre-defined percentage of the invoice value even if the buyer fails to pay, thereby safeguarding cash flow, profitability, and balance sheet stability.
+				</p>
+
+				<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+					Why Use Trade Credit Insurance?
+				</h2>
+
+				<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+					1. Protection Against Buyer Default
+				</h3>
+				<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+					<li>Buyer bankruptcy</li>
+					<li>Prolonged payment delays</li>
+					<li>Refusal to pay due to financial distress</li>
+				</ul>
+
+				<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+					2. Expansion into New & Risky Markets
+				</h3>
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+					Exporters can safely enter new countries and emerging markets where payment risks are higher, without exposing the business to severe financial losses.
+				</p>
+
+				<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+					3. Improved Credit Management
+				</h3>
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+					Insurers provide credit assessments and buyer risk ratings, helping exporters make informed decisions before extending credit terms.
+				</p>
+
+				<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+					4. Better Access to Export Financing
+				</h3>
+				<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+					<li>Obtain higher working capital limits</li>
+					<li>Access post-shipment finance at better rates</li>
+				</ul>
+
+				<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+					5. Enhanced Competitive Advantage
+				</h3>
+				<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-10">
+					<li>Open account terms</li>
+					<li>Longer credit periods</li>
+					<li>Competitive pricing</li>
+				</ul>
+
+				<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+					Where is Trade Credit Insurance Used?
+				</h2>
+
+				<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-10">
+					<li>Exporters selling on open account or deferred payment terms</li>
+					<li>SMEs and large exporters with international receivables</li>
+					<li>Emerging markets with weak legal systems</li>
+					<li>Countries with political instability or currency controls</li>
+					<li>Industries with high-value or recurring export transactions</li>
+				</ul>
+
+				<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-8">
+					Understanding Risks Covered Under Trade Credit Insurance
+				</h2>
+
+				<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+					Commercial Risks Covered
+				</h3>
+				<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+					<li>Buyer insolvency or bankruptcy</li>
+					<li>Protracted default (non-payment beyond agreed credit period)</li>
+					<li>Buyer refusal to accept goods without valid reason</li>
+				</ul>
+
+				<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+					Political Risks Covered
+				</h3>
+				<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-10">
+					<li>War, civil unrest, or terrorism</li>
+					<li>Import/export bans</li>
+					<li>Currency transfer restrictions</li>
+					<li>Government intervention or sovereign default</li>
+				</ul>
+
+				<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+					How Does Trade Credit Insurance Work? – Step-by-Step Process
+				</h2>
+
+				<ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-6 mb-10 list-decimal">
+					<li>
+					<strong>Exporter Applies for Insurance Policy</strong><br>
+					Exporter selects a Trade Credit Insurance provider and applies for coverage based on export volume, buyer profile, and destination countries.
+					</li>
+					<li>
+					<strong>Buyer Risk Assessment & Credit Limit Approval</strong><br>
+					Insurer evaluates the financial health of buyers and approves credit limits for each buyer.
+					</li>
+					<li>
+					<strong>Exporter Ships Goods on Credit</strong><br>
+					Exporter delivers goods/services under approved credit terms.
+					</li>
+					<li>
+					<strong>Invoice Monitoring & Payment Collection</strong><br>
+					Exporter continues normal collection efforts while insurer monitors risk.
+					</li>
+					<li>
+					<strong>Buyer Defaults on Payment</strong><br>
+					If payment is not received within the defined waiting period, exporter notifies insurer.
+					</li>
+					<li>
+					<strong>Claim Submission & Compensation</strong><br>
+					After verification, insurer compensates up to 80–95% of the insured invoice value.
+					</li>
+				</ol>
+
+				<!-- Policy Types -->
+
+				<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+					Types of Trade Credit Insurance Policies
+				</h2>
+
+				<ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-6 list-decimal">
+					<li>
+					<strong>Whole Turnover Policy</strong><br>
+					Covers all buyers and transactions under a single policy.<br>
+					<strong>Best for:</strong> Large exporters with diversified buyer base.
+					</li>
+					<li>
+					<strong>Single Buyer Policy</strong><br>
+					Covers exports to a specific buyer.<br>
+					<strong>Best for:</strong> High-value or strategic buyers.
+					</li>
+					<li>
+					<strong>Political Risk Insurance</strong><br>
+					Covers losses due to political events.<br>
+					<strong>Best for:</strong> High-risk countries.
+					</li>
+					<li>
+					<strong>Short-Term Trade Credit Insurance</strong><br>
+					Covers credit terms up to 180 days.<br>
+					<strong>Best for:</strong> Regular trade transactions.
+					</li>
+				</ol>
+
+				<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+					Advantages & Limitations of Trade Credit Insurance
+				</h2>
+
+				<div class="overflow-x-auto mb-10">
+					<table class="min-w-full border border-slate-200 text-sm sm:text-base">
+					<thead class="bg-slate-100">
+						<tr>
+						<th class="border px-4 py-3 text-left font-semibold">Aspect</th>
+						<th class="border px-4 py-3 text-left font-semibold">Advantage</th>
+						<th class="border px-4 py-3 text-left font-semibold">Limitation</th>
+						</tr>
+					</thead>
+					<tbody class="text-slate-600">
+						<tr>
+						<td class="border px-4 py-3">Risk Coverage</td>
+						<td class="border px-4 py-3">Protects against non-payment</td>
+						<td class="border px-4 py-3">Partial coverage only</td>
+						</tr>
+						<tr>
+						<td class="border px-4 py-3">Cash Flow</td>
+						<td class="border px-4 py-3">Improves liquidity</td>
+						<td class="border px-4 py-3">Premium cost</td>
+						</tr>
+						<tr>
+						<td class="border px-4 py-3">Financing</td>
+						<td class="border px-4 py-3">Enhances bankability</td>
+						<td class="border px-4 py-3">Policy compliance required</td>
+						</tr>
+						<tr>
+						<td class="border px-4 py-3">Market Expansion</td>
+						<td class="border px-4 py-3">Supports growth</td>
+						<td class="border px-4 py-3">Credit limits apply</td>
+						</tr>
+					</tbody>
+					</table>
+				</div>
+
+				<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+					Best Practices for Using Trade Credit Insurance
+				</h2>
+
+				<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+					<li>Regularly review buyer credit limits</li>
+					<li>Report overdue payments promptly</li>
+					<li>Maintain accurate documentation</li>
+					<li>Align insurance terms with sales contracts</li>
+					<li>Combine insurance with LC or bank guarantees where necessary</li>
+				</ul>
+
+							<div class="max-w-4xl mx-auto my-16">
+								<h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">Flowchart – Trade Credit Insurance Process</h2>
+								<img src="/public/blog-images/International-Finance/TradeCreditInsuranceProcess.png"
+								alt="Flowchart – Trade Credit Insurance Process"
+								class="mx-auto w-full max-w-xl rounded-xl border border-slate-200 shadow-sm" />
+							</div>
+
+				</section>
+
+				<!-- FAQ – Trade Credit Insurance -->
+				<section class="max-w-4xl mx-auto mb-20 space-y-6">
+					<h2 id="FAQs-tic" class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">
+						FAQ – Trade Credit Insurance
+					</h2>
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>Q1. What is Trade Credit Insurance?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					Trade Credit Insurance protects exporters against non-payment by buyers due to insolvency, prolonged default, or political risks, ensuring financial stability in international trade.
+					</p>
+				</details>
+
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>Q2. Who should use Trade Credit Insurance?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					Exporters selling on open account or deferred payment terms, especially those operating in new or high-risk markets, should use Trade Credit Insurance.
+					</p>
+				</details>
+
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>Q3. What risks are covered under Trade Credit Insurance?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					It covers commercial risks (buyer insolvency, payment default) and political risks (war, currency restrictions, government actions).
+					</p>
+				</details>
+
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>Q4. How much compensation does the insurer provide?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					Typically, insurers compensate 80% to 95% of the insured invoice value, depending on the policy terms.
+					</p>
+				</details>
+
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>Q5. Does Trade Credit Insurance help in getting bank finance?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					Yes. Insured receivables are considered low-risk assets, helping exporters obtain better working capital and export finance from banks.
+					</p>
+				</details>
+
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>Q6. Is Trade Credit Insurance mandatory for exporters?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					No, it is not mandatory, but it is highly recommended for exporters dealing with credit sales or international buyers.
+					</p>
+				</details>
+
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>Q7. What types of Trade Credit Insurance policies are available?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					Common types include Whole Turnover Policy, Single Buyer Policy, Political Risk Insurance, and Short-Term Trade Credit Insurance.
+					</p>
+				</details>
+
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>Q8. What happens if a buyer fails to pay?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					The exporter files a claim after the waiting period. Once verified, the insurer compensates the exporter as per policy terms.
+					</p>
+				</details>
+
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>Q9. What documents are required to file a Trade Credit Insurance claim?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<div class="mt-4 text-slate-700 leading-relaxed">
+					Typically required documents include:
+					<ul class="list-disc pl-6 mt-3 space-y-2">
+						<li>Commercial invoice</li>
+						<li>Shipping documents</li>
+						<li>Proof of delivery</li>
+						<li>Payment follow-up records</li>
+					</ul>
+					</div>
+				</details>
+
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>Q10. Can Trade Credit Insurance be used along with LC or forex hedging?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					Yes. Trade Credit Insurance works best when combined with Letters of Credit (LC) and forex hedging, creating a strong international risk management framework.
+					</p>
+				</details>
+
+				</section>
+
+				<!-- Risks in Advance Payment -->
+				<section id="risk-in-advance-payment" class="max-w-4xl mx-auto mb-20 space-y-6">
+
+					<!-- Buyer Risk -->
+
+					<h1 class="text-2xl sm:text-3xl text-center lg:text-4xl font-bold text-slate-900 mb-10">
+						Risks in Advance Payment
+					</h1>
+
+					<h2 id="introduction-rap" class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+						What is Advance Payment in International Trade?
+					</h2>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+						Advance Payment refers to a payment method in which the buyer pays the exporter fully or partially before goods or services are delivered. This method transfers most of the financial risk from the seller to the buyer and is commonly requested by exporters when dealing with new buyers, customized products, or high-risk countries.
+					</p>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+						Advance payment can take multiple forms:
+					</p>
+
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-10">
+						<li>100% advance payment</li>
+						<li>Partial advance payment with balance on shipment</li>
+						<li>Milestone-based advance payment</li>
+					</ul>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+						Why Advance Payment Carries Significant Risks
+					</h2>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+						1. Risk of Non-Delivery of Goods
+					</h3>
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-3">
+						Once payment is made, the buyer has limited control. The seller may:
+					</p>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Fail to ship goods</li>
+						<li>Delay production</li>
+						<li>Deliver goods not matching agreed specifications</li>
+					</ul>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+						2. Supplier Fraud & Bankruptcy Risk
+					</h3>
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-3">
+						The supplier may:
+					</p>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Be fraudulent</li>
+						<li>Become insolvent after receiving payment</li>
+						<li>Disappear or shut operations</li>
+					</ul>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+						3. Quality & Specification Risk
+					</h3>
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-3">
+						Advance payment does not guarantee:
+					</p>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Product quality</li>
+						<li>Compliance with technical standards</li>
+						<li>Timely completion of custom orders</li>
+					</ul>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+						4. International Transfer & Banking Risks
+					</h3>
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-3">
+						Buyers face risks such as:
+					</p>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Delays in international wire transfers</li>
+						<li>Wrong beneficiary details</li>
+						<li>Currency conversion losses</li>
+					</ul>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+						5. Political & Regulatory Risks
+					</h3>
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-10">
+						Government restrictions, sanctions, or trade bans may prevent delivery even after payment is made.
+					</p>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+						Where Advance Payment is Commonly Used
+					</h2>
+
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-10">
+						<li>Customized or made-to-order products</li>
+						<li>High-value machinery and capital goods</li>
+						<li>Digital services and intellectual property</li>
+						<li>New supplier or startup exporter relationships</li>
+						<li>Countries with limited trade finance access</li>
+					</ul>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-10">
+						Advance payments are common where seller bargaining power is strong or financing options are limited.
+					</p>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+						Risk Comparison: Advance Payment vs Other Payment Methods
+					</h2>
+
+					<div class="overflow-x-auto mb-10">
+						<table class="min-w-full border border-slate-200 text-sm sm:text-base">
+						<thead class="bg-slate-100">
+							<tr>
+							<th class="border px-4 py-3 text-left font-semibold">Payment Method</th>
+							<th class="border px-4 py-3 text-left font-semibold">Buyer Risk</th>
+							<th class="border px-4 py-3 text-left font-semibold">Seller Risk</th>
+							</tr>
+						</thead>
+						<tbody class="text-slate-600">
+							<tr>
+							<td class="border px-4 py-3">Advance Payment</td>
+							<td class="border px-4 py-3">Very High</td>
+							<td class="border px-4 py-3">Very Low</td>
+							</tr>
+							<tr>
+							<td class="border px-4 py-3">Letter of Credit</td>
+							<td class="border px-4 py-3">Medium</td>
+							<td class="border px-4 py-3">Medium</td>
+							</tr>
+							<tr>
+							<td class="border px-4 py-3">Documentary Collection</td>
+							<td class="border px-4 py-3">Medium</td>
+							<td class="border px-4 py-3">Medium</td>
+							</tr>
+							<tr>
+							<td class="border px-4 py-3">Open Account</td>
+							<td class="border px-4 py-3">Low</td>
+							<td class="border px-4 py-3">High</td>
+							</tr>
+						</tbody>
+						</table>
+					</div>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+						How to Mitigate Risks in Advance Payment
+					</h2>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+						1. Use Escrow Accounts
+					</h3>
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-3">
+						An escrow service holds funds until:
+					</p>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Shipment is completed</li>
+						<li>Contractual conditions are met</li>
+					</ul>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+						2. Supplier Due Diligence
+					</h3>
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-3">
+						Before making advance payment:
+					</p>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Verify company registration and trade license</li>
+						<li>Check export history and references</li>
+						<li>Conduct factory audits if possible</li>
+					</ul>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+						3. Partial Advance Payment Strategy
+					</h3>
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-3">
+						Instead of 100% advance:
+					</p>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Pay 20–40% upfront</li>
+						<li>Balance payable after shipment or inspection</li>
+					</ul>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+						4. Combine Advance Payment with LC or Bank Guarantee
+					</h3>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Use Standby LC (SBLC) as payment security</li>
+						<li>Request Performance Bank Guarantee</li>
+					</ul>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-3">
+						5. Third-Party Inspection & Quality Control
+					</h3>
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-3">
+						Appoint independent agencies to:
+					</p>
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-10">
+						<li>Inspect goods before shipment</li>
+						<li>Verify quantity and quality</li>
+					</ul>
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-5">
+						Legal & Contractual Safeguards for Advance Payment
+					</h2>
+
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+						<li>Clearly defined delivery timelines</li>
+						<li>Penalty clauses for non-performance</li>
+						<li>Refund terms in case of failure</li>
+						<li>Jurisdiction and arbitration clauses</li>
+					</ul>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mt-6">
+						Strong contracts provide legal protection in cross-border disputes.
+					</p>
+
+					<div class="max-w-4xl mx-auto my-16">
+									<h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">Flowchart – Advance Payment Risk & Mitigation Process</h2>
+									<img src="/public/blog-images/International-Finance/AdvancePaymentRisk&MitigationProcess.png"
+									alt="Flowchart – Advance Payment Risk & Mitigation Process"
+									class="mx-auto w-full max-w-xl rounded-xl border border-slate-200 shadow-sm" />
+								</div>
+				</section>
+
+				<!-- FAQ – Risks in Advance Payment	 -->
+				<section class="max-w-4xl mx-auto mb-20 space-y-6">
+
+				<h2 id="FAQs-rap" class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">
+					FAQ – Risks in Advance Payment
+				</h2>
+
+				<!-- FAQ 1 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>1. What is advance payment in international trade?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					Advance payment is a payment method where the buyer pays fully or partially before goods or services are delivered, transferring most of the risk to the buyer.
+					</p>
+				</details>
+
+				<!-- FAQ 2 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>2. Why is advance payment considered risky for buyers?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					Because the buyer pays before delivery, there is a risk of non-delivery, poor-quality goods, supplier fraud, or supplier insolvency.
+					</p>
+				</details>
+
+				<!-- FAQ 3 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>3. When is advance payment commonly used?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<div class="mt-4 text-slate-700 leading-relaxed">
+					Advance payment is usually required for:
+					<ul class="list-disc pl-6 mt-3 space-y-2">
+						<li>Custom-made or high-value goods</li>
+						<li>New supplier relationships</li>
+						<li>High-risk or restricted countries</li>
+					</ul>
+					</div>
+				</details>
+
+				<!-- FAQ 4 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>4. What are the main risks involved in advance payment?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<div class="mt-4 text-slate-700 leading-relaxed">
+					The main risks include:
+					<ul class="list-disc pl-6 mt-3 space-y-2">
+						<li>Non-shipment of goods</li>
+						<li>Supplier bankruptcy</li>
+						<li>Quality or specification mismatch</li>
+						<li>International transfer delays</li>
+					</ul>
+					</div>
+				</details>
+
+				<!-- FAQ 5 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>5. How can buyers reduce advance payment risks?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<div class="mt-4 text-slate-700 leading-relaxed">
+					Buyers can reduce risks by:
+					<ul class="list-disc pl-6 mt-3 space-y-2">
+						<li>Using escrow accounts</li>
+						<li>Conducting supplier due diligence</li>
+						<li>Opting for partial advance payment</li>
+						<li>Combining with LC or bank guarantee</li>
+					</ul>
+					</div>
+				</details>
+
+				<!-- FAQ 6 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>6. Is 100% advance payment safe for first-time transactions?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					No. For first-time transactions, 100% advance payment is highly risky and should be avoided unless supported by strong bank guarantees or escrow mechanisms.
+					</p>
+				</details>
+
+				<!-- FAQ 7 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>7. Can advance payment be combined with other payment methods?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<div class="mt-4 text-slate-700 leading-relaxed">
+					Yes. Advance payment can be combined with:
+					<ul class="list-disc pl-6 mt-3 space-y-2">
+						<li>Letter of Credit (LC)</li>
+						<li>Standby LC (SBLC)</li>
+						<li>Performance Bank Guarantee</li>
+					</ul>
+					</div>
+				</details>
+
+				<!-- FAQ 8 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>8. What role do escrow accounts play in advance payment?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					Escrow accounts hold funds securely and release payment only after contractual conditions are met, significantly reducing buyer risk.
+					</p>
+				</details>
+
+				<!-- FAQ 9 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>9. What documents help protect buyers in advance payment?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<div class="mt-4 text-slate-700 leading-relaxed">
+					Important documents include:
+					<ul class="list-disc pl-6 mt-3 space-y-2">
+						<li>Detailed sales contract</li>
+						<li>Proforma invoice</li>
+						<li>Inspection certificates</li>
+						<li>Proof of shipment</li>
+					</ul>
+					</div>
+				</details>
+
+				<!-- FAQ 10 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>10. Is advance payment suitable for all international trades?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					No. Advance payment should be used selectively and is best suited for low-volume, custom, or high-risk transactions with proper safeguards in place.
+					</p>
+				</details>
+
+				</section>
+
+				 <!-- Global Payment Gateways -->
+				<section id="global-payment-gateways" class="max-w-4xl mx-auto mb-20 space-y-6">
+
+					<!-- Overview -->
+
+					<h1 id="introduction-gpg" class="text-2xl sm:text-3xl text-center lg:text-4xl font-bold text-slate-900 mb-10">
+						Global Payment Gateways
+					</h1>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4 text-center">
+						Secure Cross-Border Payment Solutions for International Trade & E-Commerce
+					</p>
+
+					<!-- What -->
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-2">
+						What are Global Payment Gateways?
+					</h2>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+						A Global Payment Gateway is a secure digital platform that enables businesses to accept, process, and settle international payments across borders in multiple currencies using various payment methods such as credit cards, debit cards, bank transfers, and digital wallets.
+					</p>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+						These gateways act as an intermediary between the buyer, merchant, banks, and card networks, ensuring safe authorization, currency conversion, and settlement of international transactions.
+					</p>
+
+					<!-- Why -->
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-2">
+						Why Use Global Payment Gateways?
+					</h2>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+						Global Payment Gateways are essential for businesses operating internationally due to the following advantages:
+					</p>
+
+					<ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-4 mb-8 list-decimal">
+						<li>
+						<strong>Faster International Transactions</strong>
+						<ul class="list-disc pl-6 mt-2 space-y-1">
+							<li>Real-time or near real-time payment processing</li>
+							<li>Reduces payment delays compared to traditional banking channels</li>
+						</ul>
+						</li>
+						<li>
+						<strong>Multi-Currency Acceptance</strong>
+						<ul class="list-disc pl-6 mt-2 space-y-1">
+							<li>Allows buyers to pay in their local currency</li>
+							<li>Improves conversion rates and customer confidence</li>
+						</ul>
+						</li>
+						<li>
+						<strong>Enhanced Payment Security</strong>
+						<ul class="list-disc pl-6 mt-2 space-y-1">
+							<li>Advanced encryption, tokenization, and fraud detection</li>
+							<li>Compliance with PCI DSS, SSL, and 3D Secure standards</li>
+						</ul>
+						</li>
+						<li>
+						<strong>Improved Customer Experience</strong>
+						<ul class="list-disc pl-6 mt-2 space-y-1">
+							<li>Multiple payment options increase checkout success</li>
+							<li>Seamless and user-friendly payment interface</li>
+						</ul>
+						</li>
+						<li>
+						<strong>Global Market Expansion</strong>
+						<ul class="list-disc pl-6 mt-2 space-y-1">
+							<li>Enables businesses to sell in multiple countries without local bank accounts</li>
+						</ul>
+						</li>
+					</ol>
+
+					<!-- Where -->
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-2">
+						Where are Global Payment Gateways Used?
+					</h2>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+						Global Payment Gateways are widely used across industries and business models:
+					</p>
+
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Export–Import Businesses</li>
+						<li>Cross-border E-commerce Platforms</li>
+						<li>SaaS & Digital Service Providers</li>
+						<li>Online Marketplaces</li>
+						<li>International Freelancers & Consultants</li>
+						<li>Travel, Education, and Subscription-Based Businesses</li>
+					</ul>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+						They are especially critical in high-volume international sales environments and countries with foreign exchange regulations.
+					</p>
+
+					<!-- How -->
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-2">
+						How Do Global Payment Gateways Work?
+					</h2>
+
+					<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-5">
+						Step-by-Step Payment Process
+					</h3>
+
+					<ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-4 mb-8 list-decimal">
+						<li>Customer Initiates Payment – Buyer selects a product/service and chooses a payment method.</li>
+						<li>Payment Data Encryption – Payment information is securely encrypted and transmitted.</li>
+						<li>Authorization Request – Gateway sends the transaction request to the issuing bank or card network.</li>
+						<li>Currency Conversion (If Required) – Exchange rate applied automatically for cross-border payments.</li>
+						<li>Payment Approval or Decline – Issuing bank verifies funds and approves the transaction.</li>
+						<li>Settlement to Merchant Account – Funds are settled to the merchant’s bank account after deductions.</li>
+					</ol>
+
+					<!-- Features -->
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-2">
+						Key Features of Global Payment Gateways
+					</h2>
+
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Multi-Currency Pricing & Settlement</li>
+						<li>Automatic Forex Conversion</li>
+						<li>Multiple Payment Methods</li>
+						<li>Fraud Detection & Risk Scoring</li>
+						<li>API & Website Integration</li>
+						<li>Compliance & Regulatory Controls</li>
+						<li>Real-Time Reporting & Reconciliation</li>
+					</ul>
+
+					<!-- Payment Methods -->
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-2">
+						Types of Payment Methods Supported
+					</h2>
+
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Credit & Debit Cards (Visa, MasterCard, Amex)</li>
+						<li>Bank Transfers (SWIFT, ACH, SEPA)</li>
+						<li>Digital Wallets (PayPal, Apple Pay, Google Pay)</li>
+						<li>Local Payment Methods (UPI, Alipay, regional wallets)</li>
+					</ul>
+
+					<!-- Compliance -->
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-2">
+						Regulatory & Compliance Requirements
+					</h2>
+
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>KYC (Know Your Customer)</li>
+						<li>AML (Anti-Money Laundering)</li>
+						<li>PCI DSS Compliance</li>
+						<li>Data Protection Laws (GDPR, etc.)</li>
+						<li>RBI / Central Bank Regulations (country-specific)</li>
+					</ul>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+						Failure to comply can lead to account suspension, penalties, or fund blockage.
+					</p>
+
+					<!-- Risks -->
+
+					<h2 id="risks-challenges-gpg" class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-2">
+						Risks & Challenges in Using Global Payment Gateways
+					</h2>
+
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+						<li>Foreign exchange volatility</li>
+						<li>Chargebacks and disputes</li>
+						<li>High transaction and conversion fees</li>
+						<li>Regulatory restrictions in certain countries</li>
+						<li>Payment failures due to regional banking rules</li>
+					</ul>
+
+					<!-- Best Practices -->
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-2">
+						Best Practices for Using Global Payment Gateways
+					</h2>
+
+					<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-10">
+						<li>Choose gateways with strong global coverage</li>
+						<li>Enable local currency pricing</li>
+						<li>Monitor transaction analytics regularly</li>
+						<li>Maintain clear refund and dispute policies</li>
+						<li>Combine with forex hedging strategies for large volumes</li>
+					</ul>
+
+					<!-- Comparison Table -->
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-4">
+						Global Payment Gateways vs Traditional Banking
+					</h2>
+
+					<div class="overflow-x-auto mb-10">
+						<table class="min-w-full border border-slate-200 text-sm sm:text-base lg:text-lg text-slate-600">
+						<thead class="bg-slate-50 text-slate-900 font-semibold">
+							<tr>
+							<th class="border px-4 py-2 text-left">Aspect</th>
+							<th class="border px-4 py-2 text-left">Payment Gateway</th>
+							<th class="border px-4 py-2 text-left">Traditional Bank</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+							<td class="border px-4 py-2">Speed</td>
+							<td class="border px-4 py-2">Fast</td>
+							<td class="border px-4 py-2">Slow</td>
+							</tr>
+							<tr>
+							<td class="border px-4 py-2">Currency Support</td>
+							<td class="border px-4 py-2">Multi-currency</td>
+							<td class="border px-4 py-2">Limited</td>
+							</tr>
+							<tr>
+							<td class="border px-4 py-2">User Experience</td>
+							<td class="border px-4 py-2">Seamless</td>
+							<td class="border px-4 py-2">Complex</td>
+							</tr>
+							<tr>
+							<td class="border px-4 py-2">Integration</td>
+							<td class="border px-4 py-2">API-based</td>
+							<td class="border px-4 py-2">Manual</td>
+							</tr>
+							<tr>
+							<td class="border px-4 py-2">Cost Transparency</td>
+							<td class="border px-4 py-2">High</td>
+							<td class="border px-4 py-2">Low</td>
+							</tr>
+						</tbody>
+						</table>
+					</div>
+
+					<!-- Conclusion -->
+
+					<h2 class="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 mb-2">
+						Conclusion
+					</h2>
+
+					<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+						Global Payment Gateways are essential infrastructure for modern international trade, enabling secure, fast, and compliant cross-border transactions. When used strategically, they help businesses expand globally, improve cash flow, and enhance customer trust.
+					</p>
+					<div class="max-w-4xl mx-auto my-16">
+						<h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">Flowchart – Global Payment Gateway Process</h2>
+						<img src="/public/blog-images/International-Finance/GlobalPaymentGatewayProcess.png"
+						alt="Flowchart – Global Payment Gateway Process"
+						class="mx-auto w-full max-w-xl rounded-xl border border-slate-200 shadow-sm" />
+					</div>
+
+				</section>
+				
+  				<!-- FAQs: Global Payment Gateways -->
+				<section class="max-w-4xl mx-auto mb-20 space-y-6">
+  				<h2 id="FAQs-gpg" class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-6">
+					FAQ – Global Payment Gateways
+				</h2>
+
+				<!-- FAQ 1 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer
+					text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>1. What is a global payment gateway?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					A global payment gateway is a secure online platform that enables businesses to accept and process cross-border payments in multiple currencies using cards, bank transfers, and digital wallets.
+					</p>
+				</details>
+
+				<!-- FAQ 2 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer
+					text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>2. Who should use global payment gateways?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					Exporters, importers, e-commerce businesses, SaaS providers, freelancers, and global marketplaces that receive international online payments should use global payment gateways.
+					</p>
+				</details>
+
+				<!-- FAQ 3 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer
+					text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>3. How do global payment gateways handle currency conversion?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					The gateway automatically converts the buyer’s currency into the merchant’s settlement currency using real-time exchange rates, including applicable forex margins.
+					</p>
+				</details>
+
+				<!-- FAQ 4 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer
+					text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>4. Are global payment gateways safe for international transactions?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					Yes. Reputed gateways follow PCI DSS standards, use encryption, tokenization, fraud detection, and comply with KYC and AML regulations.
+					</p>
+				</details>
+
+				<!-- FAQ 5 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer
+					text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>5. What payment methods do global payment gateways support?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					They support credit/debit cards, international bank transfers, digital wallets, and region-specific local payment methods.
+					</p>
+				</details>
+
+				<!-- FAQ 6 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer
+					text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>6. What are the common charges involved in global payment gateways?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					Charges may include transaction fees, currency conversion fees, settlement fees, and chargeback fees, varying by country and payment method.
+					</p>
+				</details>
+
+				<!-- FAQ 7 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer
+					text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>7. What compliance requirements must businesses follow?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					Businesses must comply with KYC, AML, PCI DSS, data protection laws (GDPR), and country-specific foreign exchange regulations.
+					</p>
+				</details>
+
+				<!-- FAQ 8 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer
+					text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>8. Can global payment gateways be used for export-import transactions?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					Yes. They are widely used for small to medium export-import payments, especially for digital services, samples, and e-commerce exports.
+					</p>
+				</details>
+
+				<!-- FAQ 9 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer
+					text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>9. How are disputes and chargebacks handled?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					Gateways provide dispute management systems where merchants submit documents to contest chargebacks within defined timelines.
+					</p>
+				</details>
+
+				</section>	
+
+				<!-- Export Financing Options & Incentives -->
+				<section id="export-financing-options" class="max-w-4xl mx-auto mb-20 space-y-6">
+
+				<!-- Overview -->
+				<h1 id="introduction-efo" class="text-2xl sm:text-3xl text-center lg:text-4xl font-bold text-slate-900 mb-10">
+					Export Financing Options & Incentives
+				</h1>
+
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-8">
+					Empowering Exporters with International Trade Funding & Government Support
+				</p>
+
+				<!-- What is -->
+				<h2 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+					What is Export Financing?
+				</h2>
+
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+					Export Financing refers to a range of financial products, credit facilities, and government-backed incentives designed to help exporters fund production, procurement, shipment, and post-shipment operations in international trade.
+					It ensures exporters have sufficient working capital and risk coverage while selling goods and services to overseas buyers.
+				</p>
+
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+					Export financing is offered by:
+				</p>
+
+				<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+					<li>Commercial banks</li>
+					<li>Export Credit Agencies (ECAs)</li>
+					<li>Government institutions</li>
+					<li>Multilateral financial bodies</li>
+				</ul>
+
+				<!-- Why -->
+				<h2 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-8">
+					Why Use Export Financing & Incentives?
+				</h2>
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+					Export financing plays a critical role in global trade growth for the following reasons:
+				</p>
+
+				<ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-6 mb-8">
+					<li>
+					<strong>Improves Cash Flow</strong>
+					<ul class="list-disc pl-6 mt-2 space-y-2">
+						<li>Covers production and procurement costs</li>
+						<li>Prevents working capital shortages</li>
+					</ul>
+					</li>
+					<li>
+					<strong>Enhances Global Competitiveness</strong>
+					<ul class="list-disc pl-6 mt-2 space-y-2">
+						<li>Enables exporters to offer competitive payment terms</li>
+						<li>Improves pricing flexibility</li>
+					</ul>
+					</li>
+					<li>
+					<strong>Reduces Financial & Credit Risk</strong>
+					<ul class="list-disc pl-6 mt-2 space-y-2">
+						<li>Protects against buyer default and delayed payments</li>
+					</ul>
+					</li>
+					<li>
+					<strong>Enables Access to Government Incentives</strong>
+					<ul class="list-disc pl-6 mt-2 space-y-2">
+						<li>Avail tax benefits, subsidies, and interest concessions</li>
+					</ul>
+					</li>
+					<li>
+					<strong>Supports SME & New Exporters</strong>
+					<ul class="list-disc pl-6 mt-2 space-y-2">
+						<li>Facilitates entry into new international markets</li>
+					</ul>
+					</li>
+				</ol>
+
+				<!-- Where -->
+				<h2 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+					Where is Export Financing Used?
+				</h2>
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+					Export financing is used across:
+				</p>
+
+				<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-6">
+					<li>Manufacturing exports</li>
+					<li>Service exports</li>
+					<li>Agri-exports</li>
+					<li>Engineering & capital goods</li>
+					<li>E-commerce exports</li>
+					<li>SMEs and large exporters</li>
+				</ul>
+
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+					It is especially beneficial in:
+				</p>
+
+				<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+					<li>Long credit cycles</li>
+					<li>High-value export contracts</li>
+					<li>New or emerging export markets</li>
+				</ul>
+
+				<!-- Types -->
+				<h2 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-5">
+					Types of Export Financing Options
+				</h2>
+
+				<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+					1. Pre-Shipment Finance (Packing Credit)
+				</h3>
+
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+					Financing provided before shipment to fund:
+				</p>
+
+				<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-4">
+					<li>Raw materials</li>
+					<li>Production</li>
+					<li>Packaging & logistics</li>
+				</ul>
+
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+					Available in domestic or foreign currency.
+				</p>
+
+				<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+					2. Post-Shipment Finance
+				</h3>
+
+				<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-6">
+					<li>Bill discounting</li>
+					<li>Invoice financing</li>
+					<li>LC negotiation</li>
+				</ul>
+
+				<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+					3. Export Credit
+				</h3>
+
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+					Short-term or medium-term credit extended to overseas buyers, supported by banks or ECAs.
+				</p>
+
+				<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+					4. Buyer’s Credit
+				</h3>
+
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
+					Financing offered to foreign buyers to pay exporters upfront, improving exporter liquidity.
+				</p>
+
+				<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+					5. Forfaiting & Factoring
+				</h3>
+
+				<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+					<li>Forfaiting: Non-recourse financing for medium-term exports</li>
+					<li>Factoring: Sale of export receivables</li>
+				</ul>
+
+				<!-- Incentives -->
+				<h2 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+					Export Incentives & Government Support
+				</h2>
+
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-4">
+					Export incentives are designed to promote exports and improve competitiveness.
+				</p>
+
+				<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+					Common Export Incentives Include:
+				</h3>
+
+				<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-6">
+					<li>Duty drawback schemes</li>
+					<li>Export subsidies</li>
+					<li>Interest equalization schemes</li>
+					<li>Tax exemptions on export income</li>
+					<li>Freight & logistics incentives</li>
+				</ul>
+
+				<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+					Benefits of Export Incentives
+				</h3>
+
+				<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+					<li>Reduces overall export cost</li>
+					<li>Improves profit margins</li>
+					<li>Encourages market diversification</li>
+				</ul>
+
+				<!-- How -->
+				<h2 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+					How to Use Export Financing & Incentives Effectively
+				</h2>
+
+				<ol class="pl-5 text-sm sm:text-base lg:text-lg text-slate-600 space-y-4 mb-8 list-decimal">
+					<li>Assess export order & funding needs</li>
+					<li>Identify suitable financing option</li>
+					<li>Approach bank or export credit agency</li>
+					<li>Submit export documents & contracts</li>
+					<li>Avail finance & incentives</li>
+					<li>Execute shipment & realize proceeds</li>
+				</ol>
+
+				<!-- Documents -->
+				<h2 id="key-docs" class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+					Key Documents Required for Export Financing
+				</h2>
+
+				<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+					<li>Export contract / purchase order</li>
+					<li>Proforma invoice</li>
+					<li>Letter of Credit (if applicable)</li>
+					<li>Shipping documents</li>
+					<li>Exporter KYC documents</li>
+				</ul>
+
+				<!-- Risks -->
+				<h2 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+					Risks & Challenges in Export Financing
+				</h2>
+
+				<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-4">
+					<li>Currency fluctuation risk</li>
+					<li>Buyer default risk</li>
+					<li>Compliance & documentation errors</li>
+					<li>Delays in incentive realization</li>
+				</ul>
+
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+					Mitigation through:
+				</p>
+
+				<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2">
+					<li>Hedging</li>
+					<li>Trade credit insurance</li>
+					<li>Proper compliance management</li>
+				</ul>
+
+				<div class="max-w-4xl mx-auto my-16">
+					<h2 class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-5">Flowchart – Export Financing & Incentives Process</h2>
+					<img src="/public/blog-images/International-Finance/ExportFinancing&IncentivesProcess.png"
+					alt="Flowchart – Export Financing & Incentives Process"
+					class="mx-auto w-full max-w-xl rounded-xl border border-slate-200 shadow-sm" />
+				</div>
+
+				<h2 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+				Best Practices for Exporters
+				</h2>
+
+				<ul class="list-disc pl-6 text-md sm:text-base lg:text-lg text-slate-600 space-y-2 mb-8">
+				<li>Choose financing based on cash flow cycle</li>
+				<li>Maintain strong export documentation</li>
+				<li>Monitor incentive eligibility regularly</li>
+				<li>Combine finance with risk mitigation tools</li>
+				<li>Stay updated on government export policies</li>
+				</ul>
+
+				<h2 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 mb-2">
+				Conclusion
+				</h2>
+
+				<p class="text-md sm:text-base lg:text-lg text-slate-600 leading-relaxed">
+				Export Financing & Incentives are critical enablers of successful international trade, helping exporters manage cash flow, mitigate risk, and expand globally. When used strategically, they significantly improve profitability, sustainability, and competitiveness in global markets.
+				</p>
+				</section>
+
+				<!-- FAQs: Export Financing Options & Incentives -->
+				<section class="max-w-4xl mx-auto mb-20 space-y-6">
+				<h2 id="FAQs-efo" class="text-lg sm:text-xl lg:text-2xl text-center font-semibold text-slate-900 mb-6">
+					FAQ – Export Financing Options & Incentives
+				</h2>
+
+				<!-- FAQ 1 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer
+					text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>1. What is export financing?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					Export financing refers to financial support and credit facilities that help exporters fund production, shipment, and post-shipment activities in international trade.
+					</p>
+				</details>
+
+				<!-- FAQ 2 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer
+					text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>2. Who can avail export financing?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					Manufacturers, merchant exporters, service exporters, SMEs, startups, and established exporters engaged in international trade can avail export financing.
+					</p>
+				</details>
+
+				<!-- FAQ 3 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer
+					text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>3. What are the main types of export financing?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					The main types include pre-shipment finance, post-shipment finance, export credit, buyer’s credit, factoring, and forfaiting.
+					</p>
+				</details>
+
+				<!-- FAQ 4 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer
+					text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>4. What is pre-shipment and post-shipment finance?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<div class="mt-4 text-slate-700 leading-relaxed">
+					<ul class="list-disc pl-6 space-y-2">
+						<li>Pre-shipment finance funds production and procurement before shipment.</li>
+						<li>Post-shipment finance provides liquidity after shipment until payment is received.</li>
+					</ul>
+					</div>
+				</details>
+
+				<!-- FAQ 5 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer
+					text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>5. What are export incentives?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					Export incentives are government benefits such as tax exemptions, subsidies, duty drawbacks, and interest support provided to promote exports.
+					</p>
+				</details>
+
+				<!-- FAQ 6 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer
+					text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>6. How do export incentives benefit exporters?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					They reduce export costs, improve profit margins, enhance price competitiveness, and encourage market expansion.
+					</p>
+				</details>
+
+				<!-- FAQ 7 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer
+					text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>7. What documents are required for export financing?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					Common documents include export contracts, invoices, LC (if applicable), shipping documents, and exporter KYC papers.
+					</p>
+				</details>
+
+				<!-- FAQ 8 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer
+					text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>8. What risks are involved in export financing?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					Key risks include buyer default, currency fluctuation, documentation errors, and regulatory delays, which can be managed through insurance and hedging.
+					</p>
+				</details>
+
+				<!-- FAQ 9 -->
+				<details class="group border border-slate-200 rounded-xl bg-white p-4 sm:p-5 transition-shadow hover:shadow-sm">
+					<summary class="flex items-start justify-between gap-4 cursor-pointer
+					text-base sm:text-lg font-semibold text-slate-900 list-none">
+					<span>9. Is export financing suitable for new exporters?</span>
+					<span class="transition-transform duration-200 group-open:rotate-90">▶</span>
+					</summary>
+					<p class="mt-4 text-slate-700 leading-relaxed">
+					Yes. Export financing is especially beneficial for new and SME exporters, as it supports working capital needs and reduces financial pressure.
+					</p>
+				</details>
+
+				</section>
+
+
+		</article>
+		</main>
+	</div>
+<script>
+		const toggleBtn = document.getElementById("toc-toggle")
+		const closeBtn = document.getElementById("toc-close")
+		const sidebar = document.getElementById("toc-sidebar")
+		const overlay = document.getElementById("toc-overlay")
+		const body = document.body
+
+		function openSidebar() {
+			sidebar.classList.remove("-translate-x-full")
+			overlay.classList.remove("hidden")
+			body.classList.add("overflow-hidden")
+		}
+
+		function closeSidebar() {
+			sidebar.classList.add("-translate-x-full")
+			overlay.classList.add("hidden")
+			body.classList.remove("overflow-hidden")
+		}
+
+		toggleBtn.addEventListener("click", openSidebar)
+		closeBtn.addEventListener("click", closeSidebar)
+		overlay.addEventListener("click", closeSidebar)
+
+		document.querySelectorAll('[data-scroll]').forEach(link => {
+			link.addEventListener('click', e => {
+				e.preventDefault()
+
+				const id = link.getAttribute('href')
+				const target = document.querySelector(id)
+				if (!target) return
+
+				target.scrollIntoView({ behavior: 'smooth' })
+
+				// IMPORTANT: replace state instead of push
+				history.replaceState(null, '', id)
+			})
+		})
+</script>
+</body>
+</html>	
