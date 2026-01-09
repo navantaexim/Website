@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react'
 import { useParams } from 'next/navigation'
+import { useAuth } from '@/providers/auth-provider'
 
 interface PaywallState {
     timeSpent: number
@@ -12,10 +13,11 @@ interface PaywallState {
 export default function BlogPaywall() {
     const params = useParams()
     const slug = params?.slug as string
+    const { user, loading } = useAuth()
     
     // Config
-    const FREE_TIME_LIMIT_SECONDS = 45 // Example limit
-    
+    const FREE_TIME_LIMIT_SECONDS = 240 // 4 minutes
+
     const [state, setState] = useState<PaywallState>({
         timeSpent: 0,
         scrollCompleted: false,
@@ -25,10 +27,24 @@ export default function BlogPaywall() {
     const [isMounted, setIsMounted] = useState(false)
     const stateRef = useRef<PaywallState>(state)
     
+    // Auth Effect: Clear storage if logged in
+    useEffect(() => {
+        if (user) {
+            // Clear all paywall entries
+            Object.keys(localStorage).forEach(key => {
+                if (key.startsWith('paywall:blog:')) {
+                    localStorage.removeItem(key)
+                }
+            })
+        }
+    }, [user])
+
     // Keep ref in sync with state
     useEffect(() => {
         stateRef.current = state
     }, [state])
+
+    if (loading || user) return null
 
     // 1. Initial Load
     useEffect(() => {
@@ -41,6 +57,12 @@ export default function BlogPaywall() {
             const saved = localStorage.getItem(key)
             if (saved) {
                 const parsed = JSON.parse(saved)
+                
+                // Unified Trigger Logic: Check all conditions on load
+                if (parsed.scrollCompleted || (parsed.timeSpent || 0) >= FREE_TIME_LIMIT_SECONDS || parsed.paywallTriggered) {
+                    parsed.paywallTriggered = true
+                }
+
                 setState(prev => ({
                     ...prev,
                     ...parsed,
@@ -54,14 +76,14 @@ export default function BlogPaywall() {
     // 2. Timer (runs every second)
     useEffect(() => {
         if (!isMounted || !slug) return
-        if (state.paywallTriggered) return // Stop timer if paywall is already triggered
+        if (state.paywallTriggered) return // Stop tracking once triggered
 
         const timer = setInterval(() => {
             setState(prev => {
                 const newState = { ...prev, timeSpent: prev.timeSpent + 1 }
                 
-                // Logic to trigger paywall (Example rule)
-                if (!newState.paywallTriggered && newState.timeSpent > FREE_TIME_LIMIT_SECONDS) {
+                // Triggers paywall when total time >= 240 seconds
+                if (!newState.paywallTriggered && newState.timeSpent >= FREE_TIME_LIMIT_SECONDS) {
                     newState.paywallTriggered = true
                 }
                 
@@ -75,24 +97,28 @@ export default function BlogPaywall() {
     // 3. Scroll Listener
     useEffect(() => {
         if (!isMounted || !slug) return
+        if (state.paywallTriggered) return // Remove listeners if paywall triggered
         
         const handleScroll = () => {
             const scrollTop = window.scrollY
             const docHeight = document.documentElement.scrollHeight
             const winHeight = window.innerHeight
             
-            // Check if user scrolled to near bottom (90%)
-            if (scrollTop + winHeight > docHeight * 0.9) {
-                setState(prev => {
-                    if (prev.scrollCompleted) return prev
-                    return { ...prev, scrollCompleted: true }
-                })
+            // Calculate completion (100% with buffer)
+            const isBottom = scrollTop + winHeight >= docHeight - 10
+
+            if (isBottom) {
+                setState(prev => ({
+                    ...prev,
+                    scrollCompleted: true,
+                    paywallTriggered: true // Trigger paywall immediately
+                }))
             }
         }
         
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll)
-    }, [isMounted, slug])
+    }, [isMounted, slug, state.paywallTriggered])
 
     // 4. Periodic Save (every 5 seconds)
     useEffect(() => {
@@ -127,7 +153,7 @@ export default function BlogPaywall() {
                             </svg>
                         </div>
                         <h2 className="mb-3 text-2xl font-bold text-gray-900">
-                            Keep reading this story
+                            Keep reading this ahead
                         </h2>
                         <p className="mb-8 text-gray-600">
                             You've reached your free preview limit. Subscribe now to get unlimited access to all our in-depth articles.
