@@ -1,3 +1,5 @@
+'use client'
+
 import dynamic from 'next/dynamic'
 import SmoothAnchorScroll from './SmoothAnchorScroll'
 import TocSidebarController from './TocSidebarController'

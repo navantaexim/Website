@@ -2,7 +2,9 @@
 
 import { useEffect, useState, useRef } from 'react'
 import { useParams } from 'next/navigation'
+import Link from 'next/link'
 import { useAuth } from '@/providers/auth-provider'
+import GoogleSignInButton from '@/components/auth/google-signin-button'
 
 interface PaywallState {
     timeSpent: number
@@ -44,11 +46,9 @@ export default function BlogPaywall() {
         stateRef.current = state
     }, [state])
 
-    if (loading || user) return null
-
     // 1. Initial Load
     useEffect(() => {
-        if (!slug) return
+        if (!slug || loading || user) return
         
         setIsMounted(true)
         const key = `paywall:blog:${slug}`
@@ -71,11 +71,11 @@ export default function BlogPaywall() {
         } catch (e) {
             console.error('Error loading paywall state:', e)
         }
-    }, [slug])
+    }, [slug, loading, user])
 
     // 2. Timer (runs every second)
     useEffect(() => {
-        if (!isMounted || !slug) return
+        if (!isMounted || !slug || loading || user) return
         if (state.paywallTriggered) return // Stop tracking once triggered
 
         const timer = setInterval(() => {
@@ -92,11 +92,11 @@ export default function BlogPaywall() {
         }, 1000)
 
         return () => clearInterval(timer)
-    }, [isMounted, slug, state.paywallTriggered])
+    }, [isMounted, slug, state.paywallTriggered, loading, user])
 
     // 3. Scroll Listener
     useEffect(() => {
-        if (!isMounted || !slug) return
+        if (!isMounted || !slug || loading || user) return
         if (state.paywallTriggered) return // Remove listeners if paywall triggered
         
         const handleScroll = () => {
@@ -118,28 +118,22 @@ export default function BlogPaywall() {
         
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll)
-    }, [isMounted, slug, state.paywallTriggered])
+    }, [isMounted, slug, state.paywallTriggered, loading, user])
 
     // 4. Periodic Save (every 5 seconds)
     useEffect(() => {
-        if (!isMounted || !slug) return
+        if (!isMounted || !slug || loading || user) return
 
         const saveInterval = setInterval(() => {
             const key = `paywall:blog:${slug}`
             // Save the latest state from ref to avoid stale closures in interval
-            // But wait, stateRef is updated in an effect, which might be slightly delayed? 
-            // Actually, using the functional update in setState is for updating state.
-            // For SAVING, we need the current state.
-            // Using a Ref is the standard way to access latest state in an interval.
             localStorage.setItem(key, JSON.stringify(stateRef.current))
         }, 5000)
-
-        // Also save on unmount/page hide is often good practice, but not explicitly requested.
         
         return () => clearInterval(saveInterval)
-    }, [isMounted, slug])
+    }, [isMounted, slug, loading, user])
 
-    if (!isMounted) return null
+    if (loading || user || !isMounted) return null
 
     if (state.paywallTriggered) {
         return (
@@ -153,32 +147,38 @@ export default function BlogPaywall() {
                             </svg>
                         </div>
                         <h2 className="mb-3 text-2xl font-bold text-gray-900">
-                            Keep reading this ahead
+                            Start your journey today
                         </h2>
-                        <p className="mb-8 text-gray-600">
-                            You've reached your free preview limit. Subscribe now to get unlimited access to all our in-depth articles.
+                        <p className="mb-8 text-gray-600 leading-relaxed">
+                            Create a free account to continue reading and unlock deeper insights, practical examples, and future premium content curated for serious learners.
                         </p>
-                        <div className="space-y-3">
-                            <button 
-                                onClick={() => {
-                                    // Reset for demo purposes if clicked (optional, or just do nothing)
-                                    // window.location.reload()
-                                    // For now, it's a hard wall.
-                                }}
-                                className="w-full rounded-lg bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                        <div className="space-y-4 max-w-xs mx-auto">
+                            <div className="w-full">
+                                <GoogleSignInButton />
+                            </div>
+                            
+                            <div className="relative">
+                                <div className="absolute inset-0 flex items-center">
+                                    <span className="w-full border-t border-gray-300" />
+                                </div>
+                                <div className="relative flex justify-center text-xs uppercase">
+                                    <span className="bg-white px-2 text-gray-500">Or</span>
+                                </div>
+                            </div>
+
+                            <Link 
+                                href="/signup"
+                                className="block w-full rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 text-center transition-colors"
                             >
-                                Subscribe for $5/month
-                            </button>
-                            <button 
-                                onClick={() => {
-                                    // Allow resetting for testing/demo?
-                                    // The user requested persistent paywall.
-                                    // I'll leave a backdoor for the user/dev: clear local storage.
-                                }}
-                                className="w-full text-xs text-gray-400 hover:text-gray-500"
-                            >
-                                Already a subscriber? Sign in
-                            </button>
+                                Create Free Account
+                            </Link>
+
+                            <p className="text-sm text-gray-500 mt-4">
+                                Already have an account?{' '}
+                                <Link href="/login" className="font-semibold text-blue-600 hover:text-blue-500 underline decoration-blue-600/30">
+                                    Sign in
+                                </Link>
+                            </p>
                         </div>
                     </div>
                 </div>
