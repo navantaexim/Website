@@ -47,7 +47,7 @@ export default function DashboardPage() {
           <p className="text-muted-foreground mb-6">You're now logged into Navanta Exim.</p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="border border-border rounded-lg p-6">
+            {/* <div className="border border-border rounded-lg p-6">
               <h3 className="font-semibold text-foreground mb-2">Your Profile</h3>
               <p className="text-sm text-muted-foreground mb-4">Manage your account settings and preferences</p>
               <button className="text-sm font-medium text-primary hover:text-primary/80">Edit Profile →</button>
@@ -57,12 +57,14 @@ export default function DashboardPage() {
               <h3 className="font-semibold text-foreground mb-2">Your Network</h3>
               <p className="text-sm text-muted-foreground mb-4">Connect with verified global buyers</p>
               <button className="text-sm font-medium text-primary hover:text-primary/80">View Network →</button>
-            </div>
+            </div>  */}
             
             <div className="border border-border rounded-lg p-6">
               <h3 className="font-semibold text-foreground mb-2">Resources</h3>
               <p className="text-sm text-muted-foreground mb-4">Access guides and learning materials</p>
-              <button className="text-sm font-medium text-primary hover:text-primary/80">Explore Resources →</button>
+              <Link href="/blogs" className="text-sm font-medium text-primary hover:text-primary/80">
+                Explore Resources →
+              </Link>
             </div>
           </div>
         </div>
