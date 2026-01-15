@@ -7,38 +7,39 @@ export default function WhyChoose() {
       title: 'Industry-Specific Focus',
       description:
         'Built exclusively for engineering manufacturers and B2B industrial sectors.',
-      icon: '🏭',
+      image: '/why/industry-specific.svg',
     },
     {
       title: 'AI-Driven Solutions',
       description:
         'Every feature is powered by intelligent automation and real-time insights.',
-      icon: '⚡',
+      image: '/why/ai.svg',
     },
     {
       title: 'Verified Global Network',
       description: 'Trusted access to verified buyers across 50+ countries.',
-      icon: '🌐',
+      image: '/why/global.svg',
     },
     {
       title: 'One-Stop Growth Platform',
       description:
         'A complete ecosystem for marketing, sales, compliance, and scaling.',
-      icon: '🎯',
+      image: '/why/platform.jpeg',
     },
     {
       title: 'Cost Effective',
       description:
         'High ROI solutions designed to reduce operational and marketing costs.',
-      icon: '💰',
+      image: '/why/cost-effective.svg',
     },
     {
       title: 'Performance-Driven Results',
       description:
         'Proven track record of delivering measurable growth and high-quality leads.',
-      icon: '📈',
+      image: '/why/performance.jpeg',
     },
   ]
+
 
 
   return (
@@ -86,8 +87,18 @@ export default function WhyChoose() {
 
             {/* Content */}
             <div className="relative p-8 rounded-3xl z-10">
-              <div className="w-14 h-14 mx-auto rounded-full bg-primary/10 flex items-center justify-center text-3xl mb-5">
-                {reason.icon}
+              <div className="mx-auto mb-6 w-24 h-24 overflow-hidden rounded-2xl">
+                <img
+                  src={reason.image}
+                  alt={reason.title}
+                  className="
+      w-full h-full object-contain
+      transition-all duration-500 ease-out
+      group-hover:scale-110
+      group-hover:brightness-110
+      group-hover:contrast-110
+    "
+                />
               </div>
               <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition">
                 {reason.title}
