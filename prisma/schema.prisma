@@ -4,8 +4,8 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("DATABASE_URL")   // 6543
-  directUrl = env("DIRECT_URL")     // 5432
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -14,8 +14,279 @@ model User {
   email       String   @unique
   name        String?
   picture     String?
-  role        String   @default("user")
+  role        String   @default("user") // admin, seller_admin later
   status      String   @default("active")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  sellerLinks SellerUser[]
+}
+
+model Seller {
+  id                String  @id @default(cuid())
+  legalName         String
+  businessType      String
+  yearEstablished   Int
+  gstNumber         String  @unique(map: "idx_seller_gst")
+  iecCode           String  @unique
+  panNumber         String? // auto-validated PAN
+  cinOrLlpin        String? // CIN / LLPIN
+  status            String  @default("draft")
+  verificationStage String  @default("unverified")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users         SellerUser[]
+  addresses     SellerAddress[]
+  capabilities  ManufacturingCapability?
+  exportProfile ExportProfile?
+  products      Product[]
+  certificates  SellerCertification[]
+  documents     SellerDocument[]
+}
+
+model SellerAddress {
+  id          String @id @default(cuid())
+  sellerId    String
+  type        String // registered | manufacturing
+  addressLine String
+  city        String
+  state       String
+  country     String @default("India")
+  pincode     String
+
+  seller Seller @relation(fields: [sellerId], references: [id])
+}
+
+model SellerDocument {
+  id          String   @id @default(cuid())
+  sellerId    String
+  type        String // PAN_CARD, GST_CERT, IEC_CERT
+  documentUrl String
+  verified    Boolean  @default(false)
+  uploadedAt  DateTime @default(now())
+
+  seller Seller @relation(fields: [sellerId], references: [id])
+
+  @@unique([sellerId, type])
+}
+
+model SellerUser {
+  id       String @id @default(cuid())
+  sellerId String
+  userId   String
+
+  role        String // owner, export_manager, qc_manager
+  designation String
+  isPrimary   Boolean @default(false)
+  whatsapp    Boolean
+  phone       String
+
+  seller Seller @relation(fields: [sellerId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@unique([sellerId, userId])
+}
+
+model ManufacturingCapability {
+  id               String  @id @default(cuid())
+  sellerId         String  @unique
+  manufacturerType String // OEM, ODM, Trader
+  factoryAreaSqm   Int
+  employeeRange    String // 1-20, 21-50, etc
+  engineerRange    String?
+  inHouseQC        Boolean
+
+  seller Seller @relation(fields: [sellerId], references: [id])
+}
+
+model ExportProfile {
+  id       String @id @default(cuid())
+  sellerId String @unique
+
+  exportExperience Int // years
+  annualTurnover   String // confidential range
+  logisticsModes   String[] // Sea, Air, Road
+
+  seller Seller @relation(fields: [sellerId], references: [id])
+
+  markets     ExportProfileMarket[]
+  incoterms   ExportProfileIncoterm[]
+  hsExpertise ExportProfileHsCode[]
+}
+
+model ExportProfileHsCode {
+  id              String @id @default(cuid())
+  exportProfileId String
+  hsCode          String
+
+  exportProfile ExportProfile @relation(fields: [exportProfileId], references: [id])
+
+  @@unique([exportProfileId, hsCode])
+  @@index([hsCode])
+}
+
+model Country {
+  id      String @id @default(cuid())
+  name    String @unique
+  isoCode String @unique
+
+  exportProfiles ExportProfileMarket[]
+  Product        Product[]
+}
+
+model Incoterm {
+  id   String @id @default(cuid())
+  code String @unique // EXW, FOB, CIF, DDP
+
+  exportProfiles ExportProfileIncoterm[]
+}
+
+model ExportProfileMarket {
+  id              String @id @default(cuid())
+  exportProfileId String
+  countryId       String
+
+  exportProfile ExportProfile @relation(fields: [exportProfileId], references: [id])
+  country       Country       @relation(fields: [countryId], references: [id])
+
+  @@unique([exportProfileId, countryId])
+  @@index([countryId])
+}
+
+model ExportProfileIncoterm {
+  id              String @id @default(cuid())
+  exportProfileId String
+  incotermId      String
+
+  exportProfile ExportProfile @relation(fields: [exportProfileId], references: [id])
+  incoterm      Incoterm      @relation(fields: [incotermId], references: [id])
+
+  @@unique([exportProfileId, incotermId])
+}
+
+model SellerCertification {
+  id          String    @id @default(cuid())
+  sellerId    String
+  type        String // ISO 9001, CE, API
+  documentUrl String?
+  issuedBy    String?
+  validTill   DateTime?
+
+  seller Seller @relation(fields: [sellerId], references: [id])
+}
+
+model Product {
+  id         String @id @default(cuid())
+  sellerId   String
+  name       String
+  categoryId String
+  hsCode     String
+
+  productType     String // standard, custom, made-to-order
+  originCountryId String
+
+  status String @default("draft")
+  // draft | submitted | verified | active | inactive | rejected
+
+  seller        Seller   @relation(fields: [sellerId], references: [id])
+  category      Category @relation(fields: [categoryId], references: [id])
+  originCountry Country  @relation(fields: [originCountryId], references: [id])
+
+  specs      ProductSpecification?
+  compliance ProductCompliance?
+  commercial ProductCommercial?
+  media      ProductMedia[]
+
+  @@index([status])
+  @@index([hsCode], map: "idx_product_hs_code")
+  @@index([categoryId], map: "idx_product_category")
+}
+
+model ProductSpecification {
+  id               String  @id @default(cuid())
+  productId        String  @unique
+  materialGrade    String
+  dimensions       Json
+  // dimension example {
+  //   "type": "cylindrical",
+  //   "diameter": 50,
+  //   "length": 120,
+  //   "unit": "mm"
+  // }
+  weightKg         Float
+  tolerance        String
+  surfaceFinish    String
+  process          String
+  drawingAvailable Boolean
+
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model ProductCompliance {
+  id             String @id @default(cuid())
+  productId      String @unique
+  inspectionType String // in-house / third-party
+
+  status String @default("pending")
+  // pending | verified | expired | rejected
+
+  product      Product                  @relation(fields: [productId], references: [id])
+  standards    ProductStandard[]
+  certificates ProductTestCertificate[]
+}
+
+model ProductStandard {
+  id           String @id @default(cuid())
+  complianceId String
+  standard     String // ISO, ASTM, DIN, API
+
+  compliance ProductCompliance @relation(fields: [complianceId], references: [id])
+
+  @@unique([complianceId, standard])
+}
+
+model ProductTestCertificate {
+  id           String    @id @default(cuid())
+  complianceId String
+  type         String // MTC_3_1, MTC_3_2, COC
+  available    Boolean   @default(false)
+  issuedBy     String?
+  documentUrl  String
+  validTill    DateTime?
+
+  compliance ProductCompliance @relation(fields: [complianceId], references: [id])
+}
+
+model ProductCommercial {
+  id               String @id @default(cuid())
+  productId        String @unique
+  moq              Int
+  capacityPerMonth Int
+  leadTimeDays     Int
+  packaging        String
+  portOfDispatch   String
+
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model ProductMedia {
+  id        String @id @default(cuid())
+  productId String
+  type      String // image, drawing, test_report
+  url       String
+
+  product Product @relation(fields: [productId], references: [id])
+
+  @@index([productId, type])
+}
+
+model Category {
+  id       String     @id @default(cuid())
+  name     String
+  parentId String?
+  parent   Category?  @relation("CategoryTree", fields: [parentId], references: [id])
+  children Category[] @relation("CategoryTree")
+  Product  Product[]
 }
