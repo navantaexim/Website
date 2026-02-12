@@ -10,6 +10,9 @@ import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
 import { SellerBasicInfoForm } from '@/components/seller/onboarding/seller-basic-info-form'
 import { Step, Stepper } from '@/components/ui/stepper'
+import { SellerAddressSection } from '@/components/seller/onboarding/seller-address-section'
+import { SellerDocumentSection } from '@/components/seller/onboarding/seller-document-section'
+import { SellerReviewSection } from '@/components/seller/onboarding/seller-review-section'
 
 // Define the Seller type based on Prisma schema (simplified for frontend)
 interface Seller {
@@ -21,6 +24,8 @@ interface Seller {
   yearEstablished: number
   gstNumber: string
   iecCode: string
+  addresses: any[] // Simplified
+  documents: any[]
 }
 
 export default function SellerOnboardingPage() {
@@ -123,12 +128,15 @@ export default function SellerOnboardingPage() {
       { id: 1, title: 'Business Details', description: 'Tax & Legal Info' },
       { id: 2, title: 'Address', description: 'Registered Office' },
       { id: 3, title: 'Documents', description: 'GST, IEC, PAN' },
-      { id: 4, title: 'Capabilities', description: 'Factory Details' },
+      { id: 4, title: 'Review & Submit', description: 'Final Check' },
     ]
     
     // For now, assume step 0 is active
-    const currentStepIndex = 0 
+    const [currentStepIndex, setCurrentStepIndex] = useState(0)
     const progress = Math.round(((currentStepIndex) / steps.length) * 100)
+
+    const nextStep = () => setCurrentStepIndex((prev) => Math.min(prev + 1, steps.length - 1))
+    const prevStep = () => setCurrentStepIndex((prev) => Math.max(prev - 1, 0))
 
     return (
       <div className="container mx-auto py-10 px-4 max-w-5xl">
@@ -142,12 +150,21 @@ export default function SellerOnboardingPage() {
             <div className="space-y-6">
                 <Card>
                     <CardHeader>
-                        <CardTitle>Business Details</CardTitle>
-                        <CardDescription>Update your company's basic information.</CardDescription>
+                        <CardTitle>{steps[currentStepIndex].title}</CardTitle>
+                        <CardDescription>{steps[currentStepIndex].description}</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <SellerBasicInfoForm seller={seller} />
+                        {currentStepIndex === 0 && <SellerBasicInfoForm seller={seller} />}
+                        {currentStepIndex === 1 && <SellerAddressSection seller={seller} />}
+                        {currentStepIndex === 2 && <SellerDocumentSection seller={seller} />}
+                        {currentStepIndex === 3 && <SellerReviewSection seller={seller} />}
                     </CardContent>
+                     <CardFooter className="flex justify-between border-t p-6">
+                        <Button variant="outline" onClick={prevStep} disabled={currentStepIndex === 0}>Back</Button>
+                        <Button onClick={nextStep} disabled={currentStepIndex === steps.length - 1}>
+                            Continue <ChevronRight className="ml-2 h-4 w-4" />
+                        </Button>
+                    </CardFooter>
                 </Card>
             </div>
 

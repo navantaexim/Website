@@ -5,14 +5,12 @@ import { getAuth } from '@/lib/firebase-admin'
 import prisma from '@/lib/db'
 import { z } from 'zod'
 
-const addressSchema = z.object({
+const documentSchema = z.object({
   sellerId: z.string().min(1, 'Seller ID is required'),
-  type: z.enum(['registered', 'manufacturing']),
-  addressLine: z.string().min(5, 'Address line must be at least 5 characters'),
-  city: z.string().min(2, 'City is required'),
-  state: z.string().min(2, 'State is required'),
-  pincode: z.string().regex(/^\d{6}$/, 'Pincode must be 6 digits'),
-  country: z.string().default('India'),
+  type: z.enum(['PAN_CARD', 'GST_CERT', 'IEC_CERT'], {
+    errorMap: () => ({ message: "Type must be one of PAN_CARD, GST_CERT, IEC_CERT" }),
+  }),
+  documentUrl: z.string().url('Invalid document URL'),
 })
 
 async function getAuthenticatedUser(request: Request) {
@@ -52,42 +50,46 @@ export async function POST(request: Request) {
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
     const body = await request.json()
-    const validation = addressSchema.safeParse(body)
+    const validation = documentSchema.safeParse(body)
 
     if (!validation.success) {
       return NextResponse.json({ error: 'Validation Error', details: validation.error.format() }, { status: 400 })
     }
 
-    const { sellerId, type, addressLine, city, state, pincode, country } = validation.data
+    const { sellerId, type, documentUrl } = validation.data
 
     const sellerUser = await verifySellerAccess(user.id, sellerId)
     if (!sellerUser) return NextResponse.json({ error: 'Unauthorized seller access' }, { status: 403 })
-    if (sellerUser.seller.status !== 'draft') return NextResponse.json({ error: 'Cannot edit submitted seller' }, { status: 400 })
+    if (sellerUser.seller.status !== 'draft') return NextResponse.json({ error: 'Cannot upload docs for submitted seller' }, { status: 400 })
 
-    if (type === 'registered') {
-        const existing = await prisma.sellerAddress.findFirst({
-            where: { sellerId, type: 'registered' }
-        })
-        if (existing) {
-             return NextResponse.json({ error: 'A registered address already exists.' }, { status: 400 })
+    // Upsert logic: If document of type exists, update it.
+    // However, Prisma upsert requires unique constraint on [sellerId, type]
+    // Schema has @@unique([sellerId, type]) in SellerDocument model.
+    
+    const document = await prisma.sellerDocument.upsert({
+      where: {
+        sellerId_type: {
+            sellerId,
+            type
         }
-    }
-
-    const address = await prisma.sellerAddress.create({
-      data: {
+      },
+      update: {
+        documentUrl,
+        uploadedAt: new Date(),
+        verified: false
+      },
+      create: {
         sellerId,
         type,
-        addressLine,
-        city,
-        state,
-        pincode,
-        country
+        documentUrl,
+        verified: false
       }
     })
 
-    return NextResponse.json({ success: true, address })
+    return NextResponse.json({ success: true, document })
 
   } catch (error: any) {
+    console.error('Document Upload Error:', error)
     return NextResponse.json({ error: error.message || 'Error' }, { status: 500 })
   }
 }
@@ -101,17 +103,17 @@ export async function DELETE(request: Request) {
         const id = searchParams.get('id')
         const sellerId = searchParams.get('sellerId')
 
-        if (!id || !sellerId) return NextResponse.json({ error: 'Address ID and Seller ID required' }, { status: 400 })
+        if (!id || !sellerId) return NextResponse.json({ error: 'Document ID and Seller ID required' }, { status: 400 })
         
         const sellerUser = await verifySellerAccess(user.id, sellerId)
         if (!sellerUser) return NextResponse.json({ error: 'Unauthorized seller access' }, { status: 403 })
-        if (sellerUser.seller.status !== 'draft') return NextResponse.json({ error: 'Cannot edit submitted seller' }, { status: 400 })
+        if (sellerUser.seller.status !== 'draft') return NextResponse.json({ error: 'Cannot delete docs for submitted seller' }, { status: 400 })
 
-        // Ensure address belongs to seller
-        const address = await prisma.sellerAddress.findFirst({ where: { id, sellerId } })
-        if (!address) return NextResponse.json({ error: 'Address not found' }, { status: 404 })
+        // Ensure document belongs to seller
+        const doc = await prisma.sellerDocument.findUnique({ where: { id } })
+        if (!doc || doc.sellerId !== sellerId) return NextResponse.json({ error: 'Document not found' }, { status: 404 })
 
-        await prisma.sellerAddress.delete({
+        await prisma.sellerDocument.delete({
             where: { id }
         })
 

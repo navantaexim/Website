@@ -13,13 +13,17 @@ export async function GET() {
     }
 
     // Find the seller linked to this user
-    // We look for a SellerUser record where userId matches the current user's ID
     const sellerUser = await prisma.sellerUser.findFirst({
       where: { 
         userId: user.id 
       },
       include: {
-        seller: true
+        seller: {
+          include: {
+            addresses: true, // Include addresses
+            documents: true, // Include documents
+          }
+        }
       }
     });
 

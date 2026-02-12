@@ -1,6 +1,8 @@
+
 import { initializeApp } from 'firebase/app'
 import { getAuth, GoogleAuthProvider } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
+import { getStorage } from 'firebase/storage'
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -15,14 +17,16 @@ let app: any
 let auth: any
 let googleProvider: any
 let db: any
+let storage: any
 
 try {
   app = initializeApp(firebaseConfig)
   auth = getAuth(app)
   googleProvider = new GoogleAuthProvider()
   db = getFirestore(app)
+  storage = getStorage(app)
 } catch (error: any) {
-  console.warn('[Firebase] Using demo mode - authentication disabled. Configure Firebase credentials to enable auth.')
+  console.warn('[Firebase] Using demo mode - authentication and storage disabled. Configure Firebase credentials.')
   // Create mock auth object for demo mode
   auth = {
     currentUser: null,
@@ -30,9 +34,10 @@ try {
   }
   googleProvider = null
   db = {}
+  storage = {}
 }
 
-export { auth, googleProvider, db }
+export { auth, googleProvider, db, storage }
 
 import { 
   createUserWithEmailAndPassword, 
@@ -50,4 +55,3 @@ export const signInWithEmail = (email: string, password: string) =>
 export const logout = () => firebaseSignOut(auth)
 
 export const signInWithGoogle = () => signInWithPopup(auth, googleProvider)
-
