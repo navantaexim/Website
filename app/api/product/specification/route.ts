@@ -111,7 +111,7 @@ export async function POST(request: Request) {
       where: { productId },
       update: {
         materialGrade,
-        dimensions,
+        dimensions: dimensions as any,
         weightKg,
         tolerance,
         surfaceFinish,
@@ -121,7 +121,7 @@ export async function POST(request: Request) {
       create: {
         productId,
         materialGrade,
-        dimensions,
+        dimensions: dimensions as any,
         weightKg,
         tolerance,
         surfaceFinish,
