@@ -63,8 +63,7 @@ export async function POST(request: Request) {
         productId,
         url,
         type,
-        isPrimary: false // Logic to set primary can be added later
-      }
+     }
     })
 
     return NextResponse.json({ success: true, media })
