@@ -14,7 +14,7 @@ import { SellerAddressSection } from '@/components/seller/onboarding/seller-addr
 import { SellerDocumentSection } from '@/components/seller/onboarding/seller-document-section'
 import { SellerReviewSection } from '@/components/seller/onboarding/seller-review-section'
 
-// Define the Seller type based on Prisma schema (simplified for frontend)
+// Define the Seller type based on Prisma schema
 interface Seller {
   id: string
   legalName: string
@@ -24,21 +24,30 @@ interface Seller {
   yearEstablished: number
   gstNumber: string
   iecCode: string
-  addresses: any[] // Simplified
+  addresses: any[]
   documents: any[]
 }
+
+const steps: Step[] = [
+  { id: 1, title: 'Business Details', description: 'Tax & Legal Info' },
+  { id: 2, title: 'Address', description: 'Registered Office' },
+  { id: 3, title: 'Documents', description: 'GST, IEC, PAN' },
+  { id: 4, title: 'Review & Submit', description: 'Final Check' },
+]
 
 export default function SellerOnboardingPage() {
   const [seller, setSeller] = useState<Seller | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  
+  // Moved hook to top level
+  const [currentStepIndex, setCurrentStepIndex] = useState(0)
 
   useEffect(() => {
     async function fetchSeller() {
       try {
         const res = await fetch('/api/seller/me')
         if (res.status === 401) {
-          // Handle unauthorized, maybe redirect to login
           window.location.href = '/login'
           return
         }
@@ -56,6 +65,11 @@ export default function SellerOnboardingPage() {
 
     fetchSeller()
   }, [])
+
+  const nextStep = () => setCurrentStepIndex((prev) => Math.min(prev + 1, steps.length - 1))
+  const prevStep = () => setCurrentStepIndex((prev) => Math.max(prev - 1, 0))
+  
+  const progress = Math.round(((currentStepIndex) / steps.length) * 100)
 
   if (isLoading) {
     return (
@@ -123,21 +137,6 @@ export default function SellerOnboardingPage() {
 
   // 2. If seller.status="draft" -> Show Stepper UI
   if (seller.status === 'draft') {
-    // Current step logic could be dynamic based on completed fields
-    const steps: Step[] = [
-      { id: 1, title: 'Business Details', description: 'Tax & Legal Info' },
-      { id: 2, title: 'Address', description: 'Registered Office' },
-      { id: 3, title: 'Documents', description: 'GST, IEC, PAN' },
-      { id: 4, title: 'Review & Submit', description: 'Final Check' },
-    ]
-    
-    // For now, assume step 0 is active
-    const [currentStepIndex, setCurrentStepIndex] = useState(0)
-    const progress = Math.round(((currentStepIndex) / steps.length) * 100)
-
-    const nextStep = () => setCurrentStepIndex((prev) => Math.min(prev + 1, steps.length - 1))
-    const prevStep = () => setCurrentStepIndex((prev) => Math.max(prev - 1, 0))
-
     return (
       <div className="container mx-auto py-10 px-4 max-w-5xl">
         <div className="mb-8">

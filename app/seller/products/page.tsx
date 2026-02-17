@@ -152,7 +152,7 @@ export default async function SellerProductsPage() {
                 {seller.products.map((product) => (
                   <TableRow key={product.id}>
                     <TableCell className="font-medium">
-                        <Link href={`/products/${product.id}`} className="hover:underline">
+                        <Link href={`/seller/products/${product.id}`} className="hover:underline">
                             {product.name}
                         </Link>
                     </TableCell>
@@ -178,7 +178,7 @@ export default async function SellerProductsPage() {
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>Actions</DropdownMenuLabel>
                           <DropdownMenuItem asChild>
-                            <Link href={`/products/${product.id}`}>
+                            <Link href={`/seller/products/${product.id}`}>
                                 <Edit className="mr-2 h-4 w-4" /> Edit Details
                             </Link>
                           </DropdownMenuItem>

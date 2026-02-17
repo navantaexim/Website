@@ -17,7 +17,7 @@ interface ProductMediaProps {
         id: string
         url: string
         type: string
-        isPrimary: boolean
+        isPrimary?: boolean
     }[]
   }
 }

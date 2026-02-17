@@ -93,7 +93,7 @@ export function CreateProductDialog({ sellerId, categories, countries }: CreateP
       setOpen(false)
       
       // Redirect to the edit page
-      router.push(`/products/${data.productId}`)
+      router.push(`/seller/products/${data.productId}`)
       
     } catch (error) {
       toast({
