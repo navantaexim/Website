@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { getAuth } from '@/lib/firebase-admin'
 import prisma from '@/lib/db'
+import { Prisma } from '@prisma/client'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -47,24 +48,35 @@ async function getSellerData() {
 
     if (!user) return null
 
-    const sellerUser = await prisma.sellerUser.findFirst({
-      where: { userId: user.id },
+    const seller = await prisma.seller.findFirst({
+      where: {
+        users: {
+          some: {
+            userId: user.id
+          }
+        }
+      },
       include: {
-        seller: {
+        products: {
+          orderBy: { updatedAt: 'desc' },
           include: {
-            products: {
-              orderBy: { updatedAt: 'desc' },
-              include: {
-                category: true,
-                originCountry: true,
-              }
-            }
+            category: true,
+            originCountry: true,
           }
         }
       }
-    })
+    }) as Prisma.SellerGetPayload<{
+      include: {
+        products: {
+          include: {
+            category: true,
+            originCountry: true,
+          }
+        }
+      }
+    }> | null
 
-    return sellerUser?.seller || null
+    return seller
   } catch (error) {
     console.error('Error fetching seller data:', error)
     return null

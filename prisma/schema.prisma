@@ -190,6 +190,9 @@ model Product {
   status String @default("draft")
   // draft | submitted | verified | active | inactive | rejected
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   seller        Seller   @relation(fields: [sellerId], references: [id])
   category      Category @relation(fields: [categoryId], references: [id])
   originCountry Country  @relation(fields: [originCountryId], references: [id])
