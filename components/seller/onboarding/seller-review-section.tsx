@@ -26,6 +26,8 @@ interface SellerReviewProps {
     status: string
     addresses: any[]
     documents: any[]
+    capabilities?: any
+    exportProfile?: any
   }
 }
 
@@ -41,7 +43,7 @@ export function SellerReviewSection({ seller }: SellerReviewProps) {
   const hasIec = seller.documents.some(d => d.type === 'IEC_CERT')
   const hasDocuments = hasPan && hasGst && hasIec
 
-  const isReady = hasBasicInfo && hasAddress && hasDocuments
+  const isReady = hasBasicInfo && hasAddress && hasDocuments && !!seller.capabilities && !!seller.exportProfile
 
   async function handleSubmit() {
     setIsSubmitting(true)
@@ -115,6 +117,30 @@ export function SellerReviewSection({ seller }: SellerReviewProps) {
                      <p className="text-xs text-muted-foreground">{hasDocuments ? "All required docs uploaded" : "Missing PAN, GST, or IEC"}</p>
                 </CardContent>
             </Card>
+
+            <Card className={seller.capabilities ? "border-green-200 bg-green-50/50" : "border-destructive/50 bg-destructive/5"}>
+                <CardHeader className="pb-2">
+                     <CardTitle className="text-sm font-medium flex items-center gap-2">
+                        {seller.capabilities ? <Check className="h-4 w-4 text-green-600" /> : <AlertCircle className="h-4 w-4 text-destructive" />}
+                        Capabilities
+                    </CardTitle>
+                </CardHeader>
+                <CardContent>
+                     <p className="text-xs text-muted-foreground">{seller.capabilities ? "Manufacturing info saved" : "Missing capabilities"}</p>
+                </CardContent>
+            </Card>
+
+            <Card className={seller.exportProfile ? "border-green-200 bg-green-50/50" : "border-destructive/50 bg-destructive/5"}>
+                <CardHeader className="pb-2">
+                     <CardTitle className="text-sm font-medium flex items-center gap-2">
+                        {seller.exportProfile ? <Check className="h-4 w-4 text-green-600" /> : <AlertCircle className="h-4 w-4 text-destructive" />}
+                        Export Profile
+                    </CardTitle>
+                </CardHeader>
+                <CardContent>
+                     <p className="text-xs text-muted-foreground">{seller.exportProfile ? "Export profile saved" : "Missing export profile"}</p>
+                </CardContent>
+            </Card>
         </div>
 
         <div className="bg-muted p-4 rounded-lg space-y-2">
@@ -124,6 +150,8 @@ export function SellerReviewSection({ seller }: SellerReviewProps) {
                 <span className="font-medium text-foreground">GST Number:</span> {seller.gstNumber || '-'}
                 <span className="font-medium text-foreground">IEC Code:</span> {seller.iecCode || '-'}
                 <span className="font-medium text-foreground">Documents:</span> {seller.documents.length} Uploaded
+                <span className="font-medium text-foreground">Capabilities:</span> {seller.capabilities ? 'Completed' : 'Pending'}
+                <span className="font-medium text-foreground">Export Profile:</span> {seller.exportProfile ? 'Completed' : 'Pending'}
             </div>
         </div>
 

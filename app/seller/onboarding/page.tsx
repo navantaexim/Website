@@ -13,12 +13,15 @@ import { Step, Stepper } from '@/components/ui/stepper'
 import { SellerAddressSection } from '@/components/seller/onboarding/seller-address-section'
 import { SellerDocumentSection } from '@/components/seller/onboarding/seller-document-section'
 import { SellerReviewSection } from '@/components/seller/onboarding/seller-review-section'
+import { SellerManufacturingForm } from '@/components/seller/onboarding/seller-manufacturing-form'
+import { SellerExportProfileForm } from '@/components/seller/onboarding/seller-export-profile-form'
+import { SellerCertificationForm } from '@/components/seller/onboarding/seller-certification-form'
 
 // Define the Seller type based on Prisma schema
 interface Seller {
   id: string
   legalName: string
-  status: string // draft, submitted, verified, etc.
+  status: string
   verificationStage: string
   businessType: string
   yearEstablished: number
@@ -26,13 +29,19 @@ interface Seller {
   iecCode: string
   addresses: any[]
   documents: any[]
+  capabilities: any // Using specific types in sub-components
+  exportProfile: any
+  certificates: any[]
 }
 
 const steps: Step[] = [
   { id: 1, title: 'Business Details', description: 'Tax & Legal Info' },
-  { id: 2, title: 'Address', description: 'Registered Office' },
+  { id: 2, title: 'Address', description: 'Registered & Factory' },
   { id: 3, title: 'Documents', description: 'GST, IEC, PAN' },
-  { id: 4, title: 'Review & Submit', description: 'Final Check' },
+  { id: 4, title: 'Capabilities', description: 'Manufacturing Info' },
+  { id: 5, title: 'Export Profile', description: 'Markets & Logistics' },
+  { id: 6, title: 'Certifications', description: 'ISO, API, etc.' },
+  { id: 7, title: 'Review & Submit', description: 'Final Check' },
 ]
 
 export default function SellerOnboardingPage() {
@@ -156,12 +165,17 @@ export default function SellerOnboardingPage() {
                         {currentStepIndex === 0 && <SellerBasicInfoForm seller={seller} />}
                         {currentStepIndex === 1 && <SellerAddressSection seller={seller} />}
                         {currentStepIndex === 2 && <SellerDocumentSection seller={seller} />}
-                        {currentStepIndex === 3 && <SellerReviewSection seller={seller} />}
+                        {currentStepIndex === 3 && <SellerManufacturingForm seller={seller} />}
+                        {currentStepIndex === 4 && <SellerExportProfileForm seller={seller} />}
+                        {currentStepIndex === 5 && <SellerCertificationForm seller={{...seller, certificates: seller.certificates || []}} />}
+                        {currentStepIndex === 6 && <SellerReviewSection seller={seller} />}
                     </CardContent>
                      <CardFooter className="flex justify-between border-t p-6">
                         <Button variant="outline" onClick={prevStep} disabled={currentStepIndex === 0}>Back</Button>
                         <Button onClick={nextStep} disabled={currentStepIndex === steps.length - 1}>
-                            Continue <ChevronRight className="ml-2 h-4 w-4" />
+                            {currentStepIndex === steps.length - 1 ? 'Submit' : (
+                                <>Continue <ChevronRight className="ml-2 h-4 w-4" /></>
+                            )}
                         </Button>
                     </CardFooter>
                 </Card>

@@ -22,6 +22,15 @@ export async function GET() {
           include: {
             addresses: true, // Include addresses
             documents: true, // Include documents
+            capabilities: true,
+            certificates: true,
+            exportProfile: {
+              include: {
+                markets: true,
+                incoterms: true,
+                hsExpertise: true
+              }
+            }
           }
         }
       }

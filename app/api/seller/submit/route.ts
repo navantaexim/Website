@@ -34,6 +34,8 @@ export async function POST(request: Request) {
           include: {
             addresses: true,
             documents: true, // Include documents check
+            capabilities: true,
+            exportProfile: true,
           },
         },
       },
@@ -59,6 +61,9 @@ export async function POST(request: Request) {
     if (!hasPan) errors.push('PAN Card document is required')
     if (!hasGst) errors.push('GST Certificate is required')
     if (!hasIec) errors.push('IEC Certificate is required')
+
+    if (!seller.capabilities) errors.push('Manufacturing capabilities are required')
+    if (!seller.exportProfile) errors.push('Export profile is required')
 
     if (errors.length > 0) {
       return NextResponse.json({ error: 'Validation Failed', details: errors }, { status: 400 })
