@@ -9,8 +9,7 @@ import { Label } from "@/components/ui/label"
 import { useToast } from "@/hooks/use-toast"
 import { Loader2, Upload, FileCheck, X, Trash2, Plus, Calendar as CalendarIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { storage } from '@/lib/firebase'
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { format } from "date-fns"
@@ -44,6 +43,36 @@ export function SellerCertificationForm({ seller }: SellerCertificationProps) {
   const [validTill, setValidTill] = useState<Date | undefined>(undefined)
   const [file, setFile] = useState<File | null>(null)
 
+
+    // Helper component to view private certs
+    const ViewCertButton = ({ path, label }: { path: string, label: string }) => {
+        const [loading, setLoading] = useState(false)
+        
+        async function openDocument() {
+            setLoading(true)
+            try {
+                const res = await fetch('/api/storage/sign-view', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ path, bucket: 'private-docs' })
+                })
+                if (!res.ok) throw new Error('Failed to get access')
+                const { signedUrl } = await res.json()
+                window.open(signedUrl, '_blank')
+            } catch (error) {
+                toast({ title: "Error", description: "Could not open document.", variant: "destructive" })
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        return (
+             <Button variant="link" className="p-0 h-auto" onClick={openDocument} disabled={loading}>
+                {loading ? "Loading..." : label}
+             </Button>
+        )
+    }
+
   async function handleSave() {
       if (!type) {
           toast({ title: "Required", description: "Certificate Type is required", variant: "destructive" })
@@ -52,12 +81,32 @@ export function SellerCertificationForm({ seller }: SellerCertificationProps) {
 
       setIsUploading(true)
       try {
-          let downloadUrl = ""
+          let documentPath = ""
 
           if (file) {
-             const storageRef = ref(storage, `seller-certs/${seller.id}/${type}_${Date.now()}`)
-             const snapshot = await uploadBytes(storageRef, file)
-             downloadUrl = await getDownloadURL(snapshot.ref)
+             // 1. Get Signed Upload URL
+             const signRes = await fetch('/api/storage/sign-upload', {
+                 method: 'POST',
+                 headers: { 'Content-Type': 'application/json' },
+                 body: JSON.stringify({
+                     sellerId: seller.id,
+                     fileName: file.name,
+                     fileType: file.type,
+                     usage: 'seller-certification'
+                 })
+             })
+             
+             if (!signRes.ok) throw new Error('Failed to get upload signature')
+             const { signedUrl, path } = await signRes.json()
+
+             // 2. Upload to Supabase
+             const { error: uploadError } = await supabase.storage
+                .from('private-docs')
+                .uploadToSignedUrl(path, signedUrl, file)
+
+             if (uploadError) throw uploadError
+             
+             documentPath = path
           }
 
           const response = await fetch('/api/seller/certifications', {
@@ -68,7 +117,7 @@ export function SellerCertificationForm({ seller }: SellerCertificationProps) {
                   type,
                   issuedBy,
                   validTill: validTill ? validTill.toISOString() : null,
-                  documentUrl: downloadUrl
+                  documentUrl: documentPath || null
               })
           })
 
@@ -130,9 +179,7 @@ export function SellerCertificationForm({ seller }: SellerCertificationProps) {
                             </div>
                         )}
                         {cert.documentUrl && (
-                             <Button variant="link" className="p-0 h-auto" asChild>
-                                <Link href={cert.documentUrl} target="_blank">View Document</Link>
-                             </Button>
+                             <ViewCertButton path={cert.documentUrl} label="View Document" />
                         )}
                     </CardContent>
                 </Card>
