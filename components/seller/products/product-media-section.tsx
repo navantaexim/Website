@@ -74,12 +74,12 @@ export function ProductMediaSection({ product }: ProductMediaProps) {
             throw new Error(err.error || 'Failed to get upload signature')
         }
         
-        const { signedUrl, path, publicUrl } = await signRes.json()
+        const { token, path, publicUrl } = await signRes.json()
 
         // 2. Upload to Supabase using Signed URL
         const { error: uploadError } = await supabase.storage
             .from('product-media')
-            .uploadToSignedUrl(path, signedUrl, file)
+            .uploadToSignedUrl(path, token, file)
 
         if (uploadError) throw uploadError
 

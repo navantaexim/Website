@@ -97,12 +97,12 @@ export function SellerCertificationForm({ seller }: SellerCertificationProps) {
              })
              
              if (!signRes.ok) throw new Error('Failed to get upload signature')
-             const { signedUrl, path } = await signRes.json()
+             const { token, path } = await signRes.json()
 
              // 2. Upload to Supabase
              const { error: uploadError } = await supabase.storage
                 .from('private-docs')
-                .uploadToSignedUrl(path, signedUrl, file)
+                .uploadToSignedUrl(path, token, file)
 
              if (uploadError) throw uploadError
              

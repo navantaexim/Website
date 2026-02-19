@@ -10,7 +10,7 @@ const documentSchema = z.object({
   type: z.enum(['PAN_CARD', 'GST_CERT', 'IEC_CERT'], {
     errorMap: () => ({ message: "Type must be one of PAN_CARD, GST_CERT, IEC_CERT" }),
   }),
-  documentUrl: z.string().url('Invalid document URL'),
+  documentUrl: z.string().min(1, 'Document path is required'),
 })
 
 async function getAuthenticatedUser(request: Request) {

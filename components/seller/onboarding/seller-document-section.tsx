@@ -33,7 +33,7 @@ export function SellerDocumentSection({ seller }: SellerDocumentProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [uploading, setUploading] = useState<string | null>(null) // type of doc currently uploading
-
+  const [documents, setDocuments] = useState(seller.documents)
 
     // We need a sub-component or logic to handle viewing signed URLs.
     // For simplicity, we'll fetch the signed URL when the user clicks view, or render a component that fetches it.
@@ -65,12 +65,12 @@ export function SellerDocumentSection({ seller }: SellerDocumentProps) {
             })
             
             if (!signRes.ok) throw new Error('Failed to get upload signature')
-            const { signedUrl, path } = await signRes.json()
+            const { token, path } = await signRes.json()
 
             // 2. Upload to Supabase using Signed URL
             const { error: uploadError } = await supabase.storage
                 .from('private-docs')
-                .uploadToSignedUrl(path, signedUrl, file)
+                .uploadToSignedUrl(path, token, file)
 
             if (uploadError) throw uploadError
 
@@ -86,13 +86,20 @@ export function SellerDocumentSection({ seller }: SellerDocumentProps) {
                 })
             })
 
-            if (!response.ok) throw new Error('Failed to save document record')
+            const data = await response.json()
+            if (!response.ok) throw new Error(data.error || 'Failed to save document record')
+
+            // Update local state immediately
+            setDocuments(prev => {
+                const filtered = prev.filter(d => d.type !== type)
+                return [...filtered, data.document]
+            })
 
             toast({ title: "Upload Success", description: `${type.replace('_', ' ')} uploaded successfully.` })
             router.refresh()
-        } catch (error) {
+        } catch (error: any) {
             console.error(error)
-            toast({ title: "Upload Error", description: "Failed to upload document.", variant: "destructive" })
+            toast({ title: "Upload Error", description: error.message || "Failed to upload document.", variant: "destructive" })
         } finally {
             setUploading(null)
         }
@@ -129,10 +136,17 @@ export function SellerDocumentSection({ seller }: SellerDocumentProps) {
 
   async function deleteDocument(docId: string) {
        try {
+          // Optimistic update
+          const currentDocs = [...documents]
+          setDocuments(prev => prev.filter(d => d.id !== docId))
+
           const response = await fetch(`/api/seller/documents?id=${docId}&sellerId=${seller.id}`, {
               method: 'DELETE'
           })
-          if (!response.ok) throw new Error('Failed to delete')
+          if (!response.ok) {
+              setDocuments(currentDocs) // Revert on failure
+              throw new Error('Failed to delete')
+          }
           
           toast({ title: "Document Removed", description: "The document has been deleted." })
           router.refresh()
@@ -141,7 +155,7 @@ export function SellerDocumentSection({ seller }: SellerDocumentProps) {
        }
   }
 
-  const getExistingDoc = (type: string) => seller.documents.find(d => d.type === type)
+  const getExistingDoc = (type: string) => documents.find(d => d.type === type)
 
   return (
     <div className="space-y-6">
