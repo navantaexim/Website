@@ -244,7 +244,7 @@ export default function SellerOnboardingPage() {
           </CardContent>
           <CardFooter className="flex flex-col gap-3 pt-6">
             <Button variant="outline" className="w-full" asChild>
-                <Link href="/support">Contact Support</Link>
+                <Link href="/#contact">Contact Support</Link>
             </Button>
             <p className="text-xs text-muted-foreground">We will notify you via email once the verification is complete.</p>
           </CardFooter>

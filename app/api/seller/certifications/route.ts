@@ -8,7 +8,7 @@ import { z } from 'zod'
 const certificationSchema = z.object({
   sellerId: z.string().min(1, 'Seller ID is required'),
   type: z.string().min(1, 'Type is required'),
-  documentUrl: z.string().url().optional(),
+  documentUrl: z.string().optional(),
   issuedBy: z.string().optional(),
   validTill: z.string().optional().nullable(), // Receive as string, convert to Date
 })

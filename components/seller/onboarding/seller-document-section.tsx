@@ -6,8 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter }
 import { useToast } from "@/hooks/use-toast"
 import { Loader2, Upload, FileCheck, X, Eye } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { storage } from '@/lib/firebase'
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 
 interface SellerDocumentProps {
@@ -34,58 +33,120 @@ export function SellerDocumentSection({ seller }: SellerDocumentProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [uploading, setUploading] = useState<string | null>(null) // type of doc currently uploading
+  const [documents, setDocuments] = useState(seller.documents)
 
-  async function handleFileUpload(type: string, file: File) {
-    if (!file) return
-
-    // Validate file type and size
-    if (!file.type.startsWith('image/') && file.type !== 'application/pdf') {
-        toast({ title: "Invalid File", description: "Please upload an image or PDF.", variant: "destructive" })
-        return
-    }
-    if (file.size > 5 * 1024 * 1024) { // 5MB
-        toast({ title: "File too large", description: "File size must be less than 5MB.", variant: "destructive" })
-        return
-    }
-
-    setUploading(type)
-    try {
-        // 1. Upload to Firebase Storage
-        const storageRef = ref(storage, `seller-docs/${seller.id}/${type}_${Date.now()}_${file.name}`)
-        const snapshot = await uploadBytes(storageRef, file)
-        const downloadUrl = await getDownloadURL(snapshot.ref)
-
-        // 2. Save URL to Database
-        const response = await fetch('/api/seller/documents', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                sellerId: seller.id,
-                type: type,
-                documentUrl: downloadUrl
-            })
-        })
-
-        if (!response.ok) {
-            throw new Error('Failed to save document record')
+    // We need a sub-component or logic to handle viewing signed URLs.
+    // For simplicity, we'll fetch the signed URL when the user clicks view, or render a component that fetches it.
+    
+    // NEW: Function to handle signed upload
+    async function handleFileUpload(type: string, file: File) {
+        if (!file) return
+        if (!file.type.startsWith('image/') && file.type !== 'application/pdf') {
+            toast({ title: "Invalid File", description: "Please upload an image or PDF.", variant: "destructive" })
+            return
+        }
+        if (file.size > 5 * 1024 * 1024) { 
+            toast({ title: "File too large", description: "File size must be less than 5MB.", variant: "destructive" })
+            return
         }
 
-        toast({ title: "Upload Success", description: `${type.replace('_', ' ')} uploaded successfully.` })
-        router.refresh()
-    } catch (error) {
-        console.error(error)
-        toast({ title: "Upload Error", description: "Failed to upload document. Please try again.", variant: "destructive" })
-    } finally {
-        setUploading(null)
+        setUploading(type)
+        try {
+            // 1. Get Signed Upload URL from Backend
+            const signRes = await fetch('/api/storage/sign-upload', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    sellerId: seller.id,
+                    fileName: file.name,
+                    fileType: file.type,
+                    usage: 'seller-document'
+                })
+            })
+            
+            if (!signRes.ok) throw new Error('Failed to get upload signature')
+            const { token, path } = await signRes.json()
+
+            // 2. Upload to Supabase using Signed URL
+            const { error: uploadError } = await supabase.storage
+                .from('private-docs')
+                .uploadToSignedUrl(path, token, file)
+
+            if (uploadError) throw uploadError
+
+            // 3. Save Path to Database (not the URL, since it's private and changes)
+            // Note: Our DB schema has "documentUrl", but for private docs we store the path there.
+            const response = await fetch('/api/seller/documents', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    sellerId: seller.id,
+                    type: type,
+                    documentUrl: path // Storing path instead of URL
+                })
+            })
+
+            const data = await response.json()
+            if (!response.ok) throw new Error(data.error || 'Failed to save document record')
+
+            // Update local state immediately
+            setDocuments(prev => {
+                const filtered = prev.filter(d => d.type !== type)
+                return [...filtered, data.document]
+            })
+
+            toast({ title: "Upload Success", description: `${type.replace('_', ' ')} uploaded successfully.` })
+            router.refresh()
+        } catch (error: any) {
+            console.error(error)
+            toast({ title: "Upload Error", description: error.message || "Failed to upload document.", variant: "destructive" })
+        } finally {
+            setUploading(null)
+        }
     }
-  }
+
+    // Helper component to view private docs
+    const ViewDocumentButton = ({ path }: { path: string }) => {
+        const [loading, setLoading] = useState(false)
+        
+        async function openDocument() {
+            setLoading(true)
+            try {
+                const res = await fetch('/api/storage/sign-view', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ path, bucket: 'private-docs' })
+                })
+                if (!res.ok) throw new Error('Failed to get access')
+                const { signedUrl } = await res.json()
+                window.open(signedUrl, '_blank')
+            } catch (error) {
+                toast({ title: "Error", description: "Could not open document.", variant: "destructive" })
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        return (
+            <Button variant="ghost" size="icon" className="h-6 w-6" onClick={openDocument} disabled={loading}>
+                {loading ? <Loader2 className="h-3 w-3 animate-spin" /> : <Eye className="h-3 w-3" />}
+            </Button>
+        )
+    }
 
   async function deleteDocument(docId: string) {
        try {
+          // Optimistic update
+          const currentDocs = [...documents]
+          setDocuments(prev => prev.filter(d => d.id !== docId))
+
           const response = await fetch(`/api/seller/documents?id=${docId}&sellerId=${seller.id}`, {
               method: 'DELETE'
           })
-          if (!response.ok) throw new Error('Failed to delete')
+          if (!response.ok) {
+              setDocuments(currentDocs) // Revert on failure
+              throw new Error('Failed to delete')
+          }
           
           toast({ title: "Document Removed", description: "The document has been deleted." })
           router.refresh()
@@ -94,7 +155,7 @@ export function SellerDocumentSection({ seller }: SellerDocumentProps) {
        }
   }
 
-  const getExistingDoc = (type: string) => seller.documents.find(d => d.type === type)
+  const getExistingDoc = (type: string) => documents.find(d => d.type === type)
 
   return (
     <div className="space-y-6">
@@ -119,11 +180,7 @@ export function SellerDocumentSection({ seller }: SellerDocumentProps) {
                                     <div className="flex items-center gap-2 text-xs text-muted-foreground bg-background p-2 rounded border">
                                         <span className="truncate max-w-[150px]">Document Uploaded</span>
                                         <div className="ml-auto flex gap-1">
-                                            <Button variant="ghost" size="icon" className="h-6 w-6" asChild>
-                                                <Link href={existingDoc.documentUrl} target="_blank">
-                                                    <Eye className="h-3 w-3" />
-                                                </Link>
-                                            </Button>
+                                            <ViewDocumentButton path={existingDoc.documentUrl} />
                                             {seller.status === 'draft' && (
                                                 <Button variant="ghost" size="icon" className="h-6 w-6 hover:text-destructive" onClick={() => deleteDocument(existingDoc.id)}>
                                                     <X className="h-3 w-3" />
