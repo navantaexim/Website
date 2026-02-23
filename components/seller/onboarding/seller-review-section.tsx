@@ -29,9 +29,10 @@ interface SellerReviewProps {
     capabilities?: any
     exportProfile?: any
   }
+  onUpdate?: () => void
 }
 
-export function SellerReviewSection({ seller }: SellerReviewProps) {
+export function SellerReviewSection({ seller, onUpdate }: SellerReviewProps) {
   const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -65,8 +66,8 @@ export function SellerReviewSection({ seller }: SellerReviewProps) {
             description: "Your seller profile is now under review.",
         })
 
-        // Force a hard reload to update the main page state to "submitted"
-        window.location.reload()
+        // Use onUpdate to refresh parent state seamlessly
+        if (onUpdate) onUpdate()
 
     } catch (error) {
         toast({
