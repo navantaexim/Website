@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -47,15 +47,15 @@ interface ProductBasicInfoFormProps {
   }
   categories: { id: string, name: string }[]
   countries: { id: string, name: string }[]
+  onUpdate?: () => void
 }
 
-export function ProductBasicInfoForm({ product, categories, countries }: ProductBasicInfoFormProps) {
+export function ProductBasicInfoForm({ product, categories, countries, onUpdate }: ProductBasicInfoFormProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
   const isEditable = product.status === 'draft'
-
   const form = useForm<z.infer<typeof updateProductSchema>>({
     resolver: zodResolver(updateProductSchema),
     defaultValues: {
@@ -68,6 +68,17 @@ export function ProductBasicInfoForm({ product, categories, countries }: Product
     },
     disabled: !isEditable,
   })
+
+  useEffect(() => {
+    form.reset({
+      id: product.id,
+      name: product.name,
+      categoryId: product.categoryId,
+      hsCode: product.hsCode,
+      productType: product.productType as "standard" | "custom" | "made-to-order",
+      originCountryId: product.originCountryId,
+    })
+  }, [product, form])
 
   async function onSubmit(values: z.infer<typeof updateProductSchema>) {
     setIsLoading(true)
@@ -91,7 +102,8 @@ export function ProductBasicInfoForm({ product, categories, countries }: Product
         description: "Basic information saved successfully.",
       })
       
-      router.refresh()
+        if (onUpdate) onUpdate()
+        router.refresh()
     } catch (error) {
       toast({
         title: "Error",

@@ -30,9 +30,10 @@ interface ProductReviewProps {
     compliance?: any | null
     media: any[]
   }
+  onUpdate?: () => void
 }
 
-export function ProductReviewSection({ product }: ProductReviewProps) {
+export function ProductReviewSection({ product, onUpdate }: ProductReviewProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -68,6 +69,7 @@ export function ProductReviewSection({ product }: ProductReviewProps) {
         })
 
         // Redirect to dashboard
+        if (onUpdate) onUpdate()
         router.push('/seller/products')
 
     } catch (error) {

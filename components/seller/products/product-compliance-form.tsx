@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -42,13 +42,14 @@ interface ProductComplianceFormProps {
         standards: { standard: string }[]
     } | null
   }
+  onUpdate?: () => void
 }
 
 const COMMON_STANDARDS = [
     "ISO 9001", "ISO 14001", "ASTM", "DIN", "JIS", "BS (British Standards)", "ANSI", "ASME", "CE Support"
 ]
 
-export function ProductComplianceForm({ product }: ProductComplianceFormProps) {
+export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFormProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
@@ -59,7 +60,6 @@ export function ProductComplianceForm({ product }: ProductComplianceFormProps) {
       product.compliance?.standards.map(s => s.standard) || []
   )
   const [customStandard, setCustomStandard] = useState("")
-
   const form = useForm<z.infer<typeof complianceSchema>>({
     resolver: zodResolver(complianceSchema),
     defaultValues: {
@@ -69,6 +69,16 @@ export function ProductComplianceForm({ product }: ProductComplianceFormProps) {
     },
     disabled: !isEditable
   })
+
+  useEffect(() => {
+    const standards = product.compliance?.standards.map(s => s.standard) || []
+    setSelectedStandards(standards)
+    form.reset({
+      productId: product.id,
+      inspectionType: product.compliance?.inspectionType || "",
+      standards: standards,
+    })
+  }, [product, form])
 
   // Update form value when local state changes
   function updateStandards(newStandards: string[]) {
@@ -109,6 +119,7 @@ export function ProductComplianceForm({ product }: ProductComplianceFormProps) {
         description: "Standards and inspection details updated.",
       })
       
+      if (onUpdate) onUpdate()
       router.refresh()
     } catch (error) {
       toast({
