@@ -1,7 +1,6 @@
-
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -48,9 +47,10 @@ interface SellerManufacturingProps {
         inHouseQC: boolean
     } | null
   }
+  onUpdate?: () => void
 }
 
-export function SellerManufacturingForm({ seller }: SellerManufacturingProps) {
+export function SellerManufacturingForm({ seller, onUpdate }: SellerManufacturingProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
@@ -65,6 +65,16 @@ export function SellerManufacturingForm({ seller }: SellerManufacturingProps) {
       inHouseQC: seller.capabilities?.inHouseQC || false,
     },
   })
+
+  useEffect(() => {
+    form.reset({
+      manufacturerType: seller.capabilities?.manufacturerType || "",
+      factoryAreaSqm: seller.capabilities?.factoryAreaSqm || 0,
+      employeeRange: seller.capabilities?.employeeRange || "",
+      engineerRange: seller.capabilities?.engineerRange || "",
+      inHouseQC: seller.capabilities?.inHouseQC || false,
+    })
+  }, [seller, form])
 
   async function onSubmit(values: z.infer<typeof manufacturingSchema>) {
     setIsLoading(true)
@@ -81,6 +91,7 @@ export function SellerManufacturingForm({ seller }: SellerManufacturingProps) {
       if (!response.ok) throw new Error("Failed to save capabilities")
 
       toast({ title: "Success", description: "Manufacturing capabilities saved." })
+      if (onUpdate) onUpdate()
       router.refresh()
     } catch (error) {
       toast({ 

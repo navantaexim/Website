@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
@@ -21,6 +21,7 @@ interface SellerDocumentProps {
         uploadedAt: string
     }[]
   }
+  onUpdate?: () => void
 }
 
 const REQUIRED_DOCS = [
@@ -29,11 +30,15 @@ const REQUIRED_DOCS = [
     { type: 'IEC_CERT', label: 'IEC Certificate', description: 'Upload your Import Export Code certificate.' },
 ]
 
-export function SellerDocumentSection({ seller }: SellerDocumentProps) {
+export function SellerDocumentSection({ seller, onUpdate }: SellerDocumentProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [uploading, setUploading] = useState<string | null>(null) // type of doc currently uploading
   const [documents, setDocuments] = useState(seller.documents)
+
+  useEffect(() => {
+    setDocuments(seller.documents)
+  }, [seller.documents])
 
     // We need a sub-component or logic to handle viewing signed URLs.
     // For simplicity, we'll fetch the signed URL when the user clicks view, or render a component that fetches it.
@@ -96,6 +101,7 @@ export function SellerDocumentSection({ seller }: SellerDocumentProps) {
             })
 
             toast({ title: "Upload Success", description: `${type.replace('_', ' ')} uploaded successfully.` })
+            if (onUpdate) onUpdate()
             router.refresh()
         } catch (error: any) {
             console.error(error)
@@ -149,6 +155,7 @@ export function SellerDocumentSection({ seller }: SellerDocumentProps) {
           }
           
           toast({ title: "Document Removed", description: "The document has been deleted." })
+          if (onUpdate) onUpdate()
           router.refresh()
        } catch (error) {
            toast({ title: "Error", description: "Could not delete document.", variant: "destructive" })

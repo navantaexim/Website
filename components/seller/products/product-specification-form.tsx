@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -63,9 +63,10 @@ interface ProductSpecificationFormProps {
         dimensions: any
     } | null
   }
+  onUpdate?: () => void
 }
 
-export function ProductSpecificationForm({ product }: ProductSpecificationFormProps) {
+export function ProductSpecificationForm({ product, onUpdate }: ProductSpecificationFormProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
@@ -73,8 +74,7 @@ export function ProductSpecificationForm({ product }: ProductSpecificationFormPr
 
   // Default dimensions based on existing data or fallback
   const existingDims = product.specs?.dimensions as any || {}
-  
-  const form = useForm<z.infer<typeof specificationSchema>>({
+    const form = useForm<z.infer<typeof specificationSchema>>({
     resolver: zodResolver(specificationSchema),
     defaultValues: {
       productId: product.id,
@@ -96,6 +96,28 @@ export function ProductSpecificationForm({ product }: ProductSpecificationFormPr
     },
     disabled: !isEditable
   })
+
+  useEffect(() => {
+    const existingDims = product.specs?.dimensions as any || {}
+    form.reset({
+      productId: product.id,
+      materialGrade: product.specs?.materialGrade || "",
+      weightKg: product.specs?.weightKg || 0,
+      tolerance: product.specs?.tolerance || "",
+      surfaceFinish: product.specs?.surfaceFinish || "",
+      process: product.specs?.process || "",
+      drawingAvailable: product.specs?.drawingAvailable || false,
+      dimensions: {
+        type: existingDims.type || "rectangular",
+        unit: existingDims.unit || "mm",
+        length: existingDims.length,
+        width: existingDims.width,
+        height: existingDims.height,
+        diameter: existingDims.diameter,
+        thickness: existingDims.thickness,
+      }
+    })
+  }, [product, form])
 
   // Watch dimension type to show relevant fields
   const dimensionType = form.watch("dimensions.type")
@@ -132,6 +154,7 @@ export function ProductSpecificationForm({ product }: ProductSpecificationFormPr
         description: "Product technical details updated successfully.",
       })
       
+      if (onUpdate) onUpdate()
       router.refresh()
     } catch (error) {
       toast({

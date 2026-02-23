@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/select"
 import { useToast } from "@/hooks/use-toast"
 import { Loader2 } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
@@ -52,9 +52,10 @@ interface SellerBasicInfoProps {
     iecCode: string
     status: string
   }
+  onUpdate?: () => void
 }
 
-export function SellerBasicInfoForm({ seller }: SellerBasicInfoProps) {
+export function SellerBasicInfoForm({ seller, onUpdate }: SellerBasicInfoProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
@@ -70,6 +71,16 @@ export function SellerBasicInfoForm({ seller }: SellerBasicInfoProps) {
     },
     disabled: seller.status !== "draft"
   })
+
+  useEffect(() => {
+    form.reset({
+      legalName: seller.legalName,
+      businessType: seller.businessType,
+      yearEstablished: seller.yearEstablished,
+      gstNumber: seller.gstNumber,
+      iecCode: seller.iecCode,
+    })
+  }, [seller, form])
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true)
@@ -95,6 +106,7 @@ export function SellerBasicInfoForm({ seller }: SellerBasicInfoProps) {
         description: "Seller basic information updated successfully.",
       })
       
+      if (onUpdate) onUpdate()
       router.refresh()
     } catch (error) {
       toast({

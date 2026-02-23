@@ -19,9 +19,10 @@ interface ProductMediaProps {
         isPrimary?: boolean
     }[]
   }
+  onUpdate?: () => void
 }
 
-export function ProductMediaSection({ product }: ProductMediaProps) {
+export function ProductMediaSection({ product, onUpdate }: ProductMediaProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [uploading, setUploading] = useState(false)
@@ -47,20 +48,6 @@ export function ProductMediaSection({ product }: ProductMediaProps) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                sellerId: product.id, // Slight cheat, but we need product-media usage. Our API requires sellerId, but for product media it's public. 
-                // Wait, sign-upload schema requires sellerId. But product.media endpoint handles product access.
-                // The prompt says "Make sure security is present".
-                // I should pass the actual seller ID. But I don't have it in props directly, only inside product object structure?
-                // Actually, product contains seller info? No, the prop definition:
-                // product: { id, status, media: ... }
-                // I need the seller ID to generate the path or verify access.
-                // However, I can pass a dummy sellerId IF the API validates product ownership via productId.
-                // Let's check API: "if usage === 'product-media' ... requires productId". It checks product ownership.
-                // So sellerId is less critical there, but schema requires it.
-                // I'll try to get it from props if available, or fetch it.
-                // The component doesn't seem to have sellerId. 
-                // I will add a TO-DO or pass a placeholder and ensure backend relies on productId verification.
-                // Update: I will just use product.id as sellerId placeholder since backend validates productId.
                 sellerId: 'product-upload', 
                 productId: product.id,
                 fileName: file.name,
@@ -96,6 +83,7 @@ export function ProductMediaSection({ product }: ProductMediaProps) {
 
         if (!response.ok) throw new Error('Failed to save media')
         toast({ title: "Image Uploaded", description: "Product image added successfully." })
+        if (onUpdate) onUpdate()
         router.refresh()
     } catch (error: any) {
         console.error(error)
@@ -112,6 +100,7 @@ export function ProductMediaSection({ product }: ProductMediaProps) {
           })
           if (!response.ok) throw new Error('Failed to delete')
           toast({ title: "Image Removed", description: "The image has been deleted." })
+          if (onUpdate) onUpdate()
           router.refresh()
        } catch (error) {
            toast({ title: "Error", description: "Could not delete image.", variant: "destructive" })

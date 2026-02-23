@@ -59,9 +59,10 @@ interface SellerAddressProps {
         pincode: string
     }[]
   }
+  onUpdate?: () => void
 }
 
-export function SellerAddressSection({ seller }: SellerAddressProps) {
+export function SellerAddressSection({ seller, onUpdate }: SellerAddressProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
@@ -105,6 +106,7 @@ export function SellerAddressSection({ seller }: SellerAddressProps) {
       
       setIsOpen(false)
       form.reset()
+      if (onUpdate) onUpdate()
       router.refresh()
     } catch (error) {
       toast({
@@ -132,6 +134,7 @@ export function SellerAddressSection({ seller }: SellerAddressProps) {
               title: "Address Deleted",
               description: "The address has been removed."
           })
+          if (onUpdate) onUpdate()
           router.refresh()
       } catch (error) {
            toast({

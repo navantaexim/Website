@@ -52,26 +52,26 @@ export default function SellerOnboardingPage() {
   // Moved hook to top level
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
 
-  useEffect(() => {
-    async function fetchSeller() {
-      try {
-        const res = await fetch('/api/seller/me')
-        if (res.status === 401) {
-          window.location.href = '/login'
-          return
-        }
-        if (!res.ok) throw new Error('Failed to fetch seller profile')
-        
-        const data = await res.json()
-        setSeller(data.seller)
-      } catch (err) {
-        console.error(err)
-        setError('Something went wrong while loading your profile.')
-      } finally {
-        setIsLoading(false)
+  async function fetchSeller() {
+    try {
+      const res = await fetch('/api/seller/me')
+      if (res.status === 401) {
+        window.location.href = '/login'
+        return
       }
+      if (!res.ok) throw new Error('Failed to fetch seller profile')
+      
+      const data = await res.json()
+      setSeller(data.seller)
+    } catch (err) {
+      console.error(err)
+      setError('Something went wrong while loading your profile.')
+    } finally {
+      setIsLoading(false)
     }
+  }
 
+  useEffect(() => {
     fetchSeller()
   }, [])
 
@@ -162,13 +162,13 @@ export default function SellerOnboardingPage() {
                         <CardDescription>{steps[currentStepIndex].description}</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        {currentStepIndex === 0 && <SellerBasicInfoForm seller={seller} />}
-                        {currentStepIndex === 1 && <SellerAddressSection seller={seller} />}
-                        {currentStepIndex === 2 && <SellerDocumentSection seller={seller} />}
-                        {currentStepIndex === 3 && <SellerManufacturingForm seller={seller} />}
-                        {currentStepIndex === 4 && <SellerExportProfileForm seller={seller} />}
-                        {currentStepIndex === 5 && <SellerCertificationForm seller={{...seller, certificates: seller.certificates || []}} />}
-                        {currentStepIndex === 6 && <SellerReviewSection seller={seller} />}
+                        {currentStepIndex === 0 && <SellerBasicInfoForm seller={seller} onUpdate={fetchSeller} />}
+                        {currentStepIndex === 1 && <SellerAddressSection seller={seller} onUpdate={fetchSeller} />}
+                        {currentStepIndex === 2 && <SellerDocumentSection seller={seller} onUpdate={fetchSeller} />}
+                        {currentStepIndex === 3 && <SellerManufacturingForm seller={seller} onUpdate={fetchSeller} />}
+                        {currentStepIndex === 4 && <SellerExportProfileForm seller={seller} onUpdate={fetchSeller} />}
+                        {currentStepIndex === 5 && <SellerCertificationForm seller={{...seller, certificates: seller.certificates || []}} onUpdate={fetchSeller} />}
+                        {currentStepIndex === 6 && <SellerReviewSection seller={seller} onUpdate={fetchSeller} />}
                     </CardContent>
                      <CardFooter className="flex justify-between border-t p-6">
                         <Button variant="outline" onClick={prevStep} disabled={currentStepIndex === 0}>Back</Button>

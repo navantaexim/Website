@@ -1,7 +1,6 @@
-
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, useFieldArray } from "react-hook-form"
 import * as z from "zod"
@@ -63,9 +62,10 @@ interface SellerExportProfileProps {
         hsExpertise: { hsCode: string }[]
     } | null
   }
+  onUpdate?: () => void
 }
 
-export function SellerExportProfileForm({ seller }: SellerExportProfileProps) {
+export function SellerExportProfileForm({ seller, onUpdate }: SellerExportProfileProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
@@ -81,6 +81,17 @@ export function SellerExportProfileForm({ seller }: SellerExportProfileProps) {
       hsCodes: seller.exportProfile?.hsExpertise.map(h => ({ value: h.hsCode })) || [{ value: '' }],
     },
   })
+
+  useEffect(() => {
+    form.reset({
+      exportExperience: seller.exportProfile?.exportExperience || 0,
+      annualTurnover: seller.exportProfile?.annualTurnover || "",
+      logisticsModes: seller.exportProfile?.logisticsModes || [],
+      marketIds: seller.exportProfile?.markets.map(m => m.countryId) || [],
+      incotermIds: seller.exportProfile?.incoterms.map(i => i.incotermId) || [],
+      hsCodes: seller.exportProfile?.hsExpertise.map(h => ({ value: h.hsCode })) || [{ value: '' }],
+    })
+  }, [seller, form])
 
   // We only handle HS codes as dynamic field array for input
   const { fields: hsFields, append: appendHs, remove: removeHs } = useFieldArray({
@@ -111,6 +122,7 @@ export function SellerExportProfileForm({ seller }: SellerExportProfileProps) {
       if (!response.ok) throw new Error("Failed to save export profile")
 
       toast({ title: "Success", description: "Export profile updated." })
+      if (onUpdate) onUpdate()
       router.refresh()
     } catch (error) {
       toast({ 

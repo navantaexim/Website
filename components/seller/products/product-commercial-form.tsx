@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -41,14 +41,14 @@ interface ProductCommercialFormProps {
         portOfDispatch: string
     } | null
   }
+  onUpdate?: () => void
 }
 
-export function ProductCommercialForm({ product }: ProductCommercialFormProps) {
+export function ProductCommercialForm({ product, onUpdate }: ProductCommercialFormProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const isEditable = product.status === 'draft'
-
   const form = useForm<z.infer<typeof commercialSchema>>({
     resolver: zodResolver(commercialSchema),
     defaultValues: {
@@ -61,6 +61,17 @@ export function ProductCommercialForm({ product }: ProductCommercialFormProps) {
     },
     disabled: !isEditable
   })
+
+  useEffect(() => {
+    form.reset({
+      productId: product.id,
+      moq: product.commercial?.moq || 0,
+      capacityPerMonth: product.commercial?.capacityPerMonth || 0,
+      leadTimeDays: product.commercial?.leadTimeDays || 0,
+      packaging: product.commercial?.packaging || "",
+      portOfDispatch: product.commercial?.portOfDispatch || "",
+    })
+  }, [product, form])
 
   async function onSubmit(values: z.infer<typeof commercialSchema>) {
     setIsLoading(true)
@@ -83,6 +94,7 @@ export function ProductCommercialForm({ product }: ProductCommercialFormProps) {
         description: "Product logistics info updated successfully.",
       })
       
+      if (onUpdate) onUpdate()
       router.refresh()
     } catch (error) {
       toast({

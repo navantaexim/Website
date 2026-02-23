@@ -29,9 +29,10 @@ interface SellerCertificationProps {
         validTill: string | null
     }[]
   }
+  onUpdate?: () => void
 }
 
-export function SellerCertificationForm({ seller }: SellerCertificationProps) {
+export function SellerCertificationForm({ seller, onUpdate }: SellerCertificationProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
@@ -126,6 +127,7 @@ export function SellerCertificationForm({ seller }: SellerCertificationProps) {
           toast({ title: "Success", description: "Certificate added." })
           setIsOpen(false)
           resetForm()
+          if (onUpdate) onUpdate()
           router.refresh()
       } catch (error) {
           toast({ title: "Error", description: "Failed to add certificate", variant: "destructive" })
@@ -149,6 +151,7 @@ export function SellerCertificationForm({ seller }: SellerCertificationProps) {
           if (!response.ok) throw new Error('Failed to delete')
           
           toast({ title: "Certificate Removed", description: "The certificate has been deleted." })
+          if (onUpdate) onUpdate()
           router.refresh()
        } catch (error) {
            toast({ title: "Error", description: "Could not delete certificate.", variant: "destructive" })
