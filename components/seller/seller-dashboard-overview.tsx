@@ -26,7 +26,7 @@ export function SellerDashboardOverview({ seller }: DashboardOverviewProps) {
               <Link href="/seller/products">Manage Catalog</Link>
            </Button>
            <Button asChild className="shadow-lg shadow-primary/20">
-              <Link href="/seller/products/new">
+              <Link href="/seller/products">
                 <Package className="w-4 h-4 mr-2" /> List New Product
               </Link>
            </Button>
