@@ -24,7 +24,17 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (user) {
-        // Check if user is a seller
+        // Check if user is a seller or admin
+        fetch('/api/auth/me')
+            .then(res => res.json())
+            .then(data => {
+                if (data.user?.role === 'admin') {
+                    router.push('/admin')
+                    return
+                }
+            })
+            .catch(err => console.error(err))
+
         fetch('/api/seller/me')
             .then(res => res.json())
             .then(data => {
@@ -35,7 +45,7 @@ export default function DashboardPage() {
             .catch(err => console.error(err))
             .finally(() => setCheckingSeller(false))
     }
-  }, [user])
+  }, [user, router])
 
   const handleLogout = async () => {
     await signOut(auth)

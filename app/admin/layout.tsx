@@ -38,9 +38,6 @@ export default async function AdminLayout({
       <aside className="w-72 bg-white border-r border-neutral-200/60 hidden md:flex flex-col sticky top-0 h-screen">
         <div className="p-8">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-8 h-8 bg-neutral-900 rounded-lg flex items-center justify-center">
-              <span className="text-white font-black text-sm">N</span>
-            </div>
             <h2 className="text-xl font-bold text-neutral-900 tracking-tighter">Navanta Admin</h2>
           </div>
           <p className="text-[10px] text-neutral-400 uppercase tracking-[0.2em] font-black italic ml-11">Command Center</p>
