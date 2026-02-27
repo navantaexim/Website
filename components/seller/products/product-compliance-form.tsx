@@ -243,10 +243,13 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
 
         {isEditable && (
             <div className="flex justify-end pt-4">
-                <Button type="submit" disabled={isLoading}>
-                    {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    <Save className="mr-2 h-4 w-4" />
-                    Save Compliance Info
+                <Button type="submit" disabled={isLoading} size="lg" className="px-8 rounded-xl shadow-lg shadow-primary/20 transition-all hover:scale-[1.02]">
+                    {isLoading ? (
+                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    ) : (
+                        <Save className="mr-2 h-5 w-5" />
+                    )}
+                    Save & Continue
                 </Button>
             </div>
         )}

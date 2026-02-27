@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Check, AlertCircle, Loader2 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { Badge } from "@/components/ui/badge"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -95,40 +96,70 @@ export function ProductReviewSection({ product, onUpdate }: ProductReviewProps) 
   }
 
   return (
-    <div className="space-y-6">
-        <h3 className="text-lg font-medium">Review & Submit</h3>
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="flex items-center justify-between">
+            <h3 className="text-xl font-bold text-foreground/90">Review Your Listing</h3>
+            {!isReady && (
+                <Badge variant="destructive" className="animate-pulse">
+                    Action Required
+                </Badge>
+            )}
+        </div>
         
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <StatusCard label="Basic Info" isValid={hasBasicInfo} message={hasBasicInfo ? "Completed" : "Missing Name/HS Code"} />
-            <StatusCard label="Specifications" isValid={hasSpecs} message={hasSpecs ? "Completed" : "Technical details missing"} />
-            <StatusCard label="Commercial" isValid={hasCommercial} message={hasCommercial ? "Completed" : "Logistics info missing"} />
-            <StatusCard label="Compliance" isValid={hasCompliance} message={hasCompliance ? "Completed" : "Standards missing"} />
-            <StatusCard label="Media" isValid={hasMedia} message={hasMedia ? `${product.media.length} Images` : "Add at least 1 image"} />
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+            <StatusCard label="Basic Info" isValid={hasBasicInfo} message={hasBasicInfo ? "Completed" : "Missing Details"} />
+            <StatusCard label="Specs" isValid={hasSpecs} message={hasSpecs ? "Completed" : "Details Missing"} />
+            <StatusCard label="Commercial" isValid={hasCommercial} message={hasCommercial ? "Completed" : "Info Missing"} />
+            <StatusCard label="Compliance" isValid={hasCompliance} message={hasCompliance ? "Completed" : "Missing Info"} />
+            <StatusCard label="Media" isValid={hasMedia} message={hasMedia ? `${product.media.length} Images` : "Add Images"} />
         </div>
 
-        <div className="flex justify-end pt-8">
-             <AlertDialog>
-                <AlertDialogTrigger asChild>
-                    <Button size="lg" disabled={!isReady || isSubmitting} className="w-full md:w-auto">
-                        {isSubmitting ? "Submitting..." : "Submit Product Listing"}
-                    </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                    <AlertDialogHeader>
-                        <AlertDialogTitle>Confirm Submission</AlertDialogTitle>
-                        <AlertDialogDescription>
-                            Are you sure you want to publish this product? It will become visible to buyers immediately.
-                        </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={handleSubmit} disabled={isSubmitting}>
-                            {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                            Publish Product
-                        </AlertDialogAction>
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-             </AlertDialog>
+        <div className="bg-secondary/30 rounded-2xl p-6 border border-border/50 backdrop-blur-sm">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="flex-1">
+                    <h4 className="font-bold text-foreground">Ready to go live?</h4>
+                    <p className="text-sm text-muted-foreground mt-1">
+                        {isReady 
+                            ? "Everything looks great! Once you publish, your product will be visible to global buyers."
+                            : "Please complete all the sections above to publish your product listing."}
+                    </p>
+                </div>
+                <div className="flex items-center gap-3">
+                     <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button 
+                                size="lg" 
+                                disabled={!isReady || isSubmitting}
+                                className="px-10 rounded-xl shadow-xl shadow-primary/20 bg-primary hover:bg-primary/90 transition-all active:scale-95 py-6 text-base font-bold"
+                            >
+                                {isSubmitting ? (
+                                    <> <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Submitting... </>
+                                ) : "Publish Product"}
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent className="rounded-2xl border-2">
+                            <AlertDialogHeader>
+                                <AlertDialogTitle className="text-2xl font-bold">Go Live on the Marketplace?</AlertDialogTitle>
+                                <AlertDialogDescription className="text-base">
+                                    This will make <strong>{product.name}</strong> visible to international trade partners. 
+                                    You can still make minor updates to the draft after publishing if needed.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter className="mt-4 gap-3">
+                                <AlertDialogCancel className="rounded-xl border-2">Keep Reviewing</AlertDialogCancel>
+                                <AlertDialogAction 
+                                    onClick={handleSubmit} 
+                                    disabled={isSubmitting}
+                                    className="rounded-xl bg-primary px-6 font-bold"
+                                >
+                                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                                    Confirm & Publish
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                     </AlertDialog>
+                </div>
+            </div>
         </div>
     </div>
   )
@@ -136,16 +167,24 @@ export function ProductReviewSection({ product, onUpdate }: ProductReviewProps) 
 
 function StatusCard({ label, isValid, message }: { label: string, isValid: boolean, message: string }) {
     return (
-        <Card className={isValid ? "border-green-200 bg-green-50/50" : "border-destructive/50 bg-destructive/5"}>
-            <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium flex items-center gap-2">
-                    {isValid ? <Check className="h-4 w-4 text-green-600" /> : <AlertCircle className="h-4 w-4 text-destructive" />}
-                    {label}
-                </CardTitle>
-            </CardHeader>
-            <CardContent>
-                <p className="text-xs text-muted-foreground">{message}</p>
-            </CardContent>
-        </Card>
+        <div className={`
+            p-4 rounded-2xl border transition-all duration-300
+            ${isValid 
+                ? "bg-green-500/5 border-green-500/20 shadow-sm" 
+                : "bg-amber-500/5 border-amber-500/20 shadow-sm"}
+        `}>
+            <div className="flex items-center gap-3 mb-2">
+                <div className={`
+                    w-8 h-8 rounded-full flex items-center justify-center
+                    ${isValid ? "bg-green-500/10 text-green-600" : "bg-amber-500/10 text-amber-600"}
+                `}>
+                    {isValid ? <Check className="h-4 w-4" /> : <AlertCircle className="h-4 w-4" />}
+                </div>
+                <span className="text-xs font-bold uppercase tracking-wider text-foreground/70">{label}</span>
+            </div>
+            <p className={`text-sm font-medium ${isValid ? "text-green-700/80" : "text-amber-700/80"}`}>
+                {message}
+            </p>
+        </div>
     )
 }
