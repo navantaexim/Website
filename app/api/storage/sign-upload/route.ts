@@ -102,16 +102,36 @@ export async function POST(request: Request) {
     }
 
     // Generate Signed Upload URL
-    // Note: The Supabase Admin Client allows us to generate a URL that lets the frontend upload 
-    // directly to the bucket, bypassing RLS for this specific operation.
-    
-    const { data, error } = await supabaseAdmin.storage
+    // Self-healing: Try to create bucket if it doesn't exist
+    let { data, error } = await supabaseAdmin.storage
         .from(bucketName)
         .createSignedUploadUrl(filePath)
 
-    if (error) {
+    if (error && (error as any).status === 404 || error?.message?.includes('not found')) {
+        console.log(`Bucket ${bucketName} missing, attempting to create...`)
+        const { error: createError } = await supabaseAdmin.storage.createBucket(bucketName, {
+            public: bucketName === 'product-media',
+            allowedMimeTypes: bucketName === 'product-media' ? ['image/*'] : null
+        })
+        
+        if (!createError) {
+            // Retry generating signature
+            const retry = await supabaseAdmin.storage
+                .from(bucketName)
+                .createSignedUploadUrl(filePath)
+            data = retry.data
+            error = retry.error
+        } else {
+            console.error('Failed to create missing bucket:', createError)
+        }
+    }
+
+    if (error || !data) {
         console.error('Supabase Sign Error', error)
-        throw new Error('Failed to generate upload signature')
+        return NextResponse.json({ 
+            error: `Supabase Storage Error: ${error?.message || 'Failed to generate signed URL'}`,
+            details: error
+        }, { status: 500 })
     }
 
     // For public buckets, we can construct the specific public URL.
