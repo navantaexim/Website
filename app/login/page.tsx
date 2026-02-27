@@ -29,8 +29,13 @@ export default function LoginPage() {
             body: JSON.stringify({ token }),
           })
           if (response.ok) {
+            const data = await response.json()
             router.refresh()
-            router.push('/dashboard')
+            if (data.user?.role === 'admin') {
+              router.push('/admin')
+            } else {
+              router.push('/dashboard')
+            }
           }
         } catch (err) {
           console.error('Auto-sync failed', err)
@@ -63,8 +68,14 @@ export default function LoginPage() {
         throw new Error(data.error || 'Failed to sync session')
       }
 
+      const data = await response.json()
       router.refresh()
-      router.push('/dashboard')
+      
+      if (data.user?.role === 'admin') {
+        router.push('/admin')
+      } else {
+        router.push('/dashboard')
+      }
     } catch (err: any) {
       setError(err.message || 'Failed to sign in')
       setLoading(false)

@@ -12,7 +12,7 @@ import {
   Package, Calendar, Tag, ShieldCheck, 
   Download, ExternalLink, Info, AlertTriangle,
   Layers, ShoppingCart, Award, Image as ImageIcon,
-  PlayCircle, Globe
+  PlayCircle, Globe, Loader2
 } from 'lucide-react'
 import {
   Dialog,
@@ -85,6 +85,29 @@ export default function AdminProductDetailPage({ params }: { params: Promise<{ i
   const [showActivateDialog, setShowActivateDialog] = useState(false)
   const [showRejectDialog, setShowRejectDialog] = useState(false)
   const [rejectionReason, setRejectionReason] = useState('')
+  const [viewingFile, setViewingFile] = useState<string | null>(null)
+
+  const handleViewDocument = async (path: string) => {
+    if (!path || path.startsWith('http')) {
+        if (path) window.open(path, '_blank')
+        return
+    }
+    setViewingFile(path)
+    try {
+      const res = await fetch('/api/storage/sign-view', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path, bucket: 'private-docs' })
+      })
+      if (!res.ok) throw new Error('Failed to get access')
+      const { signedUrl } = await res.json()
+      window.open(signedUrl, '_blank')
+    } catch (error) {
+      toast.error("Could not open document.")
+    } finally {
+      setViewingFile(null)
+    }
+  }
 
   useEffect(() => {
     async function fetchDetails() {
@@ -383,12 +406,16 @@ export default function AdminProductDetailPage({ params }: { params: Promise<{ i
                               <p className="text-[10px] text-neutral-500 font-bold tracking-widest">ISSUED BY: {cert.issuedBy || 'N/A'}</p>
                            </div>
                         </div>
-                        <a href={cert.documentUrl} target="_blank" rel="noreferrer">
-                            <Button variant="ghost" size="sm" className="font-bold text-primary gap-2">
-                               VERIFY
-                               <ExternalLink className="w-3.5 h-3.5" />
-                            </Button>
-                        </a>
+                        <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            className="font-bold text-primary gap-2"
+                            onClick={() => handleViewDocument(cert.documentUrl)}
+                            disabled={viewingFile === cert.documentUrl}
+                        >
+                           {viewingFile === cert.documentUrl ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : 'VERIFY'}
+                           <ExternalLink className="w-3.5 h-3.5" />
+                        </Button>
                      </div>
                    ))}
                 </div>

@@ -166,7 +166,7 @@ export default async function SellerProductsPage() {
                         {product.status}
                       </Badge>
                     </TableCell>
-                    <TableCell>-</TableCell> {/* Price not in schema yet? */}
+                    <TableCell>-</TableCell>
                     <TableCell className="text-right">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
