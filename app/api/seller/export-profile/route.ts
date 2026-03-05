@@ -82,6 +82,14 @@ export async function POST(request: Request) {
         if (marketIds) {
             await tx.exportProfileMarket.deleteMany({ where: { exportProfileId: profile.id } })
             if (marketIds.length > 0) {
+              console.log("Incoming marketIds:", marketIds)
+
+              const existingCountries = await tx.country.findMany({
+                where: { id: { in: marketIds } },
+                select: { id: true }
+              })
+
+              console.log("Existing countries:", existingCountries)
                 await tx.exportProfileMarket.createMany({
                     data: marketIds.map(countryId => ({
                         exportProfileId: profile.id,
@@ -93,15 +101,24 @@ export async function POST(request: Request) {
 
         // 3. Handle Incoterms
         if (incotermIds) {
-            await tx.exportProfileIncoterm.deleteMany({ where: { exportProfileId: profile.id } })
-            if (incotermIds.length > 0) {
-                await tx.exportProfileIncoterm.createMany({
-                    data: incotermIds.map(incotermId => ({
-                        exportProfileId: profile.id,
-                        incotermId
-                    }))
-                })
-            }
+          await tx.exportProfileIncoterm.deleteMany({
+            where: { exportProfileId: profile.id }
+          })
+
+          if (incotermIds.length > 0) {
+
+            const incoterms = await tx.incoterm.findMany({
+              where: { code: { in: incotermIds } },
+              select: { id: true }
+            })
+
+            await tx.exportProfileIncoterm.createMany({
+              data: incoterms.map(term => ({
+                exportProfileId: profile.id,
+                incotermId: term.id
+              }))
+            })
+          }
         }
 
         // 4. Handle HS Codes

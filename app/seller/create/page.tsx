@@ -73,6 +73,7 @@ export default function CreateSellerPage() {
 
   async function onSubmit(values: z.infer<typeof createSellerSchema>) {
     setIsLoading(true)
+  
     try {
       const response = await fetch("/api/seller/create", {
         method: "POST",
@@ -81,21 +82,40 @@ export default function CreateSellerPage() {
         },
         body: JSON.stringify(values),
       })
-
+  
       const data = await response.json()
-
+  
+      // Handle UNIQUE constraint errors
+      if (response.status === 409) {
+  
+        const field = data.field
+  
+        const fieldLabels: any = {
+          gstNumber: "GST Number",
+          iecCode: "IEC Code",
+          panNumber: "PAN Number",
+        }
+  
+        form.setError(field, {
+          type: "server",
+          message: `${fieldLabels[field] || field} already exists`,
+        })
+  
+        setIsLoading(false)
+        return
+      }
+  
       if (!response.ok) {
         throw new Error(data.error || "Failed to create seller account")
       }
-
+  
       toast({
         title: "Account Created!",
         description: "Redirecting you to complete your profile...",
       })
-      
-      // Redirect to onboarding to start the stepper
-      router.push('/seller/onboarding')
-      
+  
+      router.push("/seller/onboarding")
+  
     } catch (error) {
       toast({
         title: "Registration Failed",
@@ -108,7 +128,8 @@ export default function CreateSellerPage() {
   }
 
   return (
-    <div className="container max-w-2xl py-10">
+    
+    <div className="container max-w-2xl py-10 ">
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl">Register as a Seller</CardTitle>
