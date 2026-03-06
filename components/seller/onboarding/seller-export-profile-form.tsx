@@ -64,16 +64,19 @@ interface SellerExportProfileProps {
         hsExpertise: { hsCode: string }[]
     } | null
   }
-  onUpdate?: () => void
+  onUpdate?: () => void,
+  onValidityChange?: (valid: boolean) => void
 }
 
-export function SellerExportProfileForm({ seller, onUpdate }: SellerExportProfileProps) {
+export function SellerExportProfileForm({ seller, onUpdate,onValidityChange }: SellerExportProfileProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<z.infer<typeof exportProfileSchema>>({
     resolver: zodResolver(exportProfileSchema),
+    mode: "onChange",          // validate as user types/selects
+    reValidateMode: "onChange",
     defaultValues: {
       exportExperience: seller.exportProfile?.exportExperience || 0,
       annualTurnover: seller.exportProfile?.annualTurnover || "",
@@ -83,6 +86,10 @@ export function SellerExportProfileForm({ seller, onUpdate }: SellerExportProfil
       hsCodes: seller.exportProfile?.hsExpertise.map(h => ({ value: h.hsCode })) || [{ value: '' }],
     },
   })
+
+  useEffect(() => {
+    onValidityChange?.(form.formState.isValid)
+  }, [form.formState.isValid])
 
   useEffect(() => {
     form.reset({

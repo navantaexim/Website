@@ -52,16 +52,19 @@ interface SellerBasicInfoProps {
     iecCode: string
     status: string
   }
-  onUpdate?: () => void
+  onUpdate?: () => void,
+  onValidityChange?: (valid: boolean) => void
 }
 
-export function SellerBasicInfoForm({ seller, onUpdate }: SellerBasicInfoProps) {
+export function SellerBasicInfoForm({ seller, onUpdate,onValidityChange  }: SellerBasicInfoProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "onChange",          // validate as user types/selects
+    reValidateMode: "onChange",
     defaultValues: {
       legalName: seller.legalName,
       businessType: seller.businessType,
@@ -71,6 +74,10 @@ export function SellerBasicInfoForm({ seller, onUpdate }: SellerBasicInfoProps) 
     },
     disabled: seller.status !== "draft"
   })
+
+  useEffect(() => {
+  onValidityChange?.(form.formState.isValid)
+}, [form.formState.isValid])
 
   useEffect(() => {
     form.reset({

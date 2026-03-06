@@ -35,13 +35,13 @@ interface Seller {
 }
 
 const steps: Step[] = [
-  { id: 1, title: 'Business Details', description: 'Tax & Legal Info' },
-  { id: 2, title: 'Address', description: 'Registered & Factory' },
-  { id: 3, title: 'Documents', description: 'GST, IEC, PAN' },
-  { id: 4, title: 'Capabilities', description: 'Manufacturing Info' },
-  { id: 5, title: 'Export Profile', description: 'Markets & Logistics' },
-  { id: 6, title: 'Certifications', description: 'ISO, API, etc.' },
-  { id: 7, title: 'Review & Submit', description: 'Final Check' },
+  { id: 1, title: 'Business Details *', description: 'Tax & Legal Info' },
+  { id: 2, title: 'Address *', description: 'Registered & Factory' },
+  { id: 3, title: 'Documents *', description: 'GST, IEC, PAN' },
+  { id: 4, title: 'Capabilities *', description: 'Manufacturing Info' },
+  { id: 5, title: 'Export Profile *', description: 'Markets & Logistics' },
+  { id: 6, title: 'Certifications *', description: 'ISO, API, etc.' },
+  { id: 7, title: 'Review & Submit ', description: 'Final Check' },
 ]
 
 export default function SellerOnboardingPage() {
@@ -51,6 +51,7 @@ export default function SellerOnboardingPage() {
   
   // Moved hook to top level
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
+  const [isStepValid, setIsStepValid] = useState(false)
 
   async function fetchSeller() {
     try {
@@ -75,7 +76,16 @@ export default function SellerOnboardingPage() {
     fetchSeller()
   }, [])
 
-  const nextStep = () => setCurrentStepIndex((prev) => Math.min(prev + 1, steps.length - 1))
+  useEffect(() => {
+  setIsStepValid(false)
+}, [currentStepIndex])
+
+  async function nextStep() {
+  if (!seller) return
+  // force refresh so latest saved data loads
+  await fetchSeller()
+  setCurrentStepIndex((prev) => Math.min(prev + 1, steps.length - 1))
+}
   const prevStep = () => setCurrentStepIndex((prev) => Math.max(prev - 1, 0))
   
   const progress = Math.round(((currentStepIndex) / steps.length) * 100)
@@ -162,17 +172,17 @@ export default function SellerOnboardingPage() {
                         <CardDescription>{steps[currentStepIndex].description}</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        {currentStepIndex === 0 && <SellerBasicInfoForm seller={seller} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 1 && <SellerAddressSection seller={seller} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 2 && <SellerDocumentSection seller={seller} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 3 && <SellerManufacturingForm seller={seller} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 4 && <SellerExportProfileForm seller={seller} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 5 && <SellerCertificationForm seller={{...seller, certificates: seller.certificates || []}} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 6 && <SellerReviewSection seller={seller} onUpdate={fetchSeller} />}
+                        {currentStepIndex === 0 && <SellerBasicInfoForm seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
+                        {currentStepIndex === 1 && <SellerAddressSection seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
+                        {currentStepIndex === 2 && <SellerDocumentSection seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
+                        {currentStepIndex === 3 && <SellerManufacturingForm seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
+                        {currentStepIndex === 4 && <SellerExportProfileForm seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
+                        {currentStepIndex === 5 && <SellerCertificationForm seller={{...seller, certificates: seller.certificates || []}} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
+                        {currentStepIndex === 6 && <SellerReviewSection seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
                     </CardContent>
                      <CardFooter className="flex justify-between border-t p-6">
                         <Button variant="outline" onClick={prevStep} disabled={currentStepIndex === 0}>Back</Button>
-                        <Button onClick={nextStep} disabled={currentStepIndex === steps.length - 1}>
+                        <Button onClick={nextStep} disabled={!isStepValid}>
                             {currentStepIndex === steps.length - 1 ? 'Submit' : (
                                 <>Continue <ChevronRight className="ml-2 h-4 w-4" /></>
                             )}
