@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { CheckCircle2, Clock, FileCheck, Store, ChevronRight, Loader2 } from 'lucide-react'
+import { CheckCircle2, Clock, Store, ChevronRight, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
@@ -18,7 +18,6 @@ import { SellerManufacturingForm } from '@/components/seller/onboarding/seller-m
 import { SellerExportProfileForm } from '@/components/seller/onboarding/seller-export-profile-form'
 import { SellerCertificationForm } from '@/components/seller/onboarding/seller-certification-form'
 
-// Define the Seller type based on Prisma schema
 interface Seller {
   id: string
   legalName: string
@@ -30,7 +29,7 @@ interface Seller {
   iecCode: string
   addresses: any[]
   documents: any[]
-  capabilities: any // Using specific types in sub-components
+  capabilities: any
   exportProfile: any
   certificates: any[]
 }
@@ -49,22 +48,24 @@ export default function SellerOnboardingPage() {
   const [seller, setSeller] = useState<Seller | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  
-  // Moved hook to top level
+
   const router = useRouter()
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
 
   async function fetchSeller() {
     try {
       const res = await fetch('/api/seller/me')
+
       if (res.status === 401) {
         window.location.href = '/login'
         return
       }
+
       if (!res.ok) throw new Error('Failed to fetch seller profile')
-      
+
       const data = await res.json()
       setSeller(data.seller)
+
     } catch (err) {
       console.error(err)
       setError('Something went wrong while loading your profile.')
@@ -77,10 +78,23 @@ export default function SellerOnboardingPage() {
     fetchSeller()
   }, [])
 
-  const nextStep = () => setCurrentStepIndex((prev) => Math.min(prev + 1, steps.length - 1))
-  const prevStep = () => setCurrentStepIndex((prev) => Math.max(prev - 1, 0))
-  
-  const progress = Math.round(((currentStepIndex) / steps.length) * 100)
+  /**
+   * FIX: redirect moved into useEffect
+   * This avoids React hook errors
+   */
+  useEffect(() => {
+    if (seller?.status === 'verified' || seller?.status === 'active') {
+      router.replace('/seller')
+    }
+  }, [seller?.status, router])
+
+  const nextStep = () =>
+    setCurrentStepIndex((prev) => Math.min(prev + 1, steps.length - 1))
+
+  const prevStep = () =>
+    setCurrentStepIndex((prev) => Math.max(prev - 1, 0))
+
+  const progress = Math.round((currentStepIndex / steps.length) * 100)
 
   if (isLoading) {
     return (
@@ -90,8 +104,8 @@ export default function SellerOnboardingPage() {
           <Skeleton className="h-4 w-2/3" />
         </div>
         <div className="grid gap-6">
-           <Skeleton className="h-40 w-full" />
-           <Skeleton className="h-40 w-full" />
+          <Skeleton className="h-40 w-full" />
+          <Skeleton className="h-40 w-full" />
         </div>
       </div>
     )
@@ -106,181 +120,174 @@ export default function SellerOnboardingPage() {
     )
   }
 
-  // 1. If no seller -> Show Create Seller button
   if (!seller) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[80vh] bg-gradient-to-b from-background to-muted/20 p-4">
         <Card className="max-w-md w-full border-muted-foreground/10 shadow-lg">
+
           <CardHeader className="text-center pb-2">
+
             <div className="mx-auto bg-primary/10 p-4 rounded-full w-fit mb-4">
               <Store className="h-10 w-10 text-primary" />
             </div>
-            <CardTitle className="text-2xl font-bold">Become a Seller</CardTitle>
+
+            <CardTitle className="text-2xl font-bold">
+              Become a Seller
+            </CardTitle>
+
             <CardDescription className="text-balance text-base mt-2">
               Start your journey with Navanta Exim. Create your seller profile to reach global markets.
             </CardDescription>
+
           </CardHeader>
+
           <CardContent className="pt-4">
             <div className="space-y-4">
+
               <div className="flex items-center gap-3 text-sm text-muted-foreground">
                 <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0" />
                 <span>Access verified international buyers</span>
               </div>
+
               <div className="flex items-center gap-3 text-sm text-muted-foreground">
                 <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0" />
                 <span>Seamless export documentation support</span>
               </div>
+
               <div className="flex items-center gap-3 text-sm text-muted-foreground">
                 <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0" />
                 <span>Secure payments and logistics</span>
               </div>
+
             </div>
           </CardContent>
+
           <CardFooter className="pt-2 pb-6">
             <Button asChild className="w-full text-lg h-12" size="lg">
-              <Link href="/seller/create">Create Seller Account</Link>
+              <Link href="/seller/create">
+                Create Seller Account
+              </Link>
             </Button>
           </CardFooter>
+
         </Card>
       </div>
     )
   }
 
-  // 2. If seller.status="draft" -> Show Stepper UI
   if (seller.status === 'draft') {
     return (
       <div className="container mx-auto py-10 px-4 max-w-5xl">
+
         <div className="mb-8">
-            <h1 className="text-3xl font-bold tracking-tight mb-2">Complete Your Profile</h1>
-            <p className="text-muted-foreground">Finish setting up your seller account to start listing products.</p>
+          <h1 className="text-3xl font-bold tracking-tight mb-2">
+            Complete Your Profile
+          </h1>
+          <p className="text-muted-foreground">
+            Finish setting up your seller account to start listing products.
+          </p>
         </div>
 
         <div className="grid lg:grid-cols-[1fr_300px] gap-8">
-            {/* Main Content Area */}
-            <div className="space-y-6">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>{steps[currentStepIndex].title}</CardTitle>
-                        <CardDescription>{steps[currentStepIndex].description}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        {currentStepIndex === 0 && <SellerBasicInfoForm seller={seller} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 1 && <SellerAddressSection seller={seller} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 2 && <SellerDocumentSection seller={seller} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 3 && <SellerManufacturingForm seller={seller} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 4 && <SellerExportProfileForm seller={seller} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 5 && <SellerCertificationForm seller={{...seller, certificates: seller.certificates || []}} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 6 && <SellerReviewSection seller={seller} onUpdate={fetchSeller} />}
-                    </CardContent>
-                     <CardFooter className="flex justify-between border-t p-6">
-                        <Button variant="outline" onClick={prevStep} disabled={currentStepIndex === 0}>Back</Button>
-                        <Button onClick={nextStep} disabled={currentStepIndex === steps.length - 1}>
-                            {currentStepIndex === steps.length - 1 ? 'Submit' : (
-                                <>Continue <ChevronRight className="ml-2 h-4 w-4" /></>
-                            )}
-                        </Button>
-                    </CardFooter>
-                </Card>
-            </div>
 
-            {/* Sidebar Stepper */}
-            <div className="space-y-6">
-                <Card>
-                    <CardHeader className="pb-4">
-                        <CardTitle className="text-lg">Progress</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                        {/* Progress Bar */}
-                        <div className="space-y-2">
-                             <div className="flex justify-between text-xs font-medium text-muted-foreground">
-                                <span>{progress}% Complete</span>
-                                <span>{currentStepIndex + 1}/{steps.length} Steps</span>
-                             </div>
-                             <Progress value={progress} className="h-2" />
-                        </div>
+          <div className="space-y-6">
 
-                        <Separator />
-                        
-                        {/* Reusable Stepper Component */}
-                        <Stepper 
-                            steps={steps} 
-                            currentStep={currentStepIndex} 
-                        />
-                    </CardContent>
-                </Card>
-            </div>
+            <Card>
+
+              <CardHeader>
+                <CardTitle>{steps[currentStepIndex].title}</CardTitle>
+                <CardDescription>
+                  {steps[currentStepIndex].description}
+                </CardDescription>
+              </CardHeader>
+
+              <CardContent>
+
+                {currentStepIndex === 0 && <SellerBasicInfoForm seller={seller} onUpdate={fetchSeller} />}
+                {currentStepIndex === 1 && <SellerAddressSection seller={seller} onUpdate={fetchSeller} />}
+                {currentStepIndex === 2 && <SellerDocumentSection seller={seller} onUpdate={fetchSeller} />}
+                {currentStepIndex === 3 && <SellerManufacturingForm seller={seller} onUpdate={fetchSeller} />}
+                {currentStepIndex === 4 && <SellerExportProfileForm seller={seller} onUpdate={fetchSeller} />}
+                {currentStepIndex === 5 && <SellerCertificationForm seller={{ ...seller, certificates: seller.certificates || [] }} onUpdate={fetchSeller} />}
+                {currentStepIndex === 6 && <SellerReviewSection seller={seller} onUpdate={fetchSeller} />}
+
+              </CardContent>
+
+              <CardFooter className="flex justify-between border-t p-6">
+
+                <Button
+                  variant="outline"
+                  onClick={prevStep}
+                  disabled={currentStepIndex === 0}
+                >
+                  Back
+                </Button>
+
+                <Button
+                  onClick={nextStep}
+                  disabled={currentStepIndex === steps.length - 1}
+                >
+                  Continue <ChevronRight className="ml-2 h-4 w-4" />
+                </Button>
+
+              </CardFooter>
+
+            </Card>
+
+          </div>
+
+          <div className="space-y-6">
+
+            <Card>
+
+              <CardHeader className="pb-4">
+                <CardTitle className="text-lg">Progress</CardTitle>
+              </CardHeader>
+
+              <CardContent className="space-y-6">
+
+                <div className="space-y-2">
+
+                  <div className="flex justify-between text-xs font-medium text-muted-foreground">
+                    <span>{progress}% Complete</span>
+                    <span>{currentStepIndex + 1}/{steps.length} Steps</span>
+                  </div>
+
+                  <Progress value={progress} className="h-2" />
+
+                </div>
+
+                <Separator />
+
+                <Stepper steps={steps} currentStep={currentStepIndex} />
+
+              </CardContent>
+
+            </Card>
+
+          </div>
+
         </div>
+
       </div>
     )
   }
 
-  // 3. If seller.status="submitted" -> Show "Under Review"
   if (seller.status === 'submitted') {
     return (
       <div className="flex flex-col items-center justify-center min-h-[80vh] px-4">
-        <Card className="max-w-lg w-full text-center p-6 border-blue-100 dark:border-blue-900/50 shadow-lg">
+        <Card className="max-w-lg w-full text-center p-6">
           <CardHeader>
-            <div className="mx-auto bg-blue-50 dark:bg-blue-900/20 p-4 rounded-full w-fit mb-4">
-              <Clock className="h-12 w-12 text-blue-500" />
-            </div>
-            <CardTitle className="text-2xl font-bold text-blue-950 dark:text-blue-50">Application Under Review</CardTitle>
-            <CardDescription className="text-base mt-2">
-              Thank you for submitting your seller application. Our team is currently reviewing your documents.
+            <Clock className="h-12 w-12 text-blue-500 mx-auto mb-4" />
+            <CardTitle>Application Under Review</CardTitle>
+            <CardDescription>
+              Our team is reviewing your documents.
             </CardDescription>
           </CardHeader>
-          <CardContent>
-             <div className="bg-muted/50 rounded-lg p-4 text-left space-y-3 text-sm">
-                <div className="flex justify-between">
-                    <span className="text-muted-foreground">Application ID</span>
-                    <span className="font-mono">{seller.id.slice(-8).toUpperCase()}</span>
-                </div>
-                <div className="flex justify-between">
-                    <span className="text-muted-foreground">Submitted On</span>
-                    <span className="font-medium">{new Date().toLocaleDateString()}</span>
-                </div>
-                <div className="flex justify-between">
-                    <span className="text-muted-foreground">Estimated Review</span>
-                    <span className="font-medium">2-3 Business Days</span>
-                </div>
-             </div>
-          </CardContent>
-          <CardFooter className="flex flex-col gap-3 pt-6">
-            <Button variant="outline" className="w-full" asChild>
-                <Link href="/#contact">Contact Support</Link>
-            </Button>
-            <p className="text-xs text-muted-foreground">We will notify you via email once the verification is complete.</p>
-          </CardFooter>
         </Card>
       </div>
     )
   }
 
-  // 4. If seller.status="verified" -> Redirect to main dashboard
-  if (seller.status === 'verified' || seller.status === 'active') {
-    router.push('/dashboard')
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <Loader2 className="h-10 w-10 animate-spin text-primary opacity-50" />
-        <p className="text-xs font-black text-neutral-400 uppercase tracking-widest animate-pulse">Redirecting to Dashboard...</p>
-      </div>
-    )
-  }
-
-  // Fallback for rejected or unknown status
-  return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-       <Card className="max-w-md w-full border-red-200">
-            <CardHeader>
-                 <CardTitle className="text-red-600">Account Issue</CardTitle>
-                 <CardDescription>Your account status is: <span className="font-semibold">{seller.status}</span></CardDescription>
-            </CardHeader>
-            <CardContent>
-                Please contact support for assistance with your seller account.
-            </CardContent>
-            <CardFooter>
-                 <Button variant="outline" className="w-full">Contact Support</Button>
-            </CardFooter>
-       </Card>
-    </div>
-  )
+  return null
 }
