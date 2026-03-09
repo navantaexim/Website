@@ -81,7 +81,7 @@ export default function Header() {
                             >
                                 <img
                                     src={
-                                        user.picture ||
+                                        (user as any).picture ||
                                         `https://ui-avatars.com/api/?name=${user.email}&background=random`
                                     }
                                     alt="profile"
