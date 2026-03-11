@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { AuthProvider } from '@/providers/auth-provider'
+import ConditionalHeader from '@/components/layout/conditional-header'
 import './globals.css'
-import Header from '@/components/layout/header'
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
@@ -25,7 +25,7 @@ export default function RootLayout({
         className="font-sans antialiased"
         suppressHydrationWarning
       >
-        {/* ✅ DISABLE NEXT.JS SCROLL RESTORATION */}
+
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -37,9 +37,14 @@ export default function RootLayout({
         />
 
         <AuthProvider>
-          <Header />
+
+          {/* Only show header outside marketplace */}
+          <ConditionalHeader />
+
           {children}
+
           <Analytics />
+
         </AuthProvider>
       </body>
     </html>

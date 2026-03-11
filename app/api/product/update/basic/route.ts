@@ -9,7 +9,13 @@ const updateProductSchema = z.object({
   id: z.string().min(1, 'Product ID is required'),
   name: z.string().min(1, 'Product name is required'),
   categoryId: z.string().min(1, 'Category is required'),
-  hsCode: z.string().min(1, 'HS Code is required'),
+  hsCode: z
+    .string()
+    .trim()
+    .regex(/^\d+$/, 'HS Code must contain only digits')
+    .refine((val) => val.length === 6 || val.length === 8, {
+      message: 'HS Code must be exactly 6 or 8 digits',
+    }),
   productType: z.enum(['standard', 'custom', 'made-to-order']),
   originCountryId: z.string().min(1, 'Origin Country is required'),
 })

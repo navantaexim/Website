@@ -4,26 +4,94 @@ import { getAuth } from '@/lib/firebase-admin'
 import prisma from '@/lib/db'
 import { z } from 'zod'
 
-// 1. Zod Schema
-const dimensionSchema = z.object({
-  type: z.string({ required_error: 'Dimension type is required' }),
-  unit: z.string({ required_error: 'Dimension unit is required' }),
-}).passthrough() // Allow other properties like length, width, etc.
+/* ===========================
+   CONSTANTS
+=========================== */
+
+const MAX_DIMENSION = 100000      // Prevent absurd values
+const MAX_WEIGHT = 50000          // 50 tons max
+
+const unitEnum = z.enum([
+  'Millimeters (mm)',
+  'Centimeters (cm)',
+  'Meters (m)',
+  'Inches (in)',
+])
+
+/* ===========================
+   DIMENSION SCHEMAS
+=========================== */
+
+const rectangularSchema = z.object({
+  type: z.literal('Rectangular / Block'),
+  unit: unitEnum,
+  length: z.coerce.number().gt(0).lt(MAX_DIMENSION),
+  width: z.coerce.number().gt(0).lt(MAX_DIMENSION),
+  height: z.coerce.number().gt(0).lt(MAX_DIMENSION),
+})
+
+const cylindricalSchema = z.object({
+  type: z.literal('Cylindrical / Rod'),
+  unit: unitEnum,
+  length: z.coerce.number().gt(0).lt(MAX_DIMENSION),
+  outerDiameter: z.coerce.number().gt(0).lt(MAX_DIMENSION),
+})
+
+const sheetSchema = z.object({
+  type: z.literal('Sheet / Plate'),
+  unit: unitEnum,
+  length: z.coerce.number().gt(0).lt(MAX_DIMENSION),
+  width: z.coerce.number().gt(0).lt(MAX_DIMENSION),
+  thickness: z.coerce.number().gt(0).lt(MAX_DIMENSION),
+})
+
+const tubularSchema = z.object({
+  type: z.literal('Tubular / Pipe'),
+  unit: unitEnum,
+  length: z.coerce.number().gt(0).lt(MAX_DIMENSION),
+  outerDiameter: z.coerce.number().gt(0).lt(MAX_DIMENSION),
+  wallThickness: z.coerce.number().gt(0).lt(MAX_DIMENSION),
+})
+
+const dimensionSchema = z
+  .discriminatedUnion('type', [
+    rectangularSchema,
+    cylindricalSchema,
+    sheetSchema,
+    tubularSchema,
+  ])
+  .refine((data) => {
+    if (data.type === 'Tubular / Pipe') {
+      return data.wallThickness < data.outerDiameter / 2
+    }
+    return true
+  }, {
+    message: 'Wall thickness cannot exceed half of outer diameter',
+    path: ['wallThickness'],
+  })
+
+
+/* ===========================
+   SPECIFICATION SCHEMA
+=========================== */
 
 const specificationSchema = z.object({
   productId: z.string().min(1, 'Product ID is required'),
   materialGrade: z.string().min(1, 'Material Grade is required'),
   dimensions: dimensionSchema,
-  weightKg: z.number().gt(0, 'Weight must be greater than 0'),
+  weightKg: z.coerce.number().gt(0).lt(MAX_WEIGHT),
   tolerance: z.string().min(1, 'Tolerance is required'),
   surfaceFinish: z.string().min(1, 'Surface Finish is required'),
   process: z.string().min(1, 'Process is required'),
   drawingAvailable: z.boolean(),
 })
 
+/* ===========================
+   ROUTE HANDLER
+=========================== */
+
 export async function POST(request: Request) {
   try {
-    // 2. Authentication
     const cookieStore = await cookies()
     const sessionCookie = cookieStore.get('session')?.value
 
@@ -34,7 +102,7 @@ export async function POST(request: Request) {
     let decodedToken
     try {
       decodedToken = await getAuth().verifySessionCookie(sessionCookie, true)
-    } catch (error) {
+    } catch {
       return NextResponse.json({ error: 'Unauthorized: Invalid session' }, { status: 401 })
     }
 
@@ -49,7 +117,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
 
-    // 3. Parse and Validate Request Body
     const body = await request.json()
     const validation = specificationSchema.safeParse(body)
 
@@ -71,7 +138,6 @@ export async function POST(request: Request) {
       drawingAvailable,
     } = validation.data
 
-    // 4. Verify Authorization and Product Status
     const product = await prisma.product.findUnique({
       where: { id: productId },
       include: {
@@ -91,22 +157,18 @@ export async function POST(request: Request) {
 
     const sellerUser = product.seller.users[0]
 
-    // Check if user is linked to seller
     if (!sellerUser) {
       return NextResponse.json({ error: 'Unauthorized access to product' }, { status: 403 })
     }
 
-    // Check if user is Owner
     if (sellerUser.role !== 'owner') {
       return NextResponse.json({ error: 'Only owner can edit specifications' }, { status: 403 })
     }
 
-    // Check if Product is Draft
     if (product.status !== 'draft') {
       return NextResponse.json({ error: 'Only draft products can be edited' }, { status: 400 })
     }
 
-    // 5. Upsert ProductSpecification
     const spec = await prisma.productSpecification.upsert({
       where: { productId },
       update: {
