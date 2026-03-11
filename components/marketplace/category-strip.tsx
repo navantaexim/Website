@@ -10,15 +10,15 @@ const categories = [
 
 export default function CategoryStrip() {
     return (
-        <section className="bg-slate-50">
+        <section className="bg-slate-50 py-12">
 
-            <div className="max-w-7xl mx-auto px-6 py-6">
+            <div className="max-w-7xl mx-auto px-6">
 
-                <h2 className="text-lg font-semibold text-slate-800 mb-4">
-                    Categories
+                <h2 className="text-lg font-semibold text-slate-800 mb-8 text-center">
+                    Browse Categories
                 </h2>
 
-                <div className="flex items-center justify-center gap-10 overflow-x-auto">
+                <div className="flex justify-center gap-10">
 
                     {categories.map((cat) => (
                         <CategoryCircle
