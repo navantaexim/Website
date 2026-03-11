@@ -111,7 +111,8 @@ export async function POST(request: Request) {
     if (error.code === 'P2002') {
       const field = error.meta?.target?.[0] || 'Field'
       return NextResponse.json(
-        { error: `${field} already exists` },
+        { error: `${field} already exists`,
+          field: field },
         { status: 409 }
       )
     }

@@ -34,8 +34,10 @@ const COUNTRIES = [
     { id: 'c4', name: 'Germany' }, { id: 'c5', name: 'Australia' }
 ]
 const INCOTERMS = [
-    { id: 'i1', code: 'FOB' }, { id: 'i2', code: 'CIF' }, { id: 'i3', code: 'EXW' }, 
-    { id: 'i4', code: 'DDP' }
+    { code: 'FOB' },
+    { code: 'CIF' },
+    { code: 'EXW' },
+    { code: 'DDP' }
 ]
 
 const exportProfileSchema = z.object({
@@ -62,16 +64,19 @@ interface SellerExportProfileProps {
         hsExpertise: { hsCode: string }[]
     } | null
   }
-  onUpdate?: () => void
+  onUpdate?: () => void,
+  onValidityChange?: (valid: boolean) => void
 }
 
-export function SellerExportProfileForm({ seller, onUpdate }: SellerExportProfileProps) {
+export function SellerExportProfileForm({ seller, onUpdate,onValidityChange }: SellerExportProfileProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<z.infer<typeof exportProfileSchema>>({
     resolver: zodResolver(exportProfileSchema),
+    mode: "onChange",          // validate as user types/selects
+    reValidateMode: "onChange",
     defaultValues: {
       exportExperience: seller.exportProfile?.exportExperience || 0,
       annualTurnover: seller.exportProfile?.annualTurnover || "",
@@ -81,6 +86,10 @@ export function SellerExportProfileForm({ seller, onUpdate }: SellerExportProfil
       hsCodes: seller.exportProfile?.hsExpertise.map(h => ({ value: h.hsCode })) || [{ value: '' }],
     },
   })
+
+  useEffect(() => {
+    onValidityChange?.(form.formState.isValid)
+  }, [form.formState.isValid])
 
   useEffect(() => {
     form.reset({
@@ -283,49 +292,57 @@ export function SellerExportProfileForm({ seller, onUpdate }: SellerExportProfil
         
         {/* Incoterms */}
         <FormField
-             control={form.control}
-             name="incotermIds"
-             render={({ field }) => (
-                 <FormItem>
-                    <FormLabel>Supported Incoterms</FormLabel>
-                     <div className="flex flex-wrap gap-2 mb-2">
-                        {field.value?.map(id => {
-                            const term = INCOTERMS.find(t => t.id === id)
-                            return term ? (
-                                <Badge key={id} variant="secondary" className="gap-1">
-                                    {term.code}
-                                    {!isReadOnly && (
-                                        <X className="h-3 w-3 cursor-pointer" onClick={() => {
-                                            field.onChange(field.value?.filter(v => v !== id))
-                                        }} />
-                                    )}
-                                </Badge>
-                            ) : null
-                        })}
-                     </div>
-                     {!isReadOnly && (
-                         <Select onValueChange={(val) => {
-                             if (!field.value?.includes(val)) {
-                                 field.onChange([...(field.value || []), val])
-                             }
-                         }}>
-                             <FormControl>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Add Incoterm..." />
-                                </SelectTrigger>
-                             </FormControl>
-                             <SelectContent>
-                                 {INCOTERMS.map(term => (
-                                     <SelectItem key={term.id} value={term.id}>
-                                         {term.code}
-                                     </SelectItem>
-                                 ))}
-                             </SelectContent>
-                         </Select>
-                     )}
-                 </FormItem>
-             )}
-        />
+        control={form.control}
+        name="incotermIds"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Supported Incoterms</FormLabel>
+
+            <div className="flex flex-wrap gap-2 mb-2">
+              {field.value?.map(code => {
+                const term = INCOTERMS.find(t => t.code === code)
+                return term ? (
+                  <Badge key={code} variant="secondary" className="gap-1">
+                    {term.code}
+                    {!isReadOnly && (
+                      <X
+                        className="h-3 w-3 cursor-pointer"
+                        onClick={() => {
+                          field.onChange(field.value?.filter(v => v !== code))
+                        }}
+                      />
+                    )}
+                  </Badge>
+                ) : null
+              })}
+            </div>
+
+            {!isReadOnly && (
+              <Select
+                onValueChange={(val) => {
+                  if (!field.value?.includes(val)) {
+                    field.onChange([...(field.value || []), val])
+                  }
+                }}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Add Incoterm..." />
+                  </SelectTrigger>
+                </FormControl>
+
+                <SelectContent>
+                  {INCOTERMS.map(term => (
+                    <SelectItem key={term.code} value={term.code}>
+                      {term.code}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          </FormItem>
+        )}
+      />
 
         {/* HS Codes */}
         <div className="space-y-3">

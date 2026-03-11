@@ -40,6 +40,10 @@ const formSchema = z.object({
   iecCode: z.string().length(10, {
     message: "IEC Code must be exactly 10 characters.",
   }),
+  phone: z.string().optional(),
+  designation: z.string().optional(),
+  panNumber: z.string().optional(),
+  cinOrLlpin: z.string().optional(),
 })
 
 interface SellerBasicInfoProps {
@@ -50,27 +54,42 @@ interface SellerBasicInfoProps {
     yearEstablished: number
     gstNumber: string
     iecCode: string
+    phone?: string
+    designation?: string
+    panNumber?: string
+    cinOrLlpin?: string
     status: string
   }
-  onUpdate?: () => void
+  onUpdate?: () => void,
+  onValidityChange?: (valid: boolean) => void
 }
 
-export function SellerBasicInfoForm({ seller, onUpdate }: SellerBasicInfoProps) {
+export function SellerBasicInfoForm({ seller, onUpdate,onValidityChange  }: SellerBasicInfoProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "onChange",          // validate as user types/selects
+    reValidateMode: "onChange",
     defaultValues: {
       legalName: seller.legalName,
       businessType: seller.businessType,
       yearEstablished: seller.yearEstablished,
       gstNumber: seller.gstNumber,
       iecCode: seller.iecCode,
+      phone: seller.phone ?? "",
+      designation: seller.designation ?? "",
+      panNumber: seller.panNumber ?? "",
+      cinOrLlpin: seller.cinOrLlpin ?? "",
     },
     disabled: seller.status !== "draft"
   })
+
+  useEffect(() => {
+  onValidityChange?.(form.formState.isValid)
+}, [form.formState.isValid])
 
   useEffect(() => {
     form.reset({
@@ -79,6 +98,10 @@ export function SellerBasicInfoForm({ seller, onUpdate }: SellerBasicInfoProps) 
       yearEstablished: seller.yearEstablished,
       gstNumber: seller.gstNumber,
       iecCode: seller.iecCode,
+      phone: seller.phone ?? "",
+      designation: seller.designation ?? "",
+      panNumber: seller.panNumber ?? "",
+      cinOrLlpin: seller.cinOrLlpin ?? "",
     })
   }, [seller, form])
 
@@ -204,6 +227,62 @@ export function SellerBasicInfoForm({ seller, onUpdate }: SellerBasicInfoProps) 
               )}
             />
         </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+          <FormItem>
+          <FormLabel>Phone Number</FormLabel>
+          <FormControl>
+          <Input placeholder="Phone Number" {...field}/>
+          </FormControl>
+          </FormItem>
+          )}
+          />
+
+          <FormField
+          control={form.control}
+          name="designation"
+          render={({ field }) => (
+          <FormItem>
+          <FormLabel>Designation</FormLabel>
+          <FormControl>
+          <Input placeholder="Designation" {...field}/>
+          </FormControl>
+          </FormItem>
+          )}
+          />
+
+          <FormField
+          control={form.control}
+          name="panNumber"
+          render={({ field }) => (
+          <FormItem>
+          <FormLabel>PAN Number</FormLabel>
+          <FormControl>
+          <Input placeholder="PAN Number" {...field}/>
+          </FormControl>
+          </FormItem>
+          )}
+          />
+
+          <FormField
+          control={form.control}
+          name="cinOrLlpin"
+          render={({ field }) => (
+          <FormItem>
+          <FormLabel>CIN / LLPIN</FormLabel>
+          <FormControl>
+          <Input placeholder="CIN or LLPIN" {...field}/>
+          </FormControl>
+          </FormItem>
+          )}
+          />
+
+          </div>
 
         <Button type="submit" disabled={isLoading || seller.status !== 'draft'}>
           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

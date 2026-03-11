@@ -29,10 +29,11 @@ interface SellerReviewProps {
     capabilities?: any
     exportProfile?: any
   }
-  onUpdate?: () => void
+  onUpdate?: () => void,
+  onValidityChange?: (valid: boolean) => void
 }
 
-export function SellerReviewSection({ seller, onUpdate }: SellerReviewProps) {
+export function SellerReviewSection({ seller, onUpdate ,onValidityChange}: SellerReviewProps) {
   const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
 

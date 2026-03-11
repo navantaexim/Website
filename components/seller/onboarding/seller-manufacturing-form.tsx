@@ -47,16 +47,19 @@ interface SellerManufacturingProps {
         inHouseQC: boolean
     } | null
   }
-  onUpdate?: () => void
+  onUpdate?: () => void,
+  onValidityChange?: (valid: boolean) => void
 }
 
-export function SellerManufacturingForm({ seller, onUpdate }: SellerManufacturingProps) {
+export function SellerManufacturingForm({ seller, onUpdate,onValidityChange }: SellerManufacturingProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<z.infer<typeof manufacturingSchema>>({
     resolver: zodResolver(manufacturingSchema),
+    mode: "onChange",          // validate as user types/selects
+    reValidateMode: "onChange",
     defaultValues: {
       manufacturerType: seller.capabilities?.manufacturerType || "",
       factoryAreaSqm: seller.capabilities?.factoryAreaSqm || 0,
@@ -65,6 +68,10 @@ export function SellerManufacturingForm({ seller, onUpdate }: SellerManufacturin
       inHouseQC: seller.capabilities?.inHouseQC || false,
     },
   })
+
+  useEffect(() => {
+    onValidityChange?.(form.formState.isValid)
+  }, [form.formState.isValid])
 
   useEffect(() => {
     form.reset({
