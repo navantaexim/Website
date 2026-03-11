@@ -17,7 +17,6 @@ export default function Header() {
         await signOut(auth)
     }
 
-    // Close dropdown when clicking outside
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
             if (
@@ -38,43 +37,59 @@ export default function Header() {
     return (
         <header className="bg-white border-b border-slate-200">
 
-            <div className="max-w-7xl mx-auto px-6 h-20 flex items-center gap-8">
+            <div className="max-w-7xl mx-auto px-6 h-16 flex items-center gap-6">
 
                 {/* Logo */}
                 <Logo />
 
+                {/* Location */}
+                <div className="hidden lg:block text-xs leading-tight cursor-pointer">
+                    <p className="text-slate-500">Deliver to</p>
+                    <p className="font-medium">Select location</p>
+                </div>
+
                 {/* Search */}
                 <div className="flex-1 flex justify-center">
-                    <div className="w-full max-w-2xl">
+                    <div className="w-full max-w-3xl">
                         <SearchBar />
                     </div>
                 </div>
 
                 {/* Right Side */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-5">
 
-                    {/* Loading */}
+                    <Link
+                        href="/orders"
+                        className="text-sm text-slate-700 hover:text-black"
+                    >
+                        Track Order
+                    </Link>
+
+                    <Link
+                        href="/cart"
+                        className="text-sm text-slate-700 hover:text-black"
+                    >
+                        Cart
+                    </Link>
+
                     {loading && (
                         <span className="text-sm text-slate-500">
                             Loading...
                         </span>
                     )}
 
-                    {/* Logged Out */}
                     {!loading && !user && (
                         <Link
                             href="/login"
-                            className="px-5 py-2 text-sm font-medium border border-slate-300 rounded-md hover:bg-slate-100"
+                            className="px-4 py-2 text-sm font-medium border border-slate-300 rounded-md hover:bg-slate-100"
                         >
                             Login
                         </Link>
                     )}
 
-                    {/* Logged In */}
                     {!loading && user && (
                         <div className="relative" ref={menuRef}>
 
-                            {/* Avatar Button */}
                             <button
                                 onClick={() => setMenuOpen(!menuOpen)}
                                 className="flex items-center"
@@ -82,14 +97,13 @@ export default function Header() {
                                 <img
                                     src={
                                         (user as any).picture ||
-                                        `https://ui-avatars.com/api/?name=${user.email}&background=random`
+                                        `https://ui-avatars.com/api/?name=${user.email}`
                                     }
                                     alt="profile"
                                     className="w-9 h-9 rounded-full object-cover border"
                                 />
                             </button>
 
-                            {/* Dropdown Menu */}
                             {menuOpen && (
                                 <div className="absolute right-0 mt-3 w-48 bg-white border border-slate-200 rounded-md shadow-lg overflow-hidden">
 
@@ -109,13 +123,6 @@ export default function Header() {
                                         className="block px-4 py-2 text-sm hover:bg-slate-100"
                                     >
                                         My Products
-                                    </Link>
-
-                                    <Link
-                                        href="/seller/profile"
-                                        className="block px-4 py-2 text-sm hover:bg-slate-100"
-                                    >
-                                        Seller Profile
                                     </Link>
 
                                     <button
