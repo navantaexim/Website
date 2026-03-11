@@ -31,8 +31,14 @@ export default function GoogleSignInButton() {
         throw new Error(data.error || 'Failed to authenticate with server')
       }
 
+      const data = await response.json()
       router.refresh()
-      router.push('/dashboard')
+      
+      if (data.user?.role === 'admin') {
+        router.push('/admin')
+      } else {
+        router.push('/dashboard')
+      }
     } catch (err: any) {
       setError(err.message || 'Failed to sign in')
       setLoading(false)

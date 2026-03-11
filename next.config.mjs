@@ -1,14 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'firebasestorage.googleapis.com',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "pqcutqmdotgenqxnzyae.supabase.co",
+        pathname: "/storage/v1/object/public/**",
       },
     ],
   },

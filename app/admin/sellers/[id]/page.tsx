@@ -10,7 +10,7 @@ import { Spinner } from '@/components/ui/spinner'
 import { 
   ArrowLeft, CheckCircle2, XCircle, FileText, MapPin, 
   Building2, Calendar, Globe, User as UserIcon, ShieldCheck, 
-  Download, ExternalLink, Factory, Truck, Info, AlertTriangle
+  Download, ExternalLink, Factory, Truck, Info, AlertTriangle, Loader2
 } from 'lucide-react'
 import {
   Dialog,
@@ -91,6 +91,29 @@ export default function AdminSellerDetailPage({ params }: { params: Promise<{ id
   const [showApproveDialog, setShowApproveDialog] = useState(false)
   const [showRejectDialog, setShowRejectDialog] = useState(false)
   const [rejectionReason, setRejectionReason] = useState('')
+  const [viewingFile, setViewingFile] = useState<string | null>(null)
+
+  const handleViewDocument = async (path: string) => {
+    if (!path || path.startsWith('http')) {
+        if (path) window.open(path, '_blank')
+        return
+    }
+    setViewingFile(path)
+    try {
+      const res = await fetch('/api/storage/sign-view', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path, bucket: 'private-docs' })
+      })
+      if (!res.ok) throw new Error('Failed to get access')
+      const { signedUrl } = await res.json()
+      window.open(signedUrl, '_blank')
+    } catch (error) {
+      toast.error("Could not open document.")
+    } finally {
+      setViewingFile(null)
+    }
+  }
 
   useEffect(() => {
     async function fetchDetails() {
@@ -357,17 +380,63 @@ export default function AdminSellerDetailPage({ params }: { params: Promise<{ id
                     <p className="text-sm font-bold text-neutral-200 uppercase tracking-wider">{doc.type.replace('_', ' ')}</p>
                     <p className="text-[10px] text-neutral-500 font-bold uppercase">{doc.verified ? 'Verified' : 'Verification Required'}</p>
                   </div>
-                  <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <a href={doc.documentUrl} target="_blank" rel="noreferrer">
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-neutral-400 hover:text-white">
+                  <div className="flex gap-1">
+                    <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className="h-8 w-8 text-neutral-400 hover:text-white"
+                        onClick={() => handleViewDocument(doc.documentUrl)}
+                        disabled={viewingFile === doc.documentUrl}
+                    >
+                        {viewingFile === doc.documentUrl ? (
+                            <Loader2 className="w-4 h-4 animate-spin text-amber-400" />
+                        ) : (
                             <ExternalLink className="w-4 h-4" />
-                        </Button>
-                    </a>
+                        )}
+                    </Button>
                   </div>
                 </div>
               ))}
             </CardContent>
           </Card>
+
+          {/* Certifications */}
+          {seller.certificates && seller.certificates.length > 0 && (
+            <Card className="border-none shadow-xl shadow-neutral-200/50">
+              <CardHeader className="border-b border-neutral-100">
+                <CardTitle className="text-lg flex items-center gap-3">
+                  <ShieldCheck className="w-5 h-5 text-indigo-500" />
+                  Certifications & Awards
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-4 space-y-3">
+                {seller.certificates.map((cert, i) => (
+                  <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-neutral-50 border border-neutral-100">
+                    <div className="space-y-1">
+                      <p className="text-sm font-bold text-neutral-800 uppercase tracking-wider">{cert.type.replace('_', ' ')}</p>
+                      {cert.issuedBy && <p className="text-[10px] text-neutral-500 font-bold uppercase">Issued by: {cert.issuedBy}</p>}
+                      {cert.validTill && <p className="text-[10px] text-neutral-400 font-bold uppercase text-xs">Valid till: {new Date(cert.validTill).toLocaleDateString()}</p>}
+                    </div>
+                    {cert.documentUrl && (
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className="h-8 w-8 text-neutral-400 hover:text-primary"
+                        onClick={() => handleViewDocument(cert.documentUrl!)}
+                        disabled={viewingFile === cert.documentUrl}
+                      >
+                        {viewingFile === cert.documentUrl ? (
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : (
+                            <ExternalLink className="w-4 h-4" />
+                        )}
+                      </Button>
+                    )}
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          )}
 
           {/* Team / Owners */}
           <Card className="border-none shadow-xl shadow-neutral-200/50">

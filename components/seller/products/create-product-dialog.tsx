@@ -49,8 +49,10 @@ interface CreateProductDialogProps {
 }
 
 export function CreateProductDialog({ sellerId, categories, countries }: CreateProductDialogProps) {
+
   const { toast } = useToast()
   const router = useRouter()
+
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -66,8 +68,11 @@ export function CreateProductDialog({ sellerId, categories, countries }: CreateP
   })
 
   async function onSubmit(values: z.infer<typeof createProductSchema>) {
+
     setIsLoading(true)
+
     try {
+
       const response = await fetch("/api/product/create", {
         method: "POST",
         headers: {
@@ -91,16 +96,17 @@ export function CreateProductDialog({ sellerId, categories, countries }: CreateP
       })
 
       setOpen(false)
-      
-      // Redirect to the edit page
+
       router.push(`/seller/products/${data.productId}`)
-      
+
     } catch (error) {
+
       toast({
         title: "Error",
         description: error instanceof Error ? error.message : "Something went wrong",
         variant: "destructive",
       })
+
     } finally {
       setIsLoading(false)
     }
@@ -108,21 +114,27 @@ export function CreateProductDialog({ sellerId, categories, countries }: CreateP
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
+
       <DialogTrigger asChild>
         <Button>
           <Plus className="mr-2 h-4 w-4" />
           Add New Product
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px]">
+
+      <DialogContent className="sm:max-w-[640px]">
+
         <DialogHeader>
           <DialogTitle>Create New Product</DialogTitle>
           <DialogDescription>
             Enter the basic details to start listing your product.
           </DialogDescription>
         </DialogHeader>
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+
+            {/* PRODUCT NAME */}
             <FormField
               control={form.control}
               name="name"
@@ -130,112 +142,179 @@ export function CreateProductDialog({ sellerId, categories, countries }: CreateP
                 <FormItem>
                   <FormLabel>Product Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. Stainless Steel Valves" {...field} />
+                    <Input
+                      placeholder="e.g. Stainless Steel Valves"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
+            {/* TYPE + CATEGORY */}
             <div className="grid grid-cols-2 gap-4">
-                <FormField
+
+              <FormField
                 control={form.control}
                 name="productType"
                 render={({ field }) => (
-                    <FormItem>
+                  <FormItem>
                     <FormLabel>Type</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select type" />
-                        </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                        <SelectItem value="standard">Standard</SelectItem>
-                        <SelectItem value="custom">Custom</SelectItem>
-                        <SelectItem value="made-to-order">Made to Order</SelectItem>
-                        </SelectContent>
-                    </Select>
-                    <FormMessage />
-                    </FormItem>
-                )}
-                />
 
-                <FormField
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select type" />
+                        </SelectTrigger>
+                      </FormControl>
+
+                      <SelectContent>
+
+                        <SelectItem value="standard">
+                          Standard
+                        </SelectItem>
+
+                        <SelectItem value="custom">
+                          Custom
+                        </SelectItem>
+
+                        <SelectItem value="made-to-order">
+                          Made to Order
+                        </SelectItem>
+
+                      </SelectContent>
+                    </Select>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
                 control={form.control}
                 name="categoryId"
                 render={({ field }) => (
-                    <FormItem>
+                  <FormItem className="min-w-0">
                     <FormLabel>Category</FormLabel>
+
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select category" />
+                      <FormControl>
+                        <SelectTrigger className="w-full overflow-hidden">
+                          <SelectValue
+                            placeholder="Select category"
+                            className="block truncate"
+                          />
                         </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
+                      </FormControl>
+
+                      <SelectContent className="max-w-[450px]">
+
                         {categories.map((category) => (
-                            <SelectItem key={category.id} value={category.id}>
+                          <SelectItem
+                            key={category.id}
+                            value={category.id}
+                            className="whitespace-normal"
+                          >
                             {category.name}
-                            </SelectItem>
+                          </SelectItem>
                         ))}
-                        </SelectContent>
+
+                      </SelectContent>
+
                     </Select>
+
                     <FormMessage />
-                    </FormItem>
+                  </FormItem>
                 )}
-                />
+              />
             </div>
 
+            {/* HS CODE + COUNTRY */}
             <div className="grid grid-cols-2 gap-4">
-                <FormField
+
+              <FormField
                 control={form.control}
                 name="hsCode"
                 render={({ field }) => (
-                    <FormItem>
+                  <FormItem>
                     <FormLabel>HS Code</FormLabel>
-                    <FormControl>
-                        <Input placeholder="Harmonized code" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                    </FormItem>
-                )}
-                />
 
-                <FormField
+                    <FormControl>
+                      <Input
+                        placeholder="Harmonized code"
+                        {...field}
+                      />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
                 control={form.control}
                 name="originCountryId"
                 render={({ field }) => (
-                    <FormItem>
+                  <FormItem>
                     <FormLabel>Origin Country</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select country" />
+
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+
+                      <FormControl>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select country" />
                         </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
+                      </FormControl>
+
+                      <SelectContent className="max-w-[400px]">
+
                         {countries.map((country) => (
-                            <SelectItem key={country.id} value={country.id}>
+
+                          <SelectItem
+                            key={country.id}
+                            value={country.id}
+                            className="whitespace-normal"
+                          >
                             {country.name}
-                            </SelectItem>
+                          </SelectItem>
+
                         ))}
-                        </SelectContent>
+
+                      </SelectContent>
+
                     </Select>
+
                     <FormMessage />
-                    </FormItem>
+                  </FormItem>
                 )}
-                />
+              />
+
             </div>
 
             <DialogFooter className="pt-4">
+
               <Button type="submit" disabled={isLoading}>
-                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+
+                {isLoading && (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                )}
+
                 Create & Continue
+
               </Button>
+
             </DialogFooter>
+
           </form>
         </Form>
+
       </DialogContent>
     </Dialog>
   )

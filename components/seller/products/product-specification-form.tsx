@@ -8,12 +8,11 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import { RequiredLabel } from "@/components/form/required-label"
 import { Input } from "@/components/ui/input"
 import {
   Select,
@@ -27,24 +26,60 @@ import { Loader2, Save } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { Checkbox } from "@/components/ui/checkbox"
 
-// Validation Schemas
-const dimensionSchema = z.object({
-  type: z.string().min(1, 'Type is required'),
-  length: z.coerce.number().optional(),
-  width: z.coerce.number().optional(),
-  height: z.coerce.number().optional(),
-  diameter: z.coerce.number().optional(),
-  thickness: z.coerce.number().optional(),
-  unit: z.string().min(1, 'Unit is required'),
+const MAX_WEIGHT = 50000
+
+const unitEnum = z.enum([
+  'Millimeters (mm)',
+  'Centimeters (cm)',
+  'Meters (m)',
+  'Inches (in)',
+])
+
+const rectangularSchema = z.object({
+  type: z.literal('Rectangular / Block'),
+  unit: unitEnum,
+  length: z.coerce.number().gt(0),
+  width: z.coerce.number().gt(0),
+  height: z.coerce.number().gt(0),
 })
+
+const cylindricalSchema = z.object({
+  type: z.literal('Cylindrical / Rod'),
+  unit: unitEnum,
+  length: z.coerce.number().gt(0),
+  outerDiameter: z.coerce.number().gt(0),
+})
+
+const sheetSchema = z.object({
+  type: z.literal('Sheet / Plate'),
+  unit: unitEnum,
+  length: z.coerce.number().gt(0),
+  width: z.coerce.number().gt(0),
+  thickness: z.coerce.number().gt(0),
+})
+
+const tubularSchema = z.object({
+  type: z.literal('Tubular / Pipe'),
+  unit: unitEnum,
+  length: z.coerce.number().gt(0),
+  outerDiameter: z.coerce.number().gt(0),
+  wallThickness: z.coerce.number().gt(0),
+})
+
+const dimensionSchema = z.discriminatedUnion('type', [
+  rectangularSchema,
+  cylindricalSchema,
+  sheetSchema,
+  tubularSchema,
+])
 
 const specificationSchema = z.object({
   productId: z.string(),
-  materialGrade: z.string().min(1, "Material Grade is required"),
-  weightKg: z.coerce.number().gt(0, "Weight must be greater than 0"),
-  tolerance: z.string().min(1, "Tolerance is required"),
-  surfaceFinish: z.string().min(1, "Surface Finish is required"),
-  process: z.string().min(1, "Manufacturing Process is required"),
+  materialGrade: z.string().min(1),
+  weightKg: z.coerce.number().gt(0).lt(MAX_WEIGHT),
+  tolerance: z.string().min(1),
+  surfaceFinish: z.string().min(1),
+  process: z.string().min(1),
   drawingAvailable: z.boolean().default(false),
   dimensions: dimensionSchema,
 })
@@ -53,333 +88,463 @@ interface ProductSpecificationFormProps {
   product: {
     id: string
     status: string
-    specs?: {
-        materialGrade: string
-        weightKg: number
-        tolerance: string
-        surfaceFinish: string
-        process: string
-        drawingAvailable: boolean
-        dimensions: any
-    } | null
+    specs?: any | null
+    media?: any[]
   }
   onUpdate?: () => void
 }
 
 export function ProductSpecificationForm({ product, onUpdate }: ProductSpecificationFormProps) {
+
   const { toast } = useToast()
   const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
-  const isEditable = product.status === 'draft'
 
-  // Default dimensions based on existing data or fallback
-  const existingDims = product.specs?.dimensions as any || {}
-    const form = useForm<z.infer<typeof specificationSchema>>({
+  const [isLoading, setIsLoading] = useState(false)
+  const [uploading, setUploading] = useState(false)
+  const [drawingName, setDrawingName] = useState<string | null>(null)
+
+  const isEditable = product.status === 'draft'
+  const existingDims = product.specs?.dimensions || {}
+
+  useEffect(() => {
+
+    const existingDrawing = product.media?.find(m => m.type === "drawing")
+
+    if (existingDrawing) {
+      const name = existingDrawing.url.split('/').pop()
+      setDrawingName(name)
+    }
+
+  }, [product])
+
+  const form = useForm<z.infer<typeof specificationSchema>>({
     resolver: zodResolver(specificationSchema),
     defaultValues: {
       productId: product.id,
       materialGrade: product.specs?.materialGrade || "",
-      weightKg: product.specs?.weightKg || 0,
+      weightKg: product.specs?.weightKg ?? "",
       tolerance: product.specs?.tolerance || "",
       surfaceFinish: product.specs?.surfaceFinish || "",
       process: product.specs?.process || "",
       drawingAvailable: product.specs?.drawingAvailable || false,
       dimensions: {
-        type: existingDims.type || "rectangular",
-        unit: existingDims.unit || "mm",
-        length: existingDims.length,
-        width: existingDims.width,
-        height: existingDims.height,
-        diameter: existingDims.diameter,
-        thickness: existingDims.thickness,
-      }
+        type: existingDims.type || 'Rectangular / Block',
+        unit: existingDims.unit || 'Millimeters (mm)',
+        length: existingDims.length ?? "",
+        width: existingDims.width ?? "",
+        height: existingDims.height ?? "",
+        outerDiameter: existingDims.outerDiameter ?? "",
+        thickness: existingDims.thickness ?? "",
+        wallThickness: existingDims.wallThickness ?? "",
+      } as any
     },
     disabled: !isEditable
   })
 
-  useEffect(() => {
-    const existingDims = product.specs?.dimensions as any || {}
-    form.reset({
-      productId: product.id,
-      materialGrade: product.specs?.materialGrade || "",
-      weightKg: product.specs?.weightKg || 0,
-      tolerance: product.specs?.tolerance || "",
-      surfaceFinish: product.specs?.surfaceFinish || "",
-      process: product.specs?.process || "",
-      drawingAvailable: product.specs?.drawingAvailable || false,
-      dimensions: {
-        type: existingDims.type || "rectangular",
-        unit: existingDims.unit || "mm",
-        length: existingDims.length,
-        width: existingDims.width,
-        height: existingDims.height,
-        diameter: existingDims.diameter,
-        thickness: existingDims.thickness,
-      }
-    })
-  }, [product, form])
-
-  // Watch dimension type to show relevant fields
   const dimensionType = form.watch("dimensions.type")
+  const drawingAvailable = form.watch("drawingAvailable")
 
-  async function onSubmit(values: z.infer<typeof specificationSchema>) {
-    setIsLoading(true)
-    
-    // Clean up dimensions object: remove undefined/null values
-    const cleanDimensions = Object.fromEntries(
-        Object.entries(values.dimensions).filter(([_, v]) => v != null)
-    )
+  async function uploadDrawing(file: File) {
 
-    const payload = {
-        ...values,
-        dimensions: cleanDimensions
+    if (drawingName === file.name) {
+      toast({ title: "Drawing already uploaded" })
+      return
     }
 
     try {
+
+      setUploading(true)
+
+      const formData = new FormData()
+      formData.append("file", file)
+
+      const upload = await fetch("/api/upload", {
+        method: "POST",
+        body: formData
+      })
+
+      if (!upload.ok) throw new Error()
+
+      const result = await upload.json()
+
+      await fetch("/api/product/media", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productId: product.id,
+          url: result.url,
+          type: "drawing"
+        })
+      })
+
+      setDrawingName(file.name)
+
+      toast({
+        title: "Drawing uploaded successfully"
+      })
+
+    } catch {
+
+      toast({
+        title: "Upload failed",
+        variant: "destructive"
+      })
+
+    } finally {
+
+      setUploading(false)
+
+    }
+
+  }
+
+  async function onSubmit(values: z.infer<typeof specificationSchema>) {
+
+    setIsLoading(true)
+
+    try {
+
       const response = await fetch("/api/product/specification", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
       })
 
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.error || "Failed to save specifications")
-      }
+      if (!response.ok) throw new Error()
 
       toast({
-        title: "Specifications Saved",
-        description: "Product technical details updated successfully.",
+        title: "Specifications Saved"
       })
-      
+
       if (onUpdate) onUpdate()
+
       router.refresh()
-    } catch (error) {
+
+    } catch {
+
       toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "Something went wrong",
-        variant: "destructive",
+        title: "Something went wrong",
+        variant: "destructive"
       })
+
     } finally {
+
       setIsLoading(false)
+
     }
   }
 
   return (
+
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        
-        {/* Physical Properties */}
-        <div className="space-y-4">
-            <h3 className="text-lg font-medium">Physical Properties</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <FormField
-                control={form.control}
-                name="materialGrade"
-                render={({ field }) => (
-                    <FormItem>
-                    <FormLabel>Material Grade</FormLabel>
-                    <FormControl>
-                        <Input placeholder="e.g. SS 304, Al 6061" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                    </FormItem>
-                )}
-                />
 
-                <FormField
-                control={form.control}
-                name="weightKg"
-                render={({ field }) => (
-                    <FormItem>
-                    <FormLabel>Net Weight (kg)</FormLabel>
-                    <FormControl>
-                        <Input type="number" step="0.01" placeholder="0.00" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                    </FormItem>
-                )}
-                />
-            </div>
+        <p className="text-sm text-muted-foreground">
+          <span className="text-red-500">*</span> indicates required fields
+        </p>
+
+        {/* BASIC INFO */}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <FormField
+            control={form.control}
+            name="materialGrade"
+            render={({ field }) => (
+              <FormItem>
+                <RequiredLabel required>Material Grade</RequiredLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="weightKg"
+            render={({ field }) => (
+              <FormItem>
+                <RequiredLabel required>Net Weight (kg)</RequiredLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    value={field.value ?? ""}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
         </div>
 
-        {/* Dimensions */}
-        <div className="space-y-4">
-             <h3 className="text-lg font-medium">Dimensions</h3>
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <FormField
-                    control={form.control}
-                    name="dimensions.type"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormLabel>Shape</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value} disabled={!isEditable}>
-                            <FormControl>
-                            <SelectTrigger>
-                                <SelectValue placeholder="Select Shape" />
-                            </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                            <SelectItem value="rectangular">Rectangular / Block</SelectItem>
-                            <SelectItem value="cylindrical">Cylindrical / Rod</SelectItem>
-                            <SelectItem value="sheet">Sheet / Plate</SelectItem>
-                            <SelectItem value="tubular">Tubular / Pipe</SelectItem>
-                            </SelectContent>
-                        </Select>
-                        <FormMessage />
-                    </FormItem>
-                )}
-                />
+        {/* PROCESS / FINISH / TOLERANCE */}
 
-                <FormField
-                    control={form.control}
-                    name="dimensions.unit"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormLabel>Unit</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value} disabled={!isEditable}>
-                            <FormControl>
-                            <SelectTrigger>
-                                <SelectValue placeholder="Select Unit" />
-                            </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                            <SelectItem value="mm">Millimeters (mm)</SelectItem>
-                            <SelectItem value="cm">Centimeters (cm)</SelectItem>
-                            <SelectItem value="m">Meters (m)</SelectItem>
-                            <SelectItem value="inch">Inches (in)</SelectItem>
-                            </SelectContent>
-                        </Select>
-                        <FormMessage />
-                    </FormItem>
-                )}
-                />
-             </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-             {/* Dynamic Dimension Inputs */}
-             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-muted/20 rounded-md border">
-                 {(dimensionType === 'rectangular' || dimensionType === 'sheet') && (
-                    <>
-                         <FormField control={form.control} name="dimensions.length" render={({ field }) => (
-                             <FormItem><FormLabel>Length</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                         )} />
-                         <FormField control={form.control} name="dimensions.width" render={({ field }) => (
-                             <FormItem><FormLabel>Width</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                         )} />
-                         {dimensionType === 'rectangular' && (
-                             <FormField control={form.control} name="dimensions.height" render={({ field }) => (
-                                 <FormItem><FormLabel>Height</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                             )} />
-                         )}
-                         {dimensionType === 'sheet' && (
-                             <FormField control={form.control} name="dimensions.thickness" render={({ field }) => (
-                                 <FormItem><FormLabel>Thickness</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                             )} />
-                         )}
-                    </>
-                 )}
+          <FormField
+            control={form.control}
+            name="process"
+            render={({ field }) => (
+              <FormItem>
+                <RequiredLabel required>Process</RequiredLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-                 {(dimensionType === 'cylindrical' || dimensionType === 'tubular') && (
-                    <>
-                        <FormField control={form.control} name="dimensions.length" render={({ field }) => (
-                             <FormItem><FormLabel>Length</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                         )} />
-                        <FormField control={form.control} name="dimensions.diameter" render={({ field }) => (
-                             <FormItem><FormLabel>Outer Diameter</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                         )} />
-                         {dimensionType === 'tubular' && (
-                             <FormField control={form.control} name="dimensions.thickness" render={({ field }) => (
-                                 <FormItem><FormLabel>Wall Thickness</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-                             )} />
-                         )}
-                    </>
-                 )}
-             </div>
+          <FormField
+            control={form.control}
+            name="surfaceFinish"
+            render={({ field }) => (
+              <FormItem>
+                <RequiredLabel required>Surface Finish</RequiredLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="tolerance"
+            render={({ field }) => (
+              <FormItem>
+                <RequiredLabel required>Tolerance</RequiredLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
         </div>
 
-        {/* Manufacturing Details */}
-        <div className="space-y-4">
-             <h3 className="text-lg font-medium">Manufacturing Details</h3>
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <FormField
-                control={form.control}
-                name="process"
-                render={({ field }) => (
-                    <FormItem>
-                    <FormLabel>Manufacturing Process</FormLabel>
-                    <FormControl>
-                        <Input placeholder="e.g. CNC Machining, Casting" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                    </FormItem>
-                )}
-                />
+        {/* DIMENSION TYPE + UNIT */}
 
-                <FormField
-                control={form.control}
-                name="surfaceFinish"
-                render={({ field }) => (
-                    <FormItem>
-                    <FormLabel>Surface Finish</FormLabel>
-                    <FormControl>
-                        <Input placeholder="e.g. Polished, Anodized" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                    </FormItem>
-                )}
-                />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                <FormField
-                control={form.control}
-                name="tolerance"
-                render={({ field }) => (
-                    <FormItem>
-                    <FormLabel>Tolerance Standard</FormLabel>
-                    <FormControl>
-                        <Input placeholder="e.g. +/- 0.05mm, ISO 2768" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                    </FormItem>
-                )}
-                />
-            </div>
-            
+          <FormField
+            control={form.control}
+            name="dimensions.type"
+            render={({ field }) => (
+              <FormItem>
+                <RequiredLabel required>Shape</RequiredLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="Rectangular / Block">Rectangular / Block</SelectItem>
+                    <SelectItem value="Cylindrical / Rod">Cylindrical / Rod</SelectItem>
+                    <SelectItem value="Sheet / Plate">Sheet / Plate</SelectItem>
+                    <SelectItem value="Tubular / Pipe">Tubular / Pipe</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="dimensions.unit"
+            render={({ field }) => (
+              <FormItem>
+                <RequiredLabel required>Unit</RequiredLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="Millimeters (mm)">Millimeters (mm)</SelectItem>
+                    <SelectItem value="Centimeters (cm)">Centimeters (cm)</SelectItem>
+                    <SelectItem value="Meters (m)">Meters (m)</SelectItem>
+                    <SelectItem value="Inches (in)">Inches (in)</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+        </div>
+
+        {/* DIMENSIONS */}
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+          <FormField
+            control={form.control}
+            name="dimensions.length"
+            render={({ field }) => (
+              <FormItem>
+                <RequiredLabel required>Length</RequiredLabel>
+                <FormControl>
+                  <Input type="number" {...field} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          {dimensionType === 'Cylindrical / Rod' && (
             <FormField
               control={form.control}
-              name="drawingAvailable"
+              name="dimensions.outerDiameter"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                <FormItem>
+                  <RequiredLabel required>Outer Diameter</RequiredLabel>
                   <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                      disabled={!isEditable}
-                    />
+                    <Input type="number" {...field} />
                   </FormControl>
-                  <div className="space-y-1 leading-none">
-                    <FormLabel>
-                      Technical Drawing Available
-                    </FormLabel>
-                    <FormDescription>
-                      Check this if you can provide CAD/PDF drawings for this product.
-                    </FormDescription>
-                  </div>
+                  <FormMessage />
                 </FormItem>
               )}
             />
+          )}
+
+          {(dimensionType === 'Rectangular / Block' || dimensionType === 'Sheet / Plate') && (
+            <FormField
+              control={form.control}
+              name="dimensions.width"
+              render={({ field }) => (
+                <FormItem>
+                  <RequiredLabel required>Width</RequiredLabel>
+                  <FormControl>
+                    <Input type="number" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          )}
+
+          {dimensionType === 'Rectangular / Block' && (
+            <FormField
+              control={form.control}
+              name="dimensions.height"
+              render={({ field }) => (
+                <FormItem>
+                  <RequiredLabel required>Height</RequiredLabel>
+                  <FormControl>
+                    <Input type="number" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          )}
+
+          {dimensionType === 'Sheet / Plate' && (
+            <FormField
+              control={form.control}
+              name="dimensions.thickness"
+              render={({ field }) => (
+                <FormItem>
+                  <RequiredLabel required>Thickness</RequiredLabel>
+                  <FormControl>
+                    <Input type="number" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          )}
+
+          {dimensionType === 'Tubular / Pipe' && (
+            <FormField
+              control={form.control}
+              name="dimensions.wallThickness"
+              render={({ field }) => (
+                <FormItem>
+                  <RequiredLabel required>Wall Thickness</RequiredLabel>
+                  <FormControl>
+                    <Input type="number" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          )}
+
         </div>
 
-        {isEditable && (
-            <div className="flex justify-end">
-                <Button type="submit" disabled={isLoading}>
-                    {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    <Save className="mr-2 h-4 w-4" />
-                    Save Specifications
-                </Button>
-            </div>
+        {/* DRAWING */}
+
+        <FormField
+          control={form.control}
+          name="drawingAvailable"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 border p-4 rounded-md">
+              <FormControl>
+                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+              </FormControl>
+              <RequiredLabel>
+                Technical Drawing Available
+              </RequiredLabel>
+            </FormItem>
+          )}
+        />
+
+        {drawingAvailable && (
+
+          <div className="space-y-2">
+
+            <RequiredLabel required>
+              Upload Technical Drawing
+            </RequiredLabel>
+
+            <Input
+              type="file"
+              accept=".pdf,.png,.jpg,.jpeg,.dwg"
+              disabled={uploading}
+              onChange={(e) => {
+
+                const file = e.target.files?.[0]
+
+                if (!file) return
+
+                uploadDrawing(file)
+
+              }}
+            />
+
+            {uploading && (
+              <p className="text-sm flex items-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Uploading drawing...
+              </p>
+            )}
+
+            {drawingName && (
+              <p className="text-sm text-green-600">
+                Uploaded: {drawingName}
+              </p>
+            )}
+
+          </div>
+
         )}
+
+        {isEditable && (
+          <div className="flex justify-end pt-4">
+            <Button type="submit" disabled={isLoading || uploading}>
+              {isLoading
+                ? <Loader2 className="animate-spin mr-2" />
+                : <Save className="mr-2" />}
+              Save & Continue
+            </Button>
+          </div>
+        )}
+
       </form>
     </Form>
   )

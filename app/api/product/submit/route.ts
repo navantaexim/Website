@@ -1,97 +1,321 @@
-
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { getAuth } from '@/lib/firebase-admin'
 import prisma from '@/lib/db'
+import { z } from 'zod'
+
+/* ===========================
+   DIMENSION VALIDATION
+=========================== */
+
+const unitEnum = z.enum([
+  'Millimeters (mm)',
+  'Centimeters (cm)',
+  'Meters (m)',
+  'Inches (in)',
+])
+
+const rectangularSchema = z.object({
+  type: z.literal('Rectangular / Block'),
+  unit: unitEnum,
+  length: z.number().gt(0),
+  width: z.number().gt(0),
+  height: z.number().gt(0),
+})
+
+const cylindricalSchema = z.object({
+  type: z.literal('Cylindrical / Rod'),
+  unit: unitEnum,
+  length: z.number().gt(0),
+  outerDiameter: z.number().gt(0),
+})
+
+const sheetSchema = z.object({
+  type: z.literal('Sheet / Plate'),
+  unit: unitEnum,
+  length: z.number().gt(0),
+  width: z.number().gt(0),
+  thickness: z.number().gt(0),
+})
+
+const tubularSchema = z.object({
+  type: z.literal('Tubular / Pipe'),
+  unit: unitEnum,
+  length: z.number().gt(0),
+  outerDiameter: z.number().gt(0),
+  wallThickness: z.number().gt(0),
+})
+
+const dimensionSchema = z
+  .discriminatedUnion('type', [
+    rectangularSchema,
+    cylindricalSchema,
+    sheetSchema,
+    tubularSchema,
+  ])
+  .refine((data) => {
+    if (data.type === 'Tubular / Pipe') {
+      return data.wallThickness < data.outerDiameter / 2
+    }
+    return true
+  }, {
+    message: 'Wall thickness cannot exceed half of outer diameter',
+  })
+
+/* ===========================
+   PRODUCT SUBMIT API
+=========================== */
 
 export async function POST(request: Request) {
+
   try {
+
+    /* ===========================
+       AUTHENTICATION
+    ============================ */
+
     const cookieStore = await cookies()
     const sessionCookie = cookieStore.get('session')?.value
-    if (!sessionCookie) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-    let decodedToken
-    try {
-      decodedToken = await getAuth().verifySessionCookie(sessionCookie, true)
-    } catch {
+    if (!sessionCookie) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { productId } = await request.json()
-    if (!productId) return NextResponse.json({ error: 'Product ID required' }, { status: 400 })
+    const decodedToken = await getAuth().verifySessionCookie(sessionCookie, true)
 
-    const user = await prisma.user.findUnique({ where: { firebaseUid: decodedToken.uid } })
-    if (!user) return NextResponse.json({ error: 'User not found' }, { status: 404 })
+    const { productId } = await request.json()
+
+    if (!productId) {
+      return NextResponse.json({ error: 'Product ID required' }, { status: 400 })
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { firebaseUid: decodedToken.uid },
+      select: { id: true },
+    })
+
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 })
+    }
+
+    /* ===========================
+       LOAD PRODUCT
+    ============================ */
 
     const product = await prisma.product.findUnique({
       where: { id: productId },
       include: {
         seller: {
-          include: { users: { where: { userId: user.id } } }
+          include: {
+            users: { where: { userId: user.id } },
+          },
         },
         specs: true,
         commercial: true,
-        compliance: true,
+        compliance: {
+          include: {
+            standards: true,
+          },
+        },
         media: true,
       },
     })
 
-    if (!product) return NextResponse.json({ error: 'Product not found' }, { status: 404 })
-    if (product.seller.users.length === 0) return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
+    if (!product) {
+      return NextResponse.json({ error: 'Product not found' }, { status: 404 })
+    }
+
+    if (!product.seller.users.length) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
+    }
 
     if (product.status !== 'draft') {
-      return NextResponse.json({ error: 'Only draft products can be submitted' }, { status: 400 })
+      return NextResponse.json(
+        { error: 'Only draft products can be submitted' },
+        { status: 400 }
+      )
     }
 
-    // Validation
     const errors: string[] = []
-    
-    // Check Basic Info (implied by existence, but double check key fields)
-    if (!product.name || !product.hsCode || !product.categoryId) errors.push("Basic product info is incomplete")
 
-    // Check Specs
-    // specs is one-to-one (optional in schema), so it might be null if not created
-    // However, our API upserts it.
-    // Let's check if the relation exists and has meaningful data if needed
-    // Assuming existence is enough for now based on previous steps
-    if (!product.specs) errors.push("Detailed specifications are missing")
+    /* ===========================
+       BASIC INFO VALIDATION
+    ============================ */
 
-    // Check Commercial
-    if (!product.commercial) errors.push("Commercial/Logistics details are missing")
-
-    // Check Compliance
-    if (!product.compliance) errors.push("Compliance info is missing")
-
-    // Check Media
-    if (product.media.length === 0) errors.push("At least one product image is required")
-
-    if (errors.length > 0) {
-      return NextResponse.json({ error: 'Validation Failed', details: errors }, { status: 400 })
+    if (!product.name || !product.hsCode || !product.categoryId) {
+      errors.push('Basic product information is incomplete')
     }
 
-    // Determine target status.
-    // If seller is unverified, maybe we can't submit? 
-    // Requirement said: "Seller must be verified" to CREATE product.
-    // So if they created it, they are verified (or logic changed).
-    // Let's assume we proceed to 'pending_approval' or 'active' depending on platform rules.
-    // For now, let's set to 'active' or a 'submitted' state if distinct.
-    // Schema Enum: 'unknown' likely has 'active', 'draft', etc.
-    // Let's use 'active' or 'pending'. User request: "Redirect to product dashboard".
-    
-    // Let's update to 'submitted' or 'active'. ProductStatus enum usually has: draft, active, inactive, rejected?
-    // Let's use 'active' for now as a simple flow, or 'pending' if it needs admin review.
-    // Based on previous convos, we used 'submitted' for seller. 
-    // Let's check schema. Re-using 'active' seems safe if no admin review step is built yet.
-    // Actually, let's use 'active' so it shows up.
-    
+    if (!/^\d{6}$|^\d{8}$/.test(product.hsCode)) {
+      errors.push('Invalid HS Code format')
+    }
+
+    /* ===========================
+       SPECIFICATIONS VALIDATION
+    ============================ */
+
+    if (!product.specs) {
+
+      errors.push('Detailed specifications are missing')
+
+    } else {
+
+      if (!product.specs.weightKg || product.specs.weightKg <= 0) {
+        errors.push('Weight must be greater than 0')
+      }
+
+      const dimensionCheck = dimensionSchema.safeParse(product.specs.dimensions)
+
+      if (!dimensionCheck.success) {
+        errors.push('Invalid product dimensions')
+      }
+
+      /* Drawing Validation */
+
+      if (product.specs?.drawingAvailable) {
+
+        const hasDrawing = product.media.some(
+          (m) => m.type === 'drawing'
+        )
+
+        if (!hasDrawing) {
+          errors.push(
+            'Technical drawing must be uploaded when drawing is marked available'
+          )
+        }
+
+      }
+
+    }
+
+    /* ===========================
+       COMMERCIAL VALIDATION
+    ============================ */
+
+    if (!product.commercial) {
+
+      errors.push('Commercial details are missing')
+
+    } else {
+
+      if (!product.commercial.moq || product.commercial.moq <= 0) {
+        errors.push('MOQ must be greater than 0')
+      }
+
+      if (!product.commercial.capacityPerMonth || product.commercial.capacityPerMonth <= 0) {
+        errors.push('Production capacity per month must be greater than 0')
+      }
+
+      if (!product.commercial.leadTimeDays || product.commercial.leadTimeDays <= 0) {
+        errors.push('Lead time must be greater than 0')
+      }
+
+      if (!product.commercial.portOfDispatch?.trim()) {
+        errors.push('Port of dispatch is required')
+      }
+
+    }
+
+    /* ===========================
+   COMPLIANCE VALIDATION
+=========================== */
+
+    if (!product.compliance) {
+
+      errors.push('Compliance information is missing')
+
+    } else {
+
+      if (!product.compliance.inspectionType) {
+        errors.push('Inspection type is required')
+      }
+
+      const standards = product.compliance.standards
+
+      if (!standards.length) {
+        errors.push('At least one compliance standard must be selected')
+      }
+
+      /* Certificate Required When Standards Selected */
+
+      if (standards.length > 0) {
+
+        const certificates = product.media.filter(
+          (m) => m.type === 'certificate'
+        )
+
+        if (!certificates.length) {
+          errors.push(
+            'At least one compliance certificate must be uploaded when standards are selected'
+          )
+        }
+
+      }
+
+    }
+    /* ===========================
+       MEDIA VALIDATION
+    ============================ */
+
+    const productImages = product.media.filter(
+      (m) => m.type === 'image'
+    )
+
+    if (productImages.length < 3) {
+      errors.push('Minimum 3 product images are required')
+    }
+
+    if (product.seller.businessType === 'manufacturer') {
+
+      const factoryImages = product.media.filter(
+        (m) => m.type === 'factory'
+      )
+
+      if (!factoryImages.length) {
+        errors.push('Manufacturer must upload at least one factory image')
+      }
+
+    }
+
+    /* ===========================
+       FINAL VALIDATION RESULT
+    ============================ */
+
+    if (errors.length) {
+
+      return NextResponse.json(
+        {
+          error: 'Validation Failed',
+          details: errors
+        },
+        { status: 400 }
+      )
+
+    }
+
+    /* ===========================
+       ACTIVATE PRODUCT
+    ============================ */
+
     const updated = await prisma.product.update({
       where: { id: productId },
-      data: { status: 'active' } // Or 'submitted' if you have that enum value
+      data: { status: 'active' },
     })
 
-    return NextResponse.json({ success: true, product: updated })
+    return NextResponse.json({
+      success: true,
+      product: updated,
+    })
 
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
+
+    console.error('Product Submit Error:', error)
+
+    return NextResponse.json(
+      { error: error.message },
+      { status: 500 }
+    )
+
   }
+
 }
