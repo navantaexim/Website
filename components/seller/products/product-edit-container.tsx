@@ -226,7 +226,7 @@ export function ProductEditContainer({
 
       {/* VIEW LISTING BLOCK (RESTORED) */}
       {product.status === 'active' && (
-        <div className="mb-8 p-5 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-100 rounded-2xl flex items-center justify-between shadow-sm">
+        <div className="mb-8 p-5 bg-linear-to-r from-green-50 to-emerald-50 border border-green-100 rounded-2xl flex items-center justify-between shadow-sm">
 
           <div className="flex items-center gap-4">
 
