@@ -33,7 +33,7 @@ interface ProductReviewProps {
             businessType?: string
         }
     }
-    onUpdate?: () => void
+    onUpdate?: (updates?: any) => void
 }
 
 export function ProductReviewSection({ product, onUpdate }: ProductReviewProps) {
@@ -298,8 +298,8 @@ function StatusCard({
 
         <div
             className={`p-4 rounded-2xl border transition-all duration-300 ${isValid
-                    ? "bg-green-500/5 border-green-500/20"
-                    : "bg-amber-500/5 border-amber-500/20"
+                ? "bg-green-500/5 border-green-500/20"
+                : "bg-amber-500/5 border-amber-500/20"
                 }`}
         >
 
@@ -307,8 +307,8 @@ function StatusCard({
 
                 <div
                     className={`w-8 h-8 rounded-full flex items-center justify-center ${isValid
-                            ? "bg-green-500/10 text-green-600"
-                            : "bg-amber-500/10 text-amber-600"
+                        ? "bg-green-500/10 text-green-600"
+                        : "bg-amber-500/10 text-amber-600"
                         }`}
                 >
 
@@ -327,8 +327,8 @@ function StatusCard({
 
             <p
                 className={`text-sm font-medium ${isValid
-                        ? "text-green-700/80"
-                        : "text-amber-700/80"
+                    ? "text-green-700/80"
+                    : "text-amber-700/80"
                     }`}
             >
                 {message}

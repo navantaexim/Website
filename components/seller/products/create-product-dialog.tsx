@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -56,6 +56,10 @@ export function CreateProductDialog({ sellerId, categories, countries }: CreateP
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
+  const defaultCountryId = useMemo(() => {
+    return countries.find(c => c.name === 'India')?.id || ""
+  }, [countries])
+
   const form = useForm<z.infer<typeof createProductSchema>>({
     resolver: zodResolver(createProductSchema),
     defaultValues: {
@@ -63,7 +67,7 @@ export function CreateProductDialog({ sellerId, categories, countries }: CreateP
       categoryId: "",
       hsCode: "",
       productType: "standard",
-      originCountryId: countries.find(c => c.name === 'India')?.id || "",
+      originCountryId: defaultCountryId,
     },
   })
 
@@ -134,7 +138,6 @@ export function CreateProductDialog({ sellerId, categories, countries }: CreateP
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 
-            {/* PRODUCT NAME */}
             <FormField
               control={form.control}
               name="name"
@@ -152,7 +155,6 @@ export function CreateProductDialog({ sellerId, categories, countries }: CreateP
               )}
             />
 
-            {/* TYPE + CATEGORY */}
             <div className="grid grid-cols-2 gap-4">
 
               <FormField
@@ -231,9 +233,9 @@ export function CreateProductDialog({ sellerId, categories, countries }: CreateP
                   </FormItem>
                 )}
               />
+
             </div>
 
-            {/* HS CODE + COUNTRY */}
             <div className="grid grid-cols-2 gap-4">
 
               <FormField
