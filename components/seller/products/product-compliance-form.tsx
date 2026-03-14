@@ -17,7 +17,6 @@ import {
 
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-
 import { useToast } from "@/hooks/use-toast"
 
 import { Loader2, Save, X, Plus } from "lucide-react"
@@ -103,8 +102,14 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
   const selectedStandards = form.watch("standards") || []
 
   const certificateRequired = selectedStandards.length > 0
-  const missingCertificate =
-    certificateRequired && certificates.length === 0
+
+  const [missingCertificate, setMissingCertificate] = useState(false)
+
+  useEffect(() => {
+    setMissingCertificate(
+      certificateRequired && certificates.length === 0
+    )
+  }, [certificateRequired, certificates])
 
   useEffect(() => {
 
@@ -117,7 +122,7 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
       standards
     })
 
-  }, [product])
+  }, [product, form])
 
   function updateStandards(newStandards: string[]) {
     form.setValue("standards", newStandards, {
@@ -190,6 +195,8 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
 
       }
 
+      e.target.value = ""
+
       toast({
         title: "Certificate Uploaded"
       })
@@ -213,7 +220,7 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
       toast({
         title: "Certificate Required",
         description:
-          "You must upload at least one compliance certificate before continuing.",
+          "Upload at least one compliance certificate before continuing.",
         variant: "destructive"
       })
 
@@ -326,6 +333,7 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
           )}
         />
 
+        {/* STANDARDS */}
         <div className="space-y-4">
 
           <FormLabel>
@@ -371,7 +379,7 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
             <div className="space-y-2">
 
               <p className="text-xs text-muted-foreground">
-                Select standard from below (Quick Add)
+                Quick Add Standards
               </p>
 
               <div className="flex flex-wrap gap-2">
@@ -429,6 +437,7 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
 
         </div>
 
+        {/* CERTIFICATES */}
         <div className="space-y-4">
 
           <FormLabel>

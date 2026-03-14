@@ -43,7 +43,7 @@ export default function WhyChoose() {
 
 
   return (
-    <section id="why-choose" className="relative py-20 overflow-hidden bg-gradient-to-br from-blue-50 to-white">
+    <section id="why-choose" className="relative py-20 overflow-hidden bg-linear-to-br from-blue-50 to-white">
       {/* Optimized Background - Removed heavy blur elements */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-blue-100/50 rounded-full mix-blend-multiply filter blur-3xl opacity-30" />
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/10 rounded-full mix-blend-multiply filter blur-3xl opacity-30" />
