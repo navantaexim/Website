@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import * as z from "zod"
 
 import { Button } from "@/components/ui/button"
@@ -20,7 +20,6 @@ import { Badge } from "@/components/ui/badge"
 import { useToast } from "@/hooks/use-toast"
 
 import { Loader2, Save, X, Plus } from "lucide-react"
-import { useRouter } from "next/navigation"
 
 import {
   Select,
@@ -55,7 +54,7 @@ interface ProductComplianceFormProps {
       standards: { standard: string }[]
     } | null
   }
-  onUpdate?: () => void
+  onUpdate?: (updates?: any) => void
 }
 
 const COMMON_STANDARDS = [
@@ -73,7 +72,6 @@ const COMMON_STANDARDS = [
 export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFormProps) {
 
   const { toast } = useToast()
-  const router = useRouter()
 
   const [isLoading, setIsLoading] = useState(false)
   const [customStandard, setCustomStandard] = useState("")
@@ -99,7 +97,10 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
     disabled: !isEditable
   })
 
-  const selectedStandards = form.watch("standards") || []
+  const selectedStandards = useWatch({
+    control: form.control,
+    name: "standards"
+  }) || []
 
   const certificateRequired = selectedStandards.length > 0
 
@@ -122,7 +123,7 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
       standards
     })
 
-  }, [product, form])
+  }, [product.id])
 
   function updateStandards(newStandards: string[]) {
     form.setValue("standards", newStandards, {
@@ -253,9 +254,16 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
         description: "Standards updated"
       })
 
-      if (onUpdate) onUpdate()
-
-      router.refresh()
+      if (onUpdate) {
+        onUpdate({
+          compliance: {
+            inspectionType: values.inspectionType,
+            standards: values.standards.map((s: string) => ({
+              standard: s
+            }))
+          }
+        })
+      }
 
     } catch (error) {
 
@@ -275,42 +283,29 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
     }
 
   }
-
   return (
-
     <Form {...form}>
-
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 
         <FormField
           control={form.control}
           name="inspectionType"
           render={({ field }) => (
             <FormItem>
-
-              <FormLabel>
-                Quality Inspection Type *
-              </FormLabel>
+              <FormLabel>Quality Inspection Type *</FormLabel>
 
               <Select
                 onValueChange={field.onChange}
                 defaultValue={field.value}
                 disabled={!isEditable}
               >
-
                 <FormControl>
-
                   <SelectTrigger>
                     <SelectValue placeholder="Select inspection type" />
                   </SelectTrigger>
-
                 </FormControl>
 
                 <SelectContent>
-
                   <SelectItem value="Self Inspection">
                     Self Inspection
                   </SelectItem>
@@ -322,18 +317,16 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
                   <SelectItem value="Buyer Inspection">
                     Buyer Inspection
                   </SelectItem>
-
                 </SelectContent>
-
               </Select>
 
               <FormMessage />
-
             </FormItem>
           )}
         />
 
         {/* STANDARDS */}
+
         <div className="space-y-4">
 
           <FormLabel>
@@ -354,7 +347,6 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
                 variant="secondary"
                 className="pl-2 pr-1 h-8"
               >
-
                 {std}
 
                 {isEditable && (
@@ -368,7 +360,6 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
                     <X className="h-3 w-3" />
                   </Button>
                 )}
-
               </Badge>
             ))}
 
@@ -376,68 +367,67 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
 
           {isEditable && (
 
-            <div className="space-y-2">
+            <>
+              <div className="space-y-2">
 
-              <p className="text-xs text-muted-foreground">
-                Quick Add Standards
-              </p>
+                <p className="text-xs text-muted-foreground">
+                  Quick Add Standards
+                </p>
 
-              <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2">
 
-                {COMMON_STANDARDS.map(std => {
+                  {COMMON_STANDARDS.map(std => {
 
-                  const selected =
-                    selectedStandards.includes(std)
+                    const selected =
+                      selectedStandards.includes(std)
 
-                  return (
-                    <Button
-                      key={std}
-                      type="button"
-                      size="sm"
-                      variant={selected ? "secondary" : "outline"}
-                      disabled={selected}
-                      onClick={() => addStandard(std)}
-                    >
-                      {std}
-                    </Button>
-                  )
+                    return (
+                      <Button
+                        key={std}
+                        type="button"
+                        size="sm"
+                        variant={selected ? "secondary" : "outline"}
+                        disabled={selected}
+                        onClick={() => addStandard(std)}
+                      >
+                        {std}
+                      </Button>
+                    )
 
-                })}
+                  })}
+
+                </div>
 
               </div>
 
-            </div>
+              <div className="flex gap-2">
 
-          )}
+                <Input
+                  placeholder="Custom Standard (e.g. ASTM A312)"
+                  value={customStandard}
+                  onChange={(e) =>
+                    setCustomStandard(e.target.value)
+                  }
+                />
 
-          {isEditable && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => addStandard(customStandard)}
+                  disabled={!customStandard.trim()}
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
 
-            <div className="flex gap-2">
+              </div>
 
-              <Input
-                placeholder="Custom Standard (e.g. ASTM A312)"
-                value={customStandard}
-                onChange={(e) =>
-                  setCustomStandard(e.target.value)
-                }
-              />
-
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => addStandard(customStandard)}
-                disabled={!customStandard.trim()}
-              >
-                <Plus className="h-4 w-4" />
-              </Button>
-
-            </div>
-
+            </>
           )}
 
         </div>
 
         {/* CERTIFICATES */}
+
         <div className="space-y-4">
 
           <FormLabel>
@@ -455,7 +445,6 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
               key={index}
               className="flex items-center justify-between border p-3 rounded-lg"
             >
-
               <a
                 href={cert.url}
                 target="_blank"
@@ -463,7 +452,6 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
               >
                 {cert.name}
               </a>
-
             </div>
           ))}
 
@@ -479,7 +467,6 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
         </div>
 
         {isEditable && (
-
           <div className="flex justify-end">
 
             <Button
@@ -488,23 +475,18 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
               disabled={isLoading || missingCertificate}
               className="px-8 rounded-xl"
             >
-
               {isLoading
                 ? <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                 : <Save className="mr-2 h-5 w-5" />
               }
 
               Save & Continue
-
             </Button>
 
           </div>
-
         )}
 
       </form>
-
     </Form>
-
   )
 }
