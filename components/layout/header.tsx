@@ -21,7 +21,7 @@ export default function Header() {
     { label: 'About', href: '/#about' },
     { label: 'Why Choose Us', href: '/#why-choose' },
     { label: 'Solutions', href: '/#solutions' },
-    { label: 'Blogs', href: '/blogs' },
+    { label: 'Trade Insights', href: '/blogs' },
     { label: 'Contact Us', href: '/#contact' },
   ]
 

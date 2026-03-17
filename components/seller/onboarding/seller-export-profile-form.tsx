@@ -46,9 +46,9 @@ const exportProfileSchema = z.object({
   logisticsModes: z.array(z.string()).min(1, 'Select at least one mode'),
   marketIds: z.array(z.string()).optional(),
   incotermIds: z.array(z.string()).optional(),
-  hsCodes: z.array(
-    z.object({ value: z.string().min(4, 'HS Code must be at least 4 chars') })
-  ).optional(), 
+  // hsCodes: z.array(
+  //   z.object({ value: z.string().min(4, 'HS Code must be at least 4 chars') })
+  // ).optional(), 
 })
 
 interface SellerExportProfileProps {
@@ -83,7 +83,7 @@ export function SellerExportProfileForm({ seller, onUpdate,onValidityChange }: S
       logisticsModes: seller.exportProfile?.logisticsModes || [],
       marketIds: seller.exportProfile?.markets.map(m => m.countryId) || [],
       incotermIds: seller.exportProfile?.incoterms.map(i => i.incotermId) || [],
-      hsCodes: seller.exportProfile?.hsExpertise.map(h => ({ value: h.hsCode })) || [{ value: '' }],
+      // hsCodes: seller.exportProfile?.hsExpertise.map(h => ({ value: h.hsCode })) || [{ value: '' }],
     },
   })
 
@@ -98,15 +98,15 @@ export function SellerExportProfileForm({ seller, onUpdate,onValidityChange }: S
       logisticsModes: seller.exportProfile?.logisticsModes || [],
       marketIds: seller.exportProfile?.markets.map(m => m.countryId) || [],
       incotermIds: seller.exportProfile?.incoterms.map(i => i.incotermId) || [],
-      hsCodes: seller.exportProfile?.hsExpertise.map(h => ({ value: h.hsCode })) || [{ value: '' }],
+      // hsCodes: seller.exportProfile?.hsExpertise.map(h => ({ value: h.hsCode })) || [{ value: '' }],
     })
   }, [seller, form])
 
   // We only handle HS codes as dynamic field array for input
-  const { fields: hsFields, append: appendHs, remove: removeHs } = useFieldArray({
-    control: form.control,
-    name: "hsCodes",
-  })
+  // const { fields: hsFields, append: appendHs, remove: removeHs } = useFieldArray({
+  //   control: form.control,
+  //   name: "hsCodes",
+  // })
 
   async function onSubmit(values: z.infer<typeof exportProfileSchema>) {
     setIsLoading(true)
@@ -119,7 +119,7 @@ export function SellerExportProfileForm({ seller, onUpdate,onValidityChange }: S
             logisticsModes: values.logisticsModes,
             marketIds: values.marketIds,
             incotermIds: values.incotermIds,
-            hsCodes: values.hsCodes?.map(h => h.value).filter(Boolean)
+            // hsCodes: values.hsCodes?.map(h => h.value).filter(Boolean)
         }
 
       const response = await fetch("/api/seller/export-profile", {
@@ -345,7 +345,7 @@ export function SellerExportProfileForm({ seller, onUpdate,onValidityChange }: S
       />
 
         {/* HS Codes */}
-        <div className="space-y-3">
+        {/* <div className="space-y-3">
             <FormLabel>Key HS Codes</FormLabel>
             <FormDescription>Enter the main HS Codes for your products.</FormDescription>
             {hsFields.map((field, index) => (
@@ -374,7 +374,7 @@ export function SellerExportProfileForm({ seller, onUpdate,onValidityChange }: S
                     <Plus className="h-4 w-4 mr-2" /> Add Code
                 </Button>
             )}
-        </div>
+        </div> */}
 
         {!isReadOnly && (
             <div className="flex justify-end pt-4">

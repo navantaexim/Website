@@ -213,7 +213,7 @@ export default function DashboardPage() {
               </div>
 
               <CardTitle className="text-2xl font-black text-neutral-900">
-                Knowledge Hub
+                Exprot & Import Guides
               </CardTitle>
 
               <CardDescription className="text-neutral-500 font-medium">
@@ -238,7 +238,7 @@ export default function DashboardPage() {
                 asChild
                 className="w-full rounded-2xl h-14 text-base font-black border-2 hover:bg-neutral-50 transition-all"
               >
-                <Link href="/blogs">Library & News</Link>
+                <Link href="/blogs">Exim Learning</Link>
               </Button>
             </CardFooter>
           </Card>
