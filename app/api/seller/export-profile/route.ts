@@ -12,7 +12,7 @@ const exportProfileSchema = z.object({
   logisticsModes: z.array(z.string()),
   marketIds: z.array(z.string()).optional(),
   incotermIds: z.array(z.string()).optional(),
-  hsCodes: z.array(z.string()).optional(),
+  // hsCodes: z.array(z.string()).optional(),
 })
 
 export async function POST(request: Request) {
@@ -49,7 +49,7 @@ export async function POST(request: Request) {
         logisticsModes, 
         marketIds, 
         incotermIds, 
-        hsCodes 
+        // hsCodes 
     } = validation.data
 
     const sellerUser = await prisma.sellerUser.findUnique({
@@ -122,17 +122,17 @@ export async function POST(request: Request) {
         }
 
         // 4. Handle HS Codes
-        if (hsCodes) {
-            await tx.exportProfileHsCode.deleteMany({ where: { exportProfileId: profile.id } })
-            if (hsCodes.length > 0) {
-                await tx.exportProfileHsCode.createMany({
-                    data: hsCodes.map(hsCode => ({
-                        exportProfileId: profile.id,
-                        hsCode
-                    }))
-                })
-            }
-        }
+        // if (hsCodes) {
+        //     await tx.exportProfileHsCode.deleteMany({ where: { exportProfileId: profile.id } })
+        //     if (hsCodes.length > 0) {
+        //         await tx.exportProfileHsCode.createMany({
+        //             data: hsCodes.map(hsCode => ({
+        //                 exportProfileId: profile.id,
+        //                 hsCode
+        //             }))
+        //         })
+        //     }
+        // }
 
         return profile
     })
