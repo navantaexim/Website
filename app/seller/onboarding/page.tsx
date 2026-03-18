@@ -56,7 +56,14 @@ const checkStepCompletion = (stepIndex: number, seller: any) => {
     case 2:
       return !!(seller.documents && seller.documents.length > 0);
     case 3:
-      return !!(seller.capabilities?.manufacturerType && seller.capabilities?.employeeRange);
+      return !!(
+        seller.capabilities?.manufacturerType && 
+        seller.capabilities?.employeeRange &&
+        seller.capabilities?.processType &&
+        seller.capabilities?.description &&
+        seller.capabilities?.engineeringCategories?.length > 0 &&
+        seller.capabilities?.machines?.length > 0
+      );
     case 4:
       return !!(seller.exportProfile?.annualTurnover && seller.exportProfile?.logisticsModes?.length > 0);
     case 5:
