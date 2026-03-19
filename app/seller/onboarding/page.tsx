@@ -50,9 +50,7 @@ const checkStepCompletion = (stepIndex: number, seller: any) => {
     case 0:
       return !!(seller.legalName && seller.businessType && seller.yearEstablished && seller.gstNumber && seller.iecCode);
     case 1:
-      const hasRegistered = seller.addresses?.some((a: any) => a.addressType === 'Registered');
-      const hasFactory = seller.addresses?.some((a: any) => a.addressType === 'Factory/Operating');
-      return !!(hasRegistered && hasFactory);
+      return !!(seller.addresses && seller.addresses.length > 0);
     case 2:
       return !!(seller.documents && seller.documents.length > 0);
     case 3:
@@ -123,8 +121,8 @@ export default function SellerOnboardingPage() {
  * This avoids React hook errors
  */
 useEffect(() => {
-  if (seller?.status === 'verified' || seller?.status === 'active') {
-    router.replace('/seller')
+  if (seller?.status === 'verified' || seller?.status === 'active' || seller?.status === 'submitted') {
+    router.replace('/dashboard')
   }
 }, [seller?.status, router])
 
@@ -323,19 +321,7 @@ useEffect(() => {
   }
 
   if (seller.status === 'submitted') {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[80vh] px-4">
-        <Card className="max-w-lg w-full text-center p-6">
-          <CardHeader>
-            <Clock className="h-12 w-12 text-blue-500 mx-auto mb-4" />
-            <CardTitle>Application Under Review</CardTitle>
-            <CardDescription>
-              Our team is reviewing your documents.
-            </CardDescription>
-          </CardHeader>
-        </Card>
-      </div>
-    )
+    return null; // Will trigger the redirect above
   }
 
   return null

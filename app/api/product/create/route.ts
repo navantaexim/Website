@@ -77,12 +77,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized access to seller' }, { status: 403 })
     }
 
-    // Rule: Seller must be verified
-    // We check verificationStage. You might also want to check status is 'active' depending on logic,
-    // but the requirement specifically said "Seller must be verified".
-    if (sellerUser.seller.verificationStage !== 'verified') {
+    // Rule: Seller must not be in 'draft' status to create products
+    // Submitted sellers are allowed to pre-populate catalogs before approval.
+    if (sellerUser.seller.status === 'draft' || sellerUser.seller.status === 'rejected') {
       return NextResponse.json(
-        { error: 'Seller must be verified to create products' },
+        { error: 'Action disallowed for your current seller status.' },
         { status: 403 }
       )
     }
