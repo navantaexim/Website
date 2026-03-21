@@ -1,5 +1,4 @@
 import Header from "@/components/marketplace/header"
-import Navbar from "@/components/marketplace/navbar"
 
 export default function MarketplaceLayout({
     children,
@@ -10,8 +9,6 @@ export default function MarketplaceLayout({
         <div className="bg-slate-50 min-h-screen">
 
             <Header />
-
-            <Navbar />
 
             {children}
 

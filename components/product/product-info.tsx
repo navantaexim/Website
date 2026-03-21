@@ -1,54 +1,70 @@
 export default function ProductInfo({ product }: any) {
 
     return (
-        <div>
+        <div className="space-y-4">
 
-            <h1 className="text-xl font-semibold leading-snug">
+            {/* PRODUCT TITLE */}
+            <h1 className="text-2xl lg:text-3xl font-semibold leading-snug text-slate-900">
                 {product.name}
             </h1>
 
-            <div className="flex items-center gap-2 mt-2">
+            {/* CATEGORY + ORIGIN */}
+            <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500">
 
-                <span className="bg-green-600 text-white text-xs px-2 py-1 rounded">
-                    4.7
-                </span>
+                {product.category?.name && (
+                    <span>
+                        Category: <span className="text-slate-700 font-medium">
+                            {product.category.name}
+                        </span>
+                    </span>
+                )}
 
-                <span className="text-sm text-slate-500">
-                    30 Reviews
-                </span>
+                {product.originCountry?.name && (
+                    <span>
+                        Origin: <span className="text-slate-700 font-medium">
+                            {product.originCountry.name}
+                        </span>
+                    </span>
+                )}
 
             </div>
 
-            <p className="text-sm text-slate-500 mt-4">
-                HS Code: {product.hsCode}
-            </p>
+            {/* HS CODE */}
+            {product.hsCode && (
+                <p className="text-sm text-slate-500">
+                    HS Code: <span className="font-medium text-slate-700">
+                        {product.hsCode}
+                    </span>
+                </p>
+            )}
 
-            <p className="text-sm text-slate-500">
-                Category: {product.category?.name}
-            </p>
+            {/* SUPPLIER */}
+            <div className="pt-4 border-t">
 
-            <p className="text-sm text-slate-500">
-                Origin: {product.originCountry?.name}
-            </p>
-
-            <div className="mt-6">
-
-                <p className="font-medium text-sm mb-2">
-                    Size
+                <p className="text-sm text-slate-500">
+                    Supplier
                 </p>
 
-                <div className="flex gap-2 flex-wrap">
+                <p className="font-medium text-slate-800">
+                    {product.seller?.legalName}
+                </p>
 
-                    {[6, 7, 8, 9, 10, 11].map(size => (
-                        <button
-                            key={size}
-                            className="border px-3 py-1 rounded text-sm hover:border-primary"
-                        >
-                            {size}
-                        </button>
-                    ))}
+            </div>
 
-                </div>
+            {/* TRUST BADGES */}
+            <div className="flex flex-wrap gap-3 pt-4">
+
+                <span className="text-xs border px-3 py-1 rounded-full">
+                    ✔ IEC Verified
+                </span>
+
+                <span className="text-xs border px-3 py-1 rounded-full">
+                    ✔ GST Registered
+                </span>
+
+                <span className="text-xs border px-3 py-1 rounded-full">
+                    ✔ Export Ready
+                </span>
 
             </div>
 
