@@ -34,8 +34,10 @@ const COUNTRIES = [
     { id: 'c4', name: 'Germany' }, { id: 'c5', name: 'Australia' }
 ]
 const INCOTERMS = [
-    { id: 'i1', code: 'FOB' }, { id: 'i2', code: 'CIF' }, { id: 'i3', code: 'EXW' }, 
-    { id: 'i4', code: 'DDP' }
+    { code: 'FOB' },
+    { code: 'CIF' },
+    { code: 'EXW' },
+    { code: 'DDP' }
 ]
 
 const exportProfileSchema = z.object({
@@ -44,9 +46,9 @@ const exportProfileSchema = z.object({
   logisticsModes: z.array(z.string()).min(1, 'Select at least one mode'),
   marketIds: z.array(z.string()).optional(),
   incotermIds: z.array(z.string()).optional(),
-  hsCodes: z.array(
-    z.object({ value: z.string().min(4, 'HS Code must be at least 4 chars') })
-  ).optional(), 
+  // hsCodes: z.array(
+  //   z.object({ value: z.string().min(4, 'HS Code must be at least 4 chars') })
+  // ).optional(), 
 })
 
 interface SellerExportProfileProps {
@@ -62,25 +64,32 @@ interface SellerExportProfileProps {
         hsExpertise: { hsCode: string }[]
     } | null
   }
-  onUpdate?: () => void
+  onUpdate?: () => void,
+  onValidityChange?: (valid: boolean) => void
 }
 
-export function SellerExportProfileForm({ seller, onUpdate }: SellerExportProfileProps) {
+export function SellerExportProfileForm({ seller, onUpdate,onValidityChange }: SellerExportProfileProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<z.infer<typeof exportProfileSchema>>({
     resolver: zodResolver(exportProfileSchema),
+    mode: "onChange",          // validate as user types/selects
+    reValidateMode: "onChange",
     defaultValues: {
       exportExperience: seller.exportProfile?.exportExperience || 0,
       annualTurnover: seller.exportProfile?.annualTurnover || "",
       logisticsModes: seller.exportProfile?.logisticsModes || [],
       marketIds: seller.exportProfile?.markets.map(m => m.countryId) || [],
       incotermIds: seller.exportProfile?.incoterms.map(i => i.incotermId) || [],
-      hsCodes: seller.exportProfile?.hsExpertise.map(h => ({ value: h.hsCode })) || [{ value: '' }],
+      // hsCodes: seller.exportProfile?.hsExpertise.map(h => ({ value: h.hsCode })) || [{ value: '' }],
     },
   })
+
+  useEffect(() => {
+    onValidityChange?.(form.formState.isValid)
+  }, [form.formState.isValid])
 
   useEffect(() => {
     form.reset({
@@ -89,15 +98,15 @@ export function SellerExportProfileForm({ seller, onUpdate }: SellerExportProfil
       logisticsModes: seller.exportProfile?.logisticsModes || [],
       marketIds: seller.exportProfile?.markets.map(m => m.countryId) || [],
       incotermIds: seller.exportProfile?.incoterms.map(i => i.incotermId) || [],
-      hsCodes: seller.exportProfile?.hsExpertise.map(h => ({ value: h.hsCode })) || [{ value: '' }],
+      // hsCodes: seller.exportProfile?.hsExpertise.map(h => ({ value: h.hsCode })) || [{ value: '' }],
     })
   }, [seller, form])
 
   // We only handle HS codes as dynamic field array for input
-  const { fields: hsFields, append: appendHs, remove: removeHs } = useFieldArray({
-    control: form.control,
-    name: "hsCodes",
-  })
+  // const { fields: hsFields, append: appendHs, remove: removeHs } = useFieldArray({
+  //   control: form.control,
+  //   name: "hsCodes",
+  // })
 
   async function onSubmit(values: z.infer<typeof exportProfileSchema>) {
     setIsLoading(true)
@@ -110,7 +119,7 @@ export function SellerExportProfileForm({ seller, onUpdate }: SellerExportProfil
             logisticsModes: values.logisticsModes,
             marketIds: values.marketIds,
             incotermIds: values.incotermIds,
-            hsCodes: values.hsCodes?.map(h => h.value).filter(Boolean)
+            // hsCodes: values.hsCodes?.map(h => h.value).filter(Boolean)
         }
 
       const response = await fetch("/api/seller/export-profile", {
@@ -283,52 +292,60 @@ export function SellerExportProfileForm({ seller, onUpdate }: SellerExportProfil
         
         {/* Incoterms */}
         <FormField
-             control={form.control}
-             name="incotermIds"
-             render={({ field }) => (
-                 <FormItem>
-                    <FormLabel>Supported Incoterms</FormLabel>
-                     <div className="flex flex-wrap gap-2 mb-2">
-                        {field.value?.map(id => {
-                            const term = INCOTERMS.find(t => t.id === id)
-                            return term ? (
-                                <Badge key={id} variant="secondary" className="gap-1">
-                                    {term.code}
-                                    {!isReadOnly && (
-                                        <X className="h-3 w-3 cursor-pointer" onClick={() => {
-                                            field.onChange(field.value?.filter(v => v !== id))
-                                        }} />
-                                    )}
-                                </Badge>
-                            ) : null
-                        })}
-                     </div>
-                     {!isReadOnly && (
-                         <Select onValueChange={(val) => {
-                             if (!field.value?.includes(val)) {
-                                 field.onChange([...(field.value || []), val])
-                             }
-                         }}>
-                             <FormControl>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Add Incoterm..." />
-                                </SelectTrigger>
-                             </FormControl>
-                             <SelectContent>
-                                 {INCOTERMS.map(term => (
-                                     <SelectItem key={term.id} value={term.id}>
-                                         {term.code}
-                                     </SelectItem>
-                                 ))}
-                             </SelectContent>
-                         </Select>
-                     )}
-                 </FormItem>
-             )}
-        />
+        control={form.control}
+        name="incotermIds"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Supported Incoterms</FormLabel>
+
+            <div className="flex flex-wrap gap-2 mb-2">
+              {field.value?.map(code => {
+                const term = INCOTERMS.find(t => t.code === code)
+                return term ? (
+                  <Badge key={code} variant="secondary" className="gap-1">
+                    {term.code}
+                    {!isReadOnly && (
+                      <X
+                        className="h-3 w-3 cursor-pointer"
+                        onClick={() => {
+                          field.onChange(field.value?.filter(v => v !== code))
+                        }}
+                      />
+                    )}
+                  </Badge>
+                ) : null
+              })}
+            </div>
+
+            {!isReadOnly && (
+              <Select
+                onValueChange={(val) => {
+                  if (!field.value?.includes(val)) {
+                    field.onChange([...(field.value || []), val])
+                  }
+                }}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Add Incoterm..." />
+                  </SelectTrigger>
+                </FormControl>
+
+                <SelectContent>
+                  {INCOTERMS.map(term => (
+                    <SelectItem key={term.code} value={term.code}>
+                      {term.code}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          </FormItem>
+        )}
+      />
 
         {/* HS Codes */}
-        <div className="space-y-3">
+        {/* <div className="space-y-3">
             <FormLabel>Key HS Codes</FormLabel>
             <FormDescription>Enter the main HS Codes for your products.</FormDescription>
             {hsFields.map((field, index) => (
@@ -357,7 +374,7 @@ export function SellerExportProfileForm({ seller, onUpdate }: SellerExportProfil
                     <Plus className="h-4 w-4 mr-2" /> Add Code
                 </Button>
             )}
-        </div>
+        </div> */}
 
         {!isReadOnly && (
             <div className="flex justify-end pt-4">

@@ -1,7 +1,7 @@
 
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -18,7 +18,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { cn } from "@/lib/utils"
 
 interface SellerCertificationProps {
-  seller: {
+    seller: {
     id: string
     status: string
     certificates: {
@@ -29,22 +29,26 @@ interface SellerCertificationProps {
         validTill: string | null
     }[]
   }
-  onUpdate?: () => void
+  onUpdate?: () => void,
+  onValidityChange?: (valid: boolean) => void
 }
 
-export function SellerCertificationForm({ seller, onUpdate }: SellerCertificationProps) {
-  const { toast } = useToast()
-  const router = useRouter()
-  const [isOpen, setIsOpen] = useState(false)
-  const [isUploading, setIsUploading] = useState(false)
-  
-  // Local form state
-  const [type, setType] = useState("")
-  const [issuedBy, setIssuedBy] = useState("")
-  const [validTill, setValidTill] = useState<Date | undefined>(undefined)
-  const [file, setFile] = useState<File | null>(null)
 
+export function SellerCertificationForm({ seller, onUpdate,onValidityChange }: SellerCertificationProps) {
+    const { toast } = useToast()
+    const router = useRouter()
+    const [isOpen, setIsOpen] = useState(false)
+    const [isUploading, setIsUploading] = useState(false)
+    
+    // Local form state
+    const [type, setType] = useState("")
+    const [issuedBy, setIssuedBy] = useState("")
+    const [validTill, setValidTill] = useState<Date | undefined>(undefined)
+    const [file, setFile] = useState<File | null>(null)
 
+    useEffect(() => {
+  onValidityChange?.(seller.certificates.length > 0)
+}, [seller.certificates])
     // Helper component to view private certs
     const ViewCertButton = ({ path, label }: { path: string, label: string }) => {
         const [loading, setLoading] = useState(false)
@@ -58,7 +62,7 @@ export function SellerCertificationForm({ seller, onUpdate }: SellerCertificatio
                     body: JSON.stringify({ path, bucket: 'private-docs' })
                 })
                 if (!res.ok) throw new Error('Failed to get access')
-                const { signedUrl } = await res.json()
+                    const { signedUrl } = await res.json()
                 window.open(signedUrl, '_blank')
             } catch (error) {
                 toast({ title: "Error", description: "Could not open document.", variant: "destructive" })
@@ -66,7 +70,6 @@ export function SellerCertificationForm({ seller, onUpdate }: SellerCertificatio
                 setLoading(false)
             }
         }
-
         return (
              <Button variant="link" className="p-0 h-auto" onClick={openDocument} disabled={loading}>
                 {loading ? "Loading..." : label}
@@ -81,6 +84,9 @@ export function SellerCertificationForm({ seller, onUpdate }: SellerCertificatio
       }
 
       setIsUploading(true)
+      if (onValidityChange) {
+        onValidityChange(true)
+        }
       try {
           let documentPath = ""
 
@@ -144,6 +150,9 @@ export function SellerCertificationForm({ seller, onUpdate }: SellerCertificatio
   }
 
   async function deleteCert(id: string) {
+        if (onValidityChange) {
+        onValidityChange(seller.certificates.length - 1 > 0)
+        }
        try {
           const response = await fetch(`/api/seller/certifications?id=${id}&sellerId=${seller.id}`, {
               method: 'DELETE'

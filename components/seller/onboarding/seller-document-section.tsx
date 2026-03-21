@@ -21,7 +21,8 @@ interface SellerDocumentProps {
         uploadedAt: string
     }[]
   }
-  onUpdate?: () => void
+  onUpdate?: () => void,
+  onValidityChange?: (valid: boolean) => void
 }
 
 const REQUIRED_DOCS = [
@@ -30,15 +31,20 @@ const REQUIRED_DOCS = [
     { type: 'IEC_CERT', label: 'IEC Certificate', description: 'Upload your Import Export Code certificate.' },
 ]
 
-export function SellerDocumentSection({ seller, onUpdate }: SellerDocumentProps) {
+export function SellerDocumentSection({ seller, onUpdate,onValidityChange }: SellerDocumentProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [uploading, setUploading] = useState<string | null>(null) // type of doc currently uploading
   const [documents, setDocuments] = useState(seller.documents)
 
   useEffect(() => {
-    setDocuments(seller.documents)
+    setDocuments(seller.documents),
+    onValidityChange?.(checkDocumentsValid(seller.documents))
   }, [seller.documents])
+
+  useEffect(() => {
+    onValidityChange?.(checkDocumentsValid(documents))
+    }, [documents])
 
     // We need a sub-component or logic to handle viewing signed URLs.
     // For simplicity, we'll fetch the signed URL when the user clicks view, or render a component that fetches it.
@@ -95,9 +101,13 @@ export function SellerDocumentSection({ seller, onUpdate }: SellerDocumentProps)
             if (!response.ok) throw new Error(data.error || 'Failed to save document record')
 
             // Update local state immediately
-            setDocuments(prev => {
-                const filtered = prev.filter(d => d.type !== type)
-                return [...filtered, data.document]
+           setDocuments(prev => {
+            const filtered = prev.filter(d => d.type !== type)
+            const updatedDocs = [...filtered, data.document]
+
+            onValidityChange?.(checkDocumentsValid(updatedDocs))
+
+            return updatedDocs
             })
 
             toast({ title: "Upload Success", description: `${type.replace('_', ' ')} uploaded successfully.` })
@@ -140,11 +150,22 @@ export function SellerDocumentSection({ seller, onUpdate }: SellerDocumentProps)
         )
     }
 
+    function checkDocumentsValid(docs: typeof documents) {
+        const uploadedTypes = docs.map(d => d.type)
+        return REQUIRED_DOCS.every(doc => uploadedTypes.includes(doc.type))
+    }
+
   async function deleteDocument(docId: string) {
        try {
           // Optimistic update
           const currentDocs = [...documents]
-          setDocuments(prev => prev.filter(d => d.id !== docId))
+          setDocuments(prev => {
+            const updatedDocs = prev.filter(d => d.id !== docId)
+
+            onValidityChange?.(checkDocumentsValid(updatedDocs))
+
+            return updatedDocs
+            })
 
           const response = await fetch(`/api/seller/documents?id=${docId}&sellerId=${seller.id}`, {
               method: 'DELETE'

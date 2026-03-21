@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -59,10 +59,11 @@ interface SellerAddressProps {
         pincode: string
     }[]
   }
-  onUpdate?: () => void
+  onUpdate?: () => void,
+  onValidityChange?: (valid: boolean) => void
 }
 
-export function SellerAddressSection({ seller, onUpdate }: SellerAddressProps) {
+export function SellerAddressSection({ seller, onUpdate,onValidityChange }: SellerAddressProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
@@ -70,6 +71,8 @@ export function SellerAddressSection({ seller, onUpdate }: SellerAddressProps) {
 
   const form = useForm<z.infer<typeof addressSchema>>({
     resolver: zodResolver(addressSchema),
+    mode: "onChange",          // validate as user types/selects
+    reValidateMode: "onChange",
     defaultValues: {
       type: "manufacturing",
       addressLine: "",
@@ -80,8 +83,15 @@ export function SellerAddressSection({ seller, onUpdate }: SellerAddressProps) {
     },
   })
 
+  useEffect(() => {
+  onValidityChange?.(seller.addresses.length > 0)
+}, [seller.addresses])
+
   async function onSubmit(values: z.infer<typeof addressSchema>) {
     setIsLoading(true)
+    if (onValidityChange) {
+    onValidityChange(true)
+    }
     try {
       const response = await fetch("/api/seller/address", {
         method: "POST",
@@ -158,7 +168,7 @@ export function SellerAddressSection({ seller, onUpdate }: SellerAddressProps) {
                                     <MapPin className="h-4 w-4" />
                                 </div>
                                 <div>
-                                    <p className="font-semibold capitalize text-sm">{address.type} Address</p>
+                                    <p className="font-semibold capitalize text-sm">{address.type} Address </p>
                                     <p className="text-sm text-muted-foreground mt-1 text-balance">
                                         {address.addressLine}, {address.city}, {address.state} - {address.pincode}, {address.country}
                                     </p>
