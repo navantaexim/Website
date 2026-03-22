@@ -100,7 +100,34 @@ model ManufacturingCapability {
   engineerRange    String?
   inHouseQC        Boolean
 
-  seller Seller @relation(fields: [sellerId], references: [id])
+  processType      String?  // Fully Automated, Semi Automated, Manual
+  description      String?  // 200-400 chars
+
+  seller            Seller                @relation(fields: [sellerId], references: [id])
+  engineeringCategories EngineeringCategory[] @relation("CapabilityToEngineeringCategory")
+  machines              Machine[]             @relation("CapabilityToMachine")
+}
+
+model EngineeringCategory {
+  id            String                    @id @default(cuid())
+  name          String                    @unique
+  capabilities  ManufacturingCapability[] @relation("CapabilityToEngineeringCategory")
+}
+
+model MachineCategory {
+  id       String    @id @default(cuid())
+  name     String    @unique
+  machines Machine[]
+}
+
+model Machine {
+  id                String          @id @default(cuid())
+  name              String
+  machineCategoryId String
+  category          MachineCategory @relation(fields: [machineCategoryId], references: [id])
+  capabilities      ManufacturingCapability[] @relation("CapabilityToMachine")
+
+  @@unique([name, machineCategoryId])
 }
 
 model ExportProfile {

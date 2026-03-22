@@ -299,7 +299,7 @@ export async function POST(request: Request) {
 
     const updated = await prisma.product.update({
       where: { id: productId },
-      data: { status: 'active' },
+      data: { status: 'submitted' },
     })
 
     return NextResponse.json({

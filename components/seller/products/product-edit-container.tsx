@@ -48,6 +48,24 @@ export function ProductEditContainer({
     { id: 'media', label: 'Media & Review', icon: Globe },
   ]
 
+  const checkSectionCompletion = (sectionIndex: number, productData: any) => {
+    if (!productData) return false;
+    switch(sectionIndex) {
+      case 0:
+        return !!(productData.name && productData.categoryId && productData.hsCode && productData.originCountryId);
+      case 1:
+        return !!productData.specs;
+      case 2:
+        return !!productData.commercial;
+      case 3:
+        return !!productData.compliance;
+      case 4:
+        return !!(productData.media && productData.media.length > 0);
+      default:
+        return false;
+    }
+  }
+
   function setActiveTab(step: string) {
     const params = new URLSearchParams(searchParams.toString())
     params.set('step', step)
@@ -164,7 +182,37 @@ export function ProductEditContainer({
 
               <button
                 key={section.id}
-                onClick={() => setActiveTab(section.id)}
+                onClick={() => {
+                  if (activeTab === section.id) return;
+                  
+                  const targetIndex = sections.findIndex(s => s.id === section.id);
+                  const currentIndex = sections.findIndex(s => s.id === activeTab);
+                  
+                  // Allow going backwards anytime
+                  if (targetIndex < currentIndex) {
+                    setActiveTab(section.id);
+                    return;
+                  }
+                  
+                  // For going forwards, ensure all previous steps are completed
+                  let canAccess = true;
+                  for (let i = 0; i < targetIndex; i++) {
+                    if (!checkSectionCompletion(i, product)) {
+                      canAccess = false;
+                      break;
+                    }
+                  }
+                  
+                  if (canAccess) {
+                    setActiveTab(section.id);
+                  } else {
+                    toast({
+                      title: "Incomplete Section",
+                      description: "Please complete and save previous sections first.",
+                      variant: "destructive"
+                    });
+                  }
+                }}
                 className="flex flex-col items-center gap-2"
               >
 

@@ -47,7 +47,7 @@ export default async function SellerPage() {
 
     const seller = await getSellerData()
 
-    if (!seller) {
+    if (!seller || seller.status === 'draft') {
         redirect('/seller/onboarding')
     }
 

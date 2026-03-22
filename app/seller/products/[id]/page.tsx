@@ -38,7 +38,7 @@ async function getSeller(userId: string) {
         some: { userId }
       }
     },
-    select: { id: true }
+    select: { id: true, status: true }
   })
 
   return seller
@@ -97,7 +97,7 @@ export default async function ProductEditPage({
 
   const seller = await getSeller(user.id)
 
-  if (!seller) {
+  if (!seller || seller.status === 'draft') {
     redirect('/seller/onboarding')
   }
 
