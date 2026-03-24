@@ -21,8 +21,8 @@ interface SellerDocumentProps {
         uploadedAt: string
     }[]
   }
-  onUpdate?: () => void,
-  onValidityChange?: (valid: boolean) => void
+  onUpdate?: (data?: any) => void,
+onValidityChange?: (valid: boolean) => void
 }
 
 const REQUIRED_DOCS = [

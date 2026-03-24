@@ -46,16 +46,16 @@ export async function POST(
 
     // 3. Update Product status with Audit Logging in Transaction
     const updatedProduct = await prisma.$transaction(async (tx) => {
-      const updated = await tx.product.update({
-        where: { id: productId },
-        data: {
+      const [updated] = await Promise.all([
+        tx.product.update({
+          where: { id: productId },
+          data: {
           status: 'rejected',
           rejectionReason,
         },
-      })
-
-      await tx.auditLog.create({
-        data: {
+        }),
+        tx.auditLog.create({
+          data: {
           userId: adminUser.id,
           action: 'REJECT_PRODUCT',
           entityType: 'PRODUCT',
@@ -70,7 +70,8 @@ export async function POST(
           userAgent: request.headers.get('user-agent'),
           ipAddress: request.headers.get('x-forwarded-for') || '0.0.0.0'
         }
-      })
+        })
+      ])
 
       return updated
     })

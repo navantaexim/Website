@@ -41,16 +41,16 @@ export async function POST(
 
     // 3. Update Seller status and verification stage with Audit Logging
     const updatedSeller = await prisma.$transaction(async (tx) => {
-      const seller = await tx.seller.update({
-        where: { id: sellerId },
-        data: {
+      const [updated] = await Promise.all([
+        tx.seller.update({
+          where: { id: sellerId },
+          data: {
           status: 'verified',
           verificationStage: 'verified',
         },
-      })
-
-      await tx.auditLog.create({
-        data: {
+        }),
+        tx.auditLog.create({
+          data: {
           userId: adminUser.id,
           action: 'APPROVE_SELLER',
           entityType: 'SELLER',
@@ -63,9 +63,10 @@ export async function POST(
           userAgent: request.headers.get('user-agent'),
           ipAddress: request.headers.get('x-forwarded-for') || '0.0.0.0'
         }
-      })
+        })
+      ])
 
-      return seller
+      return updated
     })
 
     // Log the action to console/server logs at minimum

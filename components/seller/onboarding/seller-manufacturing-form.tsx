@@ -58,8 +58,8 @@ interface SellerManufacturingProps {
         machines?: { id: string, name: string }[]
     } | null
   }
-  onUpdate?: () => void,
-  onValidityChange?: (valid: boolean) => void
+  onUpdate?: (data?: any) => void,
+onValidityChange?: (valid: boolean) => void
 }
 
 export function SellerManufacturingForm({ seller, onUpdate,onValidityChange }: SellerManufacturingProps) {

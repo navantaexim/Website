@@ -64,8 +64,8 @@ interface SellerExportProfileProps {
         hsExpertise: { hsCode: string }[]
     } | null
   }
-  onUpdate?: () => void,
-  onValidityChange?: (valid: boolean) => void
+  onUpdate?: (data?: any) => void,
+onValidityChange?: (valid: boolean) => void
 }
 
 export function SellerExportProfileForm({ seller, onUpdate,onValidityChange }: SellerExportProfileProps) {
