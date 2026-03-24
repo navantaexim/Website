@@ -11,7 +11,7 @@ export async function getCurrentUser() {
 
   try {
     // Verify the session cookie
-    const decodedClaims = await getAuth().verifySessionCookie(session, true)
+    const decodedClaims = await getAuth().verifySessionCookie(session, false)
     
     // Fetch user from DB
     const user = await prisma.user.findUnique({

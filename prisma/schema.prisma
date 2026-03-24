@@ -235,6 +235,7 @@ model Product {
   @@index([status])
   @@index([hsCode], map: "idx_product_hs_code")
   @@index([categoryId], map: "idx_product_category")
+  @@index([sellerId], map: "idx_product_seller")
 }
 
 model ProductSpecification {

@@ -81,7 +81,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const decodedToken = await getAuth().verifySessionCookie(sessionCookie, true)
+    const decodedToken = await getAuth().verifySessionCookie(sessionCookie, false)
 
     const { productId } = await request.json()
 

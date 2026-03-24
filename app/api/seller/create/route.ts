@@ -15,7 +15,7 @@ export async function POST(request: Request) {
 
     let decodedToken
     try {
-      decodedToken = await getAuth().verifySessionCookie(sessionCookie, true /** checkRevoked */)
+      decodedToken = await getAuth().verifySessionCookie(sessionCookie, false)
     } catch (error) {
       console.error('Session verification failed:', error)
       return NextResponse.json({ error: 'Unauthorized: Invalid session' }, { status: 401 })
