@@ -82,6 +82,15 @@ export default function SellerOnboardingPage() {
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
   const [isStepValid, setIsStepValid] = useState(false)
 
+  const handleLocalUpdate = (partialData: any) => {
+    setSeller((prev: any) => {
+      if (!prev) return prev;
+      return { ...prev, ...partialData };
+    });
+  };
+
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
   async function fetchSeller() {
     try {
       const res = await fetch('/api/seller/me')
@@ -127,11 +136,12 @@ useEffect(() => {
 }, [seller?.status, router])
 
   async function nextStep() {
-  if (!seller) return
-  // force refresh so latest saved data loads
-  await fetchSeller()
-  setCurrentStepIndex((prev) => Math.min(prev + 1, steps.length - 1))
-}
+    if (!seller) return;
+    setIsTransitioning(true);
+    await new Promise(r => setTimeout(r, 100)); // Visual click feedback
+    setCurrentStepIndex((prev) => Math.min(prev + 1, steps.length - 1));
+    setIsTransitioning(false);
+  }
   const prevStep = () => setCurrentStepIndex((prev) => Math.max(prev - 1, 0))
   
   const progress = Math.round(((currentStepIndex) / steps.length) * 100)
@@ -241,19 +251,20 @@ useEffect(() => {
                         <CardDescription>{steps[currentStepIndex].description}</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        {currentStepIndex === 0 && <SellerBasicInfoForm seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 1 && <SellerAddressSection seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 2 && <SellerDocumentSection seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 3 && <SellerManufacturingForm seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 4 && <SellerExportProfileForm seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 5 && <SellerCertificationForm seller={{...seller, certificates: seller.certificates || []}} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 6 && <SellerReviewSection seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
+                        {currentStepIndex === 0 && <SellerBasicInfoForm seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
+                        {currentStepIndex === 1 && <SellerAddressSection seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
+                        {currentStepIndex === 2 && <SellerDocumentSection seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
+                        {currentStepIndex === 3 && <SellerManufacturingForm seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
+                        {currentStepIndex === 4 && <SellerExportProfileForm seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
+                        {currentStepIndex === 5 && <SellerCertificationForm seller={{...seller, certificates: seller.certificates || []}} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
+                        {currentStepIndex === 6 && <SellerReviewSection seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
                     </CardContent>
                      <CardFooter className="flex justify-between border-t p-6">
                         <Button variant="outline" onClick={prevStep} disabled={currentStepIndex === 0}>Back</Button>
                         <Button 
                             onClick={nextStep} 
-                            disabled={!checkStepCompletion(currentStepIndex, seller)}
+                            disabled={!checkStepCompletion(currentStepIndex, seller) || isTransitioning}
+                            className={isTransitioning ? "opacity-50 transition-opacity" : "opacity-100 transition-opacity"}
                         >
                             {currentStepIndex === steps.length - 1 ? 'Submit' : (
                                 <>Continue <ChevronRight className="ml-2 h-4 w-4" /></>

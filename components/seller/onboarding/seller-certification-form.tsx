@@ -29,8 +29,8 @@ interface SellerCertificationProps {
         validTill: string | null
     }[]
   }
-  onUpdate?: () => void,
-  onValidityChange?: (valid: boolean) => void
+  onUpdate?: (data?: any) => void,
+onValidityChange?: (valid: boolean) => void
 }
 
 

@@ -59,8 +59,8 @@ interface SellerAddressProps {
         pincode: string
     }[]
   }
-  onUpdate?: () => void,
-  onValidityChange?: (valid: boolean) => void
+  onUpdate?: (data?: any) => void,
+onValidityChange?: (valid: boolean) => void
 }
 
 export function SellerAddressSection({ seller, onUpdate,onValidityChange }: SellerAddressProps) {

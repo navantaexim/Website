@@ -60,8 +60,8 @@ interface SellerBasicInfoProps {
     cinOrLlpin?: string
     status: string
   }
-  onUpdate?: () => void,
-  onValidityChange?: (valid: boolean) => void
+  onUpdate?: (data?: any) => void,
+onValidityChange?: (valid: boolean) => void
 }
 
 export function SellerBasicInfoForm({ seller, onUpdate,onValidityChange  }: SellerBasicInfoProps) {
@@ -129,7 +129,7 @@ export function SellerBasicInfoForm({ seller, onUpdate,onValidityChange  }: Sell
         description: "Seller basic information updated successfully.",
       })
       
-      if (onUpdate) onUpdate()
+      if (onUpdate) onUpdate(values)
       router.refresh()
     } catch (error) {
       toast({
