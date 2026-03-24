@@ -132,21 +132,12 @@ export async function DELETE(
 
       /* DELETE OTHER CHILD TABLES */
 
-      await tx.productMedia.deleteMany({
-        where: { productId }
-      })
-
-      await tx.productSpecification.deleteMany({
-        where: { productId }
-      })
-
-      await tx.productCommercial.deleteMany({
-        where: { productId }
-      })
-
-      await tx.productCompliance.deleteMany({
-        where: { productId }
-      })
+      await Promise.all([
+        tx.productMedia.deleteMany({ where: { productId } }),
+        tx.productSpecification.deleteMany({ where: { productId } }),
+        tx.productCommercial.deleteMany({ where: { productId } }),
+        tx.productCompliance.deleteMany({ where: { productId } }),
+      ])
 
       /* DELETE PRODUCT */
 

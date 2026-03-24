@@ -88,21 +88,13 @@ export async function POST(request: Request) {
 
     // 5. Create Product using Transaction
     const newProduct = await prisma.$transaction(async (tx) => {
-      // Verify Category exists (Optional but good practice)
-      const category = await tx.category.findUnique({
-        where: { id: categoryId },
-      })
-      if (!category) {
-        throw new Error('Invalid Category ID')
-      }
+      const [category, country] = await Promise.all([
+        tx.category.findUnique({ where: { id: categoryId } }),
+        tx.country.findUnique({ where: { id: originCountryId } })
+      ])
 
-      // Verify Country exists
-      const country = await tx.country.findUnique({
-        where: { id: originCountryId },
-      })
-      if (!country) {
-        throw new Error('Invalid Origin Country ID')
-      }
+      if (!category) throw new Error('Invalid Category ID')
+      if (!country) throw new Error('Invalid Origin Country ID')
 
       // Create Product
       return await tx.product.create({
