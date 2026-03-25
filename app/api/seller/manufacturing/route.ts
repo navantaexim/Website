@@ -12,6 +12,12 @@ const manufacturingSchema = z.object({
   employeeRange: z.string().min(1, 'Employee Range is required'),
   engineerRange: z.string().optional(),
   inHouseQC: z.boolean(),
+  
+  // New Fields
+  engineeringCategories: z.array(z.string()).min(1, 'Select at least one category'),
+  processType: z.string().min(1, 'Select manufacturing process type'),
+  machines: z.array(z.string()).min(1, 'Select at least one machine'),
+  description: z.string().min(10, 'Description too short').max(500, 'Description too long'),
 })
 
 export async function POST(request: Request) {
@@ -22,7 +28,7 @@ export async function POST(request: Request) {
 
     let decodedToken
     try {
-      decodedToken = await getAuth().verifySessionCookie(sessionCookie, true)
+      decodedToken = await getAuth().verifySessionCookie(sessionCookie, false)
     } catch (e) {
       return NextResponse.json({ error: 'Invalid session' }, { status: 401 })
     }
@@ -41,7 +47,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Validation Error', details: validation.error.format() }, { status: 400 })
     }
 
-    const { sellerId, manufacturerType, factoryAreaSqm, employeeRange, engineerRange, inHouseQC } = validation.data
+    const { 
+      sellerId, manufacturerType, factoryAreaSqm, employeeRange, 
+      engineerRange, inHouseQC,
+      engineeringCategories, processType, machines, description
+    } = validation.data
 
     // Verify ownership
     const sellerUser = await prisma.sellerUser.findUnique({
@@ -59,7 +69,15 @@ export async function POST(request: Request) {
         factoryAreaSqm,
         employeeRange,
         engineerRange,
-        inHouseQC
+        inHouseQC,
+        processType,
+        description,
+        engineeringCategories: {
+          set: engineeringCategories.map(id => ({ id }))
+        },
+        machines: {
+          set: machines.map(id => ({ id }))
+        }
       },
       create: {
         sellerId,
@@ -67,7 +85,15 @@ export async function POST(request: Request) {
         factoryAreaSqm,
         employeeRange,
         engineerRange,
-        inHouseQC
+        inHouseQC,
+        processType,
+        description,
+        engineeringCategories: {
+          connect: engineeringCategories.map(id => ({ id }))
+        },
+        machines: {
+          connect: machines.map(id => ({ id }))
+        }
       }
     })
 

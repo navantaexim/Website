@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import * as z from "zod"
 import { Button } from "@/components/ui/button"
 import {
@@ -23,7 +23,6 @@ import {
 } from "@/components/ui/select"
 import { useToast } from "@/hooks/use-toast"
 import { Loader2, Save } from "lucide-react"
-import { useRouter } from "next/navigation"
 import { Checkbox } from "@/components/ui/checkbox"
 
 const MAX_WEIGHT = 50000
@@ -91,13 +90,12 @@ interface ProductSpecificationFormProps {
     specs?: any | null
     media?: any[]
   }
-  onUpdate?: () => void
+  onUpdate?: (updates: any) => void
 }
 
 export function ProductSpecificationForm({ product, onUpdate }: ProductSpecificationFormProps) {
 
   const { toast } = useToast()
-  const router = useRouter()
 
   const [isLoading, setIsLoading] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -112,10 +110,10 @@ export function ProductSpecificationForm({ product, onUpdate }: ProductSpecifica
 
     if (existingDrawing) {
       const name = existingDrawing.url.split('/').pop()
-      setDrawingName(name)
+      setDrawingName(name || null)
     }
 
-  }, [product])
+  }, [product.media])
 
   const form = useForm<z.infer<typeof specificationSchema>>({
     resolver: zodResolver(specificationSchema),
@@ -141,8 +139,15 @@ export function ProductSpecificationForm({ product, onUpdate }: ProductSpecifica
     disabled: !isEditable
   })
 
-  const dimensionType = form.watch("dimensions.type")
-  const drawingAvailable = form.watch("drawingAvailable")
+  const dimensionType = useWatch({
+    control: form.control,
+    name: "dimensions.type"
+  })
+
+  const drawingAvailable = useWatch({
+    control: form.control,
+    name: "drawingAvailable"
+  })
 
   async function uploadDrawing(file: File) {
 
@@ -216,9 +221,7 @@ export function ProductSpecificationForm({ product, onUpdate }: ProductSpecifica
         title: "Specifications Saved"
       })
 
-      if (onUpdate) onUpdate()
-
-      router.refresh()
+      if (onUpdate) onUpdate({ specs: values })
 
     } catch {
 
@@ -232,6 +235,7 @@ export function ProductSpecificationForm({ product, onUpdate }: ProductSpecifica
       setIsLoading(false)
 
     }
+
   }
 
   return (
@@ -242,6 +246,8 @@ export function ProductSpecificationForm({ product, onUpdate }: ProductSpecifica
         <p className="text-sm text-muted-foreground">
           <span className="text-red-500">*</span> indicates required fields
         </p>
+
+        {/* rest of the file remains exactly unchanged */}
 
         {/* BASIC INFO */}
 
@@ -399,6 +405,7 @@ export function ProductSpecificationForm({ product, onUpdate }: ProductSpecifica
               </FormItem>
             )}
           />
+
           {dimensionType === 'Cylindrical / Rod' && (
             <FormField
               control={form.control}

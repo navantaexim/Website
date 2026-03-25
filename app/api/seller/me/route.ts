@@ -19,7 +19,12 @@ export async function GET() {
           include: {
             addresses: true,
             documents: true,
-            capabilities: true,
+            capabilities: {
+              include: {
+                engineeringCategories: true,
+                machines: true
+              }
+            },
             certificates: true,
             exportProfile: {
               include: {

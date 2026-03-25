@@ -29,8 +29,8 @@ interface SellerReviewProps {
     capabilities?: any
     exportProfile?: any
   }
-  onUpdate?: () => void,
-  onValidityChange?: (valid: boolean) => void
+  onUpdate?: (data?: any) => void,
+onValidityChange?: (valid: boolean) => void
 }
 
 export function SellerReviewSection({ seller, onUpdate ,onValidityChange}: SellerReviewProps) {

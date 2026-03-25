@@ -39,18 +39,18 @@ export default async function ProductPage({
         <div className="max-w-7xl mx-auto px-6 py-10">
 
             {/* PRODUCT HERO */}
-            <div className="grid grid-cols-12 gap-10">
+            <div className="grid lg:grid-cols-12 gap-10">
 
-                <div className="col-span-5">
+                <div className="lg:col-span-5">
                     <ProductGallery media={images} />
                 </div>
 
-                <div className="col-span-4">
+                <div className="lg:col-span-4">
                     <ProductInfo product={product} />
                 </div>
 
-                {/* INQUIRY BOX (Replaces PurchaseBox) */}
-                <div className="col-span-3">
+                {/* INQUIRY BOX */}
+                <div className="lg:col-span-3">
                     <InquiryBox
                         productId={product.id}
                         sellerName={product.seller.legalName}

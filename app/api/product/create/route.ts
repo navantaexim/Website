@@ -26,7 +26,7 @@ export async function POST(request: Request) {
 
     let decodedToken
     try {
-      decodedToken = await getAuth().verifySessionCookie(sessionCookie, true)
+      decodedToken = await getAuth().verifySessionCookie(sessionCookie, false)
     } catch (error) {
       return NextResponse.json({ error: 'Unauthorized: Invalid session' }, { status: 401 })
     }
@@ -77,33 +77,24 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized access to seller' }, { status: 403 })
     }
 
-    // Rule: Seller must be verified
-    // We check verificationStage. You might also want to check status is 'active' depending on logic,
-    // but the requirement specifically said "Seller must be verified".
-    if (sellerUser.seller.verificationStage !== 'verified') {
+    // Rule: Seller must not be in 'draft' status to create products
+    // Submitted sellers are allowed to pre-populate catalogs before approval.
+    if (sellerUser.seller.status === 'draft' || sellerUser.seller.status === 'rejected') {
       return NextResponse.json(
-        { error: 'Seller must be verified to create products' },
+        { error: 'Action disallowed for your current seller status.' },
         { status: 403 }
       )
     }
 
     // 5. Create Product using Transaction
     const newProduct = await prisma.$transaction(async (tx) => {
-      // Verify Category exists (Optional but good practice)
-      const category = await tx.category.findUnique({
-        where: { id: categoryId },
-      })
-      if (!category) {
-        throw new Error('Invalid Category ID')
-      }
+      const [category, country] = await Promise.all([
+        tx.category.findUnique({ where: { id: categoryId } }),
+        tx.country.findUnique({ where: { id: originCountryId } })
+      ])
 
-      // Verify Country exists
-      const country = await tx.country.findUnique({
-        where: { id: originCountryId },
-      })
-      if (!country) {
-        throw new Error('Invalid Origin Country ID')
-      }
+      if (!category) throw new Error('Invalid Category ID')
+      if (!country) throw new Error('Invalid Origin Country ID')
 
       // Create Product
       return await tx.product.create({

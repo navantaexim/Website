@@ -17,7 +17,6 @@ import { RequiredLabel } from "@/components/form/required-label"
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"
 import { Loader2, Save } from "lucide-react"
-import { useRouter } from "next/navigation"
 import { Textarea } from "@/components/ui/textarea"
 
 const commercialSchema = z.object({
@@ -41,13 +40,12 @@ interface ProductCommercialFormProps {
       portOfDispatch: string
     } | null
   }
-  onUpdate?: () => void
+  onUpdate?: (updates: any) => void
 }
 
 export function ProductCommercialForm({ product, onUpdate }: ProductCommercialFormProps) {
 
   const { toast } = useToast()
-  const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
   const isEditable = product.status === 'draft'
@@ -76,7 +74,7 @@ export function ProductCommercialForm({ product, onUpdate }: ProductCommercialFo
       portOfDispatch: product.commercial?.portOfDispatch || "",
     })
 
-  }, [product])
+  }, [product.id])
 
   async function onSubmit(values: z.infer<typeof commercialSchema>) {
 
@@ -97,9 +95,7 @@ export function ProductCommercialForm({ product, onUpdate }: ProductCommercialFo
         description: "Product logistics info updated successfully.",
       })
 
-      if (onUpdate) onUpdate()
-
-      router.refresh()
+      if (onUpdate) onUpdate({ commercial: values })
 
     } catch {
 
@@ -114,6 +110,7 @@ export function ProductCommercialForm({ product, onUpdate }: ProductCommercialFo
       setIsLoading(false)
 
     }
+
   }
 
   return (
@@ -209,7 +206,9 @@ export function ProductCommercialForm({ product, onUpdate }: ProductCommercialFo
         {isEditable && (
           <div className="flex justify-end pt-4">
             <Button type="submit" disabled={isLoading}>
-              {isLoading ? <Loader2 className="animate-spin mr-2" /> : <Save className="mr-2" />}
+              {isLoading
+                ? <Loader2 className="animate-spin mr-2" />
+                : <Save className="mr-2" />}
               Save & Continue
             </Button>
           </div>

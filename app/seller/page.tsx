@@ -11,7 +11,7 @@ async function getSellerData() {
     if (!sessionCookie) return null
 
     try {
-        const decodedToken = await getAuth().verifySessionCookie(sessionCookie, true)
+        const decodedToken = await getAuth().verifySessionCookie(sessionCookie, false)
 
         const user = await prisma.user.findUnique({
             where: { firebaseUid: decodedToken.uid }
@@ -47,7 +47,7 @@ export default async function SellerPage() {
 
     const seller = await getSellerData()
 
-    if (!seller) {
+    if (!seller || seller.status === 'draft') {
         redirect('/seller/onboarding')
     }
 

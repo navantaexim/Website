@@ -101,7 +101,7 @@ export async function POST(request: Request) {
 
     let decodedToken
     try {
-      decodedToken = await getAuth().verifySessionCookie(sessionCookie, true)
+      decodedToken = await getAuth().verifySessionCookie(sessionCookie, false)
     } catch {
       return NextResponse.json({ error: 'Unauthorized: Invalid session' }, { status: 401 })
     }

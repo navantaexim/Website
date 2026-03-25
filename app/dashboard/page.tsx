@@ -166,8 +166,8 @@ export default function DashboardPage() {
                 asChild
                 className="w-full rounded-2xl h-14 text-base font-black shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
               >
-                <Link href={seller ? "/seller" : "/seller/onboarding"}>
-                  {seller ? "Open Seller Center" : "Register as Seller"}
+                <Link href={seller?.status === 'draft' ? "/seller/onboarding" : (seller ? "/seller" : "/seller/onboarding")}>
+                  {seller?.status === 'draft' ? "Complete Registration" : (seller ? "Open Seller Center" : "Register as Seller")}
                 </Link>
               </Button>
             </CardFooter>

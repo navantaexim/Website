@@ -45,20 +45,28 @@ export default function ProductGallery({ media }: { media: Media[] }) {
         setLensStyle({ display: "block" })
     }
 
+    if (!media || media.length === 0) {
+        return (
+            <div className="border rounded-lg h-[450px] flex items-center justify-center text-slate-400">
+                No images available
+            </div>
+        )
+    }
+
     return (
-        <div className="flex gap-4">
+        <div className="flex flex-col md:flex-row gap-4">
 
             {/* THUMBNAILS */}
-            <div className="flex flex-col gap-2">
+            <div className="flex md:flex-col gap-2 overflow-auto md:max-h-[450px]">
 
                 {media.map((img) => (
 
                     <button
                         key={img.id}
                         onClick={() => setActiveImage(img.url)}
-                        className={`w-16 h-16 border rounded-md overflow-hidden
-              ${activeImage === img.url
-                                ? "border-primary"
+                        className={`w-16 h-16 border rounded-md overflow-hidden shrink-0
+                        ${activeImage === img.url
+                                ? "border-blue-600 ring-1 ring-blue-600"
                                 : "border-slate-200 hover:border-slate-400"
                             }`}
                     >

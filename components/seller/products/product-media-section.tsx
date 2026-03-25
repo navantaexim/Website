@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/hooks/use-toast"
 import { Loader2, Upload, Trash2, Eye } from "lucide-react"
-import { useRouter } from "next/navigation"
 import { supabase } from '@/lib/supabase'
 import Image from 'next/image'
 
@@ -19,13 +18,12 @@ interface ProductMediaProps {
             isPrimary?: boolean
         }[]
     }
-    onUpdate?: () => void
+    onUpdate?: (updates?: any) => void
 }
 
 export function ProductMediaSection({ product, onUpdate }: ProductMediaProps) {
 
     const { toast } = useToast()
-    const router = useRouter()
 
     const [uploading, setUploading] = useState(false)
 
@@ -103,7 +101,6 @@ export function ProductMediaSection({ product, onUpdate }: ProductMediaProps) {
             })
 
             if (onUpdate) onUpdate()
-            router.refresh()
 
         } catch (error: any) {
 
@@ -139,7 +136,6 @@ export function ProductMediaSection({ product, onUpdate }: ProductMediaProps) {
             })
 
             if (onUpdate) onUpdate()
-            router.refresh()
 
         } catch {
 

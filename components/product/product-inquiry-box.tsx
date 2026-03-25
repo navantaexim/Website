@@ -11,6 +11,7 @@ export default function InquiryBox({
 }) {
 
     const [message, setMessage] = useState("")
+    const [quantity, setQuantity] = useState("")
     const [loading, setLoading] = useState(false)
 
     const handleSubmit = async () => {
@@ -31,12 +32,14 @@ export default function InquiryBox({
                 },
                 body: JSON.stringify({
                     productId,
-                    message
+                    message,
+                    quantity
                 })
             })
 
             alert("Inquiry sent successfully")
             setMessage("")
+            setQuantity("")
 
         } catch (error) {
 
@@ -49,16 +52,26 @@ export default function InquiryBox({
     }
 
     return (
-        <div className="border rounded-xl p-6 bg-white shadow-sm">
+        <div className="sticky top-24 border rounded-xl p-6 bg-white shadow-sm">
 
             <h3 className="text-lg font-semibold mb-3">
                 Send Inquiry
             </h3>
 
             <p className="text-sm text-slate-500 mb-4">
-                Contact {sellerName} for pricing, MOQ and lead time.
+                Contact <span className="font-medium">{sellerName}</span> for pricing, MOQ and lead time.
             </p>
 
+            {/* Quantity */}
+            <input
+                type="text"
+                placeholder="Required Quantity"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+                className="w-full border rounded-lg p-3 text-sm mb-3"
+            />
+
+            {/* Requirement */}
             <textarea
                 rows={4}
                 placeholder="Describe your requirement..."
@@ -74,6 +87,10 @@ export default function InquiryBox({
             >
                 {loading ? "Sending..." : "Send Inquiry"}
             </button>
+
+            <p className="text-xs text-slate-400 mt-3 text-center">
+                Suppliers typically respond within 24 hours
+            </p>
 
         </div>
     )
