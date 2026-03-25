@@ -213,7 +213,7 @@ export default function DashboardPage() {
               </div>
 
               <CardTitle className="text-2xl font-black text-neutral-900">
-                Exprot & Import Guides
+                Export & Import Guides
               </CardTitle>
 
               <CardDescription className="text-neutral-500 font-medium">
