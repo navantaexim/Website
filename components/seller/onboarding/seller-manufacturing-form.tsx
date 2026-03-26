@@ -59,10 +59,11 @@ interface SellerManufacturingProps {
     } | null
   }
   onUpdate?: (data?: any) => void,
-onValidityChange?: (valid: boolean) => void
+  onValidityChange?: (valid: boolean) => void
+  onNext?: () => void
 }
 
-export function SellerManufacturingForm({ seller, onUpdate,onValidityChange }: SellerManufacturingProps) {
+export function SellerManufacturingForm({ seller, onUpdate,onValidityChange,onNext }: SellerManufacturingProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
@@ -138,8 +139,8 @@ export function SellerManufacturingForm({ seller, onUpdate,onValidityChange }: S
       if (!response.ok) throw new Error("Failed to save capabilities")
 
       toast({ title: "Success", description: "Manufacturing details saved successfully." })
-      if (onUpdate) onUpdate()
-      router.refresh()
+      await onUpdate?.()
+      onNext?.()
     } catch (error) {
       toast({ 
         title: "Error", 
@@ -159,7 +160,7 @@ export function SellerManufacturingForm({ seller, onUpdate,onValidityChange }: S
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl">
+      <form id="capabilities-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl">
         
         {/* NEW FIELDS AT THE TOP FOR BETTER UX AS REQUESTED */}
 
@@ -441,10 +442,10 @@ export function SellerManufacturingForm({ seller, onUpdate,onValidityChange }: S
 
         {!isReadOnly && (
             <div className="flex justify-start pt-4 border-t mt-4 border-border">
-                 <Button type="submit" disabled={isLoading} size="lg" className="w-full sm:w-auto mt-4 px-8">
+                 {/* <Button type="submit" disabled={isLoading} size="lg" className="w-full sm:w-auto mt-4 px-8">
                     {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Plus className="mr-2 h-4 w-4" />}
                     Save Manufacturing Details
-                </Button>
+                </Button> */}
             </div>
         )}
       </form>

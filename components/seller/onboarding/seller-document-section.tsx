@@ -111,8 +111,7 @@ export function SellerDocumentSection({ seller, onUpdate,onValidityChange }: Sel
             })
 
             toast({ title: "Upload Success", description: `${type.replace('_', ' ')} uploaded successfully.` })
-            if (onUpdate) onUpdate()
-            router.refresh()
+            await onUpdate?.()
         } catch (error: any) {
             console.error(error)
             toast({ title: "Upload Error", description: error.message || "Failed to upload document.", variant: "destructive" })

@@ -65,10 +65,11 @@ interface SellerExportProfileProps {
     } | null
   }
   onUpdate?: (data?: any) => void,
-onValidityChange?: (valid: boolean) => void
+  onValidityChange?: (valid: boolean) => void
+  onNext?: () => void
 }
 
-export function SellerExportProfileForm({ seller, onUpdate,onValidityChange }: SellerExportProfileProps) {
+export function SellerExportProfileForm({ seller, onUpdate,onValidityChange,onNext }: SellerExportProfileProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
@@ -108,47 +109,90 @@ export function SellerExportProfileForm({ seller, onUpdate,onValidityChange }: S
   //   name: "hsCodes",
   // })
 
+  // async function onSubmit(values: z.infer<typeof exportProfileSchema>) {
+  //   setIsLoading(true)
+  //   try {
+  //       // Flatten hsCodes to array of strings
+  //       const payload = {
+  //           sellerId: seller.id,
+  //           exportExperience: values.exportExperience,
+  //           annualTurnover: values.annualTurnover,
+  //           logisticsModes: values.logisticsModes,
+  //           marketIds: values.marketIds,
+  //           incotermIds: values.incotermIds,
+  //           // hsCodes: values.hsCodes?.map(h => h.value).filter(Boolean)
+  //       }
+
+  //     const response = await fetch("/api/seller/export-profile", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(payload),
+  //     })
+
+  //     if (!response.ok) throw new Error("Failed to save export profile")
+
+  //     toast({ title: "Success", description: "Export profile updated." })
+  //     if (onUpdate) onUpdate()
+  //     router.refresh()
+  //   } catch (error) {
+  //     toast({ 
+  //       title: "Error", 
+  //       description: "Failed to save details.", 
+  //       variant: "destructive" 
+  //     })
+  //   } finally {
+  //     setIsLoading(false)
+  //   }
+  // }
+
   async function onSubmit(values: z.infer<typeof exportProfileSchema>) {
-    setIsLoading(true)
-    try {
-        // Flatten hsCodes to array of strings
-        const payload = {
-            sellerId: seller.id,
-            exportExperience: values.exportExperience,
-            annualTurnover: values.annualTurnover,
-            logisticsModes: values.logisticsModes,
-            marketIds: values.marketIds,
-            incotermIds: values.incotermIds,
-            // hsCodes: values.hsCodes?.map(h => h.value).filter(Boolean)
-        }
+  setIsLoading(true)
 
-      const response = await fetch("/api/seller/export-profile", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      })
-
-      if (!response.ok) throw new Error("Failed to save export profile")
-
-      toast({ title: "Success", description: "Export profile updated." })
-      if (onUpdate) onUpdate()
-      router.refresh()
-    } catch (error) {
-      toast({ 
-        title: "Error", 
-        description: "Failed to save details.", 
-        variant: "destructive" 
-      })
-    } finally {
-      setIsLoading(false)
+  try {
+    const payload = {
+      sellerId: seller.id,
+      exportExperience: values.exportExperience,
+      annualTurnover: values.annualTurnover,
+      logisticsModes: values.logisticsModes,
+      marketIds: values.marketIds,
+      incotermIds: values.incotermIds,
     }
+
+    const response = await fetch("/api/seller/export-profile", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    })
+
+    if (!response.ok) throw new Error("Failed to save export profile")
+
+    toast({
+      title: "Success",
+      description: "Export profile updated.",
+    })
+
+    // ✅ Refresh seller data (IMPORTANT)
+    await onUpdate?.()
+
+    // ✅ Move to next step (NEW)
+    onNext?.()
+
+  } catch (error) {
+    toast({
+      title: "Error",
+      description: "Failed to save details.",
+      variant: "destructive",
+    })
+  } finally {
+    setIsLoading(false)
   }
+}
 
   const isReadOnly = seller.status !== 'draft'
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl">
+      <form id="export-profile-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl">
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <FormField
@@ -378,10 +422,10 @@ export function SellerExportProfileForm({ seller, onUpdate,onValidityChange }: S
 
         {!isReadOnly && (
             <div className="flex justify-end pt-4">
-                 <Button type="submit" disabled={isLoading}>
+                 {/* <Button type="submit" disabled={isLoading}>
                     {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    Save Profile
-                </Button>
+                    Save & Continue
+                </Button> */}
             </div>
         )}
       </form>
