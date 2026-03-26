@@ -29,7 +29,11 @@ export async function GET() {
             exportProfile: {
               include: {
                 markets: true,
-                incoterms: true,
+                incoterms: {
+                  include: {
+                    incoterm: true // 👈 join with master table
+                  }
+                },
                 hsExpertise: true
               }
             }
@@ -42,8 +46,22 @@ export async function GET() {
       return NextResponse.json({ seller: null });
     }
 
+    const sellerData = sellerUser.seller;
+
+    const transformedSeller = {
+      ...sellerData,
+      exportProfile: sellerData.exportProfile
+        ? {
+            ...sellerData.exportProfile,
+            incoterms: sellerData.exportProfile.incoterms.map(i => ({
+              incotermId: i.incoterm.code // 👈 convert ID → CODE
+            }))
+          }
+        : null,
+    };
+
     const mergedSeller = {
-      ...sellerUser.seller,
+      ...transformedSeller,
       phone: sellerUser.phone,
       designation: sellerUser.designation,
       whatsapp: sellerUser.whatsapp
