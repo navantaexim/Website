@@ -69,14 +69,24 @@ export function SellerUnderReview({ seller }: UnderReviewProps) {
            </div>
         </CardContent>
         <CardFooter className="bg-neutral-50/50 p-6 flex flex-col sm:flex-row justify-between items-center gap-4 border-t border-neutral-100">
-           <p className="text-[11px] text-neutral-400 font-medium max-w-[280px] text-center sm:text-left leading-relaxed">
-             Our team is cross-referencing your manufacturing capabilities with international export standards.
-           </p>
-           <div className="flex gap-3 w-full sm:w-auto">
-              <Button variant="ghost" size="sm" className="font-bold flex-1 sm:flex-none">Support</Button>
-              <Button size="sm" className="font-bold gap-2 flex-1 sm:flex-none" variant="outline" asChild>
-                 <Link href="/seller/onboarding">
-                   Update Profile <ArrowRight className="w-3.5 h-3.5" />
+           <div className="flex flex-col gap-1 max-w-[300px]">
+             <p className="text-sm font-bold text-neutral-900 leading-relaxed text-center sm:text-left">
+               Start Preparing Your Catalog
+             </p>
+             <p className="text-[11px] text-neutral-500 font-medium text-center sm:text-left leading-relaxed">
+               You can begin listing your products now. They will go live instantly once your audit clears.
+             </p>
+           </div>
+           
+           <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+              <Button size="sm" className="font-bold flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-600/20 hover:scale-[1.02] transition-transform" asChild>
+                 <Link href="/seller/products">
+                    List Products Now
+                 </Link>
+              </Button>
+              <Button size="sm" className="font-bold gap-2 flex-1 sm:flex-none border-blue-200 text-blue-700 hover:bg-blue-50" variant="outline" asChild>
+                 <Link href="/seller">
+                   Seller Dashboard <ArrowRight className="w-3.5 h-3.5" />
                  </Link>
               </Button>
            </div>

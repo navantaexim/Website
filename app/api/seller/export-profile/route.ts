@@ -23,7 +23,7 @@ export async function POST(request: Request) {
 
     let decodedToken
     try {
-      decodedToken = await getAuth().verifySessionCookie(sessionCookie, true)
+      decodedToken = await getAuth().verifySessionCookie(sessionCookie, false)
     } catch {
       return NextResponse.json({ error: 'Invalid session' }, { status: 401 })
     }
@@ -78,48 +78,49 @@ export async function POST(request: Request) {
             }
         })
 
+        const syncTasks: Promise<any>[] = []
+
         // 2. Handle Markets
         if (marketIds) {
-            await tx.exportProfileMarket.deleteMany({ where: { exportProfileId: profile.id } })
-            if (marketIds.length > 0) {
-              console.log("Incoming marketIds:", marketIds)
-
-              const existingCountries = await tx.country.findMany({
-                where: { id: { in: marketIds } },
-                select: { id: true }
-              })
-
-              console.log("Existing countries:", existingCountries)
-                await tx.exportProfileMarket.createMany({
-                    data: marketIds.map(countryId => ({
-                        exportProfileId: profile.id,
-                        countryId
-                    }))
-                })
-            }
+            syncTasks.push((async () => {
+                await tx.exportProfileMarket.deleteMany({ where: { exportProfileId: profile.id } })
+                if (marketIds.length > 0) {
+                    const existingCountries = await tx.country.findMany({
+                        where: { id: { in: marketIds } },
+                        select: { id: true }
+                    })
+                    await tx.exportProfileMarket.createMany({
+                        data: existingCountries.map(country => ({
+                            exportProfileId: profile.id,
+                            countryId: country.id
+                        }))
+                    })
+                }
+            })())
         }
 
         // 3. Handle Incoterms
         if (incotermIds) {
-          await tx.exportProfileIncoterm.deleteMany({
-            where: { exportProfileId: profile.id }
-          })
-
-          if (incotermIds.length > 0) {
-
-            const incoterms = await tx.incoterm.findMany({
-              where: { code: { in: incotermIds } },
-              select: { id: true }
-            })
-
-            await tx.exportProfileIncoterm.createMany({
-              data: incoterms.map(term => ({
-                exportProfileId: profile.id,
-                incotermId: term.id
-              }))
-            })
-          }
+            syncTasks.push((async () => {
+                await tx.exportProfileIncoterm.deleteMany({
+                    where: { exportProfileId: profile.id }
+                })
+                if (incotermIds.length > 0) {
+                    const incoterms = await tx.incoterm.findMany({
+                        where: { code: { in: incotermIds } },
+                        select: { id: true }
+                    })
+                    await tx.exportProfileIncoterm.createMany({
+                        data: incoterms.map(term => ({
+                            exportProfileId: profile.id,
+                            incotermId: term.id
+                        }))
+                    })
+                }
+            })())
         }
+
+        await Promise.all(syncTasks)
 
         // 4. Handle HS Codes
         // if (hsCodes) {

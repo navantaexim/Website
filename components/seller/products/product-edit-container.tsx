@@ -49,6 +49,24 @@ export function ProductEditContainer({
     { id: 'media', label: 'Media & Review', icon: Globe },
   ]
 
+  const checkSectionCompletion = (sectionIndex: number, productData: any) => {
+    if (!productData) return false
+    switch (sectionIndex) {
+      case 0:
+        return !!(productData.name && productData.categoryId && productData.hsCode && productData.originCountryId)
+      case 1:
+        return !!productData.specs
+      case 2:
+        return !!productData.commercial
+      case 3:
+        return !!productData.compliance
+      case 4:
+        return !!(productData.media && productData.media.length > 0)
+      default:
+        return false
+    }
+  }
+
   function setActiveTab(step: string) {
     const params = new URLSearchParams(searchParams.toString())
     params.set('step', step)
@@ -65,46 +83,31 @@ export function ProductEditContainer({
 
   const isEditable = product.status === 'draft'
 
-  // 🔥 stable refs (fixes loop + listeners)
-  const updateTimeoutRef = useRef<any>(null)
-
   const isUpdatingRef = useRef(false)
 
   function handleUpdate(updates?: any) {
-
     if (!updates) return
-
-    // 🚫 prevent recursive loops
     if (isUpdatingRef.current) return
 
     isUpdatingRef.current = true
 
     setProduct((prev: any) => {
-
       const next = { ...prev }
 
-      if ('specs' in updates) {
-        if (JSON.stringify(prev.specs) !== JSON.stringify(updates.specs)) {
-          next.specs = updates.specs
-        }
+      if ('specs' in updates && JSON.stringify(prev.specs) !== JSON.stringify(updates.specs)) {
+        next.specs = updates.specs
       }
 
-      if ('commercial' in updates) {
-        if (JSON.stringify(prev.commercial) !== JSON.stringify(updates.commercial)) {
-          next.commercial = updates.commercial
-        }
+      if ('commercial' in updates && JSON.stringify(prev.commercial) !== JSON.stringify(updates.commercial)) {
+        next.commercial = updates.commercial
       }
 
-      if ('compliance' in updates) {
-        if (JSON.stringify(prev.compliance) !== JSON.stringify(updates.compliance)) {
-          next.compliance = updates.compliance
-        }
+      if ('compliance' in updates && JSON.stringify(prev.compliance) !== JSON.stringify(updates.compliance)) {
+        next.compliance = updates.compliance
       }
 
-      if ('media' in updates) {
-        if (JSON.stringify(prev.media) !== JSON.stringify(updates.media)) {
-          next.media = updates.media
-        }
+      if ('media' in updates && JSON.stringify(prev.media) !== JSON.stringify(updates.media)) {
+        next.media = updates.media
       }
 
       return next
@@ -114,6 +117,7 @@ export function ProductEditContainer({
       isUpdatingRef.current = false
     }, 0)
   }
+
   return (
     <div className="container mx-auto py-8 px-4 max-w-5xl">
 
@@ -124,109 +128,82 @@ export function ProductEditContainer({
         </Link>
 
         <div className="flex-1">
-          <div className="flex items-center gap-3">
-            <h1 className="text-3xl font-bold tracking-tight text-foreground/90">
-              {product.name || 'Untitled Product'}
-            </h1>
-            {isLoading && <Loader2 className="h-5 w-5 animate-spin text-primary" />}
-          </div>
-
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
-            <Badge variant="outline" className="font-mono px-2 py-0 text-[10px] uppercase tracking-wider">
-              {product.hsCode || 'No HS Code'}
-            </Badge>
-
-            <span className="text-muted-foreground/40">•</span>
-
-            <span className="capitalize">
-              {product.category?.name || 'Uncategorized'}
-            </span>
-          </div>
+          <h1 className="text-3xl font-bold">
+            {product.name || 'Untitled Product'}
+          </h1>
         </div>
 
-        <Badge variant={product.status === 'active' ? 'default' : 'secondary'} className="capitalize px-3 py-1 text-xs font-semibold">
-          {product.status}
-        </Badge>
+        <Badge>{product.status}</Badge>
       </div>
 
       {/* Stepper */}
-      <div className="mb-10 relative">
-        <div className="absolute top-1/2 left-0 w-full h-[2px] bg-blue-200 -translate-y-1/2 -z-10" />
-
-        <div className="flex justify-between items-center">
+      <div className="mb-10">
+        <div className="flex justify-between">
           {sections.map((section, index) => {
 
             const isActive = activeTab === section.id
             const isCompleted = sections.findIndex(s => s.id === activeTab) > index
 
             return (
-              <button key={section.id} onClick={() => setActiveTab(section.id)} className="flex flex-col items-center gap-2">
+              <button
+                key={section.id}
+                onClick={() => {
+                  const targetIndex = sections.findIndex(s => s.id === section.id)
+                  const currentIndex = sections.findIndex(s => s.id === activeTab)
 
-                <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 text-sm font-bold
-                  ${isActive
-                    ? 'bg-blue-600 border-blue-600 text-white'
-                    : isCompleted
-                      ? 'bg-green-500 border-green-500 text-white'
-                      : 'bg-white border-gray-300 text-gray-500'}
+                  if (targetIndex < currentIndex) {
+                    setActiveTab(section.id)
+                    return
+                  }
+
+                  for (let i = 0; i < targetIndex; i++) {
+                    if (!checkSectionCompletion(i, product)) {
+                      alert("Complete previous steps first")
+                      return
+                    }
+                  }
+
+                  setActiveTab(section.id)
+                }}
+                className="flex flex-col items-center gap-2"
+              >
+                <div className={`w-10 h-10 flex items-center justify-center rounded-full border
+                  ${isActive ? 'bg-blue-600 text-white' : isCompleted ? 'bg-green-500 text-white' : ''}
                 `}>
-                  {isCompleted ? <CheckCircle2 className="h-5 w-5" /> : index + 1}
+                  {isCompleted ? <CheckCircle2 size={16} /> : index + 1}
                 </div>
 
-                <span className={`text-sm font-medium ${isActive ? 'text-blue-600' : 'text-gray-500'}`}>
-                  {section.label}
-                </span>
-
-                {isActive && <div className="w-8 h-[3px] bg-blue-600 rounded-full mt-1" />}
+                <span>{section.label}</span>
               </button>
             )
           })}
         </div>
       </div>
 
-      {/* 🔥 FIXED: prevent hydration mismatch */}
+      {/* Tabs */}
       {isMounted && (
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsContent value="basic">
-            <ProductBasicInfoForm
-              product={product}
-              categories={categories}
-              countries={countries}
-              onUpdate={handleUpdate}
-              onNext={nextTab}
-            />
+            <ProductBasicInfoForm product={product} categories={categories} countries={countries} onUpdate={handleUpdate} onNext={nextTab} />
           </TabsContent>
 
           <TabsContent value="specs">
-            <ProductSpecificationForm
-              product={product}
-              onUpdate={handleUpdate}
-              onNext={nextTab}
-            />
+            <ProductSpecificationForm product={product} onUpdate={handleUpdate} onNext={nextTab} />
           </TabsContent>
 
           <TabsContent value="commercial">
-            <ProductCommercialForm
-              product={product}
-              onUpdate={handleUpdate}
-              onNext={nextTab}
-            />
+            <ProductCommercialForm product={product} onUpdate={handleUpdate} onNext={nextTab} />
           </TabsContent>
 
           <TabsContent value="compliance">
-            <ProductComplianceForm
-              product={product}
-              onUpdate={handleUpdate}
-              onNext={nextTab}
-            />
+            <ProductComplianceForm product={product} onUpdate={handleUpdate} onNext={nextTab} />
           </TabsContent>
 
-          <TabsContent value="media" className="space-y-10">
+          <TabsContent value="media">
             <ProductMediaSection product={product} onUpdate={handleUpdate} />
-            <Separator className="bg-border/30" />
+            <Separator />
             <ProductReviewSection product={product} onUpdate={handleUpdate} />
           </TabsContent>
-
         </Tabs>
       )}
 

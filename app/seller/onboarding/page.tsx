@@ -44,6 +44,35 @@ const steps: Step[] = [
   { id: 7, title: 'Review & Submit ', description: 'Final Check' },
 ]
 
+const checkStepCompletion = (stepIndex: number, seller: any) => {
+  if (!seller) return false;
+  switch (stepIndex) {
+    case 0:
+      return !!(seller.legalName && seller.businessType && seller.yearEstablished && seller.gstNumber && seller.iecCode);
+    case 1:
+      return !!(seller.addresses && seller.addresses.length > 0);
+    case 2:
+      return !!(seller.documents && seller.documents.length > 0);
+    case 3:
+      return !!(
+        seller.capabilities?.manufacturerType && 
+        seller.capabilities?.employeeRange &&
+        seller.capabilities?.processType &&
+        seller.capabilities?.description &&
+        seller.capabilities?.engineeringCategories?.length > 0 &&
+        seller.capabilities?.machines?.length > 0
+      );
+    case 4:
+      return !!(seller.exportProfile?.annualTurnover && seller.exportProfile?.logisticsModes?.length > 0);
+    case 5:
+      return true; // Certifications are optional
+    case 6:
+      return false; // Final check isn't complete until submit
+    default:
+      return false;
+  }
+}
+
 export default function SellerOnboardingPage() {
   const [seller, setSeller] = useState<Seller | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -52,6 +81,15 @@ export default function SellerOnboardingPage() {
   const router = useRouter()
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
   const [isStepValid, setIsStepValid] = useState(false)
+
+  const handleLocalUpdate = (partialData: any) => {
+    setSeller((prev: any) => {
+      if (!prev) return prev;
+      return { ...prev, ...partialData };
+    });
+  };
+
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   async function fetchSeller() {
     try {
@@ -80,25 +118,30 @@ export default function SellerOnboardingPage() {
   }, [])
 
   useEffect(() => {
-  setIsStepValid(false)
-}, [currentStepIndex])
+    if (seller) {
+      setIsStepValid(checkStepCompletion(currentStepIndex, seller))
+    } else {
+      setIsStepValid(false)
+    }
+  }, [currentStepIndex, seller])
 
 /**
  * FIX: redirect moved into useEffect
  * This avoids React hook errors
  */
 useEffect(() => {
-  if (seller?.status === 'verified' || seller?.status === 'active') {
-    router.replace('/seller')
+  if (seller?.status === 'verified' || seller?.status === 'active' || seller?.status === 'submitted') {
+    router.replace('/dashboard')
   }
 }, [seller?.status, router])
 
   async function nextStep() {
-  if (!seller) return
-  // force refresh so latest saved data loads
-  await fetchSeller()
-  setCurrentStepIndex((prev) => Math.min(prev + 1, steps.length - 1))
-}
+    if (!seller) return;
+    setIsTransitioning(true);
+    await new Promise(r => setTimeout(r, 100)); // Visual click feedback
+    setCurrentStepIndex((prev) => Math.min(prev + 1, steps.length - 1));
+    setIsTransitioning(false);
+  }
   const prevStep = () => setCurrentStepIndex((prev) => Math.max(prev - 1, 0))
   
   const progress = Math.round(((currentStepIndex) / steps.length) * 100)
@@ -208,17 +251,21 @@ useEffect(() => {
                         <CardDescription>{steps[currentStepIndex].description}</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        {currentStepIndex === 0 && <SellerBasicInfoForm seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 1 && <SellerAddressSection seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 2 && <SellerDocumentSection seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 3 && <SellerManufacturingForm seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 4 && <SellerExportProfileForm seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 5 && <SellerCertificationForm seller={{...seller, certificates: seller.certificates || []}} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 6 && <SellerReviewSection seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
+                        {currentStepIndex === 0 && <SellerBasicInfoForm seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
+                        {currentStepIndex === 1 && <SellerAddressSection seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
+                        {currentStepIndex === 2 && <SellerDocumentSection seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
+                        {currentStepIndex === 3 && <SellerManufacturingForm seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
+                        {currentStepIndex === 4 && <SellerExportProfileForm seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
+                        {currentStepIndex === 5 && <SellerCertificationForm seller={{...seller, certificates: seller.certificates || []}} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
+                        {currentStepIndex === 6 && <SellerReviewSection seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
                     </CardContent>
                      <CardFooter className="flex justify-between border-t p-6">
                         <Button variant="outline" onClick={prevStep} disabled={currentStepIndex === 0}>Back</Button>
-                        <Button onClick={nextStep} disabled={!isStepValid}>
+                        <Button 
+                            onClick={nextStep} 
+                            disabled={!checkStepCompletion(currentStepIndex, seller) || isTransitioning}
+                            className={isTransitioning ? "opacity-50 transition-opacity" : "opacity-100 transition-opacity"}
+                        >
                             {currentStepIndex === steps.length - 1 ? 'Submit' : (
                                 <>Continue <ChevronRight className="ml-2 h-4 w-4" /></>
                             )}
@@ -249,7 +296,28 @@ useEffect(() => {
 
                 <Separator />
 
-                <Stepper steps={steps} currentStep={currentStepIndex} />
+                <Stepper 
+                  steps={steps} 
+                  currentStep={currentStepIndex} 
+                  onStepClick={(index) => {
+                    // Only allow clicking to previous steps, or next steps if the previous ones are completed
+                    if (index < currentStepIndex) {
+                      setCurrentStepIndex(index);
+                    } else if (index > currentStepIndex) {
+                      // Check if all steps up to index - 1 are completed
+                      let canAccess = true;
+                      for (let i = 0; i < index; i++) {
+                        if (!checkStepCompletion(i, seller)) {
+                          canAccess = false;
+                          break;
+                        }
+                      }
+                      if (canAccess) {
+                        setCurrentStepIndex(index);
+                      }
+                    }
+                  }} 
+                />
 
               </CardContent>
 
@@ -264,19 +332,7 @@ useEffect(() => {
   }
 
   if (seller.status === 'submitted') {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[80vh] px-4">
-        <Card className="max-w-lg w-full text-center p-6">
-          <CardHeader>
-            <Clock className="h-12 w-12 text-blue-500 mx-auto mb-4" />
-            <CardTitle>Application Under Review</CardTitle>
-            <CardDescription>
-              Our team is reviewing your documents.
-            </CardDescription>
-          </CardHeader>
-        </Card>
-      </div>
-    )
+    return null; // Will trigger the redirect above
   }
 
   return null

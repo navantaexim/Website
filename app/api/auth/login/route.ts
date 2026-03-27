@@ -20,30 +20,27 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Email required' }, { status: 400 })
     }
 
-    // 2. Upsert user in PostgreSQL
-    // We match by email to support existing users, and ensure firebaseUid is set
-    const user = await prisma.user.upsert({
-      where: { email },
-      update: {
-        firebaseUid: uid,
-        name: name || undefined,
-        picture: picture || undefined,
-        // We do NOT update role here to prevent overriding admin assignments
-      },
-      create: {
-        email,
-        firebaseUid: uid,
-        name: name || '',
-        picture: picture || '',
-        role: 'user', // Default role
-        status: 'active',
-      },
-    })
-
-    // 3. Create Session Cookie
-    // Set explicit expiration (e.g., 5 days)
+    // 2 & 3. Upsert user in PostgreSQL and Create Session Cookie in parallel
     const expiresIn = 60 * 60 * 24 * 5 * 1000
-    const sessionCookie = await getAuth().createSessionCookie(token, { expiresIn })
+    const [user, sessionCookie] = await Promise.all([
+      prisma.user.upsert({
+        where: { email },
+        update: {
+          firebaseUid: uid,
+          name: name || undefined,
+          picture: picture || undefined,
+        },
+        create: {
+          email,
+          firebaseUid: uid,
+          name: name || '',
+          picture: picture || '',
+          role: 'user', // Default role
+          status: 'active',
+        },
+      }),
+      getAuth().createSessionCookie(token, { expiresIn })
+    ])
 
     // 4. Set the cookie
     // Next.js 15+ compatible await
