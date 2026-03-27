@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { useToast } from "@/hooks/use-toast"
 
-import { Loader2, Save, X, Plus } from "lucide-react"
+import { Loader2, Save, X, Plus, Trash2 } from "lucide-react"
 
 import {
   Select,
@@ -29,13 +29,16 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+// ---------------- SCHEMA ----------------
 const complianceSchema = z.object({
   productId: z.string(),
   inspectionType: z.string().min(1, "Inspection Type is required"),
   standards: z.array(z.string()).min(1, "At least one standard is required"),
 })
 
+// ---------------- TYPES ----------------
 interface Certificate {
+  id?: string
   name: string
   url: string
 }
@@ -55,40 +58,47 @@ interface ProductComplianceFormProps {
     } | null
   }
   onUpdate?: (updates?: any) => void
+  onNext?: () => void
 }
 
+// ---------------- CONSTANTS ----------------
 const COMMON_STANDARDS = [
-  "ISO 9001",
-  "ISO 14001",
-  "ASTM",
-  "DIN",
-  "JIS",
-  "BS",
-  "ANSI",
-  "ASME",
-  "CE"
+  "ISO 9001", "ISO 14001", "ASTM", "DIN", "JIS", "BS", "ANSI", "ASME", "CE"
 ]
 
-export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFormProps) {
+// ---------------- COMPONENT ----------------
+export function ProductComplianceForm({
+  product,
+  onUpdate,
+  onNext
+}: ProductComplianceFormProps) {
 
   const { toast } = useToast()
 
   const [isLoading, setIsLoading] = useState(false)
   const [customStandard, setCustomStandard] = useState("")
+  const [certificates, setCertificates] = useState<Certificate[]>([])
 
   const isEditable = product.status === 'draft'
 
-  const [certificates, setCertificates] = useState<Certificate[]>(
-    product.media
-      ?.filter(m => m.type === "certificate")
-      .map(m => ({
-        name: m.url.split("/").pop() || "certificate",
-        url: m.url
-      })) || []
-  )
+  // ---------------- SYNC CERTIFICATES ----------------
+  useEffect(() => {
+    const certs =
+      product.media
+        ?.filter(m => m.type === "certificate")
+        .map(m => ({
+          id: m.id,
+          name: m.url.split("/").pop() || "certificate",
+          url: m.url
+        })) || []
 
+    setCertificates(certs)
+  }, [product.media])
+
+  // ---------------- FORM ----------------
   const form = useForm<z.infer<typeof complianceSchema>>({
     resolver: zodResolver(complianceSchema),
+    mode: "onChange", // 🔥 ADD THIS LINE
     defaultValues: {
       productId: product.id,
       inspectionType: product.compliance?.inspectionType || "",
@@ -97,42 +107,38 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
     disabled: !isEditable
   })
 
+  const { isValid } = form.formState
+
+  // ---------------- RESET ----------------
+  useEffect(() => {
+    if (!product) return
+
+    form.reset({
+      productId: product.id,
+      inspectionType: product.compliance?.inspectionType || "",
+      standards: product.compliance?.standards?.map(s => s.standard) || []
+    })
+
+  }, [
+    product.id,
+    product.compliance?.inspectionType,
+    product.compliance?.standards?.length // 🔥 FIX HERE
+  ])
+  // ---------------- WATCH ----------------
   const selectedStandards = useWatch({
     control: form.control,
     name: "standards"
   }) || []
 
   const certificateRequired = selectedStandards.length > 0
+  const missingCertificate = certificateRequired && certificates.length === 0
 
-  const [missingCertificate, setMissingCertificate] = useState(false)
-
-  useEffect(() => {
-    setMissingCertificate(
-      certificateRequired && certificates.length === 0
-    )
-  }, [certificateRequired, certificates])
-
-  useEffect(() => {
-
-    const standards =
-      product.compliance?.standards.map(s => s.standard) || []
-
-    form.reset({
-      productId: product.id,
-      inspectionType: product.compliance?.inspectionType || "",
-      standards
-    })
-
-  }, [product.id])
-
+  // ---------------- STANDARDS ----------------
   function updateStandards(newStandards: string[]) {
-    form.setValue("standards", newStandards, {
-      shouldValidate: true
-    })
+    form.setValue("standards", newStandards, { shouldValidate: true })
   }
 
   function addStandard(std: string) {
-
     if (!std) return
 
     const normalized = std.trim().toUpperCase()
@@ -150,12 +156,58 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
     updateStandards(selectedStandards.filter(s => s !== std))
   }
 
-  async function handleCertificateUpload(
-    e: React.ChangeEvent<HTMLInputElement>
-  ) {
+  // ---------------- DELETE CERTIFICATE ----------------
+  async function deleteCertificate(cert: Certificate) {
+
+    const prevCertificates = [...certificates]
+    const prevMedia = product.media
+
+    const isTemp = !cert.id || cert.id.startsWith('temp-')
+
+    const updated = certificates.filter(c => c.url !== cert.url)
+    setCertificates(updated)
+
+    onUpdate?.({
+      media: product.media?.filter(m => m.url !== cert.url)
+    })
+
+    if (isTemp) return
+
+    try {
+
+      const res = await fetch(
+        `/api/product/media?id=${cert.id}&productId=${product.id}`,
+        { method: "DELETE" }
+      )
+
+      if (!res.ok) throw new Error()
+
+      toast({ title: "Certificate Deleted" })
+
+    } catch {
+
+      // 🔥 ROLLBACK
+      setCertificates(prevCertificates)
+      onUpdate?.({ media: prevMedia })
+
+      toast({
+        title: "Delete failed",
+        variant: "destructive"
+      })
+
+    }
+  }
+
+  // ---------------- UPLOAD ----------------
+  async function handleCertificateUpload(e: React.ChangeEvent<HTMLInputElement>) {
 
     const files = e.target.files
     if (!files?.length) return
+
+    // ✅ prevent duplicate triggers
+    if (isLoading) return
+
+    setIsLoading(true)
 
     try {
 
@@ -169,16 +221,13 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
           body: formData
         })
 
-        if (!uploadRes.ok) throw new Error("Upload failed")
+        if (!uploadRes.ok) throw new Error()
 
-        const uploadData = await uploadRes.json()
-        const url = uploadData.url
+        const { url } = await uploadRes.json()
 
-        await fetch("/api/product/media", {
+        const saveRes = await fetch("/api/product/media", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             productId: product.id,
             url,
@@ -186,45 +235,73 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
           })
         })
 
-        setCertificates(prev => [
-          ...prev,
-          {
+        if (!saveRes.ok) throw new Error()
+
+        const saved = await saveRes.json()
+
+        const prevCertificates = [...certificates]
+        const prevMedia = product.media
+
+        try {
+
+          const newCert = {
+            id: saved.id,
             name: file.name,
             url
           }
-        ])
+
+          // ✅ FIX: functional update (no stale state)
+          const updatedCertificates = [...certificates, newCert]
+
+          // ✅ update local state
+          setCertificates(updatedCertificates)
+
+          // ✅ THEN update parent (outside state setter)
+          onUpdate?.({
+            media: updatedCertificates.map(c => ({
+              id: c.id!,
+              url: c.url,
+              type: "certificate"
+            }))
+          })
+
+        } catch {
+
+          // 🔥 rollback (UI + parent)
+          setCertificates(prevCertificates)
+          onUpdate?.({ media: prevMedia })
+
+          throw new Error()
+        }
 
       }
 
       e.target.value = ""
 
-      toast({
-        title: "Certificate Uploaded"
-      })
+      toast({ title: "Certificate Uploaded" })
 
     } catch {
 
       toast({
         title: "Upload Failed",
-        description: "Could not upload certificate",
         variant: "destructive"
       })
 
+    } finally {
+
+      setIsLoading(false)
+
     }
-
   }
-
+  // ---------------- SUBMIT ----------------
   async function onSubmit(values: z.infer<typeof complianceSchema>) {
 
     if (missingCertificate) {
-
       toast({
         title: "Certificate Required",
-        description:
-          "Upload at least one compliance certificate before continuing.",
+        description: "Upload at least one compliance certificate.",
         variant: "destructive"
       })
-
       return
     }
 
@@ -234,45 +311,29 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
 
       const response = await fetch("/api/product/compliance", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       })
 
-      if (!response.ok) {
+      if (!response.ok) throw new Error()
 
-        const errorData = await response.json()
-
-        throw new Error(
-          errorData.error || "Failed to save compliance"
-        )
-      }
-
-      toast({
-        title: "Compliance Saved",
-        description: "Standards updated"
-      })
+      toast({ title: "Compliance Saved" })
 
       if (onUpdate) {
         onUpdate({
           compliance: {
             inspectionType: values.inspectionType,
-            standards: values.standards.map((s: string) => ({
-              standard: s
-            }))
+            standards: values.standards.map(s => ({ standard: s }))
           }
         })
       }
 
-    } catch (error) {
+      if (onNext) onNext()
+
+    } catch {
 
       toast({
         title: "Error",
-        description:
-          error instanceof Error
-            ? error.message
-            : "Something went wrong",
         variant: "destructive"
       })
 
@@ -281,12 +342,14 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
       setIsLoading(false)
 
     }
-
   }
+
+  // ---------------- UI ----------------
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 
+        {/* INSPECTION TYPE */}
         <FormField
           control={form.control}
           name="inspectionType"
@@ -296,7 +359,7 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
 
               <Select
                 onValueChange={field.onChange}
-                defaultValue={field.value}
+                value={field.value}
                 disabled={!isEditable}
               >
                 <FormControl>
@@ -306,17 +369,9 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
                 </FormControl>
 
                 <SelectContent>
-                  <SelectItem value="Self Inspection">
-                    Self Inspection
-                  </SelectItem>
-
-                  <SelectItem value="Third Party Inspection">
-                    Third Party Inspection
-                  </SelectItem>
-
-                  <SelectItem value="Buyer Inspection">
-                    Buyer Inspection
-                  </SelectItem>
+                  <SelectItem value="Self Inspection">Self Inspection</SelectItem>
+                  <SelectItem value="Third Party Inspection">Third Party Inspection</SelectItem>
+                  <SelectItem value="Buyer Inspection">Buyer Inspection</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -326,15 +381,11 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
         />
 
         {/* STANDARDS */}
-
         <div className="space-y-4">
 
-          <FormLabel>
-            Applicable Standards *
-          </FormLabel>
+          <FormLabel>Applicable Standards *</FormLabel>
 
           <div className="flex flex-wrap gap-2 min-h-[40px] p-3 border rounded-lg bg-muted/20">
-
             {selectedStandards.length === 0 && (
               <span className="text-sm text-muted-foreground">
                 No standards selected
@@ -342,13 +393,8 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
             )}
 
             {selectedStandards.map(std => (
-              <Badge
-                key={std}
-                variant="secondary"
-                className="pl-2 pr-1 h-8"
-              >
+              <Badge key={std} variant="secondary" className="pl-2 pr-1 h-8">
                 {std}
-
                 {isEditable && (
                   <Button
                     type="button"
@@ -362,25 +408,15 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
                 )}
               </Badge>
             ))}
-
           </div>
 
           {isEditable && (
-
             <>
               <div className="space-y-2">
-
-                <p className="text-xs text-muted-foreground">
-                  Quick Add Standards
-                </p>
-
+                <p className="text-xs text-muted-foreground">Quick Add Standards</p>
                 <div className="flex flex-wrap gap-2">
-
                   {COMMON_STANDARDS.map(std => {
-
-                    const selected =
-                      selectedStandards.includes(std)
-
+                    const selected = selectedStandards.includes(std)
                     return (
                       <Button
                         key={std}
@@ -393,41 +429,30 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
                         {std}
                       </Button>
                     )
-
                   })}
-
                 </div>
-
               </div>
 
               <div className="flex gap-2">
-
                 <Input
-                  placeholder="Custom Standard (e.g. ASTM A312)"
+                  placeholder="Custom Standard"
                   value={customStandard}
-                  onChange={(e) =>
-                    setCustomStandard(e.target.value)
-                  }
+                  onChange={(e) => setCustomStandard(e.target.value)}
                 />
-
                 <Button
                   type="button"
                   variant="outline"
                   onClick={() => addStandard(customStandard)}
-                  disabled={!customStandard.trim()}
                 >
                   <Plus className="h-4 w-4" />
                 </Button>
-
               </div>
-
             </>
           )}
 
         </div>
 
         {/* CERTIFICATES */}
-
         <div className="space-y-4">
 
           <FormLabel>
@@ -440,18 +465,22 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
             </p>
           )}
 
-          {certificates.map((cert, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-between border p-3 rounded-lg"
-            >
-              <a
-                href={cert.url}
-                target="_blank"
-                className="text-sm text-primary underline"
-              >
+          {certificates.map(cert => (
+            <div key={cert.url} className="flex justify-between border p-3 rounded-lg">
+              <a href={cert.url} target="_blank" className="text-sm underline">
                 {cert.name}
               </a>
+
+              {isEditable && (
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="icon"
+                  onClick={() => deleteCertificate(cert)}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              )}
             </div>
           ))}
 
@@ -466,23 +495,18 @@ export function ProductComplianceForm({ product, onUpdate }: ProductComplianceFo
 
         </div>
 
+        {/* SUBMIT */}
         {isEditable && (
           <div className="flex justify-end">
-
             <Button
               type="submit"
-              size="lg"
-              disabled={isLoading || missingCertificate}
-              className="px-8 rounded-xl"
+              disabled={isLoading || !isValid || missingCertificate}
             >
               {isLoading
-                ? <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                : <Save className="mr-2 h-5 w-5" />
-              }
-
+                ? <Loader2 className="mr-2 animate-spin" />
+                : <Save className="mr-2" />}
               Save & Continue
             </Button>
-
           </div>
         )}
 

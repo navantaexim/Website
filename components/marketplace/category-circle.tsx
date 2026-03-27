@@ -8,10 +8,10 @@ type Props = {
 export default function CategoryCircle({ name, icon }: Props) {
 
     return (
-        <div className="flex flex-col items-center min-w-[80px] group cursor-pointer">
+        <div className="flex flex-col items-center min-w-[70px] sm:min-w-[80px] group cursor-pointer">
 
             <div className="
-                w-16 h-16
+                w-14 h-14 sm:w-16 sm:h-16
                 rounded-full
                 bg-slate-50
                 border border-slate-200
@@ -24,17 +24,17 @@ export default function CategoryCircle({ name, icon }: Props) {
                 <Image
                     src={icon}
                     alt={name}
-                    width={28}
-                    height={28}
+                    width={24}
+                    height={24}
                     className="opacity-80 group-hover:opacity-100"
                 />
 
             </div>
 
             <span className="
-                text-[11px]
+                text-[10px] sm:text-[11px]
                 text-center
-                mt-2
+                mt-1.5 sm:mt-2
                 text-slate-600
                 leading-tight
                 line-clamp-2

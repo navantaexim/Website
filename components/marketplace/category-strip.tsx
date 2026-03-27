@@ -45,29 +45,29 @@ export default function CategoryStrip() {
     })
 
     return (
-        <section className="bg-white border-b border-slate-200 py-4">
+        <section className="bg-white border-b border-slate-200 py-3 md:py-4">
 
-            <div className="max-w-7xl mx-auto px-6 relative">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 relative">
 
-                {/* ARROWS */}
+                {/* 🔹 ARROWS (hide on mobile) */}
                 <button
                     onClick={() => emblaApi?.scrollPrev()}
-                    className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow"
+                    className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow hover:bg-slate-50"
                 >
                     <ChevronLeft size={16} />
                 </button>
 
                 <button
                     onClick={() => emblaApi?.scrollNext()}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow"
+                    className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow hover:bg-slate-50"
                 >
                     <ChevronRight size={16} />
                 </button>
 
-                {/* SCROLLER */}
+                {/* 🔹 SCROLLER */}
                 <div ref={emblaRef} className="overflow-hidden">
 
-                    <div className="flex gap-5">
+                    <div className="flex gap-3 md:gap-5">
 
                         {categories.map((cat) => (
                             <div key={cat} className="flex-[0_0_auto]">

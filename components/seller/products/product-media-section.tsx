@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/hooks/use-toast"
-import { Loader2, Upload, Trash2, Eye } from "lucide-react"
+import { Loader2, Upload, Trash2 } from "lucide-react"
 import { supabase } from '@/lib/supabase'
 import Image from 'next/image'
 
@@ -29,11 +29,14 @@ export function ProductMediaSection({ product, onUpdate }: ProductMediaProps) {
 
     const isEditable = product.status === 'draft'
 
+    // ✅ SINGLE SOURCE OF TRUTH
     const images = product.media.filter(m => m.type === 'image')
     const drawings = product.media.filter(m => m.type === 'drawing')
 
+    // ✅ UPLOAD
     async function handleFileUpload(file: File) {
 
+        if (uploading) return // ✅ prevent duplicate uploads
         if (!file) return
 
         if (!file.type.startsWith('image/')) {
@@ -95,16 +98,23 @@ export function ProductMediaSection({ product, onUpdate }: ProductMediaProps) {
 
             if (!response.ok) throw new Error('Failed to save media')
 
+            const newItem = {
+                id: `temp-${Math.random().toString(36).slice(2)}`,
+                url: publicUrl,
+                type: 'image'
+            }
+
+            // ✅ optimistic update ONLY via parent
+            const updatedMedia = [...product.media, newItem]
+
+            onUpdate?.({ media: updatedMedia })
+
             toast({
                 title: "Image Uploaded",
                 description: "Product image added successfully."
             })
 
-            if (onUpdate) onUpdate()
-
         } catch (error: any) {
-
-            console.error(error)
 
             toast({
                 title: "Upload Error",
@@ -117,31 +127,37 @@ export function ProductMediaSection({ product, onUpdate }: ProductMediaProps) {
             setUploading(false)
 
         }
-
     }
 
+    // ✅ DELETE
     async function deleteMedia(mediaId: string) {
+
+        const isTemp = mediaId.startsWith('temp-')
+
+        const updatedMedia = product.media.filter(m => m.id !== mediaId)
+
+        // ✅ optimistic update via parent
+        onUpdate?.({ media: updatedMedia })
+
+        if (isTemp) return
 
         try {
 
-            const response = await fetch(`/api/product/media?id=${mediaId}&productId=${product.id}`, {
-                method: 'DELETE'
-            })
+            const response = await fetch(
+                `/api/product/media?id=${mediaId}&productId=${product.id}`,
+                { method: 'DELETE' }
+            )
 
-            if (!response.ok) throw new Error('Failed to delete')
+            if (!response.ok) throw new Error()
 
             toast({
-                title: "Media Removed",
-                description: "The media file has been deleted."
+                title: "Media Removed"
             })
-
-            if (onUpdate) onUpdate()
 
         } catch {
 
             toast({
-                title: "Error",
-                description: "Could not delete media.",
+                title: "Error deleting media",
                 variant: "destructive"
             })
 
@@ -150,66 +166,49 @@ export function ProductMediaSection({ product, onUpdate }: ProductMediaProps) {
     }
 
     return (
-
         <div className="space-y-8">
 
-            {/* PRODUCT IMAGES */}
-
             <div className="space-y-4">
-
-                <h3 className="text-sm font-semibold">
-                    Product Images
-                </h3>
+                <h3 className="text-sm font-semibold">Product Images</h3>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 
                     {images.map((item) => (
-
-                        <div
-                            key={item.id}
-                            className="relative group aspect-square rounded-lg border overflow-hidden bg-muted"
-                        >
+                        <div key={item.id} className="relative group aspect-square rounded-lg border overflow-hidden bg-muted">
 
                             <Image
                                 src={item.url}
-                                alt="Product Image"
+                                alt="Product"
                                 fill
                                 className="object-cover"
+                                unoptimized
                             />
 
                             {isEditable && (
-
-                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-
+                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center">
                                     <Button
+                                        type="button"
                                         variant="destructive"
                                         size="icon"
-                                        className="h-8 w-8"
                                         onClick={() => deleteMedia(item.id)}
                                     >
                                         <Trash2 className="h-4 w-4" />
                                     </Button>
-
                                 </div>
-
                             )}
 
                         </div>
-
                     ))}
 
                     {isEditable && (
-
-                        <label className="flex flex-col items-center justify-center aspect-square border-2 border-dashed rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
+                        <label className="flex flex-col items-center justify-center aspect-square border-2 border-dashed rounded-lg cursor-pointer">
 
                             {uploading ? (
-                                <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                                <Loader2 className="h-8 w-8 animate-spin" />
                             ) : (
                                 <>
-                                    <Upload className="h-8 w-8 text-muted-foreground mb-2" />
-                                    <span className="text-xs text-muted-foreground font-medium">
-                                        Add Image
-                                    </span>
+                                    <Upload className="h-8 w-8 mb-2" />
+                                    <span className="text-xs">Add Image</span>
                                 </>
                             )}
 
@@ -221,66 +220,12 @@ export function ProductMediaSection({ product, onUpdate }: ProductMediaProps) {
                                     const file = e.target.files?.[0]
                                     if (file) handleFileUpload(file)
                                 }}
-                                disabled={uploading}
                             />
-
                         </label>
-
                     )}
 
                 </div>
-
             </div>
-
-            {/* TECHNICAL DRAWING */}
-
-            {drawings.length > 0 && (
-
-                <div className="space-y-4">
-
-                    <h3 className="text-sm font-semibold">
-                        Technical Drawing
-                    </h3>
-
-                    {drawings.map((drawing) => (
-
-                        <div
-                            key={drawing.id}
-                            className="flex items-center justify-between border rounded-lg p-3"
-                        >
-
-                            <a
-                                href={drawing.url}
-                                target="_blank"
-                                className="flex items-center gap-2 text-sm text-primary underline"
-                            >
-                                <Eye className="h-4 w-4" />
-                                View Drawing
-                            </a>
-
-                            {isEditable && (
-
-                                <Button
-                                    variant="destructive"
-                                    size="icon"
-                                    className="h-8 w-8"
-                                    onClick={() => deleteMedia(drawing.id)}
-                                >
-                                    <Trash2 className="h-4 w-4" />
-                                </Button>
-
-                            )}
-
-                        </div>
-
-                    ))}
-
-                </div>
-
-            )}
-
         </div>
-
     )
-
 }

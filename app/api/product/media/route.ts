@@ -219,12 +219,11 @@ export async function DELETE(request: Request) {
 
     const { searchParams } = new URL(request.url)
 
-    const id = searchParams.get('id')
     const productId = searchParams.get('productId')
 
-    if (!id || !productId)
+    if (!productId)
       return NextResponse.json(
-        { error: 'Media ID and Product ID required' },
+        { error: 'Product ID required' },
         { status: 400 }
       )
 
@@ -236,11 +235,25 @@ export async function DELETE(request: Request) {
         { status: access.status }
       )
 
-    await prisma.productMedia.delete({
-      where: { id }
+    // 🔥 FINAL FIX: delete drawing by productId (NOT id)
+    const deleted = await prisma.productMedia.deleteMany({
+      where: {
+        productId: String(productId),
+        type: "drawing"
+      }
     })
 
-    return NextResponse.json({ success: true })
+    if (deleted.count === 0) {
+      return NextResponse.json(
+        { error: 'No drawing found to delete' },
+        { status: 404 }
+      )
+    }
+
+    return NextResponse.json({
+      success: true,
+      deletedCount: deleted.count
+    })
 
   } catch (error: any) {
 
