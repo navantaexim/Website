@@ -4,19 +4,31 @@ import { getAuth } from '@/lib/firebase-admin'
 import prisma from '@/lib/db'
 import { z } from 'zod'
 
-// 1. Zod Schema
+// 🔒 STRONG VALIDATION SCHEMA
 const createProductSchema = z.object({
   sellerId: z.string().min(1, 'Seller ID is required'),
-  name: z.string().min(1, 'Product name is required'),
+
+  name: z.string()
+    .trim()
+    .min(3, 'Product name must be at least 3 characters')
+    .max(120, 'Product name too long'),
+
   categoryId: z.string().min(1, 'Category ID is required'),
-  hsCode: z.string().min(1, 'HS Code is required'),
+
+  hsCode: z.string()
+    .trim()
+    .regex(/^\d{6,10}$/, 'HS Code must be 6-10 digits'),
+
   productType: z.enum(['standard', 'custom', 'made-to-order']),
+
   originCountryId: z.string().min(1, 'Origin Country ID is required'),
 })
 
 export async function POST(request: Request) {
   try {
-    // 2. Authentication
+    // =========================
+    // 1. AUTH CHECK
+    // =========================
     const cookieStore = await cookies()
     const sessionCookie = cookieStore.get('session')?.value
 
@@ -42,20 +54,35 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
 
-    // 3. Parse and Validate Request Body
+    // =========================
+    // 2. BODY VALIDATION
+    // =========================
     const body = await request.json()
+
     const validation = createProductSchema.safeParse(body)
 
     if (!validation.success) {
       return NextResponse.json(
-        { error: 'Validation Error', details: validation.error.format() },
+        {
+          error: 'Validation Error',
+          details: validation.error.flatten(),
+        },
         { status: 400 }
       )
     }
 
-    const { sellerId, name, categoryId, hsCode, productType, originCountryId } = validation.data
+    const {
+      sellerId,
+      name,
+      categoryId,
+      hsCode,
+      productType,
+      originCountryId,
+    } = validation.data
 
-    // 4. Verify Authorization and Seller Status
+    // =========================
+    // 3. AUTHORIZATION CHECK
+    // =========================
     const sellerUser = await prisma.sellerUser.findUnique({
       where: {
         sellerId_userId: {
@@ -74,7 +101,10 @@ export async function POST(request: Request) {
     })
 
     if (!sellerUser) {
-      return NextResponse.json({ error: 'Unauthorized access to seller' }, { status: 403 })
+      return NextResponse.json(
+        { error: 'Unauthorized access to seller' },
+        { status: 403 }
+      )
     }
 
     // Rule: Seller must not be in 'draft' status to create products
@@ -86,7 +116,16 @@ export async function POST(request: Request) {
       )
     }
 
-    // 5. Create Product using Transaction
+    if (sellerUser.seller.status !== 'active') {
+      return NextResponse.json(
+        { error: 'Seller account is not active' },
+        { status: 403 }
+      )
+    }
+
+    // =========================
+    // 4. TRANSACTION (SAFE CREATE)
+    // =========================
     const newProduct = await prisma.$transaction(async (tx) => {
       const [category, country] = await Promise.all([
         tx.category.findUnique({ where: { id: categoryId } }),
@@ -96,7 +135,20 @@ export async function POST(request: Request) {
       if (!category) throw new Error('Invalid Category ID')
       if (!country) throw new Error('Invalid Origin Country ID')
 
-      // Create Product
+      // 🔒 Optional: prevent duplicate drafts (same name + seller)
+      const existing = await tx.product.findFirst({
+        where: {
+          sellerId,
+          name,
+          status: 'draft',
+        },
+      })
+
+      if (existing) {
+        throw new Error('Draft product with same name already exists')
+      }
+
+      // 🚀 CREATE PRODUCT
       return await tx.product.create({
         data: {
           sellerId,
@@ -105,11 +157,14 @@ export async function POST(request: Request) {
           hsCode,
           productType,
           originCountryId,
-          status: 'draft', // Explicitly set status to draft
+          status: 'draft',
         },
       })
     })
 
+    // =========================
+    // 5. SUCCESS RESPONSE
+    // =========================
     return NextResponse.json({
       success: true,
       message: 'Product draft created successfully',
@@ -118,8 +173,11 @@ export async function POST(request: Request) {
 
   } catch (error: any) {
     console.error('Create Product Error:', error)
+
     return NextResponse.json(
-      { error: error.message || 'Internal Server Error' },
+      {
+        error: error.message || 'Internal Server Error',
+      },
       { status: 500 }
     )
   }
