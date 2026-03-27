@@ -14,7 +14,6 @@ const createProductSchema = z.object({
     .max(120, 'Product name too long'),
 
   categoryId: z.string().min(1, 'Category ID is required'),
-
   hsCode: z.string()
     .trim()
     .regex(/^\d{6,10}$/, 'HS Code must be 6-10 digits'),
