@@ -38,13 +38,8 @@ export async function POST(request: Request) {
 
     let decodedToken
     try {
-<<<<<<< HEAD
-      decodedToken = await getAuth().verifySessionCookie(sessionCookie, true)
-    } catch {
-=======
       decodedToken = await getAuth().verifySessionCookie(sessionCookie, false)
     } catch (error) {
->>>>>>> c476cab083dd7c556650ba3af353384cc10a8f44
       return NextResponse.json({ error: 'Unauthorized: Invalid session' }, { status: 401 })
     }
 
@@ -112,13 +107,9 @@ export async function POST(request: Request) {
       )
     }
 
-<<<<<<< HEAD
-    if (sellerUser.seller.verificationStage !== 'verified') {
-=======
     // Rule: Seller must not be in 'draft' status to create products
     // Submitted sellers are allowed to pre-populate catalogs before approval.
     if (sellerUser.seller.status === 'draft' || sellerUser.seller.status === 'rejected') {
->>>>>>> c476cab083dd7c556650ba3af353384cc10a8f44
       return NextResponse.json(
         { error: 'Action disallowed for your current seller status.' },
         { status: 403 }
@@ -136,24 +127,6 @@ export async function POST(request: Request) {
     // 4. TRANSACTION (SAFE CREATE)
     // =========================
     const newProduct = await prisma.$transaction(async (tx) => {
-<<<<<<< HEAD
-
-      // 🔒 Category check
-      const category = await tx.category.findUnique({
-        where: { id: categoryId },
-      })
-      if (!category) {
-        throw new Error('Invalid Category ID')
-      }
-
-      // 🔒 Country check
-      const country = await tx.country.findUnique({
-        where: { id: originCountryId },
-      })
-      if (!country) {
-        throw new Error('Invalid Origin Country ID')
-      }
-=======
       const [category, country] = await Promise.all([
         tx.category.findUnique({ where: { id: categoryId } }),
         tx.country.findUnique({ where: { id: originCountryId } })
@@ -161,7 +134,6 @@ export async function POST(request: Request) {
 
       if (!category) throw new Error('Invalid Category ID')
       if (!country) throw new Error('Invalid Origin Country ID')
->>>>>>> c476cab083dd7c556650ba3af353384cc10a8f44
 
       // 🔒 Optional: prevent duplicate drafts (same name + seller)
       const existing = await tx.product.findFirst({
