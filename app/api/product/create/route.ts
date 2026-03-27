@@ -81,7 +81,7 @@ export async function POST(request: Request) {
     } = validation.data
 
     // =========================
-    // 3. AUTHORIZATION CHECK
+    // 3. AUTHORIZATION CHECK (FIXED)
     // =========================
     const sellerUser = await prisma.sellerUser.findUnique({
       where: {
@@ -100,25 +100,19 @@ export async function POST(request: Request) {
       },
     })
 
-    if (!sellerUser) {
+    if (!sellerUser || !sellerUser.seller) {
       return NextResponse.json(
         { error: 'Unauthorized access to seller' },
         { status: 403 }
       )
     }
 
-    // Rule: Seller must not be in 'draft' status to create products
-    // Submitted sellers are allowed to pre-populate catalogs before approval.
-    if (sellerUser.seller.status === 'draft' || sellerUser.seller.status === 'rejected') {
-      return NextResponse.json(
-        { error: 'Action disallowed for your current seller status.' },
-        { status: 403 }
-      )
-    }
+    // ✅ Allowed statuses: submitted + active
+    const allowedStatuses = ['active', 'submitted']
 
-    if (sellerUser.seller.status !== 'active') {
+    if (!allowedStatuses.includes(sellerUser.seller.status)) {
       return NextResponse.json(
-        { error: 'Seller account is not active' },
+        { error: 'Seller account is not eligible to create products' },
         { status: 403 }
       )
     }
@@ -135,7 +129,7 @@ export async function POST(request: Request) {
       if (!category) throw new Error('Invalid Category ID')
       if (!country) throw new Error('Invalid Origin Country ID')
 
-      // 🔒 Optional: prevent duplicate drafts (same name + seller)
+      // 🔒 Prevent duplicate drafts
       const existing = await tx.product.findFirst({
         where: {
           sellerId,
