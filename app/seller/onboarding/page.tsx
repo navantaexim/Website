@@ -115,7 +115,7 @@ export default function SellerOnboardingPage() {
       if (!res.ok) throw new Error('Failed to fetch seller profile')
 
       const data = await res.json()
-      console.log("FROM API:", data.seller.exportProfile?.incoterms)
+      // console.log("FROM API:", data.seller.exportProfile?.incoterms)
       
       setSeller(data.seller)
       setIncotermsList(data.incoterms) // 👈 NEW
@@ -267,8 +267,8 @@ useEffect(() => {
                     </CardHeader>
                     <CardContent>
                         {currentStepIndex === 0 && <SellerBasicInfoForm seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 1 && <SellerAddressSection seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
-                        {currentStepIndex === 2 && <SellerDocumentSection seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
+                        {currentStepIndex === 1 && <SellerAddressSection seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
+                        {currentStepIndex === 2 && <SellerDocumentSection seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate } />}
                         {currentStepIndex === 3 && <SellerManufacturingForm seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} onNext={nextStep}/>}
                         {currentStepIndex === 4 && <SellerExportProfileForm seller={seller} onValidityChange={setIsStepValid} incotermsList={incotermsList} onUpdate={fetchSeller} onNext={nextStep}/>}
                         {currentStepIndex === 5 && <SellerCertificationForm seller={{...seller, certificates: seller.certificates || []}} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}

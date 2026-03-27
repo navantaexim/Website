@@ -111,7 +111,9 @@ export function SellerDocumentSection({ seller, onUpdate,onValidityChange }: Sel
             })
 
             toast({ title: "Upload Success", description: `${type.replace('_', ' ')} uploaded successfully.` })
-            await onUpdate?.()
+            onUpdate?.({
+            documents: [...documents.filter(d => d.type !== type), data.document]
+            })
         } catch (error: any) {
             console.error(error)
             toast({ title: "Upload Error", description: error.message || "Failed to upload document.", variant: "destructive" })
@@ -173,10 +175,11 @@ export function SellerDocumentSection({ seller, onUpdate,onValidityChange }: Sel
               setDocuments(currentDocs) // Revert on failure
               throw new Error('Failed to delete')
           }
-          
+           const { updatedDocs } = await response.json()
           toast({ title: "Document Removed", description: "The document has been deleted." })
-          if (onUpdate) onUpdate()
-          router.refresh()
+          onUpdate?.({
+            documents: updatedDocs
+            })
        } catch (error) {
            toast({ title: "Error", description: "Could not delete document.", variant: "destructive" })
        }
