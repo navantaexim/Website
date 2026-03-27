@@ -98,16 +98,16 @@ export async function POST(request: Request) {
                 }
             })())
         }
-
+        console.log("INCOTERMS RECEIVED:", incotermIds)
         // 3. Handle Incoterms
-        if (incotermIds) {
+        if (incotermIds !== undefined) {
             syncTasks.push((async () => {
                 await tx.exportProfileIncoterm.deleteMany({
                     where: { exportProfileId: profile.id }
                 })
                 if (incotermIds.length > 0) {
                     const incoterms = await tx.incoterm.findMany({
-                        where: { code: { in: incotermIds } },
+                        where: { id: { in: incotermIds } }  ,
                         select: { id: true }
                     })
                     await tx.exportProfileIncoterm.createMany({

@@ -60,16 +60,23 @@ interface SellerExportProfileProps {
         annualTurnover: string
         logisticsModes: string[]
         markets: { countryId: string }[]
-        incoterms: { incotermId: string }[]
+        incoterms: {
+          incotermId: string
+          incoterm: {
+            id: string
+            code: string
+          }
+        }[]
         hsExpertise: { hsCode: string }[]
     } | null
   }
+  incotermsList: { id: string; code: string }[]
   onUpdate?: (data?: any) => void,
   onValidityChange?: (valid: boolean) => void
   onNext?: () => void
 }
 
-export function SellerExportProfileForm({ seller, onUpdate,onValidityChange,onNext }: SellerExportProfileProps) {
+export function SellerExportProfileForm({ seller,incotermsList, onUpdate,onValidityChange,onNext }: SellerExportProfileProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
@@ -173,7 +180,8 @@ export function SellerExportProfileForm({ seller, onUpdate,onValidityChange,onNe
 
     // ✅ Refresh seller data (IMPORTANT)
     await onUpdate?.()
-
+    // ✅ force fresh data
+    router.refresh()
     // ✅ Move to next step (NEW)
     onNext?.()
 
@@ -189,7 +197,9 @@ export function SellerExportProfileForm({ seller, onUpdate,onValidityChange,onNe
 }
 
   const isReadOnly = seller.status !== 'draft'
-
+  const incotermMap = Object.fromEntries(
+  incotermsList.map(term => [term.id, term])
+)
   return (
     <Form {...form}>
       <form id="export-profile-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl">
@@ -343,16 +353,17 @@ export function SellerExportProfileForm({ seller, onUpdate,onValidityChange,onNe
             <FormLabel>Supported Incoterms</FormLabel>
 
             <div className="flex flex-wrap gap-2 mb-2">
-              {field.value?.map(code => {
-                const term = INCOTERMS.find(t => t.code === code)
+              {field.value?.map(id => {
+                const term = incotermMap[id]
+
                 return term ? (
-                  <Badge key={code} variant="secondary" className="gap-1">
+                  <Badge key={id} variant="secondary" className="gap-1">
                     {term.code}
                     {!isReadOnly && (
                       <X
                         className="h-3 w-3 cursor-pointer"
                         onClick={() => {
-                          field.onChange(field.value?.filter(v => v !== code))
+                          field.onChange(field.value?.filter(v => v !== id))
                         }}
                       />
                     )}
@@ -376,8 +387,8 @@ export function SellerExportProfileForm({ seller, onUpdate,onValidityChange,onNe
                 </FormControl>
 
                 <SelectContent>
-                  {INCOTERMS.map(term => (
-                    <SelectItem key={term.code} value={term.code}>
+                  {incotermsList.map((term) => (
+                    <SelectItem key={term.id} value={term.id}>
                       {term.code}
                     </SelectItem>
                   ))}
@@ -387,39 +398,6 @@ export function SellerExportProfileForm({ seller, onUpdate,onValidityChange,onNe
           </FormItem>
         )}
       />
-
-        {/* HS Codes */}
-        {/* <div className="space-y-3">
-            <FormLabel>Key HS Codes</FormLabel>
-            <FormDescription>Enter the main HS Codes for your products.</FormDescription>
-            {hsFields.map((field, index) => (
-                <div key={field.id} className="flex gap-2">
-                     <FormField
-                        control={form.control}
-                        name={`hsCodes.${index}.value`}
-                        render={({ field }) => (
-                            <FormItem className="flex-1">
-                            <FormControl>
-                                <Input placeholder="e.g. 840120" {...field} disabled={isReadOnly} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                        />
-                        {!isReadOnly && (
-                            <Button type="button" variant="outline" size="icon" onClick={() => removeHs(index)} disabled={hsFields.length === 1 && index === 0}>
-                                <X className="h-4 w-4" />
-                            </Button>
-                        )}
-                </div>
-            ))}
-            {!isReadOnly && (
-                <Button type="button" variant="outline" size="sm" onClick={() => appendHs({ value: "" })}>
-                    <Plus className="h-4 w-4 mr-2" /> Add Code
-                </Button>
-            )}
-        </div> */}
-
         {!isReadOnly && (
             <div className="flex justify-end pt-4">
                  {/* <Button type="submit" disabled={isLoading}>

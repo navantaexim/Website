@@ -48,26 +48,41 @@ export async function GET() {
 
     const sellerData = sellerUser.seller;
 
-    const transformedSeller = {
-      ...sellerData,
-      exportProfile: sellerData.exportProfile
-        ? {
-            ...sellerData.exportProfile,
-            incoterms: sellerData.exportProfile.incoterms.map(i => ({
-              incotermId: i.incoterm.code // 👈 convert ID → CODE
-            }))
-          }
-        : null,
-    };
+    // const transformedSeller = {
+    //   ...sellerData,
+    //   exportProfile: sellerData.exportProfile
+    //     ? {
+    //         ...sellerData.exportProfile,
+    //         incoterms: sellerData.exportProfile.incoterms.map(i => ({
+    //           incotermId: i.incoterm.code // 👈 convert ID → CODE
+    //         }))
+    //       }
+    //     : null,
+    // };
+
+    // const mergedSeller = {
+    //   ...transformedSeller,
+    //   phone: sellerUser.phone,
+    //   designation: sellerUser.designation,
+    //   whatsapp: sellerUser.whatsapp
+    // };
 
     const mergedSeller = {
-      ...transformedSeller,
-      phone: sellerUser.phone,
-      designation: sellerUser.designation,
-      whatsapp: sellerUser.whatsapp
-    };
-
-    return NextResponse.json({ seller: mergedSeller });
+    ...sellerUser.seller,
+    phone: sellerUser.phone,
+    designation: sellerUser.designation,
+    whatsapp: sellerUser.whatsapp
+  };
+    const allIncoterms = await prisma.incoterm.findMany({
+      select: {
+        id: true,
+        code: true
+      }
+    });
+    return NextResponse.json({ 
+      seller: mergedSeller,
+      incoterms: allIncoterms
+    });
 
   } catch (error) {
     console.error('Error fetching seller:', error);

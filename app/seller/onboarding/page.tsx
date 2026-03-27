@@ -102,7 +102,7 @@ export default function SellerOnboardingPage() {
   };
 
   const [isTransitioning, setIsTransitioning] = useState(false);
-
+  const [incotermsList, setIncotermsList] = useState([])
   async function fetchSeller() {
     try {
       const res = await fetch('/api/seller/me')
@@ -115,8 +115,11 @@ export default function SellerOnboardingPage() {
       if (!res.ok) throw new Error('Failed to fetch seller profile')
 
       const data = await res.json()
+      console.log("FROM API:", data.seller.exportProfile?.incoterms)
+      
       setSeller(data.seller)
-
+      setIncotermsList(data.incoterms) // 👈 NEW
+      
     } catch (err) {
       console.error(err)
       setError('Something went wrong while loading your profile.')
@@ -267,7 +270,7 @@ useEffect(() => {
                         {currentStepIndex === 1 && <SellerAddressSection seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
                         {currentStepIndex === 2 && <SellerDocumentSection seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
                         {currentStepIndex === 3 && <SellerManufacturingForm seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} onNext={nextStep}/>}
-                        {currentStepIndex === 4 && <SellerExportProfileForm seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} onNext={nextStep}/>}
+                        {currentStepIndex === 4 && <SellerExportProfileForm seller={seller} onValidityChange={setIsStepValid} incotermsList={incotermsList} onUpdate={fetchSeller} onNext={nextStep}/>}
                         {currentStepIndex === 5 && <SellerCertificationForm seller={{...seller, certificates: seller.certificates || []}} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
                         {currentStepIndex === 6 && <SellerReviewSection seller={seller} onValidityChange={setIsStepValid} onUpdate={fetchSeller} />}
                     </CardContent>
