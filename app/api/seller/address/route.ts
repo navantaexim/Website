@@ -4,6 +4,7 @@ import { cookies } from 'next/headers'
 import { getAuth } from '@/lib/firebase-admin'
 import prisma from '@/lib/db'
 import { z } from 'zod'
+import { revalidatePath } from 'next/cache'
 
 const addressSchema = z.object({
   sellerId: z.string().min(1, 'Seller ID is required'),
@@ -85,6 +86,7 @@ export async function POST(request: Request) {
       }
     })
 
+    revalidatePath('/seller/onboarding') // change to your actual page route
     return NextResponse.json({ success: true, address })
 
   } catch (error: any) {
@@ -114,7 +116,7 @@ export async function DELETE(request: Request) {
         await prisma.sellerAddress.delete({
             where: { id }
         })
-
+        revalidatePath('/seller/onboarding')
         return NextResponse.json({ success: true })
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 })

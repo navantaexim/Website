@@ -60,15 +60,23 @@ interface SellerExportProfileProps {
         annualTurnover: string
         logisticsModes: string[]
         markets: { countryId: string }[]
-        incoterms: { incotermId: string }[]
+        incoterms: {
+          incotermId: string
+          incoterm: {
+            id: string
+            code: string
+          }
+        }[]
         hsExpertise: { hsCode: string }[]
     } | null
   }
+  incotermsList: { id: string; code: string }[]
   onUpdate?: (data?: any) => void,
-onValidityChange?: (valid: boolean) => void
+  onValidityChange?: (valid: boolean) => void
+  onNext?: () => void
 }
 
-export function SellerExportProfileForm({ seller, onUpdate,onValidityChange }: SellerExportProfileProps) {
+export function SellerExportProfileForm({ seller,incotermsList, onUpdate,onValidityChange,onNext }: SellerExportProfileProps) {
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
@@ -108,47 +116,103 @@ export function SellerExportProfileForm({ seller, onUpdate,onValidityChange }: S
   //   name: "hsCodes",
   // })
 
+  // async function onSubmit(values: z.infer<typeof exportProfileSchema>) {
+  //   setIsLoading(true)
+  //   try {
+  //       // Flatten hsCodes to array of strings
+  //       const payload = {
+  //           sellerId: seller.id,
+  //           exportExperience: values.exportExperience,
+  //           annualTurnover: values.annualTurnover,
+  //           logisticsModes: values.logisticsModes,
+  //           marketIds: values.marketIds,
+  //           incotermIds: values.incotermIds,
+  //           // hsCodes: values.hsCodes?.map(h => h.value).filter(Boolean)
+  //       }
+
+  //     const response = await fetch("/api/seller/export-profile", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(payload),
+  //     })
+
+  //     if (!response.ok) throw new Error("Failed to save export profile")
+
+  //     toast({ title: "Success", description: "Export profile updated." })
+  //     if (onUpdate) onUpdate()
+  //     router.refresh()
+  //   } catch (error) {
+  //     toast({ 
+  //       title: "Error", 
+  //       description: "Failed to save details.", 
+  //       variant: "destructive" 
+  //     })
+  //   } finally {
+  //     setIsLoading(false)
+  //   }
+  // }
+
   async function onSubmit(values: z.infer<typeof exportProfileSchema>) {
-    setIsLoading(true)
-    try {
-        // Flatten hsCodes to array of strings
-        const payload = {
-            sellerId: seller.id,
-            exportExperience: values.exportExperience,
-            annualTurnover: values.annualTurnover,
-            logisticsModes: values.logisticsModes,
-            marketIds: values.marketIds,
-            incotermIds: values.incotermIds,
-            // hsCodes: values.hsCodes?.map(h => h.value).filter(Boolean)
-        }
+  setIsLoading(true)
 
-      const response = await fetch("/api/seller/export-profile", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      })
-
-      if (!response.ok) throw new Error("Failed to save export profile")
-
-      toast({ title: "Success", description: "Export profile updated." })
-      if (onUpdate) onUpdate()
-      router.refresh()
-    } catch (error) {
-      toast({ 
-        title: "Error", 
-        description: "Failed to save details.", 
-        variant: "destructive" 
-      })
-    } finally {
-      setIsLoading(false)
+  try {
+    const payload = {
+      sellerId: seller.id,
+      exportExperience: values.exportExperience,
+      annualTurnover: values.annualTurnover,
+      logisticsModes: values.logisticsModes,
+      marketIds: values.marketIds,
+      incotermIds: values.incotermIds,
     }
+
+    const response = await fetch("/api/seller/export-profile", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    })
+
+    if (!response.ok) throw new Error("Failed to save export profile")
+
+    toast({
+      title: "Success",
+      description: "Export profile updated.",
+    })
+
+    onUpdate?.({
+    exportProfile: {
+      exportExperience: values.exportExperience,
+      annualTurnover: values.annualTurnover,
+      logisticsModes: values.logisticsModes,
+
+      // match structure used in checkStepCompletion
+      markets: values.marketIds?.map(id => ({ countryId: id })) || [],
+      incoterms: values.incotermIds?.map(id => ({
+        incotermId: id,
+        incoterm: incotermsList.find(i => i.id === id) || { id, code: "" }
+      })) || [],
+    }
+  })
+
+  onNext?.()
+
+  } catch (error) {
+    toast({
+      title: "Error",
+      description: "Failed to save details.",
+      variant: "destructive",
+    })
+  } finally {
+    setIsLoading(false)
   }
+}
 
   const isReadOnly = seller.status !== 'draft'
-
+  const incotermMap = Object.fromEntries(
+  incotermsList.map(term => [term.id, term])
+)
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl">
+      <form id="export-profile-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl">
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <FormField
@@ -299,16 +363,17 @@ export function SellerExportProfileForm({ seller, onUpdate,onValidityChange }: S
             <FormLabel>Supported Incoterms</FormLabel>
 
             <div className="flex flex-wrap gap-2 mb-2">
-              {field.value?.map(code => {
-                const term = INCOTERMS.find(t => t.code === code)
+              {field.value?.map(id => {
+                const term = incotermMap[id]
+
                 return term ? (
-                  <Badge key={code} variant="secondary" className="gap-1">
+                  <Badge key={id} variant="secondary" className="gap-1">
                     {term.code}
                     {!isReadOnly && (
                       <X
                         className="h-3 w-3 cursor-pointer"
                         onClick={() => {
-                          field.onChange(field.value?.filter(v => v !== code))
+                          field.onChange(field.value?.filter(v => v !== id))
                         }}
                       />
                     )}
@@ -332,8 +397,8 @@ export function SellerExportProfileForm({ seller, onUpdate,onValidityChange }: S
                 </FormControl>
 
                 <SelectContent>
-                  {INCOTERMS.map(term => (
-                    <SelectItem key={term.code} value={term.code}>
+                  {incotermsList.map((term) => (
+                    <SelectItem key={term.id} value={term.id}>
                       {term.code}
                     </SelectItem>
                   ))}
@@ -343,45 +408,12 @@ export function SellerExportProfileForm({ seller, onUpdate,onValidityChange }: S
           </FormItem>
         )}
       />
-
-        {/* HS Codes */}
-        {/* <div className="space-y-3">
-            <FormLabel>Key HS Codes</FormLabel>
-            <FormDescription>Enter the main HS Codes for your products.</FormDescription>
-            {hsFields.map((field, index) => (
-                <div key={field.id} className="flex gap-2">
-                     <FormField
-                        control={form.control}
-                        name={`hsCodes.${index}.value`}
-                        render={({ field }) => (
-                            <FormItem className="flex-1">
-                            <FormControl>
-                                <Input placeholder="e.g. 840120" {...field} disabled={isReadOnly} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                        />
-                        {!isReadOnly && (
-                            <Button type="button" variant="outline" size="icon" onClick={() => removeHs(index)} disabled={hsFields.length === 1 && index === 0}>
-                                <X className="h-4 w-4" />
-                            </Button>
-                        )}
-                </div>
-            ))}
-            {!isReadOnly && (
-                <Button type="button" variant="outline" size="sm" onClick={() => appendHs({ value: "" })}>
-                    <Plus className="h-4 w-4 mr-2" /> Add Code
-                </Button>
-            )}
-        </div> */}
-
         {!isReadOnly && (
             <div className="flex justify-end pt-4">
-                 <Button type="submit" disabled={isLoading}>
+                 {/* <Button type="submit" disabled={isLoading}>
                     {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    Save Profile
-                </Button>
+                    Save & Continue
+                </Button> */}
             </div>
         )}
       </form>
