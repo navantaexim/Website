@@ -22,48 +22,50 @@ export default function ProductCard({ product }: { product: ProductCardType }) {
     return (
         <Link
             href={`/products/${product.id}`}
-            className="group bg-white border border-slate-200 rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+            className="group bg-white border border-slate-200 rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col"
         >
-            {/* IMAGE */}
-            <div className="relative h-52 bg-slate-100">
+
+            {/* 🔹 IMAGE (responsive aspect ratio) */}
+            <div className="relative w-full aspect-square sm:aspect-[4/3] bg-slate-100">
                 <Image
                     src={image}
                     alt={product.name}
                     fill
-                    className="object-contain p-4 group-hover:scale-105 transition"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-contain p-3 sm:p-4 group-hover:scale-105 transition"
                 />
             </div>
 
-            {/* CONTENT */}
-            <div className="p-4 flex flex-col gap-2">
+            {/* 🔹 CONTENT */}
+            <div className="p-3 sm:p-4 flex flex-col flex-1 gap-1.5 sm:gap-2">
 
                 {/* TITLE */}
-                <h3 className="text-sm font-medium text-slate-800 line-clamp-2 group-hover:text-blue-700">
+                <h3 className="text-sm sm:text-base font-medium text-slate-800 line-clamp-2 group-hover:text-blue-700 leading-tight">
                     {product.name}
                 </h3>
 
                 {/* SELLER */}
-                <div className="text-xs text-slate-600 line-clamp-1">
+                <div className="text-xs sm:text-sm text-slate-600 line-clamp-1">
                     {product.seller.legalName}
                 </div>
 
                 {/* LOCATION */}
                 {product.seller.location && (
-                    <div className="flex items-center gap-1 text-xs text-slate-500">
-                        <MapPin className="w-3 h-3" />
-                        {product.seller.location}
+                    <div className="flex items-center gap-1 text-[11px] sm:text-xs text-slate-500">
+                        <MapPin className="w-3 h-3 shrink-0" />
+                        <span className="truncate">{product.seller.location}</span>
                     </div>
                 )}
 
                 {/* MOQ */}
                 {product.moq && (
-                    <div className="text-xs text-slate-500">
+                    <div className="text-[11px] sm:text-xs text-slate-500">
                         MOQ: {product.moq}
                     </div>
                 )}
 
                 {/* CTA */}
-                <button className="mt-3 w-full border border-blue-600 text-blue-600 text-sm py-2 rounded-md hover:bg-blue-600 hover:text-white transition">
+                <button className="mt-auto w-full border border-blue-600 text-blue-600 text-xs sm:text-sm py-2.5 sm:py-2 rounded-md hover:bg-blue-600 hover:text-white transition active:scale-95">
                     Get Best Price
                 </button>
 

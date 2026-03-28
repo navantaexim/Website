@@ -29,7 +29,11 @@ export async function GET() {
             exportProfile: {
               include: {
                 markets: true,
-                incoterms: true,
+                incoterms: {
+                  include: {
+                    incoterm: true // 👈 join with master table
+                  }
+                },
                 hsExpertise: true
               }
             }
@@ -42,14 +46,43 @@ export async function GET() {
       return NextResponse.json({ seller: null });
     }
 
-    const mergedSeller = {
-      ...sellerUser.seller,
-      phone: sellerUser.phone,
-      designation: sellerUser.designation,
-      whatsapp: sellerUser.whatsapp
-    };
+    const sellerData = sellerUser.seller;
 
-    return NextResponse.json({ seller: mergedSeller });
+    // const transformedSeller = {
+    //   ...sellerData,
+    //   exportProfile: sellerData.exportProfile
+    //     ? {
+    //         ...sellerData.exportProfile,
+    //         incoterms: sellerData.exportProfile.incoterms.map(i => ({
+    //           incotermId: i.incoterm.code // 👈 convert ID → CODE
+    //         }))
+    //       }
+    //     : null,
+    // };
+
+    // const mergedSeller = {
+    //   ...transformedSeller,
+    //   phone: sellerUser.phone,
+    //   designation: sellerUser.designation,
+    //   whatsapp: sellerUser.whatsapp
+    // };
+
+    const mergedSeller = {
+    ...sellerUser.seller,
+    phone: sellerUser.phone,
+    designation: sellerUser.designation,
+    whatsapp: sellerUser.whatsapp
+  };
+    const allIncoterms = await prisma.incoterm.findMany({
+      select: {
+        id: true,
+        code: true
+      }
+    });
+    return NextResponse.json({ 
+      seller: mergedSeller,
+      incoterms: allIncoterms
+    });
 
   } catch (error) {
     console.error('Error fetching seller:', error);

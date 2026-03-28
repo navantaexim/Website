@@ -40,10 +40,14 @@ const steps: Step[] = [
   { id: 3, title: 'Documents *', description: 'GST, IEC, PAN' },
   { id: 4, title: 'Capabilities *', description: 'Manufacturing Info' },
   { id: 5, title: 'Export Profile *', description: 'Markets & Logistics' },
-  { id: 6, title: 'Certifications *', description: 'ISO, API, etc.' },
+  { id: 6, title: 'Certifications', description: 'ISO, API, etc.' },
   { id: 7, title: 'Review & Submit ', description: 'Final Check' },
 ]
-
+const REQUIRED_DOCS = [
+  { type: "PAN_CARD" },
+  { type: "GST_CERT" },
+  { type: "IEC_CERT" },
+];
 const checkStepCompletion = (stepIndex: number, seller: any) => {
   if (!seller) return false;
   switch (stepIndex) {
@@ -52,7 +56,15 @@ const checkStepCompletion = (stepIndex: number, seller: any) => {
     case 1:
       return !!(seller.addresses && seller.addresses.length > 0);
     case 2:
-      return !!(seller.documents && seller.documents.length > 0);
+    if (!seller.documents) return false;
+    const uploadedTypes = seller.documents.map((d: any) => d.type);
+
+    console.log("uploadedTypes:", uploadedTypes);
+    console.log("required:", REQUIRED_DOCS.map(d => d.type));
+
+    return REQUIRED_DOCS.every(doc =>
+      uploadedTypes.includes(doc.type)
+    );
     case 3:
       return !!(
         seller.capabilities?.manufacturerType && 
@@ -90,21 +102,24 @@ export default function SellerOnboardingPage() {
   };
 
   const [isTransitioning, setIsTransitioning] = useState(false);
-
+  const [incotermsList, setIncotermsList] = useState([])
   async function fetchSeller() {
     try {
       const res = await fetch('/api/seller/me')
 
       if (res.status === 401) {
         window.location.href = '/login'
-        return
+        return  
       }
 
       if (!res.ok) throw new Error('Failed to fetch seller profile')
 
       const data = await res.json()
+      // console.log("FROM API:", data.seller.exportProfile?.incoterms)
+      
       setSeller(data.seller)
-
+      setIncotermsList(data.incoterms) // 👈 NEW
+      
     } catch (err) {
       console.error(err)
       setError('Something went wrong while loading your profile.')
@@ -253,24 +268,59 @@ useEffect(() => {
                     <CardContent>
                         {currentStepIndex === 0 && <SellerBasicInfoForm seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
                         {currentStepIndex === 1 && <SellerAddressSection seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
-                        {currentStepIndex === 2 && <SellerDocumentSection seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
-                        {currentStepIndex === 3 && <SellerManufacturingForm seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
-                        {currentStepIndex === 4 && <SellerExportProfileForm seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
+                        {currentStepIndex === 2 && <SellerDocumentSection seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate } />}
+                        {currentStepIndex === 3 && <SellerManufacturingForm seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} onNext={nextStep}/>}
+                        {currentStepIndex === 4 && <SellerExportProfileForm seller={seller} onValidityChange={setIsStepValid} incotermsList={incotermsList} onUpdate={handleLocalUpdate} onNext={nextStep}/>}
                         {currentStepIndex === 5 && <SellerCertificationForm seller={{...seller, certificates: seller.certificates || []}} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
                         {currentStepIndex === 6 && <SellerReviewSection seller={seller} onValidityChange={setIsStepValid} onUpdate={handleLocalUpdate} />}
                     </CardContent>
                      <CardFooter className="flex justify-between border-t p-6">
-                        <Button variant="outline" onClick={prevStep} disabled={currentStepIndex === 0}>Back</Button>
                         <Button 
-                            onClick={nextStep} 
-                            disabled={!checkStepCompletion(currentStepIndex, seller) || isTransitioning}
-                            className={isTransitioning ? "opacity-50 transition-opacity" : "opacity-100 transition-opacity"}
+                          variant="outline" 
+                          onClick={prevStep} 
+                          disabled={currentStepIndex === 0}
                         >
-                            {currentStepIndex === steps.length - 1 ? 'Submit' : (
-                                <>Continue <ChevronRight className="ml-2 h-4 w-4" /></>
+                          Back
+                        </Button>
+
+                        <Button
+                          type={
+                            currentStepIndex === 3 || currentStepIndex === 4
+                              ? "submit"
+                              : "button"
+                          }
+                          form={
+                            currentStepIndex === 3
+                              ? "capabilities-form"
+                              : currentStepIndex === 4
+                              ? "export-profile-form"
+                              : undefined
+                          }
+                          onClick={() => {
+                            if (currentStepIndex !== 3 && currentStepIndex !== 4) {
+                              nextStep()
+                            }
+                          }}
+                          disabled={
+                            (currentStepIndex === 3 || currentStepIndex === 4)
+                              ? isTransitioning
+                              : !checkStepCompletion(currentStepIndex, seller) || isTransitioning
+                          }
+                          className={
+                            isTransitioning
+                              ? "opacity-50 transition-opacity"
+                              : "opacity-100 transition-opacity"
+                          }
+                        >
+                          {currentStepIndex === steps.length - 1
+                            ? "Submit"
+                            : currentStepIndex === 3 || currentStepIndex === 4
+                            ? "Save & Continue"
+                            : (
+                              <>Continue <ChevronRight className="ml-2 h-4 w-4" /></>
                             )}
                         </Button>
-                    </CardFooter>
+                      </CardFooter>
                 </Card>
             </div>
           <div className="space-y-6">

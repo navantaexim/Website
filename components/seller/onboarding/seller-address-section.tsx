@@ -108,7 +108,7 @@ export function SellerAddressSection({ seller, onUpdate,onValidityChange }: Sell
         const errorData = await response.json()
         throw new Error(errorData.error || "Failed to add address")
       }
-
+      const {address} = await response.json()
       toast({
         title: "Success",
         description: "Address added successfully.",
@@ -116,8 +116,9 @@ export function SellerAddressSection({ seller, onUpdate,onValidityChange }: Sell
       
       setIsOpen(false)
       form.reset()
-      if (onUpdate) onUpdate()
-      router.refresh()
+      onUpdate?.({
+  addresses: [...seller.addresses, address] // use response data
+})
     } catch (error) {
       toast({
         title: "Error",

@@ -41,9 +41,10 @@ interface ProductCommercialFormProps {
     } | null
   }
   onUpdate?: (updates: any) => void
+  onNext?: () => void
 }
 
-export function ProductCommercialForm({ product, onUpdate }: ProductCommercialFormProps) {
+export function ProductCommercialForm({ product, onUpdate, onNext }: ProductCommercialFormProps) {
 
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
@@ -52,32 +53,34 @@ export function ProductCommercialForm({ product, onUpdate }: ProductCommercialFo
 
   const form = useForm<z.infer<typeof commercialSchema>>({
     resolver: zodResolver(commercialSchema),
+    mode: "onChange",
+    // ✅ ADD THIS
     defaultValues: {
       productId: product.id,
-      moq: product.commercial?.moq || 0,
-      capacityPerMonth: product.commercial?.capacityPerMonth || 0,
-      leadTimeDays: product.commercial?.leadTimeDays || 0,
+      moq: product.commercial?.moq ?? undefined,
+      capacityPerMonth: product.commercial?.capacityPerMonth ?? undefined,
+      leadTimeDays: product.commercial?.leadTimeDays ?? undefined,
       packaging: product.commercial?.packaging || "",
       portOfDispatch: product.commercial?.portOfDispatch || "",
     },
     disabled: !isEditable
   })
+  const { isValid } = form.formState
 
   useEffect(() => {
+    if (!product) return
 
     form.reset({
       productId: product.id,
-      moq: product.commercial?.moq || 0,
-      capacityPerMonth: product.commercial?.capacityPerMonth || 0,
-      leadTimeDays: product.commercial?.leadTimeDays || 0,
+      moq: product.commercial?.moq ?? undefined,
+      capacityPerMonth: product.commercial?.capacityPerMonth ?? undefined,
+      leadTimeDays: product.commercial?.leadTimeDays ?? undefined,
       packaging: product.commercial?.packaging || "",
       portOfDispatch: product.commercial?.portOfDispatch || "",
     })
-
   }, [product.id])
-
   async function onSubmit(values: z.infer<typeof commercialSchema>) {
-
+    if (isLoading) return
     setIsLoading(true)
 
     try {
@@ -96,6 +99,7 @@ export function ProductCommercialForm({ product, onUpdate }: ProductCommercialFo
       })
 
       if (onUpdate) onUpdate({ commercial: values })
+      if (onNext) onNext()
 
     } catch {
 
@@ -131,7 +135,11 @@ export function ProductCommercialForm({ product, onUpdate }: ProductCommercialFo
               <FormItem>
                 <RequiredLabel required>MOQ (Minimum Order Qty)</RequiredLabel>
                 <FormControl>
-                  <Input type="number" {...field} />
+                  <Input
+                    type="number"
+                    value={field.value ?? ""}
+                    onChange={field.onChange}
+                  />
                 </FormControl>
                 <FormDescription>
                   Smallest order size you accept.
@@ -148,7 +156,11 @@ export function ProductCommercialForm({ product, onUpdate }: ProductCommercialFo
               <FormItem>
                 <RequiredLabel required>Monthly Capacity</RequiredLabel>
                 <FormControl>
-                  <Input type="number" {...field} />
+                  <Input
+                    type="number"
+                    value={field.value ?? ""}
+                    onChange={field.onChange}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -162,7 +174,12 @@ export function ProductCommercialForm({ product, onUpdate }: ProductCommercialFo
               <FormItem>
                 <RequiredLabel required>Lead Time (Days)</RequiredLabel>
                 <FormControl>
-                  <Input type="number" {...field} />
+                  <Input
+                    type="number"
+                    value={field.value ?? ""}
+                    onChange={field.onChange}
+
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -205,7 +222,7 @@ export function ProductCommercialForm({ product, onUpdate }: ProductCommercialFo
 
         {isEditable && (
           <div className="flex justify-end pt-4">
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit" disabled={isLoading || !isValid}>
               {isLoading
                 ? <Loader2 className="animate-spin mr-2" />
                 : <Save className="mr-2" />}
