@@ -8,14 +8,13 @@ export function middleware(request: NextRequest) {
   if (!session) {
     const loginUrl = new URL('/login', request.url)
     // Optional: Add redirect param to return after login
-    // loginUrl.searchParams.set('redirect', request.nextUrl.pathname)
+    loginUrl.searchParams.set('redirect', request.nextUrl.pathname)
     return NextResponse.redirect(loginUrl)
   }
 
   return NextResponse.next()
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
   matcher: ['/dashboard/:path*'],
 }
