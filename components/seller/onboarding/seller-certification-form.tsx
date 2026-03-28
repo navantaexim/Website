@@ -133,8 +133,11 @@ export function SellerCertificationForm({ seller, onUpdate,onValidityChange }: S
           toast({ title: "Success", description: "Certificate added." })
           setIsOpen(false)
           resetForm()
-          if (onUpdate) onUpdate()
-          router.refresh()
+          const data = await response.json()
+
+            onUpdate?.({
+            certificates: [...seller.certificates, data.certificate]
+            })
       } catch (error) {
           toast({ title: "Error", description: "Failed to add certificate", variant: "destructive" })
       } finally {
@@ -160,8 +163,9 @@ export function SellerCertificationForm({ seller, onUpdate,onValidityChange }: S
           if (!response.ok) throw new Error('Failed to delete')
           
           toast({ title: "Certificate Removed", description: "The certificate has been deleted." })
-          if (onUpdate) onUpdate()
-          router.refresh()
+          onUpdate?.({
+        certificates: seller.certificates.filter(c => c.id !== id)
+        })
        } catch (error) {
            toast({ title: "Error", description: "Could not delete certificate.", variant: "destructive" })
        }

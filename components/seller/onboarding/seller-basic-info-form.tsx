@@ -129,8 +129,17 @@ export function SellerBasicInfoForm({ seller, onUpdate,onValidityChange  }: Sell
         description: "Seller basic information updated successfully.",
       })
       
-      if (onUpdate) onUpdate(values)
-      router.refresh()
+      onUpdate?.({
+      legalName: values.legalName,
+      businessType: values.businessType,
+      yearEstablished: values.yearEstablished,
+      gstNumber: values.gstNumber,
+      iecCode: values.iecCode,
+      phone: values.phone,
+      designation: values.designation,
+      panNumber: values.panNumber,
+      cinOrLlpin: values.cinOrLlpin,
+    })
     } catch (error) {
       toast({
         title: "Error",

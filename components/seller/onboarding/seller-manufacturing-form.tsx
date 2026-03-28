@@ -139,8 +139,23 @@ export function SellerManufacturingForm({ seller, onUpdate,onValidityChange,onNe
       if (!response.ok) throw new Error("Failed to save capabilities")
 
       toast({ title: "Success", description: "Manufacturing details saved successfully." })
-      await onUpdate?.()
-      onNext?.()
+      onUpdate?.({
+      capabilities: {
+        manufacturerType: values.manufacturerType,
+        factoryAreaSqm: values.factoryAreaSqm,
+        employeeRange: values.employeeRange,
+        engineerRange: values.engineerRange,
+        inHouseQC: values.inHouseQC,
+        processType: values.processType,
+        description: values.description,
+
+        // IMPORTANT: match backend structure
+        engineeringCategories: values.engineeringCategories.map(id => ({ id })),
+        machines: values.machines.map(id => ({ id })),
+      }
+    })
+
+    onNext?.()
     } catch (error) {
       toast({ 
         title: "Error", 

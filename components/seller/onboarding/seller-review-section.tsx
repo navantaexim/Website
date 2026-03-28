@@ -67,8 +67,7 @@ export function SellerReviewSection({ seller, onUpdate ,onValidityChange}: Selle
             description: "Your seller profile is now under review.",
         })
 
-        // Use onUpdate to refresh parent state seamlessly
-        if (onUpdate) onUpdate()
+        onUpdate?.(data.seller)
 
     } catch (error) {
         toast({

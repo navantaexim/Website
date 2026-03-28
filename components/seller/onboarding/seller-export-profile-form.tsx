@@ -178,12 +178,22 @@ export function SellerExportProfileForm({ seller,incotermsList, onUpdate,onValid
       description: "Export profile updated.",
     })
 
-    // ✅ Refresh seller data (IMPORTANT)
-    await onUpdate?.()
-    // ✅ force fresh data
-    router.refresh()
-    // ✅ Move to next step (NEW)
-    onNext?.()
+    onUpdate?.({
+    exportProfile: {
+      exportExperience: values.exportExperience,
+      annualTurnover: values.annualTurnover,
+      logisticsModes: values.logisticsModes,
+
+      // match structure used in checkStepCompletion
+      markets: values.marketIds?.map(id => ({ countryId: id })) || [],
+      incoterms: values.incotermIds?.map(id => ({
+        incotermId: id,
+        incoterm: incotermsList.find(i => i.id === id) || { id, code: "" }
+      })) || [],
+    }
+  })
+
+  onNext?.()
 
   } catch (error) {
     toast({
