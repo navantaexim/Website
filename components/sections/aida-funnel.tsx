@@ -28,17 +28,17 @@ export default function AIDAFunnel() {
       stage: 'Awareness',
       word: 'AWARENESS',
       title: 'Global Visibility',
-      action: 'AI Ad Campaigns',
+      action: 'Targeted B2B Marketing & Global Outreach',
       description:
-        'Reach qualified buyers worldwide with targeted AI-powered advertising',
+        'Build international brand visibility and reach relevant buyers, distributors and industry partners through targeted B2B marketing.',
     },
     {
       stage: 'Interest',
       word: 'INTEREST',
       title: 'Educate Buyers',
-      action: 'Product Storytelling Videos',
+      action: 'Product Showcases & Technical Documentation Sharing',
       description:
-        'Engage prospects with compelling AI-generated product narratives',
+        'Share product details, catalogues and manufacturing documents so buyers can assess your capabilities.',
     },
     {
       stage: 'Desire',

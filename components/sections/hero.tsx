@@ -10,13 +10,12 @@ export default function Hero() {
         <div className="grid md:grid-cols-2 gap-12 items-center md:items-center">
           <div className="flex flex-col justify-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-              AI-Driven Global Marketing for Engineering Manufacturers
+              Your Global Market Access Partner Connecting Indian Engineering Manufacturers with Global Buyers.
             </h1>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Connecting manufacturers & buyers worldwide — simplifying export,
-              import & growth through intelligent automation.
+              We help Indian engineering manufacturers expand internationally through targeted buyer identification, B2B marketing, export
+              development and strategic business partnerships.
             </p>
-
           </div>
 
           <HeroCarousel />

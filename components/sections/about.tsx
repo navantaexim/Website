@@ -8,9 +8,12 @@ export default function About() {
           </h2>
 
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed text-center">
-            Empowering global trade with intelligent AI-driven technology,
-            trusted networks, and seamless export-import solutions designed for
-            engineering manufacturers.
+            Navanta EXIM is a global market access partner helping Indian
+            engineering manufacturers identify international business
+            opportunities and establish connections with relevant global buyers.
+            Through targeted B2B marketing, market research, export development
+            and strategic partnerships, we help manufacturers build a pathway to
+            sustainable international growth.
           </p>
         </div>
 
@@ -20,10 +23,9 @@ export default function About() {
               Our Vision
             </h3>
             <p className="text-foreground leading-relaxed">
-              To build a trusted, AI-powered global platform that makes
-              export-import simple, transparent, and efficient for engineering
-              manufacturers, while equipping them with the right knowledge to
-              grow confidently in international markets.
+              Make Indian engineering manufacturers globally accessible,
+              competitive and recognised as trusted partners in international
+              markets.
             </p>
           </div>
 
@@ -32,11 +34,10 @@ export default function About() {
               Our Mission
             </h3>
             <p className="text-foreground leading-relaxed">
-              To solve real industry challenges — not just digitize them — by
-              continuously innovating through AI-driven insights, industry
-              feedback, and advanced technology. We aim to eliminate the
-              operational barriers engineering companies face and empower them
-              with practical, scalable solutions.
+              Empower Indian engineering manufacturers to expand into global
+              markets through targeted buyer identification, strategic B2B
+              marketing, export development and international business
+              partnerships.
             </p>
           </div>
         </div>
